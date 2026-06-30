@@ -1,0 +1,36 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: invite-backend:local
+    restart: unless-stopped
+    env_file:
+      - backend/.env.local
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:8080}
+    ports:
+      - "8081:3001"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://backend:3001
+    image: invite-frontend:local
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - frontend/.env.local
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      BACKEND_API_URL: http://backend:3001
+    ports:
+      - "8080:3000"

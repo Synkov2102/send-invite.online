@@ -24,7 +24,7 @@ npm run dev:frontend
 
 ## Переменные окружения
 
-Backend читает `.env.local` из `backend/` или из корня репозитория. Можно скопировать `.env.example` в `.env.local` и заполнить:
+Backend читает `backend/.env.local`. Создайте его из `backend/.env.example` и заполните:
 
 ```bash
 PORT=3001
@@ -42,7 +42,7 @@ S3_REGION=ru-central1
 S3_FORCE_PATH_STYLE=false
 ```
 
-Frontend может работать с дефолтным `http://localhost:3001`. Для другого адреса API создайте `frontend/.env.local`:
+Frontend читает `frontend/.env.local`, создаваемый из `frontend/.env.example`:
 
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:3001
