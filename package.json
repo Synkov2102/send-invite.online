@@ -1,0 +1,19 @@
+{
+  "name": "invite",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev": "npm run build --workspace @invite/shared && npm run dev --workspace frontend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run build --workspace @invite/shared && npm run start:dev --workspace backend",
+    "build": "npm run build --workspace @invite/shared && npm run build --workspace frontend && npm run build --workspace backend",
+    "build:frontend": "npm run build --workspace frontend",
+    "build:backend": "npm run build --workspace backend",
+    "lint": "npm run lint --workspaces --if-present"
+  }
+}

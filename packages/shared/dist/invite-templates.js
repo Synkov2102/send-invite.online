@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.toPublicTemplate = exports.isWideTemplateKind = exports.isInviteTemplate = exports.isEditorReadyTemplate = exports.inviteTemplateCatalog = exports.getTemplateKind = exports.getTemplateDefinition = exports.getInviteTemplateName = exports.getInviteTemplate = exports.getEditorReadyTemplates = exports.getEditorPreset = exports.defaultInviteTemplates = void 0;
+var invite_template_catalog_1 = require("./invite-template-catalog");
+Object.defineProperty(exports, "defaultInviteTemplates", { enumerable: true, get: function () { return invite_template_catalog_1.defaultInviteTemplates; } });
+Object.defineProperty(exports, "getEditorPreset", { enumerable: true, get: function () { return invite_template_catalog_1.getEditorPreset; } });
+Object.defineProperty(exports, "getEditorReadyTemplates", { enumerable: true, get: function () { return invite_template_catalog_1.getEditorReadyTemplates; } });
+Object.defineProperty(exports, "getInviteTemplate", { enumerable: true, get: function () { return invite_template_catalog_1.getInviteTemplate; } });
+Object.defineProperty(exports, "getInviteTemplateName", { enumerable: true, get: function () { return invite_template_catalog_1.getInviteTemplateName; } });
+Object.defineProperty(exports, "getTemplateDefinition", { enumerable: true, get: function () { return invite_template_catalog_1.getTemplateDefinition; } });
+Object.defineProperty(exports, "getTemplateKind", { enumerable: true, get: function () { return invite_template_catalog_1.getTemplateKind; } });
+Object.defineProperty(exports, "inviteTemplateCatalog", { enumerable: true, get: function () { return invite_template_catalog_1.inviteTemplateCatalog; } });
+Object.defineProperty(exports, "isEditorReadyTemplate", { enumerable: true, get: function () { return invite_template_catalog_1.isEditorReadyTemplate; } });
+Object.defineProperty(exports, "isInviteTemplate", { enumerable: true, get: function () { return invite_template_catalog_1.isInviteTemplate; } });
+Object.defineProperty(exports, "isWideTemplateKind", { enumerable: true, get: function () { return invite_template_catalog_1.isWideTemplateKind; } });
+Object.defineProperty(exports, "toPublicTemplate", { enumerable: true, get: function () { return invite_template_catalog_1.toPublicTemplate; } });

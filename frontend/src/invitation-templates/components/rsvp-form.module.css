@@ -1,0 +1,585 @@
+.form {
+  --rsvp-accent: var(--invite-accent, #c89d60);
+  --rsvp-accent-soft: color-mix(in srgb, var(--rsvp-accent) 11%, transparent);
+  --rsvp-ink: var(--invite-ink, #49434d);
+  --rsvp-muted: var(--invite-muted, #8f8790);
+  --rsvp-line: var(--invite-line, rgba(200, 157, 96, 0.28));
+  --rsvp-surface: color-mix(in srgb, var(--invite-surface, #ffffff) 82%, transparent);
+  --rsvp-section: color-mix(in srgb, var(--invite-surface, #ffffff) 68%, transparent);
+  --rsvp-focus-surface: var(--invite-surface, #ffffff);
+  --rsvp-button-text: var(--invite-photo-text, #ffffff);
+  --rsvp-radius: 20px;
+  --rsvp-control-radius: 13px;
+  --rsvp-shadow: 0 18px 50px rgba(43, 48, 42, 0.07);
+
+  display: grid;
+  width: min(100%, 640px);
+  gap: 22px;
+  margin: 0 auto;
+  color: var(--rsvp-ink);
+  text-align: left;
+}
+
+.vanilla {
+  --rsvp-accent: var(--vanilla-orange, #f47a23);
+  --rsvp-accent-soft: color-mix(
+    in srgb,
+    var(--vanilla-pink, #ef8bbb) 18%,
+    var(--vanilla-paper, #ffffff)
+  );
+  --rsvp-ink: var(--vanilla-ink, #49434d);
+  --rsvp-muted: var(--vanilla-muted, #8f8790);
+  --rsvp-line: color-mix(in srgb, var(--vanilla-pink, #ef8bbb) 34%, transparent);
+  --rsvp-surface: color-mix(in srgb, var(--vanilla-paper, #ffffff) 88%, transparent);
+  --rsvp-section: color-mix(in srgb, var(--vanilla-paper, #ffffff) 76%, transparent);
+  --rsvp-focus-surface: var(--vanilla-paper, #ffffff);
+  --rsvp-button-text: var(--invite-photo-text, #ffffff);
+  --rsvp-radius: 26px;
+  --rsvp-control-radius: 18px;
+  --rsvp-shadow: 0 20px 55px color-mix(in srgb, var(--vanilla-ink, #49434d) 10%, transparent);
+}
+
+.alpine {
+  --rsvp-accent: var(--invite-accent, #46767a);
+  --rsvp-accent-soft: color-mix(in srgb, var(--invite-accent, #46767a) 11%, transparent);
+  --rsvp-ink: var(--invite-ink, #26383a);
+  --rsvp-muted: var(--invite-muted, #687b7d);
+  --rsvp-line: var(--invite-line, #bfd0d0);
+  --rsvp-surface: rgba(255, 255, 255, 0.68);
+  --rsvp-section: rgba(255, 255, 255, 0.42);
+  --rsvp-radius: 10px;
+  --rsvp-control-radius: 6px;
+  --rsvp-shadow: 0 16px 44px rgba(38, 56, 58, 0.06);
+}
+
+.aqua {
+  --rsvp-accent: var(--invite-accent, #149aa6);
+  --rsvp-accent-soft: color-mix(in srgb, var(--invite-accent, #149aa6) 12%, transparent);
+  --rsvp-ink: var(--invite-ink, #0c2730);
+  --rsvp-muted: var(--invite-muted, #5d8086);
+  --rsvp-line: var(--invite-line, #bfe3e3);
+  --rsvp-surface: color-mix(in srgb, var(--invite-photo-text, #ffffff) 42%, transparent);
+  --rsvp-section: color-mix(in srgb, var(--invite-photo-text, #ffffff) 30%, transparent);
+  --rsvp-focus-surface: var(--invite-surface, #f1fbfb);
+  --rsvp-button-text: var(--invite-photo-text, #ffffff);
+  --rsvp-radius: 18px;
+  --rsvp-control-radius: 12px;
+  --rsvp-shadow: 0 18px 48px rgba(6, 28, 33, 0.12);
+}
+
+.aqua .title {
+  color: var(--rsvp-ink);
+  font-size: clamp(28px, 5.5vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-transform: none;
+}
+
+.form.aqua .title {
+  color: var(--rsvp-ink);
+  font-size: clamp(28px, 5.5vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-transform: none;
+}
+
+.header {
+  display: grid;
+  justify-items: center;
+  gap: 15px;
+  padding-inline: 10px;
+  text-align: center;
+}
+
+.form .title {
+  margin: 0;
+  color: var(--rsvp-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(44px, 7vw, 66px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.alpine .title {
+  color: var(--rsvp-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 8vw, 38px);
+  letter-spacing: -0.045em;
+  text-transform: none;
+}
+
+.alpine .copy {
+  font-size: 15px;
+}
+
+@media (min-width: 1200px) {
+  .form.alpine {
+    width: min(100%, 720px);
+    gap: clamp(24px, 2.2vw, 34px);
+  }
+
+  .alpine .header {
+    gap: clamp(16px, 1.4vw, 22px);
+  }
+
+  .alpine .title {
+    font-size: clamp(48px, 4.4vw, 72px);
+  }
+
+  .alpine .copy {
+    width: min(100%, 540px);
+    font-size: clamp(16px, 1.3vw, 20px);
+    line-height: 1.62;
+  }
+
+  .alpine .deadline {
+    padding: 10px 16px;
+    font-size: clamp(12px, 1vw, 14px);
+  }
+
+  .alpine .section {
+    gap: clamp(18px, 1.6vw, 24px);
+    padding: clamp(24px, 2vw, 32px);
+  }
+
+  .alpine .step {
+    flex-basis: 36px;
+    width: 36px;
+    height: 36px;
+    font-size: clamp(11px, 0.95vw, 13px);
+  }
+
+  .alpine .sectionHeading h3,
+  .alpine .declineNote h3 {
+    font-size: clamp(18px, 1.45vw, 22px);
+  }
+
+  .alpine .sectionHeading p,
+  .alpine .declineNote p {
+    font-size: clamp(13px, 1.05vw, 15px);
+  }
+
+  .alpine .fieldLabel {
+    font-size: clamp(12px, 1vw, 14px);
+  }
+
+  .alpine .textInput,
+  .alpine .textarea {
+    min-height: 58px;
+    font-size: clamp(15px, 1.2vw, 17px);
+  }
+
+  .alpine .optionText strong {
+    font-size: clamp(14px, 1.15vw, 17px);
+  }
+
+  .alpine .optionText span {
+    font-size: clamp(12px, 1vw, 14px);
+  }
+
+  .alpine .submit {
+    min-height: 62px;
+    font-size: clamp(13px, 1.1vw, 15px);
+  }
+
+  .alpine .helper {
+    font-size: clamp(12px, 1vw, 14px);
+  }
+}
+
+.form .copy {
+  width: min(100%, 470px);
+  margin: 0 auto;
+  color: var(--rsvp-muted);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.form .deadline {
+  margin: 0;
+  border: 1px solid var(--rsvp-line);
+  border-radius: 999px;
+  background: var(--rsvp-accent-soft);
+  padding: 8px 13px;
+  color: var(--rsvp-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.section {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--rsvp-line);
+  border-radius: var(--rsvp-radius);
+  background: var(--rsvp-section);
+  padding: 22px;
+  box-shadow: var(--rsvp-shadow);
+  backdrop-filter: blur(12px);
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.step {
+  display: grid;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid var(--rsvp-line);
+  border-radius: 50%;
+  background: var(--rsvp-accent-soft);
+  color: var(--rsvp-accent);
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.sectionHeading div {
+  display: grid;
+  gap: 4px;
+}
+
+.sectionHeading h3,
+.sectionHeading p {
+  margin: 0;
+}
+
+.sectionHeading h3 {
+  color: var(--rsvp-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.sectionHeading p {
+  color: var(--rsvp-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.declineNote {
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: start;
+  background: var(--rsvp-accent-soft);
+}
+
+.declineNote div {
+  display: grid;
+  gap: 6px;
+}
+
+.declineNote h3,
+.declineNote p {
+  margin: 0;
+}
+
+.declineNote h3 {
+  color: var(--rsvp-ink);
+  font-size: 16px;
+}
+
+.declineNote p {
+  color: var(--rsvp-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.fieldLabel {
+  color: var(--rsvp-ink);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.textInput,
+.textarea {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--rsvp-line);
+  border-radius: var(--rsvp-control-radius);
+  background: var(--rsvp-surface);
+  padding: 0 15px;
+  color: var(--rsvp-ink);
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.textarea {
+  min-height: 96px;
+  padding-block: 13px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.textInput:focus,
+.textarea:focus {
+  border-color: var(--rsvp-accent);
+  background: var(--rsvp-focus-surface);
+  box-shadow: 0 0 0 3px var(--rsvp-accent-soft);
+}
+
+.textInput::placeholder,
+.textarea::placeholder {
+  color: color-mix(in srgb, var(--rsvp-muted) 72%, transparent);
+}
+
+.choiceGrid,
+.drinkGrid {
+  display: grid;
+  width: 100%;
+  gap: 8px;
+}
+
+.drinkGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--rsvp-line);
+  border-radius: var(--rsvp-control-radius);
+  background: var(--rsvp-surface);
+  padding: 14px;
+  color: var(--rsvp-muted);
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.drinkOption {
+  min-height: 52px;
+  align-items: center;
+  padding-block: 11px;
+}
+
+.option:hover {
+  border-color: color-mix(in srgb, var(--rsvp-accent) 55%, var(--rsvp-line));
+  transform: translateY(-1px);
+}
+
+.optionText {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.optionText strong {
+  color: var(--rsvp-ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.optionText span {
+  color: var(--rsvp-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.radioControl,
+.checkboxControl {
+  display: grid;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  margin-top: 1px;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: var(--rsvp-muted);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.radioControl {
+  border-radius: 50%;
+}
+
+.checkboxControl {
+  border-radius: 4px;
+}
+
+.radioIndicator {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  width: auto;
+  height: auto;
+  place-items: center;
+  pointer-events: none;
+}
+
+.radioIndicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rsvp-accent);
+  opacity: 0;
+  transform: scale(0.45);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.checkboxIndicator {
+  color: var(--rsvp-button-text);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(0.45);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.option[data-selected] {
+  border-color: var(--rsvp-accent);
+  background: var(--rsvp-accent-soft);
+  color: var(--rsvp-ink);
+}
+
+.option[data-selected] .radioControl {
+  border-color: var(--rsvp-accent);
+  color: var(--rsvp-accent);
+}
+
+.option[data-selected] .checkboxControl {
+  border-color: var(--rsvp-accent);
+  background: var(--rsvp-accent);
+  color: var(--rsvp-accent);
+}
+
+.option[data-selected] .radioIndicator span,
+.option[data-selected] .checkboxIndicator {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.option[data-focus-visible] {
+  outline: 2px solid color-mix(in srgb, var(--rsvp-accent) 45%, transparent);
+  outline-offset: 2px;
+}
+
+.footer {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.submit {
+  display: flex;
+  width: 100%;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid var(--rsvp-accent);
+  border-radius: var(--rsvp-control-radius);
+  background: var(--rsvp-accent);
+  padding: 0 18px;
+  color: var(--rsvp-button-text);
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.submit span:last-child {
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.helper {
+  margin: 0;
+  color: var(--rsvp-muted);
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.form .status {
+  width: 100%;
+  margin: 2px 0 0;
+  border: 1px solid var(--rsvp-line);
+  border-radius: var(--rsvp-control-radius);
+  background: var(--rsvp-accent-soft);
+  padding: 12px 14px;
+  color: var(--rsvp-accent);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.form .status[hidden] {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .form {
+    gap: 18px;
+  }
+
+  .form .title,
+  .alpine .title {
+    font-size: clamp(36px, 12vw, 48px);
+  }
+
+  .form .copy {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .section {
+    gap: 15px;
+    padding: 16px;
+  }
+
+  .drinkGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .option {
+    padding: 12px;
+  }
+}
