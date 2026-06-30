@@ -27,7 +27,7 @@ docker login ghcr.io
 - `VPS_SSH_USER` — SSH-пользователь;
 - `VPS_DEPLOY_PATH` — необязательно, по умолчанию `/opt/invite`.
 
-Workflow запускается для веток `main` и `master`. Сейчас production Compose использует тег `master`; если основной веткой станет `main`, замените тег обоих образов в `docker-compose.prod.yml`.
+Workflow запускается для веток `main` и `master`. Production Compose использует образы репозитория `send-invite.online` с тегом `main`.
 
 ## Локальная проверка контейнеров
 

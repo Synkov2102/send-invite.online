@@ -1,6 +1,6 @@
 services:
   backend:
-    image: ghcr.io/synkov2102/invite-backend:master
+    image: ghcr.io/synkov2102/send-invite.online-backend:main
     restart: unless-stopped
     env_file:
       - .env.backend.production
@@ -11,7 +11,7 @@ services:
       - "127.0.0.1:8091:3001"
 
   frontend:
-    image: ghcr.io/synkov2102/invite-frontend:master
+    image: ghcr.io/synkov2102/send-invite.online-frontend:main
     restart: unless-stopped
     depends_on:
       - backend
