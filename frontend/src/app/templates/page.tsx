@@ -36,8 +36,13 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
         </section>
 
         <section aria-label="Список шаблонов" className="templates-page__grid">
-          {templates.map((template) => (
-            <TemplateCard key={template.id} siteId={siteId} template={template} />
+          {templates.map((template, index) => (
+            <TemplateCard
+              index={index}
+              key={template.id}
+              siteId={siteId}
+              template={template}
+            />
           ))}
         </section>
       </main>

@@ -1,12 +1,13 @@
 import SiteHeader from "@/components/site-header";
 import { getCurrentUser } from "@/lib/auth";
+import { brand } from "@/lib/brand";
 import { ArrowRight, LogIn, UserPlus } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Вход и регистрация",
-  description: "Войдите или зарегистрируйтесь в Invite через Yandex ID.",
+  description: `Войдите или зарегистрируйтесь в ${brand.name} через Yandex ID.`,
 };
 
 type AuthPageProps = {
@@ -72,7 +73,7 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
               <p className="marketing-eyebrow">Авторизация через Yandex ID</p>
               <h1 id="auth-title">{title}</h1>
               <p>
-                Один безопасный вход без паролей в Invite. Если аккаунта еще нет, мы
+                Один безопасный вход без паролей в {brand.name}. Если аккаунта еще нет, мы
                 создадим его после подтверждения в Yandex ID.
               </p>
 

@@ -1,73 +1,128 @@
+import BrandLockup from "@/components/brand-lockup";
 import SiteHeader from "@/components/site-header";
+import TemplateCard from "@/components/template-card";
+import WaterBackground from "@/invitation-templates/aqua/water-background";
+import { brand } from "@/lib/brand";
 import { defaultInviteTemplates } from "@/lib/invite-templates";
 import {
   ArrowRight,
-  CalendarHeart,
+  CalendarDays,
   Check,
   Heart,
+  LayoutTemplate,
+  MessageCircle,
   Palette,
+  Send,
   Sparkles,
   Wand2,
+  type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import type { ReactNode } from "react";
+import styles from "./page.module.css";
 
-const steps = [
+const HERO_CHECKS = ["Без кода", "Адаптивно", "RSVP внутри"] as const;
+
+const LANDING_BACKGROUND = {
+  deep: "#fffaf7",
+  foam: "#ff5f7f",
+  shallow: "#efd7de",
+} as const;
+
+type FeatureItem = {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+};
+
+const benefits: FeatureItem[] = [
+  {
+    icon: LayoutTemplate,
+    title: "Дизайн с характером",
+    text: "Современные шаблоны, которые выглядят как работа студии, а не конструктор.",
+  },
   {
     icon: Palette,
-    title: "Выберите настроение",
-    text: "Начните с готового дизайна и палитры, которые подходят именно вашей истории.",
+    title: "Ваши цвета и детали",
+    text: "Настройте палитру, фотографии, тексты и атмосферу именно вашего дня.",
   },
   {
-    icon: Wand2,
-    title: "Добавьте ваши детали",
-    text: "Имена, дата, программа, дресс-код и контакты — всё меняется прямо в редакторе.",
+    icon: MessageCircle,
+    title: "RSVP без переписок",
+    text: "Ответы гостей, пожелания и важные детали собираются в одном месте.",
   },
   {
-    icon: Sparkles,
-    title: "Пригласите гостей",
-    text: "Отправьте одну красивую ссылку и соберите ответы гостей в удобной RSVP-форме.",
+    icon: Send,
+    title: "Одна красивая ссылка",
+    text: "Отправьте приглашение в мессенджере — оно идеально откроется на любом экране.",
   },
 ];
 
-const assurances = ["Без кода", "Готово за один вечер", "RSVP уже внутри"];
+const steps: FeatureItem[] = [
+  {
+    icon: LayoutTemplate,
+    title: "Выберите основу",
+    text: "Найдите дизайн, который совпадает с настроением свадьбы.",
+  },
+  {
+    icon: Wand2,
+    title: "Добавьте свою историю",
+    text: "Заполните детали дня, загрузите фотографии и настройте цвета.",
+  },
+  {
+    icon: Send,
+    title: "Поделитесь с гостями",
+    text: "Опубликуйте сайт и отправьте одну аккуратную ссылку.",
+  },
+];
 
-export default async function HomePage() {
-  const inviteTemplates = defaultInviteTemplates;
-  const featured = inviteTemplates.slice(0, 3);
+function Eyebrow({ children }: { children: ReactNode }) {
+  return (
+    <p className={styles.eyebrow}>
+      <span />
+      {children}
+    </p>
+  );
+}
+
+function formatSectionIndex(index: number) {
+  return String(index + 1).padStart(2, "0");
+}
+
+export default function HomePage() {
+  const featured = defaultInviteTemplates.slice(0, 3);
 
   return (
-    <div className="marketing-page">
+    <div className={styles.page}>
+      <WaterBackground className={styles.liquidBackground} {...LANDING_BACKGROUND} />
       <SiteHeader active="home" />
 
       <main>
-        <section className="marketing-hero">
-          <div className="marketing-hero__copy">
-            <p className="marketing-eyebrow">Свадебные сайты-приглашения</p>
+        <section className={styles.hero}>
+          <div className={styles.heroCopy}>
+            <Eyebrow>Сайты-приглашения для свадьбы</Eyebrow>
             <h1>
-              Приглашение, с которого начинается
-              <span> ваша свадьба</span>
+              Ваш день.
+              <span>В одном красивом сайте.</span>
             </h1>
-            <p className="marketing-hero__lead">
-              Соберите камерный и красивый сайт о вашем дне. Гости сразу увидят
-              программу, адрес и дресс-код, а вы получите их ответы без лишних
-              сообщений.
+            <p className={styles.heroLead}>
+              Создайте современное приглашение с программой, адресом, дресс-кодом
+              и RSVP. Без дизайнера, кода и десятков сообщений.
             </p>
-            <div className="marketing-hero__actions">
-              <Link className="marketing-button marketing-button--primary" href="/templates">
-                Выбрать дизайн
-                <ArrowRight aria-hidden size={16} />
+            <div className={styles.heroActions}>
+              <Link className={styles.primaryButton} href="/templates">
+                Создать приглашение <ArrowRight aria-hidden size={17} />
               </Link>
               <Link
-                className="marketing-button marketing-button--ghost"
-                href={`/editor?template=${inviteTemplates[0].id}`}
+                className={styles.secondaryButton}
+                href={`/editor?template=${featured[0].id}`}
               >
-                Попробовать редактор
+                Открыть редактор
               </Link>
             </div>
-            <ul className="marketing-assurances" aria-label="Преимущества сервиса">
-              {assurances.map((item) => (
+            <ul className={styles.heroChecks} aria-label="Преимущества сервиса">
+              {HERO_CHECKS.map((item) => (
                 <li key={item}>
                   <Check aria-hidden size={14} />
                   {item}
@@ -76,101 +131,108 @@ export default async function HomePage() {
             </ul>
           </div>
 
-          <div className="marketing-hero__visual">
-            <div className="marketing-hero__halo" />
-            <figure className="marketing-hero__photo">
-              <Image
-                alt="Молодожёны идут по полю на фоне гор"
-                fill
-                priority
-                sizes="(max-width: 899px) 88vw, 42vw"
-                src="/images/wedding-mountain-cover.png"
-              />
-            </figure>
-            <div className="marketing-date-card">
-              <span>сентябрь</span>
-              <strong>14</strong>
-              <small>2026 · Алматы</small>
+          <div className={styles.heroVisual}>
+            <div className={styles.previewWindow}>
+              <div className={styles.previewBar}>
+                <span />
+                <span />
+                <span />
+                <p>
+                  {brand.domain}/{brand.exampleInviteSlug}
+                </p>
+              </div>
+              <div className={styles.previewPhoto}>
+                <Image
+                  alt="Свадебное приглашение Анны и Максима"
+                  fill
+                  priority
+                  sizes="(max-width: 899px) 92vw, 48vw"
+                  src="/images/wedding-mountain-cover.png"
+                />
+                <div className={styles.previewShade} />
+                <div className={styles.previewCopy}>
+                  <small>мы женимся</small>
+                  <strong>
+                    Анна <i>&</i> Максим
+                  </strong>
+                  <time dateTime="2026-09-14">14 · 09 · 2026</time>
+                </div>
+              </div>
             </div>
-            <div className="marketing-invite-card">
-              <Heart aria-hidden size={15} />
-              <p>Мы женимся</p>
-              <strong>Владлен <i>&</i> Диана</strong>
-              <span>Приглашаем разделить этот день с нами</span>
+            <div className={styles.dateBadge}>
+              <CalendarDays aria-hidden size={17} />
+              <span>14 сентября</span>
+              <strong>Сохрани дату</strong>
+            </div>
+            <div className={styles.rsvpBadge}>
+              <span className={styles.rsvpIcon}>
+                <Check aria-hidden size={14} />
+              </span>
+              <div>
+                <strong>Гость ответил</strong>
+                <span>Буду с радостью</span>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="marketing-promise" aria-label="О сервисе">
-          <p>Одна красивая ссылка вместо десятков сообщений</p>
-          <div>
-            <span><strong>5 минут</strong> на первые настройки</span>
-            <span><strong>100%</strong> адаптивно для телефона</span>
-            <span><strong>1 место</strong> для всех деталей дня</span>
-          </div>
+        <section className={styles.benefits} aria-label={`Возможности ${brand.name}`}>
+          {benefits.map((benefit, index) => (
+            <article key={benefit.title}>
+              <span className={styles.benefitNumber}>{formatSectionIndex(index)}</span>
+              <benefit.icon aria-hidden size={20} />
+              <h2>{benefit.title}</h2>
+              <p>{benefit.text}</p>
+            </article>
+          ))}
         </section>
 
-        <section className="marketing-section marketing-section--featured">
-          <div className="marketing-section__head marketing-section__head--split">
+        <section className={styles.templates}>
+          <div className={styles.sectionHeading}>
             <div>
-              <p className="marketing-eyebrow">Коллекция</p>
-              <h2>Дизайны с характером,<br />как и ваша история</h2>
+              <Eyebrow>Коллекция</Eyebrow>
+              <h2>
+                Начните с дизайна,
+                <br />
+                который уже всё чувствует.
+              </h2>
             </div>
-            <Link className="marketing-link" href="/templates">
-              Смотреть все шаблоны
-              <ArrowRight aria-hidden size={15} />
+            <Link href="/templates">
+              Все шаблоны <ArrowRight aria-hidden size={16} />
             </Link>
           </div>
-          <div className="marketing-featured">
+          <div className={styles.templateGrid}>
             {featured.map((template, index) => (
-              <Link
+              <TemplateCard
+                className={styles.templateCard}
+                imageSizes="(max-width: 760px) 92vw, 31vw"
+                index={index}
                 key={template.id}
-                className="marketing-featured__card"
-                href={`/editor?template=${template.id}`}
-                style={
-                  {
-                    "--card-bg": template.preview.background,
-                    "--card-surface": template.preview.surface,
-                    "--card-ink": template.preview.ink,
-                    "--card-accent": template.preview.accent,
-                  } as CSSProperties
-                }
-              >
-                <span className="marketing-featured__number">0{index + 1}</span>
-                <div className="marketing-featured__art">
-                  <span />
-                  <span />
-                  <Heart aria-hidden size={16} />
-                </div>
-                <div>
-                  <small>{template.tags.join(" · ")}</small>
-                  <h3>{template.name}</h3>
-                  <span className="marketing-featured__action">
-                    Открыть в редакторе <ArrowRight aria-hidden size={14} />
-                  </span>
-                </div>
-              </Link>
+                template={template}
+                titleAs="h3"
+              />
             ))}
           </div>
         </section>
 
-        <section className="marketing-section marketing-process">
-          <div className="marketing-process__intro">
-            <p className="marketing-eyebrow">Всё просто</p>
-            <h2>Вы занимаетесь свадьбой.<br /><span>Мы — приглашением.</span></h2>
+        <section className={styles.workflow}>
+          <div className={styles.workflowIntro}>
+            <Eyebrow>Три простых шага</Eyebrow>
+            <h2>От идеи до ссылки — за один вечер.</h2>
             <p>
-              Редактор устроен так, чтобы вы думали о гостях и атмосфере, а не о
-              настройках сайта.
+              Редактор ведёт по шагам и сразу показывает результат. Вы занимаетесь
+              свадьбой, а не настройками сайта.
             </p>
+            <Link href="/templates">
+              Начать с шаблона <ArrowRight aria-hidden size={16} />
+            </Link>
           </div>
-          <div className="marketing-steps">
+          <div className={styles.steps}>
             {steps.map((step, index) => (
               <article key={step.title}>
-                <span className="marketing-steps__index">0{index + 1}</span>
-                <div className="marketing-steps__icon">
-                  <step.icon aria-hidden size={19} />
-                </div>
+                <span>{formatSectionIndex(index)}</span>
                 <div>
+                  <step.icon aria-hidden size={20} />
                   <h3>{step.title}</h3>
                   <p>{step.text}</p>
                 </div>
@@ -179,42 +241,57 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <section className="marketing-story">
-          <div className="marketing-story__photo">
+        <section className={styles.story}>
+          <div className={styles.storyPhoto}>
             <Image
-              alt="Портрет молодожёнов в день свадьбы"
+              alt="Молодожёны в день свадьбы"
               fill
-              sizes="(max-width: 899px) 100vw, 46vw"
+              sizes="(max-width: 899px) 92vw, 42vw"
               src="/images/wedding-mountain-portrait.png"
             />
           </div>
-          <div className="marketing-story__copy">
-            <CalendarHeart aria-hidden size={23} />
-            <p className="marketing-eyebrow">Всё важное рядом</p>
-            <h2>Гости почувствуют атмосферу ещё до праздника</h2>
+          <div className={styles.storyCopy}>
+            <Heart aria-hidden size={22} />
+            <Eyebrow>Больше, чем приглашение</Eyebrow>
+            <h2>Первое впечатление от вашего дня.</h2>
             <p>
-              Сайт открывается как небольшая история: знакомит с настроением дня,
-              бережно рассказывает детали и помогает каждому гостю подготовиться.
+              Гости почувствуют атмосферу свадьбы ещё до праздника. Все важные
+              детали будут рядом — красиво, понятно и в вашем стиле.
             </p>
             <ul>
-              <li><Check aria-hidden size={15} /> Программа и адрес площадки</li>
-              <li><Check aria-hidden size={15} /> Дресс-код и пожелания</li>
-              <li><Check aria-hidden size={15} /> Ответы гостей через RSVP</li>
+              <li>
+                <Check aria-hidden size={15} /> Программа и адрес площадки
+              </li>
+              <li>
+                <Check aria-hidden size={15} /> Дресс-код и пожелания
+              </li>
+              <li>
+                <Check aria-hidden size={15} /> Ответы гостей через RSVP
+              </li>
             </ul>
           </div>
         </section>
 
-        <section className="marketing-cta">
-          <div>
-            <p className="marketing-eyebrow">Начните с красивого</p>
-            <h2>Создайте приглашение,<br />которое хочется сохранить</h2>
-          </div>
-          <Link className="marketing-button marketing-button--light" href="/templates">
-            Выбрать шаблон
-            <ArrowRight aria-hidden size={16} />
+        <section className={styles.cta}>
+          <Sparkles aria-hidden size={22} />
+          <p>Ваше приглашение может быть готово сегодня</p>
+          <h2>Создайте красивое начало вашей истории.</h2>
+          <Link href="/templates">
+            Выбрать шаблон <ArrowRight aria-hidden size={17} />
           </Link>
         </section>
       </main>
+
+      <footer className={styles.footer}>
+        <Link aria-label={brand.homeAriaLabel} href="/">
+          <BrandLockup showDomain />
+        </Link>
+        <p>Современные сайты-приглашения для вашего самого важного дня.</p>
+        <nav aria-label="Навигация в подвале">
+          <Link href="/templates">Шаблоны</Link>
+          <Link href="/auth">Войти</Link>
+        </nav>
+      </footer>
     </div>
   );
 }

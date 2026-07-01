@@ -1,70 +1,56 @@
 import type { InviteTemplate } from "@/lib/invite-templates";
-import TemplatePreview from "@/components/template-preview";
-import { ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
 
 type TemplateCardProps = {
+  className?: string;
+  imageSizes?: string;
+  index: number;
   siteId?: string;
   template: InviteTemplate;
+  titleAs?: "h2" | "h3";
 };
 
-export default function TemplateCard({ siteId, template }: TemplateCardProps) {
-  const swatches: { key: string; label: string; color: string }[] = [
-    { key: "bg", label: "Фон", color: template.preview.background },
-    { key: "surface", label: "Поверхность", color: template.preview.surface },
-    { key: "accent", label: "Акцент", color: template.preview.accent },
-    { key: "ink", label: "Текст", color: template.preview.ink },
-  ];
+function formatCardIndex(index: number) {
+  return String(index + 1).padStart(2, "0");
+}
+
+export default function TemplateCard({
+  className,
+  imageSizes = "(max-width: 640px) 92vw, (max-width: 899px) 46vw, 31vw",
+  index,
+  siteId,
+  template,
+  titleAs: Title = "h2",
+}: TemplateCardProps) {
   const editorParams = new URLSearchParams({ template: template.id });
 
   if (siteId) {
     editorParams.set("site", siteId);
   }
 
+  const rootClassName = className ? `template-card ${className}` : "template-card";
+
   return (
-    <Link
-      className="template-card"
-      href={`/editor?${editorParams.toString()}`}
-      style={
-        {
-          "--card-bg": template.preview.background,
-          "--card-surface": template.preview.surface,
-          "--card-ink": template.preview.ink,
-          "--card-accent": template.preview.accent,
-        } as CSSProperties
-      }
-    >
-      <div className="template-card__preview">
-        <TemplatePreview template={template} />
+    <Link className={rootClassName} href={`/editor?${editorParams.toString()}`}>
+      <div className="template-card__image">
+        <Image
+          alt={`Шаблон «${template.name}»`}
+          fill
+          sizes={imageSizes}
+          src={template.screenshot}
+        />
+        <span>{formatCardIndex(index)}</span>
       </div>
 
-      <div className="template-card__body">
-        <div className="template-card__tags">
-          {template.tags.map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
+      <div className="template-card__meta">
+        <div>
+          <small>{template.tags.join(" · ")}</small>
+          <Title>{template.name}</Title>
         </div>
-        <h2>{template.name}</h2>
-
-        <div className="template-card__palette">
-          <span className="template-card__palette-label">Палитра</span>
-          <span className="template-card__swatches">
-            {swatches.map((swatch) => (
-              <span
-                key={swatch.key}
-                className="template-card__swatch"
-                style={{ background: swatch.color } as CSSProperties}
-                title={swatch.label}
-              />
-            ))}
-          </span>
-        </div>
-
-        <span className="template-card__action">
-          <Sparkles size={16} />
-          Открыть в редакторе
-          <ArrowUpRight size={16} />
+        <span className="template-card__arrow">
+          <ArrowRight aria-hidden size={17} />
         </span>
       </div>
     </Link>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { brand } from "@/lib/brand";
 import "./globals.css";
+import "./product-theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,12 +15,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(brand.url),
   title: {
-    default: "Invite — свадебные приглашения онлайн",
-    template: "%s · Invite",
+    default: `${brand.name} — сайты-приглашения на свадьбу`,
+    template: `%s · ${brand.name}`,
   },
   description:
-    "Создайте красивое сайт-приглашение на свадьбу: выберите шаблон, настройте тексты и поделитесь с гостями.",
+    "Создайте красивый сайт-приглашение на свадьбу: выберите шаблон, настройте тексты и поделитесь с гостями.",
+  applicationName: brand.name,
 };
 
 export default function RootLayout({

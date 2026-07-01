@@ -1,7 +1,9 @@
 import { getCurrentUser } from "@/lib/auth";
-import { ArrowUpRight, Heart, LayoutDashboard, LogIn, LogOut } from "lucide-react";
+import { brand } from "@/lib/brand";
+import { ArrowUpRight, LayoutDashboard, LogIn, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import BrandLockup from "./brand-lockup";
 
 type SiteHeaderProps = {
   active?: "home" | "templates";
@@ -12,12 +14,8 @@ export default async function SiteHeader({ active }: SiteHeaderProps) {
 
   return (
     <header className="site-header">
-      <Link className="site-header__brand" href="/">
-        <span className="site-header__mark">
-          <Heart aria-hidden size={15} />
-        </span>
-        <span>Invite</span>
-        <small>wedding studio</small>
+      <Link aria-label={brand.homeAriaLabel} className="site-header__brand" href="/">
+        <BrandLockup showDomain />
       </Link>
 
       <nav aria-label="Основная навигация" className="site-header__nav">

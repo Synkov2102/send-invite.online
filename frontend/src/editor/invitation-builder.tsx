@@ -30,6 +30,7 @@ import {
 import type { InviteTemplate } from "@/lib/invite-templates";
 import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
 import { saveInviteSite } from "@/lib/api/sites";
+import BrandLockup from "@/components/brand-lockup";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import {
   getTemplateKind,
@@ -662,8 +663,7 @@ export default function InvitationBuilder({
               Шаблоны
             </Link>
             <Link aria-label="На главную" className="editor-brand" href="/">
-              <Heart aria-hidden size={14} />
-              Invite
+              <BrandLockup />
             </Link>
             <span
               aria-live="polite"
