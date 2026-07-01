@@ -90,18 +90,25 @@ jobs:
       DEPLOY_PATH: ${{ secrets.VPS_DEPLOY_PATH || '/opt/invite' }}
 
     steps:
+      - name: Checkout deployment configuration
+        uses: actions/checkout@v4
+
+      - name: Validate deployment secrets
+        run: |
+          test -n "$SSH_KEY" || (echo "VPS_SSH_KEY_B64 is not configured" && exit 1)
+          test -n "$SSH_HOST" || (echo "VPS_SSH_HOST is not configured" && exit 1)
+          test -n "$SSH_USER" || (echo "VPS_SSH_USER is not configured" && exit 1)
+
       - name: Setup SSH key
-        if: env.SSH_KEY != ''
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.VPS_SSH_KEY_B64 }}" | base64 -d > ~/.ssh/id_rsa
+          echo "$SSH_KEY" | base64 -d > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${SSH_HOST}" >> ~/.ssh/known_hosts 2>/dev/null || true
           printf '%s\n' 'Host *' '  ConnectTimeout 30' '  ServerAliveInterval 15' '  ServerAliveCountMax 3' >> ~/.ssh/config
           chmod 600 ~/.ssh/config
 
       - name: Deploy to production
-        if: env.SSH_KEY != ''
         run: |
           echo "Deploying Invite..."
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=30 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 -o BatchMode=yes"
@@ -118,6 +125,10 @@ jobs:
             sleep 10
           done
 
+          echo "Uploading production Compose configuration..."
+          ssh $SSH_OPTS "${SSH_USER}@${SSH_HOST}" "mkdir -p '$DEPLOY_PATH'"
+          scp $SSH_OPTS docker-compose.prod.yml "${SSH_USER}@${SSH_HOST}:$DEPLOY_PATH/docker-compose.prod.yml"
+
           ssh $SSH_OPTS "${SSH_USER}@${SSH_HOST}" << EOF
           set -e
           cd "$DEPLOY_PATH"
@@ -132,3 +143,16 @@ jobs:
           docker image prune -f
           echo "Deployment completed"
           EOF
+
+          echo "Checking deployed frontend..."
+          for i in 1 2 3 4 5; do
+            if curl --fail --silent --show-error https://send-invite.online/ | grep -q '<title>Invite'; then
+              echo "Invite frontend is live"
+              exit 0
+            fi
+            echo "Health check attempt $i/5 failed"
+            sleep 5
+          done
+
+          echo "Production domain does not serve the Invite frontend"
+          exit 1
