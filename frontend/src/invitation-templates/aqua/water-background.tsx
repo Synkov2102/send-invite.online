@@ -3,6 +3,8 @@
 import { useEffect, useState, type ComponentType, type CSSProperties } from "react";
 import type { WaterBackgroundProps } from "./water-background.types";
 
+const STATIC_BACKGROUND_QUERY = "(max-width: 640px), (prefers-reduced-motion: reduce)";
+
 function waterGradientStyle(deep: string, shallow: string): CSSProperties {
   return { background: `linear-gradient(160deg, ${deep}, ${shallow})` };
 }
@@ -18,17 +20,33 @@ export default function WaterBackground({
 
   useEffect(() => {
     let cancelled = false;
-    const frameId = window.requestAnimationFrame(() => {
-      void import("./water-background-renderer").then((module) => {
-        if (!cancelled) {
-          setRenderer(() => module.WaterBackgroundRenderer);
-        }
+    let frameId: number | null = null;
+    const staticBackground = window.matchMedia(STATIC_BACKGROUND_QUERY);
+
+    const updateRenderer = () => {
+      if (staticBackground.matches) {
+        setRenderer(null);
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        void import("./water-background-renderer").then((module) => {
+          if (!cancelled && !staticBackground.matches) {
+            setRenderer(() => module.WaterBackgroundRenderer);
+          }
+        });
       });
-    });
+    };
+
+    updateRenderer();
+    staticBackground.addEventListener("change", updateRenderer);
 
     return () => {
       cancelled = true;
-      window.cancelAnimationFrame(frameId);
+      staticBackground.removeEventListener("change", updateRenderer);
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
     };
   }, []);
 

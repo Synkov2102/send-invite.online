@@ -41,6 +41,7 @@ export type OwnedInviteSite = {
   date: string;
   groom: string;
   id: string;
+  isPaid: boolean;
   isPublished: boolean;
   rsvpEnabled: boolean;
   responseCount: number;
@@ -49,6 +50,7 @@ export type OwnedInviteSite = {
 };
 
 export type ManagedInviteSite = PublishedInviteSite & {
+  isPaid: boolean;
   isPublished: boolean;
 };
 

@@ -9,6 +9,7 @@ import { SitesService } from "./sites.service";
 
 @Module({
   controllers: [SitesController],
+  exports: [SitesService],
   imports: [AuthModule],
   providers: [
     InviteResponseStore,

@@ -33,6 +33,7 @@ export default async function SiteHeader({ active }: SiteHeaderProps) {
         >
           Шаблоны
         </Link>
+        <Link href="/contacts">Контакты</Link>
       </nav>
 
       <div className="site-header__actions">

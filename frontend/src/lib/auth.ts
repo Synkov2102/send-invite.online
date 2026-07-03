@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import type { NextRequest } from "next/server";
 import { getServerApiBaseUrl } from "@/lib/backend-api";
 
 export const authSessionCookieName = "invite_session";
@@ -18,13 +19,24 @@ type SessionResponse = {
   user?: AuthUser;
 };
 
-export function getAuthCookieOptions(maxAge?: number) {
+function isSecureRequest(request: NextRequest) {
+  const forwardedProtocol = request.headers
+    .get("x-forwarded-proto")
+    ?.split(",")[0]
+    ?.trim()
+    .toLowerCase();
+  const protocol = forwardedProtocol || request.nextUrl.protocol.replace(":", "");
+
+  return protocol === "https";
+}
+
+export function getAuthCookieOptions(request: NextRequest, maxAge?: number) {
   return {
     httpOnly: true,
     maxAge,
     path: "/",
     sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    secure: isSecureRequest(request),
   };
 }
 

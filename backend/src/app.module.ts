@@ -5,11 +5,12 @@ import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { AuthModule } from "./auth/auth.module";
 import { DatabaseModule } from "./database/database.module";
 import { SitesModule } from "./sites/sites.module";
+import { PaymentsModule } from "./payments/payments.module";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [".env.local", ".env", "../.env.local", "../.env"],
+      envFilePath: ["../.env.backend.local", "../.env.backend.production"],
       isGlobal: true,
     }),
     ThrottlerModule.forRoot({
@@ -17,6 +18,7 @@ import { SitesModule } from "./sites/sites.module";
     }),
     DatabaseModule,
     AuthModule,
+    PaymentsModule,
     SitesModule,
   ],
   providers: [

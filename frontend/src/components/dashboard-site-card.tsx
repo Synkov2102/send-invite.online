@@ -5,6 +5,7 @@ import {
   CalendarDays,
   CheckCircle2,
   ChevronDown,
+  CreditCard,
   Download,
   ExternalLink,
   Eye,
@@ -80,7 +81,11 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
             </h2>
             <span className={site.isPublished ? "is-active" : "is-muted"}>
               <i />
-              {site.isPublished ? "Сайт опубликован" : "Сайт скрыт"}
+              {!site.isPaid
+                ? "Ожидает оплаты"
+                : site.isPublished
+                  ? "Сайт опубликован"
+                  : "Сайт скрыт"}
             </span>
           </div>
         </div>
@@ -101,20 +106,27 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
               <ExternalLink aria-hidden size={15} />
             </Link>
           ) : null}
-          <form action={`/dashboard/actions/sites/${site.id}/visibility`} method="post">
-            <input
-              name="isPublished"
-              type="hidden"
-              value={site.isPublished ? "false" : "true"}
-            />
-            <button
-              aria-label={site.isPublished ? "Скрыть сайт" : "Опубликовать сайт"}
-              title={site.isPublished ? "Скрыть сайт" : "Опубликовать сайт"}
-              type="submit"
-            >
-              {site.isPublished ? <EyeOff aria-hidden size={15} /> : <Eye aria-hidden size={15} />}
-            </button>
-          </form>
+          {site.isPaid ? (
+            <form action={`/dashboard/actions/sites/${site.id}/visibility`} method="post">
+              <input
+                name="isPublished"
+                type="hidden"
+                value={site.isPublished ? "false" : "true"}
+              />
+              <button
+                aria-label={site.isPublished ? "Скрыть сайт" : "Опубликовать сайт"}
+                title={site.isPublished ? "Скрыть сайт" : "Опубликовать сайт"}
+                type="submit"
+              >
+                {site.isPublished ? <EyeOff aria-hidden size={15} /> : <Eye aria-hidden size={15} />}
+              </button>
+            </form>
+          ) : (
+            <Link className="dashboard-site__pay" href={`/editor?site=${site.id}`}>
+              <CreditCard aria-hidden size={15} />
+              Оплатить
+            </Link>
+          )}
           {site.rsvpEnabled ? (
             <a href={`/downloads/sites/${site.id}/responses`}>
               <Download aria-hidden size={15} />

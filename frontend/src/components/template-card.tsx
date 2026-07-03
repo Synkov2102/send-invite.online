@@ -2,6 +2,7 @@ import type { InviteTemplate } from "@/lib/invite-templates";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { formatInviteSitePrice } from "@/lib/commerce";
 
 type TemplateCardProps = {
   className?: string;
@@ -48,6 +49,10 @@ export default function TemplateCard({
         <div>
           <small>{template.tags.join(" · ")}</small>
           <Title>{template.name}</Title>
+          <span className="template-card__price">
+            <strong>{formatInviteSitePrice()}</strong>
+            <span>за сайт</span>
+          </span>
         </div>
         <span className="template-card__arrow">
           <ArrowRight aria-hidden size={17} />

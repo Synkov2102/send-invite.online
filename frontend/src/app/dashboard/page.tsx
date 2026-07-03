@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import DashboardSiteCard from "@/components/dashboard-site-card";
+import CommerceFooter from "@/components/commerce-footer";
 import SiteHeader from "@/components/site-header";
 import { getOwnedInviteSites, type OwnedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
@@ -49,6 +50,7 @@ export default async function DashboardPage() {
   }
 
   const totalResponses = sites.reduce((total, site) => total + site.responseCount, 0);
+  const publishedSites = sites.filter((site) => site.isPublished).length;
   const activeRsvpSites = sites.filter((site) => site.rsvpEnabled).length;
   const nextEvent = sites
     .filter((site) => site.date && new Date(site.date) >= new Date())
@@ -88,7 +90,7 @@ export default async function DashboardPage() {
               <article>
                 <Globe2 aria-hidden size={18} />
                 <span>Сайтов</span>
-                <strong>{sites.length}</strong>
+                <strong>{publishedSites}</strong>
                 <small>Опубликовано</small>
               </article>
               <article>
@@ -116,7 +118,7 @@ export default async function DashboardPage() {
             <div className="dashboard-list-heading">
               <div>
                 <h2>Все приглашения</h2>
-                <span>{sites.length} опубликовано</span>
+                <span>{publishedSites} опубликовано</span>
               </div>
             </div>
 
@@ -128,6 +130,7 @@ export default async function DashboardPage() {
           </>
         )}
       </main>
+      <CommerceFooter />
     </div>
   );
 }

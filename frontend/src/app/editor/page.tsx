@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import CommerceFooter from "@/components/commerce-footer";
 import InvitationBuilder from "@/editor/invitation-builder";
 import { getManagedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
@@ -44,25 +45,29 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
       : getInviteTemplate(managedSite?.templateId);
 
   return (
-    <Suspense
-      fallback={
-        <div className="editor-loading">
-          <div className="editor-loading__mark">
-            <span />
-            <span />
+    <div className="editor-shell">
+      <Suspense
+        fallback={
+          <div className="editor-loading">
+            <div className="editor-loading__mark">
+              <span />
+              <span />
+            </div>
+            <p>Готовим вашу студию</p>
+            <small>Загружаем редактор приглашения</small>
           </div>
-          <p>Готовим вашу студию</p>
-          <small>Загружаем редактор приглашения</small>
-        </div>
-      }
-    >
-      <InvitationBuilder
-        initialInvite={managedSite?.invite}
-        initialPalette={managedSite?.palette}
-        isAuthenticated={Boolean(user)}
-        siteId={managedSite?.id}
-        template={template}
-      />
-    </Suspense>
+        }
+      >
+        <InvitationBuilder
+          initialInvite={managedSite?.invite}
+          initialIsPaid={managedSite?.isPaid}
+          initialPalette={managedSite?.palette}
+          isAuthenticated={Boolean(user)}
+          siteId={managedSite?.id}
+          template={template}
+        />
+      </Suspense>
+      <CommerceFooter />
+    </div>
   );
 }

@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
   authorizeUrl.searchParams.set("code_challenge_method", "S256");
 
   const response = NextResponse.redirect(authorizeUrl);
-  const shortCookie = getAuthCookieOptions(10 * 60);
+  const shortCookie = getAuthCookieOptions(request, 10 * 60);
 
   response.cookies.set(stateCookieName, state, shortCookie);
   response.cookies.set(verifierCookieName, codeVerifier, shortCookie);

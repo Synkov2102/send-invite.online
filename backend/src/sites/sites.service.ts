@@ -47,6 +47,15 @@ export class SitesService {
   ) {}
 
   async createSite(body: unknown, ownerId: string) {
+    const site = await this.createDraftForCheckout(body, ownerId);
+
+    return {
+      id: site.id,
+      url: `/invite/sites/${site.id}`,
+    };
+  }
+
+  async createDraftForCheckout(body: unknown, ownerId: string) {
     const parsed = parseCreateInviteSitePayload(body);
 
     if (!parsed.ok) {
@@ -57,12 +66,7 @@ export class SitesService {
       await this.assertKnownTemplate(parsed.payload.templateId);
       const payload = await this.prepareSitePayload(parsed.payload);
 
-      const site = await this.inviteSites.saveInviteSite(payload, ownerId);
-
-      return {
-        id: site.id,
-        url: `/invite/sites/${site.id}`,
-      };
+      return await this.inviteSites.saveInviteSite(payload, ownerId);
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -90,8 +94,32 @@ export class SitesService {
 
     return {
       ...publicSite,
+      isPaid: site.isPaid,
       isPublished: site.isPublished,
     };
+  }
+
+  async updateDraftForCheckout(ownerId: string, siteId: string, body: unknown) {
+    const existingSite = await this.getOwnedSite(ownerId, siteId);
+
+    if (existingSite.isPaid) {
+      throw new BadRequestException({
+        error: "Этот сайт уже оплачен.",
+      });
+    }
+
+    await this.updateSite(ownerId, siteId, body);
+    return this.getOwnedSite(ownerId, siteId);
+  }
+
+  async publishAfterPayment(siteId: string) {
+    const site = await this.inviteSites.markInviteSitePaidAndPublished(siteId);
+
+    if (!site) {
+      throw new NotFoundException({ error: "Сайт не найден." });
+    }
+
+    return site;
   }
 
   async updateSite(ownerId: string, siteId: string, body: unknown) {
@@ -124,6 +152,14 @@ export class SitesService {
 
   async setSitePublished(ownerId: string, siteId: string, body: unknown) {
     const isPublished = this.parsePublishedFlag(body);
+    const existingSite = await this.getOwnedSite(ownerId, siteId);
+
+    if (isPublished && !existingSite.isPaid) {
+      throw new ForbiddenException({
+        error: "Оплатите сайт перед публикацией.",
+      });
+    }
+
     const site = await this.inviteSites.setInviteSitePublished(
       siteId,
       ownerId,
@@ -176,6 +212,7 @@ export class SitesService {
         date: site.invite.date,
         groom: site.invite.groom,
         id: site.id,
+        isPaid: site.isPaid,
         isPublished: site.isPublished,
         rsvpEnabled: site.invite.showRsvp,
         responseCount: counts.get(site.id) ?? 0,

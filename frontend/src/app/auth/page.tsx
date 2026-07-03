@@ -1,4 +1,5 @@
 import SiteHeader from "@/components/site-header";
+import CommerceFooter from "@/components/commerce-footer";
 import { getCurrentUser } from "@/lib/auth";
 import { brand } from "@/lib/brand";
 import { ArrowRight, LogIn, UserPlus } from "lucide-react";
@@ -115,6 +116,7 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
           )}
         </section>
       </main>
+      <CommerceFooter />
     </div>
   );
 }

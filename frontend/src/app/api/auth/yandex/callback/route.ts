@@ -82,7 +82,11 @@ export async function GET(request: NextRequest) {
     const expiresAt = new Date(session.expiresAt);
     const maxAge = Math.max(0, Math.floor((expiresAt.getTime() - Date.now()) / 1000));
 
-    response.cookies.set(authSessionCookieName, session.token, getAuthCookieOptions(maxAge));
+    response.cookies.set(
+      authSessionCookieName,
+      session.token,
+      getAuthCookieOptions(request, maxAge),
+    );
     clearOAuthCookies(response);
 
     return response;

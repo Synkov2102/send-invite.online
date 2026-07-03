@@ -8,11 +8,13 @@ const siteIdPattern = /^[a-z0-9-]{36}$/;
 
 type InviteSiteDocument = PublishedInviteSite & {
   _id: string;
+  isPaid?: boolean;
   isPublished?: boolean;
   ownerId?: string;
 };
 
 export type StoredInviteSite = PublishedInviteSite & {
+  isPaid: boolean;
   isPublished: boolean;
   ownerId: string | null;
 };
@@ -22,6 +24,7 @@ function toSite(document: InviteSiteDocument): StoredInviteSite {
     createdAt: document.createdAt,
     id: document.id,
     invite: document.invite,
+    isPaid: document.isPaid !== false,
     isPublished: document.isPublished !== false,
     ownerId: document.ownerId ?? null,
     palette: document.palette,
@@ -50,7 +53,14 @@ export class InviteSiteStore {
     await collection.createIndex({ ownerId: 1, createdAt: -1 });
   }
 
-  async saveInviteSite(payload: CreateInviteSitePayload, ownerId: string) {
+  async saveInviteSite(
+    payload: CreateInviteSitePayload,
+    ownerId: string,
+    options: { isPaid: boolean; isPublished: boolean } = {
+      isPaid: false,
+      isPublished: false,
+    },
+  ) {
     await this.ensureIndexes();
 
     const now = new Date().toISOString();
@@ -65,11 +75,12 @@ export class InviteSiteStore {
     await collection.insertOne({
       ...site,
       _id: site.id,
-      isPublished: true,
+      isPaid: options.isPaid,
+      isPublished: options.isPublished,
       ownerId,
     });
 
-    return { ...site, isPublished: true, ownerId };
+    return { ...site, ...options, ownerId };
   }
 
   async getInviteSite(id: string) {
@@ -126,6 +137,25 @@ export class InviteSiteStore {
       {
         $set: {
           isPublished,
+          updatedAt: new Date().toISOString(),
+        },
+      },
+      { returnDocument: "after" },
+    );
+
+    return result ? toSite(result) : null;
+  }
+
+  async markInviteSitePaidAndPublished(id: string) {
+    await this.ensureIndexes();
+
+    const collection = await this.getSitesCollection();
+    const result = await collection.findOneAndUpdate(
+      { id },
+      {
+        $set: {
+          isPaid: true,
+          isPublished: true,
           updatedAt: new Date().toISOString(),
         },
       },

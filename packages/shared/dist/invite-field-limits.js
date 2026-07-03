@@ -43,6 +43,15 @@ function isStringArrayWithinLimit(value, maxItems, maxItemLength) {
         value.length <= maxItems &&
         value.every((item) => typeof item === "string" && isWithinLimit(item, maxItemLength)));
 }
+function isValidMediaUrl(value, maxUrlLength) {
+    if (typeof value !== "string") {
+        return false;
+    }
+    if (value.startsWith("data:")) {
+        return true;
+    }
+    return isWithinLimit(value, maxUrlLength);
+}
 function validateInviteFieldLimits(value) {
     if (typeof value !== "object" || value === null || Array.isArray(value)) {
         return "Некорректные данные приглашения.";
@@ -53,24 +62,31 @@ function validateInviteFieldLimits(value) {
         ["address", limits.address],
         ["bride", limits.bride],
         ["city", limits.city],
-        ["coverImageUrl", limits.mediaUrl],
         ["date", limits.textDate],
         ["dressCode", limits.dressCode],
         ["groom", limits.groom],
         ["lead", limits.lead],
         ["musicTitle", limits.musicTitle],
-        ["musicUrl", limits.mediaUrl],
         ["paletteId", limits.paletteId],
-        ["portraitImageUrl", limits.mediaUrl],
         ["ringMetal", limits.ringMetal],
         ["rsvpDate", limits.rsvpDate],
         ["rsvpText", limits.rsvpText],
         ["time", limits.textTime],
         ["venue", limits.venue],
+    ];
+    const mediaUrlChecks = [
+        ["coverImageUrl", limits.mediaUrl],
+        ["musicUrl", limits.mediaUrl],
+        ["portraitImageUrl", limits.mediaUrl],
         ["venueImageUrl", limits.mediaUrl],
     ];
     for (const [field, max] of stringChecks) {
         if (typeof invite[field] !== "string" || !isWithinLimit(invite[field], max)) {
+            return "Слишком длинные или некорректные данные приглашения.";
+        }
+    }
+    for (const [field, max] of mediaUrlChecks) {
+        if (!isValidMediaUrl(invite[field], max)) {
             return "Слишком длинные или некорректные данные приглашения.";
         }
     }

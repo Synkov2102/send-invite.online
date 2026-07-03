@@ -1,9 +1,10 @@
-import BrandLockup from "@/components/brand-lockup";
+import CommerceFooter from "@/components/commerce-footer";
 import SiteHeader from "@/components/site-header";
 import TemplateCard from "@/components/template-card";
 import WaterBackground from "@/invitation-templates/aqua/water-background";
 import { brand } from "@/lib/brand";
 import { defaultInviteTemplates } from "@/lib/invite-templates";
+import { formatInviteSitePrice } from "@/lib/commerce";
 import {
   ArrowRight,
   CalendarDays,
@@ -110,6 +111,11 @@ export default function HomePage() {
               Создайте современное приглашение с программой, адресом, дресс-кодом
               и RSVP. Без дизайнера, кода и десятков сообщений.
             </p>
+            <div className={styles.heroPrice}>
+              <span>Создание и публикация сайта-приглашения</span>
+              <strong>{formatInviteSitePrice()}</strong>
+              <small>разовая оплата · электронная услуга</small>
+            </div>
             <div className={styles.heroActions}>
               <Link className={styles.primaryButton} href="/templates">
                 Создать приглашение <ArrowRight aria-hidden size={17} />
@@ -282,16 +288,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className={styles.footer}>
-        <Link aria-label={brand.homeAriaLabel} href="/">
-          <BrandLockup showDomain />
-        </Link>
-        <p>Современные сайты-приглашения для вашего самого важного дня.</p>
-        <nav aria-label="Навигация в подвале">
-          <Link href="/templates">Шаблоны</Link>
-          <Link href="/auth">Войти</Link>
-        </nav>
-      </footer>
+      <CommerceFooter />
     </div>
   );
 }

@@ -1,5 +1,13 @@
+import { existsSync } from "node:fs";
 import path from "node:path";
+import { config as loadEnvFile } from "dotenv";
 import type { NextConfig } from "next";
+
+const rootFrontendEnv = path.join(__dirname, "..", ".env.frontend.local");
+
+if (existsSync(rootFrontendEnv)) {
+  loadEnvFile({ path: rootFrontendEnv });
+}
 
 const apiBaseUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
 

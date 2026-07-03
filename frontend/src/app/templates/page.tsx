@@ -1,7 +1,9 @@
 import SiteHeader from "@/components/site-header";
+import CommerceFooter from "@/components/commerce-footer";
 import TemplateCard from "@/components/template-card";
 import { getEditorReadyTemplates } from "@invite/shared";
 import type { Metadata } from "next";
+import { formatInviteSitePrice } from "@/lib/commerce";
 
 export const metadata: Metadata = {
   title: "Шаблоны приглашений",
@@ -33,6 +35,15 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
             Каждый шаблон открывается в редакторе с подходящей обложкой и цветовой
             темой. Палитру и тексты можно изменить в любой момент.
           </p>
+          <p className="templates-page__service">
+            Услуга: создание и публикация одного сайта-приглашения с уникальной ссылкой,
+            редактором, шаблоном и формой RSVP.
+          </p>
+          <div className="templates-page__price">
+            <span>Создание и публикация одного сайта</span>
+            <strong>{formatInviteSitePrice()}</strong>
+            <small>разовая оплата</small>
+          </div>
         </section>
 
         <section aria-label="Список шаблонов" className="templates-page__grid">
@@ -46,6 +57,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
           ))}
         </section>
       </main>
+      <CommerceFooter />
     </div>
   );
 }

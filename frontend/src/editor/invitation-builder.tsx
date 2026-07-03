@@ -29,7 +29,12 @@ import {
 } from "lucide-react";
 import type { InviteTemplate } from "@/lib/invite-templates";
 import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
-import { saveInviteSite } from "@/lib/api/sites";
+import {
+  saveInviteSite,
+  startInviteSiteCheckout,
+  submitRobokassaForm,
+} from "@/lib/api/sites";
+import { formatInviteSitePrice } from "@/lib/commerce";
 import BrandLockup from "@/components/brand-lockup";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import {
@@ -158,6 +163,7 @@ const themeFields: Array<{
 
 type InvitationBuilderProps = {
   initialInvite?: InviteState;
+  initialIsPaid?: boolean;
   initialPalette?: InvitePalette;
   isAuthenticated: boolean;
   siteId?: string;
@@ -166,6 +172,7 @@ type InvitationBuilderProps = {
 
 export default function InvitationBuilder({
   initialInvite,
+  initialIsPaid = false,
   initialPalette,
   isAuthenticated,
   siteId,
@@ -196,8 +203,10 @@ export default function InvitationBuilder({
   const [mobileView, setMobileView] = useState<"edit" | "preview">("edit");
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("saved");
   const [isPublishing, setIsPublishing] = useState(false);
+  const [acceptedPurchaseTerms, setAcceptedPurchaseTerms] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
+  const requiresPayment = !siteId || !initialIsPaid;
 
   const palettes = useMemo(() => getTemplatePalettes(template.id), [template.id]);
   const templatePalette = palettes.find((item) => item.id === invite.paletteId);
@@ -501,6 +510,11 @@ export default function InvitationBuilder({
       return;
     }
 
+    if (requiresPayment && !acceptedPurchaseTerms) {
+      setPublishError("Подтвердите согласие с офертой и условиями оплаты.");
+      return;
+    }
+
     setIsPublishing(true);
     setPublishError(null);
 
@@ -511,6 +525,22 @@ export default function InvitationBuilder({
     };
 
     try {
+      if (requiresPayment) {
+        const { ok, result, status } = await startInviteSiteCheckout(payload, siteId);
+
+        if (status === 401) {
+          router.push(`/auth?mode=login&returnTo=${encodeURIComponent(returnTo)}`);
+          return;
+        }
+
+        if (!ok || !result.action || !result.fields) {
+          throw new Error(result.error ?? "Не удалось перейти к оплате.");
+        }
+
+        submitRobokassaForm(result.action, result.fields);
+        return;
+      }
+
       const { ok, result, status } = await saveInviteSite(payload, siteId);
 
       if (status === 401) {
@@ -525,14 +555,14 @@ export default function InvitationBuilder({
         );
       }
 
-      router.push(siteId ? "/dashboard" : result.url);
+      router.push("/dashboard");
     } catch (error) {
       setPublishError(
         error instanceof Error
           ? error.message
-          : siteId
-            ? "Не удалось сохранить изменения."
-            : "Не удалось создать сайт.",
+          : requiresPayment
+            ? "Не удалось перейти к оплате."
+            : "Не удалось сохранить изменения.",
       );
     } finally {
       setIsPublishing(false);
@@ -1386,6 +1416,31 @@ export default function InvitationBuilder({
               </div>
             </section>
 
+            {activeStep === editorSteps.length - 1 && requiresPayment ? (
+              <section className="editor-payment-summary" aria-label="Оплата публикации">
+                <div>
+                  <span>Создание и публикация одного сайта</span>
+                  <strong>{formatInviteSitePrice()}</strong>
+                </div>
+                <p>
+                  Разовая оплата через Robokassa. После оплаты сайт публикуется
+                  автоматически, чек приходит на email.
+                </p>
+                <label>
+                  <input
+                    checked={acceptedPurchaseTerms}
+                    onChange={(event) => setAcceptedPurchaseTerms(event.target.checked)}
+                    type="checkbox"
+                  />
+                  <span>
+                    Я принимаю <Link href="/offer" target="_blank">публичную оферту</Link>,
+                    условия <Link href="/payment-and-refund" target="_blank">оплаты и возврата</Link>
+                    {" "}и <Link href="/privacy" target="_blank">политику обработки данных</Link>.
+                  </span>
+                </label>
+              </section>
+            ) : null}
+
             {visibleValidationStep === activeStep && stepErrors[activeStep].length > 0 ? (
               <div className="editor-validation-summary" role="alert">
                 <strong>Проверьте этот раздел</strong>
@@ -1427,18 +1482,22 @@ export default function InvitationBuilder({
               ) : (
                 <Button
                   className="editor-step-actions__next"
-                  isDisabled={isPublishing || allErrors.length > 0}
+                  isDisabled={
+                    isPublishing ||
+                    allErrors.length > 0 ||
+                    (requiresPayment && !acceptedPurchaseTerms)
+                  }
                   onClick={publishSite}
                   type="button"
                   variant="primary"
                 >
                   {isPublishing
-                    ? siteId
-                      ? "Сохраняем"
-                      : "Создаем сайт"
-                    : siteId
-                      ? "Сохранить изменения"
-                      : "Создать сайт"}
+                    ? requiresPayment
+                      ? "Переходим к оплате"
+                      : "Сохраняем"
+                    : requiresPayment
+                      ? `Оплатить ${formatInviteSitePrice()}`
+                      : "Сохранить изменения"}
                   <Sparkles aria-hidden size={16} />
                 </Button>
               )}
