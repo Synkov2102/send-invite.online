@@ -7,11 +7,16 @@ import {
   Param,
   Post,
   Query,
+  Req,
   UnauthorizedException,
+  UseFilters,
 } from "@nestjs/common";
+import { SkipThrottle } from "@nestjs/throttler";
+import type { Request } from "express";
 import { AuthService } from "../auth/auth.service";
 import { getBearerToken } from "../auth/bearer-token";
 import { PaymentsService } from "./payments.service";
+import { RobokassaExceptionFilter } from "./robokassa-exception.filter";
 
 @Controller("payments")
 export class PaymentsController {
@@ -53,12 +58,25 @@ export class PaymentsController {
     return this.paymentsService.getOwnedOrder(id, user.id);
   }
 
-  @Post("robokassa/result")
+  @SkipThrottle()
+  @UseFilters(RobokassaExceptionFilter)
+  @Post("robokassa/success")
   @Header("Content-Type", "text/plain; charset=utf-8")
-  processResultPost(@Body() body: Record<string, unknown>) {
-    return this.paymentsService.processResult(body);
+  confirmSuccess(@Body() body: unknown) {
+    return this.paymentsService.processSuccessRedirect(body);
   }
 
+  @SkipThrottle()
+  @UseFilters(RobokassaExceptionFilter)
+  @Post("robokassa/result")
+  @Header("Content-Type", "text/plain; charset=utf-8")
+  processResultPost(@Req() request: Request, @Body() body: Record<string, unknown>) {
+    const payload = Object.keys(body).length > 0 ? body : request.query;
+    return this.paymentsService.processResult(payload);
+  }
+
+  @SkipThrottle()
+  @UseFilters(RobokassaExceptionFilter)
   @Get("robokassa/result")
   @Header("Content-Type", "text/plain; charset=utf-8")
   processResultGet(@Query() query: Record<string, unknown>) {

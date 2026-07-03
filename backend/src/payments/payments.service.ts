@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   NotFoundException,
   ServiceUnavailableException,
   UnauthorizedException,
@@ -13,6 +14,11 @@ import type { AuthUser } from "../auth/auth.types";
 import { SitesService } from "../sites/sites.service";
 import { PaymentOrderStore } from "./payment-order.store";
 import {
+  readRobokassaField,
+  readRobokassaShpOrder,
+  type RobokassaPayload,
+} from "./robokassa-payload";
+import {
   createRobokassaSignature,
   isRobokassaSignatureValid,
 } from "./robokassa-signature";
@@ -22,25 +28,18 @@ type CheckoutBody = {
   siteId?: unknown;
 };
 
-type RobokassaPayload = Record<string, unknown>;
+type SuccessConfirmBody = {
+  invId?: unknown;
+  orderId?: unknown;
+  outSum?: unknown;
+  signature?: unknown;
+};
 
 function readString(
   payload: RobokassaPayload,
   ...keys: string[]
 ): string {
-  for (const key of keys) {
-    const value = payload[key];
-
-    if (typeof value === "string" && value.trim()) {
-      return value.trim();
-    }
-
-    if (typeof value === "number" && Number.isFinite(value)) {
-      return String(value);
-    }
-  }
-
-  return "";
+  return readRobokassaField(payload, ...keys);
 }
 
 function getPaymentPasswords(testMode: boolean) {
@@ -57,6 +56,8 @@ function getPaymentPasswords(testMode: boolean) {
 
 @Injectable()
 export class PaymentsService {
+  private readonly logger = new Logger(PaymentsService.name);
+
   constructor(
     private readonly orders: PaymentOrderStore,
     private readonly sites: SitesService,
@@ -75,12 +76,15 @@ export class PaymentsService {
     const site = siteId
       ? await this.sites.updateDraftForCheckout(user.id, siteId, checkout.site)
       : await this.sites.createDraftForCheckout(checkout.site, user.id);
-    const order = await this.orders.createOrder({
-      amount: INVITE_SITE_PRICE,
-      email: user.email,
-      ownerId: user.id,
-      siteId: site.id,
-    });
+    const existingPending = await this.orders.getLatestPendingOrderForSite(site.id);
+    const order =
+      existingPending ??
+      (await this.orders.createOrder({
+        amount: INVITE_SITE_PRICE,
+        email: user.email,
+        ownerId: user.id,
+        siteId: site.id,
+      }));
 
     return {
       action: "https://auth.robokassa.ru/Merchant/Index.aspx",
@@ -135,11 +139,14 @@ export class PaymentsService {
     const outSum = readString(payload, "OutSum", "outSum");
     const invIdRaw = readString(payload, "InvId", "InvID", "invoiceID");
     const signature = readString(payload, "SignatureValue", "signatureValue");
-    const orderId = readString(payload, "Shp_order");
+    const orderId = readRobokassaShpOrder(payload);
     const paymentMethod = readString(payload, "PaymentMethod") || null;
     const invId = Number(invIdRaw);
 
     if (!outSum || !Number.isSafeInteger(invId) || invId < 1 || !signature || !orderId) {
+      this.logger.warn(
+        `Invalid Result URL payload: outSum=${Boolean(outSum)}, invId=${invIdRaw}, signature=${Boolean(signature)}, orderId=${Boolean(orderId)}`,
+      );
       throw new BadRequestException("Invalid payment notification.");
     }
 
@@ -152,26 +159,79 @@ export class PaymentsService {
     ]);
 
     if (!isRobokassaSignatureValid(expectedSignature, signature)) {
+      this.logger.warn(`Invalid Result URL signature for order ${orderId}, invId ${invIdRaw}`);
       throw new UnauthorizedException("Invalid payment signature.");
     }
 
+    return this.completePayment({
+      invIdRaw,
+      orderId,
+      outSum,
+      paymentMethod,
+    });
+  }
+
+  async processSuccessRedirect(body: unknown) {
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      throw new BadRequestException("Invalid success confirmation.");
+    }
+
+    const payload = body as SuccessConfirmBody;
+    const outSum = typeof payload.outSum === "string" ? payload.outSum.trim() : "";
+    const invIdRaw = typeof payload.invId === "string" ? payload.invId.trim() : "";
+    const signature = typeof payload.signature === "string" ? payload.signature.trim() : "";
+    const orderId = typeof payload.orderId === "string" ? payload.orderId.trim() : "";
+    const invId = Number(invIdRaw);
+
+    if (!outSum || !Number.isSafeInteger(invId) || invId < 1 || !signature || !orderId) {
+      throw new BadRequestException("Invalid success confirmation.");
+    }
+
+    const config = this.getConfig();
+    const expectedSignature = createRobokassaSignature([
+      outSum,
+      invIdRaw,
+      config.password1,
+      `Shp_order=${orderId}`,
+    ]);
+
+    if (!isRobokassaSignatureValid(expectedSignature, signature)) {
+      this.logger.warn(`Invalid Success URL signature for order ${orderId}, invId ${invIdRaw}`);
+      throw new UnauthorizedException("Invalid payment signature.");
+    }
+
+    return this.completePayment({
+      invIdRaw,
+      orderId,
+      outSum,
+      paymentMethod: null,
+    });
+  }
+
+  private async completePayment(input: {
+    invIdRaw: string;
+    orderId: string;
+    outSum: string;
+    paymentMethod: string | null;
+  }) {
+    const invId = Number(input.invIdRaw);
     const order = await this.orders.getOrderByInvoice(invId);
 
     if (
       !order ||
-      order.id !== orderId ||
-      Math.abs(Number(order.amount) - Number(outSum)) > 0.000001
+      order.id !== input.orderId ||
+      Math.abs(Number(order.amount) - Number(input.outSum)) > 0.000001
     ) {
+      this.logger.warn(
+        `Payment mismatch for order ${input.orderId}, invId ${input.invIdRaw}`,
+      );
       throw new BadRequestException("Payment does not match the order.");
     }
 
-    if (order.status === "paid") {
-      return `OK${invIdRaw}`;
-    }
-
-    await this.orders.markPaid(invId, paymentMethod);
+    await this.orders.markPaidIfPending(invId, input.paymentMethod);
     await this.sites.publishAfterPayment(order.siteId);
-    return `OK${invIdRaw}`;
+    this.logger.log(`Payment completed for order ${order.id}, site ${order.siteId}`);
+    return `OK${input.invIdRaw}`;
   }
 
   private createPaymentFields(

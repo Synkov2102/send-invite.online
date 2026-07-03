@@ -67,3 +67,13 @@ Frontend будет доступен на `http://localhost:8080`, backend — �
 SuccessURL и FailURL передаются сайтом для каждого заказа. Перед включением боевого
 режима выполните тестовую оплату, убедитесь, что ResultURL отвечает `OK<InvId>`,
 сайт появляется в личном кабинете и публичная ссылка открывается только после оплаты.
+
+### Диагностика, если оплата «зависла» в pending
+
+1. Проверьте, что ResultURL в кабинете Robokassa совпадает с production URL и метод **POST**.
+2. Убедитесь, что `ROBOKASSA_TEST_MODE` и тестовые/боевые пароли соответствуют режиму оплаты.
+3. `FRONTEND_ORIGIN` в `.env.backend.production` должен быть `https://send-invite.online` — от него строятся Success/Fail URL.
+4. После оплаты Success URL может подтвердить платёж сразу (параметры `OutSum`, `InvId`, `SignatureValue` в адресной строке). Result URL остаётся основным серверным каналом.
+5. На VPS смотрите логи backend: `docker compose -f docker-compose.prod.yml logs -f backend` — ищите `Payment completed` или `Invalid Result URL signature`.
+
+Для локального Docker используйте `FRONTEND_ORIGIN=http://localhost:8080` и ResultURL `http://localhost:8080/api/payments/robokassa/result` (нужен туннель вроде ngrok, если Robokassa должна достучаться снаружи).

@@ -107,12 +107,21 @@ export class PaymentOrderStore {
     return this.getOrdersCollection().then((orders) => orders.findOne({ id, ownerId }));
   }
 
-  async markPaid(invId: number, paymentMethod: string | null) {
+  async getLatestPendingOrderForSite(siteId: string) {
+    await this.ensureIndexes();
+    const orders = await this.getOrdersCollection();
+    return orders.findOne(
+      { siteId, status: "pending" },
+      { sort: { createdAt: -1 } },
+    );
+  }
+
+  async markPaidIfPending(invId: number, paymentMethod: string | null) {
     await this.ensureIndexes();
     const orders = await this.getOrdersCollection();
     const now = new Date().toISOString();
     return orders.findOneAndUpdate(
-      { invId },
+      { invId, status: "pending" },
       {
         $set: {
           paidAt: now,
@@ -123,5 +132,9 @@ export class PaymentOrderStore {
       },
       { returnDocument: "after" },
     );
+  }
+
+  async markPaid(invId: number, paymentMethod: string | null) {
+    return this.markPaidIfPending(invId, paymentMethod);
   }
 }
