@@ -1,13 +1,12 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
 import { getServerApiBaseUrl } from "@/lib/backend-api";
 
 export async function GET(
-  _request: Request,
+  request: NextRequest,
   context: RouteContext<"/api/payments/orders/[id]">,
 ) {
-  const sessionToken = (await cookies()).get(authSessionCookieName)?.value;
+  const sessionToken = request.cookies.get(authSessionCookieName)?.value;
 
   if (!sessionToken) {
     return NextResponse.json({ error: "Войдите в аккаунт." }, { status: 401 });

@@ -97,6 +97,11 @@ export class PaymentOrderStore {
     return this.getOrdersCollection().then((orders) => orders.findOne({ invId }));
   }
 
+  async getOrderById(id: string) {
+    await this.ensureIndexes();
+    return this.getOrdersCollection().then((orders) => orders.findOne({ id }));
+  }
+
   async getOwnedOrder(id: string, ownerId: string) {
     await this.ensureIndexes();
     return this.getOrdersCollection().then((orders) => orders.findOne({ id, ownerId }));

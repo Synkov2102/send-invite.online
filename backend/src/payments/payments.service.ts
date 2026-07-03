@@ -101,6 +101,26 @@ export class PaymentsService {
       throw new NotFoundException({ error: "Заказ не найден." });
     }
 
+    return this.toOrderStatusResponse(order);
+  }
+
+  async getPublicOrderStatus(orderId: string) {
+    const order = await this.orders.getOrderById(orderId);
+
+    if (!order) {
+      throw new NotFoundException({ error: "Заказ не найден." });
+    }
+
+    return this.toOrderStatusResponse(order);
+  }
+
+  private toOrderStatusResponse(order: {
+    amount: string;
+    id: string;
+    paidAt: string | null;
+    siteId: string;
+    status: "pending" | "paid";
+  }) {
     return {
       amount: order.amount,
       id: order.id,

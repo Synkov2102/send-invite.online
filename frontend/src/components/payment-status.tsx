@@ -30,8 +30,8 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
     async function loadStatus() {
       try {
         const response = await fetch(
-          `/api/payments/orders/${encodeURIComponent(orderId)}`,
-          { cache: "no-store" },
+          `/api/payments/orders/${encodeURIComponent(orderId)}/status`,
+          { cache: "no-store", credentials: "same-origin" },
         );
         const result = (await response.json()) as OrderState & { error?: string };
 

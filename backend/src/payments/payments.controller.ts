@@ -34,6 +34,11 @@ export class PaymentsController {
     return this.paymentsService.createCheckout(body, user);
   }
 
+  @Get("orders/:id/status")
+  getPublicOrderStatus(@Param("id") id: string) {
+    return this.paymentsService.getPublicOrderStatus(id);
+  }
+
   @Get("orders/:id")
   async getOrder(
     @Param("id") id: string,
