@@ -90,7 +90,7 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
     );
   }
 
-  if (failed && order?.status !== "paid") {
+  if (failed) {
     return (
       <section className="payment-panel is-failed">
         <XCircle aria-hidden size={34} />

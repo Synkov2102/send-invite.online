@@ -1,4 +1,4 @@
-FROM node:20-alpine AS deps
+FROM node:24-alpine AS deps
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -18,7 +18,7 @@ COPY packages/shared packages/shared
 RUN npm run build --workspace @invite/shared \
   && npm run build --workspace frontend
 
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 WORKDIR /app
 
 ENV HOSTNAME=0.0.0.0
