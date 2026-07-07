@@ -234,6 +234,8 @@
 .editor-sidebar__intro, .editor-steps { border-color: var(--product-line); }
 .editor-sidebar__kicker { color: var(--product-accent); }
 .editor-sidebar__intro h1, .editor-field-group__heading h2, .editor-preview__toolbar h2 { color: var(--product-ink); font-family: var(--font-geist-sans), sans-serif; font-weight: 700; letter-spacing: -.035em; }
+.editor-field-group__heading p { color: var(--product-muted); }
+.editor-field-group__hint, .editor-review__hint { border-color: var(--product-line); background: var(--product-soft); color: #5f535b; }
 .editor-step { color: #665b62; }
 .editor-step:hover { background: var(--product-soft); }
 .editor-step.is-active { border-color: transparent; background: var(--product-accent-soft); color: var(--product-ink); box-shadow: inset 3px 0 var(--product-accent); }
@@ -251,6 +253,36 @@
 .editor-preview { background: var(--product-grid), var(--product-soft); background-size: 42px 42px; }
 .editor-preview__toolbar { border-color: var(--product-line); border-radius: 18px; background: rgba(255,253,250,.92); box-shadow: 0 12px 36px rgba(57,43,52,.09); }
 .editor-preview__toolbar p { color: var(--product-muted); }
+.editor-save-status { color: var(--product-muted); }
+.editor-save-status.is-error { color: #b43151; }
+.editor-toggle input { accent-color: var(--product-accent); }
+.editor-review__heading > span.is-ready,
+.editor-form-builder__guide { border-color: rgba(255,79,114,.2); background: #fff2f5; color: #6b5963; }
+.editor-review__heading > span.is-ready,
+.editor-form-builder__guide > svg { color: #b43151; }
+.editor-form-builder__guide strong,
+.editor-answer-type button.is-active { color: var(--product-ink); }
+.editor-form-builder__guide span,
+.editor-answer-type button small,
+.editor-question__hint,
+.editor-question__inline-help,
+.editor-question__options-head p { color: var(--product-muted); }
+.editor-answer-type button.is-active { border-color: rgba(255,79,114,.38); background: var(--product-accent-soft); }
+.editor-answer-type button.is-active > svg { border-color: var(--product-accent); background: var(--product-accent); color: #fff; }
+.editor-question__options,
+.editor-photo-upload,
+.editor-dress-code,
+.editor-subpanel { background: var(--product-soft); }
+.editor-schedule__add,
+.editor-dress-code__add,
+.editor-question__add-option,
+.editor-photo-upload__reset,
+.editor-map-field > a { color: #5c5158 !important; }
+
+@media (max-width: 640px) {
+  .editor-field-group { border-radius: 16px; }
+  .editor-step.is-active { box-shadow: inset 0 -3px var(--product-accent); }
+}
 .editor-device-switch { border-color: var(--product-line); background: var(--product-soft); }
 .editor-device-switch button.is-selected { background: var(--product-ink) !important; }
 .editor-preview__canvas { border-color: rgba(255,255,255,.8); border-radius: 26px; background: rgba(255,255,255,.32); box-shadow: 0 30px 90px rgba(57,43,52,.14); }

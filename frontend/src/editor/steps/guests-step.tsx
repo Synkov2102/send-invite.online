@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { Plus, Trash2 } from "lucide-react";
-import type { InviteRsvpQuestion } from "@/lib/invite-state";
+import { Check, Info, ListChecks, Plus, Trash2 } from "lucide-react";
 import { FieldGroup, TextAreaField, TextInput } from "../components";
 import { useEditor } from "../editor-context";
 
@@ -24,7 +23,11 @@ export function GuestsStep({ isActive }: StepPanelProps) {
 
   return (
     <section className={isActive ? "editor-step-panel is-active" : "editor-step-panel"}>
-      <FieldGroup title="Гости">
+      <FieldGroup
+        title="Гости"
+        description="Настройте подтверждение участия и вопросы для анкеты."
+        hint="Поле имени будет добавлено автоматически, поэтому здесь нужны только вопросы к гостям."
+      >
         <label className="editor-toggle">
           <span>
             <strong>Форма подтверждения</strong>
@@ -53,10 +56,13 @@ export function GuestsStep({ isActive }: StepPanelProps) {
               <div className="editor-form-builder__head">
                 <div>
                   <p>Вопросы анкеты</p>
-                  <span>Поле имени добавляется автоматически</span>
+                  <span>
+                    {invite.rsvpQuestions.length} из 8 вопросов. Поле имени добавляется
+                    автоматически.
+                  </span>
                 </div>
                 <Button
-                  className="editor-dress-code__add"
+                  className="editor-form-builder__add"
                   isDisabled={invite.rsvpQuestions.length >= 8}
                   onClick={addRsvpQuestion}
                   type="button"
@@ -66,10 +72,23 @@ export function GuestsStep({ isActive }: StepPanelProps) {
                   Вопрос
                 </Button>
               </div>
+              <div className="editor-form-builder__guide">
+                <Info aria-hidden size={15} />
+                <div>
+                  <strong>Как гость увидит форму</strong>
+                  <span>
+                    Сначала он укажет имя и подтвердит участие, затем ответит на
+                    ваши дополнительные вопросы ниже.
+                  </span>
+                </div>
+              </div>
               {invite.rsvpQuestions.map((question, questionIndex) => (
                 <div className="editor-question" key={`rsvp-question-${questionIndex}`}>
                   <div className="editor-question__head">
-                    <span>Вопрос {questionIndex + 1}</span>
+                    <div>
+                      <span>Вопрос {questionIndex + 1}</span>
+                      <strong>{question.title || "Новый вопрос"}</strong>
+                    </div>
                     <Button
                       aria-label={`Удалить вопрос ${questionIndex + 1}`}
                       className="editor-dress-code__remove"
@@ -85,26 +104,54 @@ export function GuestsStep({ isActive }: StepPanelProps) {
                     value={question.title}
                     onChange={(value) => updateRsvpQuestion(questionIndex, "title", value)}
                   />
-                  <label className="editor-field">
+                  <p className="editor-question__hint">
+                    Это заголовок, который увидит гость. Например: “Будете ли вы с
+                    сопровождающим?” или “Какие напитки предпочитаете?”.
+                  </p>
+                  <div className="editor-field">
                     <span className="editor-field__label">Тип ответа</span>
-                    <select
-                      className="editor-question__select"
-                      onChange={(event) =>
-                        updateRsvpQuestion(
-                          questionIndex,
-                          "type",
-                          event.target.value as InviteRsvpQuestion["type"],
-                        )
-                      }
-                      value={question.type}
-                    >
-                      <option value="single">Один вариант</option>
-                      <option value="multiple">Несколько вариантов</option>
-                    </select>
-                  </label>
+                    <p className="editor-question__inline-help">
+                      Выберите, сколько вариантов можно отметить в этом вопросе.
+                    </p>
+                    <div className="editor-answer-type" aria-label="Тип ответа">
+                      {(["single", "multiple"] as const).map((type) => (
+                        <button
+                          aria-pressed={question.type === type}
+                          className={question.type === type ? "is-active" : ""}
+                          key={type}
+                          onClick={() => updateRsvpQuestion(questionIndex, "type", type)}
+                          type="button"
+                        >
+                          {question.type === type ? (
+                            <Check aria-hidden size={14} />
+                          ) : (
+                            <ListChecks aria-hidden size={14} />
+                          )}
+                          <span>
+                            <strong>
+                              {type === "single" ? "Один вариант" : "Несколько вариантов"}
+                            </strong>
+                            <small>
+                              {type === "single"
+                                ? "Гость выберет один ответ"
+                                : "Можно отметить несколько"}
+                            </small>
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <div className="editor-question__options">
+                    <div className="editor-question__options-head">
+                      <div>
+                        <span>Варианты ответа</span>
+                        <p>Это кнопки выбора, которые появятся у гостя под вопросом.</p>
+                      </div>
+                      <small>{question.options.length} из 8</small>
+                    </div>
                     {question.options.map((option, optionIndex) => (
                       <div className="editor-question__option" key={`option-${optionIndex}`}>
+                        <span className="editor-question__option-index">{optionIndex + 1}</span>
                         <TextInput
                           label={`Вариант ${optionIndex + 1}`}
                           value={option}

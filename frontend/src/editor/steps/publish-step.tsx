@@ -33,6 +33,11 @@ export function PublishStep({ isActive }: StepPanelProps) {
           </div>
         </div>
 
+        <p className="editor-review__hint">
+          Перед запуском откройте предпросмотр на телефоне и проверьте первый экран,
+          адрес, форму гостя и читаемость текста на фотографиях.
+        </p>
+
         <div className="editor-review__sections">
           {editorSteps.slice(0, 5).map((step, index) => (
             <button

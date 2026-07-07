@@ -46,7 +46,11 @@ export function MediaStep({ isActive }: StepPanelProps) {
 
   return (
     <section className={isActive ? "editor-step-panel is-active" : "editor-step-panel"}>
-      <FieldGroup title="Фото">
+      <FieldGroup
+        title="Фото"
+        description="Загрузите изображения, которые зададут настроение приглашения."
+        hint="Вертикальные фото пары и светлое фото площадки лучше всего заполняют мобильный экран."
+      >
         <div className="editor-photo-grid">
           {photoSlots.map((item) => (
             <div className="editor-photo-upload" key={item.field}>
@@ -97,7 +101,11 @@ export function MediaStep({ isActive }: StepPanelProps) {
         </p>
       </FieldGroup>
 
-      <FieldGroup title="Музыка">
+      <FieldGroup
+        title="Музыка"
+        description="Добавьте мелодию, которую гости смогут включить вручную."
+        hint="Короткая и спокойная композиция меньше отвлекает от текста приглашения."
+      >
         <label className="editor-toggle">
           <span>
             <strong>Музыка в приглашении</strong>

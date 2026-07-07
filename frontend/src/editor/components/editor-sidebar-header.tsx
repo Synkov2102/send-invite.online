@@ -2,6 +2,7 @@
 
 import { AlertCircle, ArrowLeft, Check, Eye, Save, Sparkles } from "lucide-react";
 import Link from "next/link";
+import type { MouseEvent } from "react";
 import BrandLockup from "@/components/brand-lockup";
 import { editorSteps } from "../constants";
 import { useEditor } from "../editor-context";
@@ -48,16 +49,27 @@ export function EditorStepNav() {
 }
 
 export function EditorSidebarHeader() {
-  const { saveStatus, setMobileView, siteId, template } = useEditor();
+  const { confirmLeaveEditor, saveStatus, setMobileView, siteId, template } = useEditor();
+
+  function handleEditorExit(event: MouseEvent<HTMLAnchorElement>) {
+    if (!confirmLeaveEditor()) {
+      event.preventDefault();
+    }
+  }
 
   return (
     <>
       <div className="editor-sidebar__topbar">
-        <Link className="editor-back" href="/templates">
+        <Link className="editor-back" href="/templates" onClick={handleEditorExit}>
           <ArrowLeft aria-hidden size={15} />
           Шаблоны
         </Link>
-        <Link aria-label="На главную" className="editor-brand" href="/">
+        <Link
+          aria-label="На главную"
+          className="editor-brand"
+          href="/"
+          onClick={handleEditorExit}
+        >
           <BrandLockup />
         </Link>
         <span aria-live="polite" className={`editor-save-status is-${saveStatus}`}>

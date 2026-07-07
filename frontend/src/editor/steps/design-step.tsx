@@ -29,7 +29,11 @@ export function DesignStep({ isActive }: StepPanelProps) {
 
   return (
     <section className={isActive ? "editor-step-panel is-active" : "editor-step-panel"}>
-      <FieldGroup title="Палитра">
+      <FieldGroup
+        title="Палитра"
+        description="Выберите готовое настроение или настройте цвета вручную."
+        hint="После выбора палитры откройте предпросмотр: контраст текста на фото особенно важен на телефоне."
+      >
         <div className="editor-palette-mode" aria-label="Режим настройки палитры">
           <button
             className={paletteMode === "presets" ? "is-active" : ""}

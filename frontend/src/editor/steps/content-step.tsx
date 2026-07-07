@@ -14,7 +14,11 @@ export function ContentStep({ isActive }: StepPanelProps) {
 
   return (
     <section className={isActive ? "editor-step-panel is-active" : "editor-step-panel"}>
-      <FieldGroup title="Пара">
+      <FieldGroup
+        title="Пара"
+        description="Эти данные попадут в первый экран приглашения."
+        hint="На телефоне лучше смотрятся короткие имена и текст в 1-2 предложения."
+      >
         <div className="grid grid-cols-2 gap-2">
           <TextInput
             label="Жених"
@@ -34,7 +38,11 @@ export function ContentStep({ isActive }: StepPanelProps) {
         />
       </FieldGroup>
 
-      <FieldGroup title="Событие">
+      <FieldGroup
+        title="Событие"
+        description="Дата, время и адрес помогут гостям сразу сохранить планы."
+        hint="Если место уже есть на Яндекс Картах, добавьте ссылку: кнопка маршрута появится в приглашении."
+      >
         <div className="grid grid-cols-2 gap-2">
           <TextInput
             label="Дата"

@@ -25,7 +25,7 @@ import {
   type InvitePalette,
 } from "@/lib/invite-theme";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { imageUploadTypes, maxImageUploadBytes, themeFields, editorSteps } from "./constants";
 import {
   isLocalMusicSource,
@@ -37,6 +37,9 @@ import {
 import { getInitialInvite } from "./template-presets";
 import type { InvitationBuilderProps, SaveStatus } from "./types";
 import { getEditorStepErrors } from "./validation";
+
+const leaveEditorMessage =
+  "Есть несохраненные изменения. Выйти из редактора без сохранения?";
 
 export function useInvitationBuilder({
   initialInvite,
@@ -101,9 +104,32 @@ export function useInvitationBuilder({
     () => createRingColor(effectiveInvite.ringMetal),
     [effectiveInvite.ringMetal],
   );
+  const currentEditorSnapshot = useMemo(
+    () =>
+      JSON.stringify({
+        customPalette,
+        hasLocalMusic,
+        invite: effectiveInvite,
+      }),
+    [customPalette, effectiveInvite, hasLocalMusic],
+  );
+  const lastSafeEditorSnapshotRef = useRef(currentEditorSnapshot);
+  const hasHistoryGuardRef = useRef(false);
+  const ignoreNextPopStateRef = useRef(false);
+  const shouldWarnBeforeLeaveRef = useRef(false);
   const hasRingControls = template.coverType === "rings";
   const stepErrors = useMemo(() => getEditorStepErrors(effectiveInvite), [effectiveInvite]);
   const allErrors = stepErrors.slice(0, 3).flat();
+  const hasUnsavedChanges = lastSafeEditorSnapshotRef.current !== currentEditorSnapshot;
+  const shouldWarnBeforeLeave = !isPublishing && hasUnsavedChanges;
+
+  function confirmLeaveEditor() {
+    if (!shouldWarnBeforeLeave) {
+      return true;
+    }
+
+    return window.confirm(leaveEditorMessage);
+  }
 
   function openStep(index: number) {
     setActiveStep(index);
@@ -447,6 +473,7 @@ export function useInvitationBuilder({
       return;
     }
 
+    const snapshot = currentEditorSnapshot;
     const savingTimeout = window.setTimeout(() => setSaveStatus("saving"), 0);
     const timeout = window.setTimeout(() => {
       const didSave = saveEditorDraft(
@@ -458,6 +485,9 @@ export function useInvitationBuilder({
         },
         template.id,
       );
+      if (didSave) {
+        lastSafeEditorSnapshotRef.current = snapshot;
+      }
       setSaveStatus(didSave ? "saved" : "error");
     }, 450);
 
@@ -465,7 +495,85 @@ export function useInvitationBuilder({
       window.clearTimeout(savingTimeout);
       window.clearTimeout(timeout);
     };
-  }, [customPalette, effectiveInvite, hasLocalMusic, siteId, template.id]);
+  }, [customPalette, currentEditorSnapshot, effectiveInvite, hasLocalMusic, siteId, template.id]);
+
+  useEffect(() => {
+    shouldWarnBeforeLeaveRef.current = shouldWarnBeforeLeave;
+  }, [shouldWarnBeforeLeave]);
+
+  useEffect(() => {
+    if (!shouldWarnBeforeLeave) {
+      return;
+    }
+
+    function warnBeforeUnload(event: BeforeUnloadEvent) {
+      event.preventDefault();
+      event.returnValue = "";
+    }
+
+    window.addEventListener("beforeunload", warnBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", warnBeforeUnload);
+    };
+  }, [shouldWarnBeforeLeave]);
+
+  useEffect(() => {
+    function handlePopState() {
+      if (ignoreNextPopStateRef.current) {
+        ignoreNextPopStateRef.current = false;
+        return;
+      }
+
+      if (!shouldWarnBeforeLeaveRef.current) {
+        return;
+      }
+
+      if (window.confirm(leaveEditorMessage)) {
+        shouldWarnBeforeLeaveRef.current = false;
+        hasHistoryGuardRef.current = false;
+        window.history.back();
+        return;
+      }
+
+      window.history.pushState(
+        {
+          ...(window.history.state ?? {}),
+          editorLeaveGuard: true,
+        },
+        "",
+        window.location.href,
+      );
+      hasHistoryGuardRef.current = true;
+    }
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (shouldWarnBeforeLeave && !hasHistoryGuardRef.current) {
+      window.history.pushState(
+        {
+          ...(window.history.state ?? {}),
+          editorLeaveGuard: true,
+        },
+        "",
+        window.location.href,
+      );
+      hasHistoryGuardRef.current = true;
+      return;
+    }
+
+    if (!shouldWarnBeforeLeave && hasHistoryGuardRef.current && !isPublishing) {
+      hasHistoryGuardRef.current = false;
+      ignoreNextPopStateRef.current = true;
+      window.history.back();
+    }
+  }, [isPublishing, shouldWarnBeforeLeave]);
 
   useEffect(() => {
     if (!initialDraft?.hasLocalMusic || initialDraft.invite.musicUrl) {
@@ -519,6 +627,7 @@ export function useInvitationBuilder({
     allErrors,
     continueToNextStep,
     coverImage,
+    confirmLeaveEditor,
     customPalette,
     effectiveInvite,
     hasRingControls,

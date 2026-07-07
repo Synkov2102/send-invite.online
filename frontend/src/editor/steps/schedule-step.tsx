@@ -23,7 +23,11 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
 
   return (
     <section className={isActive ? "editor-step-panel is-active" : "editor-step-panel"}>
-      <FieldGroup title="Расписание">
+      <FieldGroup
+        title="Расписание"
+        description="Добавьте ключевые моменты дня в порядке, как их увидят гости."
+        hint="Для мобильного экрана лучше оставить 3-5 событий с короткими названиями."
+      >
         <div className="editor-schedule">
           {invite.schedule.map((item, index) => (
             <div className="editor-schedule__item" key={`schedule-${index}`}>
@@ -73,7 +77,11 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
         </div>
       </FieldGroup>
 
-      <FieldGroup title="Дресс-код">
+      <FieldGroup
+        title="Дресс-код"
+        description="Опишите пожелания к образам и покажите гостям цветовые ориентиры."
+        hint="Палитра в 3-5 оттенков обычно читается лучше, чем длинный набор похожих цветов."
+      >
         <TextAreaField
           label="Текст для гостей"
           value={invite.dressCode}
