@@ -4,7 +4,7 @@ import {
   getAuthCookieOptions,
   isSafeReturnPath,
 } from "@/lib/auth";
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 const stateCookieName = "yandex_oauth_state";
 const verifierCookieName = "yandex_oauth_code_verifier";

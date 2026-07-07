@@ -1,14 +1,9 @@
+import "server-only";
+
 import { isPublishedInviteSite, type PublishedInviteSite } from "@/lib/invite-site-types";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
-const defaultApiBaseUrl = "http://localhost:3001";
-
-export function getServerApiBaseUrl() {
-  return (
-    process.env.BACKEND_API_URL ??
-    process.env.NEXT_PUBLIC_API_URL ??
-    defaultApiBaseUrl
-  ).replace(/\/$/, "");
-}
+export { getServerApiBaseUrl };
 
 export async function getPublishedInviteSite(id: string): Promise<PublishedInviteSite | null> {
   try {

@@ -12,6 +12,7 @@ if (existsSync(rootFrontendEnv)) {
 const apiBaseUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
+  transpilePackages: ["@invite/shared"],
   experimental: {
     proxyClientMaxBodySize: "30mb",
   },

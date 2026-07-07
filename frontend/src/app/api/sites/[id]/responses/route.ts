@@ -1,15 +1,14 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
-import { getServerApiBaseUrl, type InviteResponseData } from "@/lib/backend-api";
+import { type InviteResponseData } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 type RouteParams = {
   params: Promise<{ id: string }>;
 };
 
-export async function GET(_request: Request, { params }: RouteParams) {
-  const sessionToken = (await cookies()).get(authSessionCookieName)?.value;
-
+export async function GET(request: NextRequest, { params }: RouteParams) {
+  const sessionToken = request.cookies.get(authSessionCookieName)?.value;
   if (!sessionToken) {
     return NextResponse.json({ error: "Войдите в аккаунт." }, { status: 401 });
   }

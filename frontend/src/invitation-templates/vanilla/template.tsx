@@ -284,11 +284,16 @@ function RsvpSection({
 }: Readonly<{ invite: InviteState; siteId?: string }>) {
   return (
     <section className={cx(styles.cloud, styles.rsvpCloud)} id="rsvp">
+      <header className={styles.rsvpHeader}>
+        <span>RSVP</span>
+        <h2>Анкета гостя</h2>
+        <p>{invite.rsvpText}</p>
+        <strong>Ждем ваш ответ до {formatDate(invite.rsvpDate)}</strong>
+      </header>
       <InvitationRsvpForm
         questions={invite.rsvpQuestions}
         rsvpDate={invite.rsvpDate}
         siteId={siteId}
-        text={invite.rsvpText}
         variant="vanilla"
       />
     </section>

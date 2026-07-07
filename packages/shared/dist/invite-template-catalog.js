@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defaultInviteTemplates = exports.inviteTemplateCatalog = void 0;
+exports.defaultInviteTemplates = exports.inviteTemplateCatalog = exports.isInviteTemplate = void 0;
 exports.toPublicTemplate = toPublicTemplate;
 exports.getTemplateDefinition = getTemplateDefinition;
 exports.getTemplateKind = getTemplateKind;
@@ -10,7 +10,8 @@ exports.getEditorReadyTemplates = getEditorReadyTemplates;
 exports.getEditorPreset = getEditorPreset;
 exports.isWideTemplateKind = isWideTemplateKind;
 exports.getInviteTemplate = getInviteTemplate;
-exports.isInviteTemplate = isInviteTemplate;
+var invite_template_schema_1 = require("./schemas/invite-template.schema");
+Object.defineProperty(exports, "isInviteTemplate", { enumerable: true, get: function () { return invite_template_schema_1.isInviteTemplate; } });
 const vanillaEditorPreset = {
     bride: "Катя",
     groom: "Миша",
@@ -60,6 +61,26 @@ const silkEditorPreset = {
     rsvpText: "Ваши ответы очень помогут нам при организации свадьбы.",
     rsvpDate: "2026-04-20",
     paletteId: "silk",
+};
+const clarityEditorPreset = {
+    bride: "Маша",
+    groom: "Саша",
+    date: "2026-06-26",
+    time: "15:00",
+    city: "Москва",
+    venue: "Svoy Hamovniki",
+    address: "ул. Льва Толстого, 23",
+    lead: "Это всё потому, что два человека влюбились. С радостью приглашаем вас разделить с нами самый трогательный и важный момент нашей жизни.",
+    dressCode: "Мы очень трепетно готовим наше торжество и будем благодарны, если вы поддержите его цветовую гамму и стилистику в своих образах.",
+    dressCodeColors: ["#d9dfeb", "#f4f1e5", "#817017", "#49413f"],
+    schedule: [
+        { time: "15:00", title: "Сбор гостей", description: "Общение с гостями и праздничный фуршет" },
+        { time: "15:30", title: "Церемония", description: "Пожалуйста, не стесняйтесь проявлять ваши искренние эмоции" },
+        { time: "16:30", title: "Банкет", description: "Время танцев, веселья, ваших поздравлений и вкусной еды" },
+    ],
+    rsvpText: "Пожалуйста, подтвердите ваше присутствие. Ответы помогут нам внимательно подготовить этот день.",
+    rsvpDate: "2026-06-01",
+    paletteId: "clarity",
 };
 exports.inviteTemplateCatalog = [
     {
@@ -145,6 +166,25 @@ exports.inviteTemplateCatalog = [
             accent: "#b9a78f",
         },
     },
+    {
+        id: "clarity-editorial",
+        name: "Clarity",
+        description: "Минималистичное приглашение с журнальной типографикой, крупной фотографией и ясной композицией.",
+        coverType: "arch",
+        kind: "clarity",
+        editorReady: true,
+        editorPreset: clarityEditorPreset,
+        defaultPaletteId: "clarity",
+        recommendedPaletteIds: ["clarity", "graphite", "pearl", "silk", "nocturne"],
+        tags: ["фото", "editorial"],
+        screenshot: "/images/templates/clarity-editorial-mobile.png",
+        preview: {
+            background: "#b8b4aa",
+            surface: "#f5f3e9",
+            ink: "#302f2c",
+            accent: "#817017",
+        },
+    },
 ];
 const templateDefinitionById = new Map(exports.inviteTemplateCatalog.map((template) => [template.id, template]));
 function toPublicTemplate(definition) {
@@ -189,33 +229,4 @@ function isWideTemplateKind(kind) {
 exports.defaultInviteTemplates = exports.inviteTemplateCatalog.map(toPublicTemplate);
 function getInviteTemplate(id) {
     return toPublicTemplate(getTemplateDefinition(id));
-}
-function isInviteTemplate(value) {
-    if (typeof value !== "object" || value === null || Array.isArray(value)) {
-        return false;
-    }
-    const template = value;
-    const preview = template.preview;
-    return (typeof template.defaultPaletteId === "string" &&
-        Array.isArray(template.recommendedPaletteIds) &&
-        template.recommendedPaletteIds.length > 0 &&
-        template.recommendedPaletteIds.every((paletteId) => typeof paletteId === "string") &&
-        template.recommendedPaletteIds.includes(template.defaultPaletteId) &&
-        template.recommendedPaletteIds[0] === template.defaultPaletteId &&
-        typeof template.description === "string" &&
-        (template.coverType === "arch" ||
-            template.coverType === "rings" ||
-            template.coverType === "wave") &&
-        typeof template.id === "string" &&
-        typeof template.name === "string" &&
-        typeof template.screenshot === "string" &&
-        Array.isArray(template.tags) &&
-        template.tags.every((tag) => typeof tag === "string") &&
-        typeof preview === "object" &&
-        preview !== null &&
-        !Array.isArray(preview) &&
-        typeof preview.accent === "string" &&
-        typeof preview.background === "string" &&
-        typeof preview.ink === "string" &&
-        typeof preview.surface === "string");
 }

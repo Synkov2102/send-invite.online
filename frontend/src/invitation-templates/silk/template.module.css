@@ -336,13 +336,17 @@
   padding-top: 28px;
 }
 
+.rsvpDeadline {
+  border: 1px solid var(--silk-line);
+  padding: 8px 13px;
+  color: var(--silk-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
 .rsvpFormWrap {
   width: 100%;
   margin-top: 26px;
-}
-
-.rsvpFormWrap :global(form > header) {
-  display: none;
 }
 
 .rsvpFormWrap :global(form) {

@@ -38,6 +38,12 @@ export const silkImages = {
   venue: "/images/silk-wedding-venue.png",
 } as const;
 
+export const clarityImages = {
+  cover: "/images/clarity-wedding-cover.png",
+  portrait: "/images/clarity-wedding-cover.png",
+  venue: "/images/clarity-wedding-venue.png",
+} as const;
+
 const ringColors = {
   gold: "#d7a83a",
   silver: "#d8dbe0",

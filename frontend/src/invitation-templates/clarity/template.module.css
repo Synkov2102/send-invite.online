@@ -1,0 +1,566 @@
+.shell {
+  --clarity-bg: #b8b4aa;
+  --clarity-paper: #f5f3e9;
+  --clarity-ink: #302f2c;
+  --clarity-muted: #706e67;
+  --clarity-line: #d5d1c5;
+  --clarity-accent: #817017;
+  --clarity-content-width: min(100%, 1440px);
+  width: 100%;
+  overflow: hidden;
+  background: var(--clarity-bg);
+  color: var(--clarity-ink);
+  font-family: Arial, var(--font-geist-sans), sans-serif;
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #25231f;
+}
+
+.hero {
+  width: var(--clarity-content-width);
+  min-height: max(720px, 100svh);
+  margin: 0 auto;
+  color: var(--invite-photo-text, #f8f7f1);
+}
+
+.coverImage,
+.photo {
+  object-fit: cover;
+}
+
+.hero .coverImage {
+  object-position: center 58%;
+  transform: translateY(-9%) scale(1.1);
+  transform-origin: center top;
+}
+
+.heroShade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(22, 21, 19, 0.18);
+}
+
+.heroShade {
+  background:
+    linear-gradient(180deg, rgba(20, 19, 17, 0.06), transparent 30%),
+    linear-gradient(0deg, rgba(20, 19, 17, 0.72), transparent 43%);
+}
+
+.heroTitle,
+.heroFooter {
+  position: absolute;
+  z-index: 2;
+}
+
+.heroTitle {
+  top: clamp(26px, 4vw, 64px);
+  left: clamp(18px, 3vw, 44px);
+  display: grid;
+  color: var(--invite-photo-text, #f8f7f1);
+  font-size: clamp(64px, 8vw, 116px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.82;
+}
+
+.heroTitle time {
+  font-variant-numeric: tabular-nums;
+}
+
+.heroFooter {
+  right: clamp(18px, 5vw, 72px);
+  bottom: clamp(26px, 4vw, 58px);
+  left: clamp(18px, 5vw, 72px);
+  display: grid;
+  grid-template-columns: minmax(90px, 0.45fr) minmax(0, 1fr);
+  align-items: end;
+  column-gap: clamp(24px, 8vw, 112px);
+  row-gap: clamp(20px, 3vw, 34px);
+}
+
+.heroFooter p,
+.heroFooter span {
+  margin: 0;
+}
+
+.heroFooter p:first-child {
+  grid-column: 1 / -1;
+  max-width: 25ch;
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1.03;
+}
+
+.heroFooter span {
+  grid-column: 1;
+  align-self: start;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.heroFooter p:last-child {
+  grid-column: 2;
+  max-width: 31ch;
+  font-size: clamp(12px, 1.1vw, 15px);
+  line-height: 1.18;
+}
+
+.paper {
+  width: var(--clarity-content-width);
+  margin: 0 auto;
+  background: var(--clarity-paper);
+}
+
+.dateSection {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.5fr) minmax(200px, 0.75fr) minmax(0, 1.35fr);
+  gap: clamp(26px, 5vw, 80px);
+  padding: clamp(64px, 9vw, 132px) clamp(22px, 7vw, 106px);
+}
+
+.dateLockup {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 20px;
+}
+
+.dateLockup time {
+  display: grid;
+  font-size: clamp(76px, 9vw, 132px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 0.7;
+}
+
+.dateLockup > span {
+  padding-top: 4px;
+  font-size: 13px;
+}
+
+.dateNote {
+  align-self: center;
+  max-width: 29ch;
+  margin: 0;
+  color: var(--clarity-muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.locationCopy {
+  grid-column: 1 / 3;
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  padding-top: clamp(20px, 5vw, 70px);
+}
+
+.locationCopy > span,
+.sectionHeader > span,
+.rsvpIntro > span {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.locationCopy h2,
+.locationCopy p {
+  margin: 0;
+}
+
+.locationCopy h2 {
+  max-width: 13ch;
+  font-size: clamp(32px, 4.2vw, 64px);
+  font-weight: 400;
+  line-height: 0.98;
+  text-transform: lowercase;
+}
+
+.locationCopy p {
+  max-width: 42ch;
+  color: var(--clarity-muted);
+  font-size: 14px;
+}
+
+.venuePhoto {
+  position: relative;
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  min-height: 570px;
+  overflow: hidden;
+  background: #211e1a;
+}
+
+.locationLinks {
+  grid-column: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: -54px;
+  padding: 0 18px 18px;
+  color: #f7f4ea;
+  font-size: 12px;
+}
+
+.locationLinks a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+.scheduleSection {
+  padding: clamp(64px, 9vw, 130px) clamp(22px, 7vw, 106px);
+  border-top: 1px solid var(--clarity-line);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(34px, 5vw, 72px);
+}
+
+.sectionHeader h2 {
+  margin: 0;
+  font-size: clamp(40px, 6.5vw, 96px);
+  font-weight: 400;
+  line-height: 0.9;
+  text-transform: lowercase;
+}
+
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.scheduleCard {
+  display: grid;
+  min-height: 300px;
+  align-content: space-between;
+  border: 1px solid var(--clarity-line);
+  padding: clamp(20px, 2.6vw, 38px);
+}
+
+.scheduleCard > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.scheduleCard time {
+  font-size: clamp(28px, 3vw, 42px);
+  font-variant-numeric: tabular-nums;
+}
+
+.scheduleCard > div span {
+  color: var(--clarity-muted);
+  font-size: 11px;
+}
+
+.scheduleCard h3,
+.scheduleCard p {
+  margin: 0;
+}
+
+.scheduleCard h3 {
+  align-self: end;
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 400;
+}
+
+.scheduleCard p {
+  max-width: 31ch;
+  color: var(--clarity-muted);
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.scheduleCardDark {
+  border-color: var(--clarity-ink);
+  background: var(--clarity-ink);
+  color: var(--clarity-paper);
+}
+
+.scheduleCardDark p,
+.scheduleCardDark > div span {
+  color: color-mix(in srgb, var(--clarity-paper) 68%, transparent);
+}
+
+.dressSection {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.85fr);
+  align-items: stretch;
+  border-top: 1px solid var(--clarity-line);
+}
+
+.dressBlock.dressBlock {
+  --dress-accent: var(--clarity-ink);
+  --dress-ink: var(--clarity-ink);
+  --dress-muted: var(--clarity-muted);
+  --dress-line: var(--clarity-line);
+  --dress-surface: var(--clarity-paper);
+  --dress-veil: transparent;
+  align-content: center;
+  width: 100%;
+  min-height: 690px;
+  border: 0;
+  background: none;
+  padding: clamp(66px, 9vw, 132px) clamp(24px, 8vw, 112px);
+  box-shadow: none;
+}
+
+.dressBlock :global([class*="section-eyebrow"]),
+.dressBlock :global([class*="swatchLabel"]) {
+  display: none;
+}
+
+.dressBlock :global(h2) {
+  color: var(--clarity-ink) !important;
+  font-family: Arial, var(--font-geist-sans), sans-serif !important;
+  font-size: clamp(46px, 6vw, 88px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 0.92 !important;
+  text-transform: lowercase !important;
+}
+
+.dressBlock :global(p) {
+  max-width: 46ch;
+  font-size: 15px;
+}
+
+.dressBlock :global([class*="swatch"]) {
+  border-radius: 50% !important;
+  box-shadow: none !important;
+}
+
+.martiniPhoto {
+  position: relative;
+  min-height: 690px;
+  overflow: hidden;
+  background: var(--clarity-paper);
+}
+
+.rsvpSection {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(34px, 8vw, 120px);
+  border-top: 1px solid var(--clarity-line);
+  padding: clamp(72px, 10vw, 150px) clamp(22px, 7vw, 106px);
+}
+
+.rsvpIntro {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.rsvpIntro h2,
+.rsvpIntro p {
+  margin: 0;
+}
+
+.rsvpIntro h2 {
+  font-size: clamp(42px, 5vw, 74px);
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: lowercase;
+}
+
+.rsvpIntro p {
+  max-width: 34ch;
+  color: var(--clarity-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--clarity-ink);
+  --rsvp-accent-soft: color-mix(in srgb, var(--clarity-line) 48%, transparent);
+  --rsvp-button-text: var(--clarity-paper);
+  --rsvp-control-radius: 0;
+  --rsvp-focus-surface: var(--clarity-paper);
+  --rsvp-ink: var(--clarity-ink);
+  --rsvp-line: var(--clarity-line);
+  --rsvp-muted: var(--clarity-muted);
+  --rsvp-radius: 0;
+  --rsvp-section: transparent;
+  --rsvp-shadow: none;
+  --rsvp-surface: transparent;
+  width: 100%;
+}
+
+.rsvpForm :global([class*="section"]) {
+  backdrop-filter: none;
+}
+
+@media (max-width: 900px) {
+  .dateSection {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+
+  .locationCopy {
+    grid-column: 1 / -1;
+  }
+
+  .venuePhoto {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-height: 470px;
+  }
+
+  .locationLinks {
+    grid-column: 2;
+  }
+
+  .scheduleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .scheduleCard {
+    min-height: 230px;
+  }
+
+  .dressSection {
+    grid-template-columns: 1fr;
+  }
+
+  .dressBlock.dressBlock,
+  .martiniPhoto {
+    min-height: 560px;
+  }
+
+  .rsvpSection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 601px) {
+  .heroTitle {
+    font-size: 96px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    height: clamp(700px, 182vw, 760px);
+    min-height: 0;
+  }
+
+  .hero .coverImage {
+    object-position: 52% center;
+    transform: translateY(-20%) scale(1.24);
+    transform-origin: center top;
+  }
+
+  .heroTitle {
+    top: 28px;
+    left: 20px;
+    font-size: clamp(62px, 18vw, 72px);
+    line-height: 0.82;
+  }
+
+  .heroFooter {
+    right: 20px;
+    bottom: 24px;
+    left: 20px;
+    grid-template-columns: minmax(74px, 0.44fr) minmax(0, 1fr);
+    column-gap: 18px;
+    row-gap: 18px;
+  }
+
+  .heroFooter p:first-child {
+    max-width: 18ch;
+    font-size: clamp(27px, 8vw, 32px);
+    line-height: 0.98;
+  }
+
+  .heroFooter span {
+    display: block;
+    font-size: 8px;
+  }
+
+  .heroFooter p:last-child {
+    max-width: 26ch;
+    font-size: 11px;
+    line-height: 1.14;
+  }
+
+  .dateSection {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding-inline: 18px;
+  }
+
+  .dateLockup {
+    width: min(100%, 270px);
+  }
+
+  .dateNote {
+    align-self: start;
+  }
+
+  .locationCopy {
+    grid-column: 1;
+    padding-top: 20px;
+  }
+
+  .locationCopy h2 {
+    font-size: clamp(36px, 12vw, 52px);
+  }
+
+  .venuePhoto {
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 390px;
+  }
+
+  .locationLinks {
+    grid-column: 1;
+    margin-top: -58px;
+  }
+
+  .scheduleSection {
+    padding-inline: 18px;
+  }
+
+  .sectionHeader {
+    display: grid;
+  }
+
+  .sectionHeader h2 {
+    font-size: clamp(48px, 15vw, 66px);
+  }
+
+  .scheduleCard {
+    min-height: 240px;
+    padding: 22px;
+  }
+
+  .dressBlock.dressBlock {
+    min-height: 540px;
+    padding-inline: 18px;
+  }
+
+  .martiniPhoto {
+    min-height: 460px;
+  }
+
+  .rsvpSection {
+    padding-inline: 18px;
+  }
+
+}

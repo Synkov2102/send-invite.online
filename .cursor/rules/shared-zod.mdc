@@ -1,0 +1,14 @@
+---
+description: Shared package — Zod-схемы, типы, лимиты полей
+globs: packages/shared/**/*
+alwaysApply: false
+---
+
+# @invite/shared
+
+- Схемы: `src/schemas/*.schema.ts`; guards/parse: `invite-validators.ts`.
+- Типы через `z.infer`; не дублировать ручные type guards.
+- Лимиты: `field-limits.ts` — схемы импортируют **его**, не `invite-field-limits.ts` (циклы).
+- Shape vs strict: `*ShapeSchema` — структура; `*Schema` — с `INVITE_FIELD_LIMITS`.
+- Публичный API: `parseCreateInviteSitePayload`, `isInviteState`, `isInviteTemplate`, …
+- Сборка: `npm run build --workspace @invite/shared` перед backend/frontend.

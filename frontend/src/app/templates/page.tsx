@@ -1,7 +1,7 @@
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
 import TemplateCard from "@/components/template-card";
-import { getEditorReadyTemplates } from "@invite/shared";
+import { getEditorReadyTemplates } from "@/lib/invite-templates";
 import type { Metadata } from "next";
 import { formatInviteSitePrice } from "@/lib/commerce";
 

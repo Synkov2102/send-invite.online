@@ -1,4 +1,4 @@
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 async function proxyResult(request: Request) {
   const target = new URL("/api/payments/robokassa/result", getServerApiBaseUrl());

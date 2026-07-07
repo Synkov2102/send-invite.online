@@ -1,5 +1,5 @@
 import type { InviteTemplate } from "@/lib/invite-templates";
-import type { InviteState } from "@invite/shared";
+import type { InviteState } from "@/lib/invite-state";
 import type { InvitePalette } from "@/lib/invite-theme";
 
 export type { InviteState };

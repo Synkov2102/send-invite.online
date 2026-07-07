@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function GET(
   _request: Request,

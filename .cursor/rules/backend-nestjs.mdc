@@ -1,0 +1,15 @@
+---
+description: NestJS backend — API, MongoDB, платежи, S3
+globs: backend/**/*
+alwaysApply: false
+---
+
+# Backend
+
+- Префикс `/api`; stores в `*.store.ts`; бизнес-логика в `*.service.ts`.
+- Ошибки для клиента: `{ error: "…" }` на русском (`BadRequestException`, …).
+- Парсинг тела сайта: `parseCreateInviteSitePayload` из `@invite/shared`.
+- Публикация только после оплаты: `publishAfterPayment`, проверки `isPaid`.
+- Robokassa: `@SkipThrottle()` на webhook; Password2 (result), Password1 (success); ответ `OK{InvId}`.
+- `completePayment` всегда вызывает `publishAfterPayment` (идемпотентность).
+- Env: `../.env.backend.local` / `../.env.backend.production` (см. `app.module.ts`).

@@ -19,7 +19,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { InviteResponseData, OwnedInviteSite } from "@/lib/backend-api";
 import { fetchInviteResponses } from "@/lib/api/sites";
-import { getInviteTemplateName } from "@invite/shared";
+import { getInviteTemplateName } from "@/lib/invite-templates";
 
 type DashboardSiteCardProps = {
   site: OwnedInviteSite;

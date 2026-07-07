@@ -1,0 +1,76 @@
+import { z } from "zod";
+export declare const inviteSitePaletteShapeSchema: z.ZodObject<{
+    accent: z.ZodString;
+    background: z.ZodString;
+    id: z.ZodString;
+    ink: z.ZodString;
+    label: z.ZodString;
+    line: z.ZodString;
+    mood: z.ZodString;
+    muted: z.ZodString;
+    photoText: z.ZodString;
+    surface: z.ZodString;
+    veil: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    accent: string;
+    background: string;
+    id: string;
+    ink: string;
+    label: string;
+    line: string;
+    mood: string;
+    muted: string;
+    photoText: string;
+    surface: string;
+    veil: string;
+}, {
+    accent: string;
+    background: string;
+    id: string;
+    ink: string;
+    label: string;
+    line: string;
+    mood: string;
+    muted: string;
+    photoText: string;
+    surface: string;
+    veil: string;
+}>;
+export declare const inviteSitePaletteSchema: z.ZodObject<{
+    accent: z.ZodString;
+    background: z.ZodString;
+    id: z.ZodString;
+    ink: z.ZodString;
+    label: z.ZodString;
+    line: z.ZodString;
+    mood: z.ZodString;
+    muted: z.ZodString;
+    photoText: z.ZodString;
+    surface: z.ZodString;
+    veil: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    accent: string;
+    background: string;
+    id: string;
+    ink: string;
+    label: string;
+    line: string;
+    mood: string;
+    muted: string;
+    photoText: string;
+    surface: string;
+    veil: string;
+}, {
+    accent: string;
+    background: string;
+    id: string;
+    ink: string;
+    label: string;
+    line: string;
+    mood: string;
+    muted: string;
+    photoText: string;
+    surface: string;
+    veil: string;
+}>;
+export type InviteSitePalette = z.infer<typeof inviteSitePaletteShapeSchema>;

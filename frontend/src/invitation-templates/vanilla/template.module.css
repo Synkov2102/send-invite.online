@@ -606,6 +606,41 @@
     inset 0 1px 0 color-mix(in srgb, var(--vanilla-paper) 86%, transparent);
 }
 
+.rsvpHeader {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  margin-bottom: 38px;
+  text-align: center;
+}
+
+.rsvpHeader > span,
+.rsvpHeader > strong {
+  color: var(--vanilla-orange);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.rsvpHeader h2,
+.rsvpHeader p {
+  margin: 0;
+}
+
+.rsvpHeader p {
+  max-width: 500px;
+}
+
+.rsvpHeader > strong {
+  border: 1px solid color-mix(in srgb, var(--vanilla-pink) 40%, transparent);
+  border-radius: 999px;
+  padding: 9px 14px;
+  letter-spacing: 0.05em;
+}
+
 .rsvpCloud::before,
 .rsvpCloud::after {
   position: absolute;

@@ -1,5 +1,6 @@
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
-import type { InviteTemplate, PublishedInviteSite } from "@invite/shared";
+import type { PublishedInviteSite } from "@/lib/invite-site-types";
+import type { InviteTemplate } from "@/lib/invite-templates";
 
 export type PublishedInviteSiteViewProps = {
   site: PublishedInviteSite;

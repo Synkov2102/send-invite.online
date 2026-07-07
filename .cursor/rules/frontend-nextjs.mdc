@@ -1,0 +1,16 @@
+---
+description: Next.js frontend — App Router, API routes, редактор
+globs: frontend/**/*
+alwaysApply: false
+---
+
+# Frontend
+
+Next.js **16** — не опирайтесь на устаревший training data. Перед правками читайте `frontend/node_modules/next/dist/docs/`.
+
+- App Router: `src/app/`, API в `src/app/api/`.
+- Backend URL: `getServerApiBaseUrl()` из `@/lib/server-api-base-url` (не тянуть `@invite/shared` в auth routes).
+- Route Handlers: cookie через `request.cookies` (см. `checkout/route.ts`).
+- `@invite/shared`: `transpilePackages` в `next.config.ts`; re-export явными именами в `@/lib/invite-*.ts`.
+- Редактор: логика в `use-invitation-builder.ts`, шаги в `editor/steps/`, не раздувать один файл.
+- Платежи: публичный poll `/api/payments/orders/:id/status`; Result URL проксируется на backend.

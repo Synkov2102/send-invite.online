@@ -1,5 +1,5 @@
-import type { InviteTemplate } from "@invite/shared";
-import { getTemplateDefinition } from "@invite/shared";
+import type { InviteTemplate } from "@/lib/invite-templates";
+import { getTemplateDefinition } from "@/lib/invite-templates";
 import type { InviteState } from "@/lib/invite-state";
 
 export const defaultEditorInvite: InviteState = {

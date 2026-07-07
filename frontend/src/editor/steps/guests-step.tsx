@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { Plus, Trash2 } from "lucide-react";
-import type { InviteRsvpQuestion } from "@invite/shared";
+import type { InviteRsvpQuestion } from "@/lib/invite-state";
 import { FieldGroup, TextAreaField, TextInput } from "../components";
 import { useEditor } from "../editor-context";
 

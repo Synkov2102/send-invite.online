@@ -1,4 +1,4 @@
-import type { InviteState } from "@invite/shared";
+import type { InviteState } from "@/lib/invite-state";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 
 export function getEditorStepErrors(invite: InviteState) {

@@ -3,7 +3,7 @@
  *
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
- * 2. Укажите `kind` (alpine | aqua | silk | vanilla) и `editorReady: true`.
+ * 2. Укажите `kind` (alpine | aqua | clarity | silk | vanilla) и `editorReady: true`.
  * 3. Положите скриншот в frontend/public/images/templates/.
  *
  * Чтобы добавить новый движок рендера:
@@ -11,24 +11,10 @@
  * 2. Добавьте kind в TemplateKind и loader в invitation-templates/registry.ts.
  */
 import type { InviteState } from "./invite-state";
-export type CoverType = "rings" | "arch" | "wave";
-export type TemplateKind = "alpine" | "aqua" | "silk" | "vanilla";
-export type InviteTemplate = {
-    id: string;
-    name: string;
-    description: string;
-    coverType: CoverType;
-    defaultPaletteId: string;
-    recommendedPaletteIds: readonly string[];
-    tags: string[];
-    screenshot: string;
-    preview: {
-        background: string;
-        surface: string;
-        ink: string;
-        accent: string;
-    };
-};
+import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema";
+export type { CoverType, InviteTemplate };
+export { isInviteTemplate } from "./schemas/invite-template.schema";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "silk" | "vanilla";
 export type InviteTemplateDefinition = InviteTemplate & {
     /** Какой React-движок рисует шаблон. */
     kind: TemplateKind;
@@ -43,9 +29,56 @@ export declare function getTemplateDefinition(id: string | null | undefined): In
 export declare function getTemplateKind(templateId: string): TemplateKind;
 export declare function getInviteTemplateName(templateId: string): string;
 export declare function isEditorReadyTemplate(templateId: string): boolean;
-export declare function getEditorReadyTemplates(): InviteTemplate[];
-export declare function getEditorPreset(templateId: string): Partial<InviteState> | undefined;
-export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "silk" | "vanilla";
+export declare function getEditorReadyTemplates(): {
+    id: string;
+    description: string;
+    coverType: "rings" | "arch" | "wave";
+    defaultPaletteId: string;
+    recommendedPaletteIds: string[];
+    name: string;
+    preview: {
+        accent: string;
+        background: string;
+        ink: string;
+        surface: string;
+    };
+    screenshot: string;
+    tags: string[];
+}[];
+export declare function getEditorPreset(templateId: string): Partial<{
+    time: string;
+    date: string;
+    address: string;
+    bride: string;
+    city: string;
+    coverImageUrl: string;
+    dressCode: string;
+    dressCodeColors: string[];
+    groom: string;
+    lead: string;
+    musicEnabled: boolean;
+    musicTitle: string;
+    musicUrl: string;
+    paletteId: string;
+    portraitImageUrl: string;
+    ringMetal: string;
+    rsvpDate: string;
+    rsvpQuestions: {
+        options: string[];
+        type: "multiple" | "single";
+        title: string;
+    }[];
+    rsvpText: string;
+    schedule: {
+        description: string;
+        time: string;
+        title: string;
+    }[];
+    showRsvp: boolean;
+    venue: string;
+    venueImageUrl: string;
+    mapUrl?: string | undefined;
+}> | undefined;
+export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "clarity" | "silk" | "vanilla";
 export declare const defaultInviteTemplates: InviteTemplate[];
 export declare function getInviteTemplate(id: string | null | undefined): InviteTemplate;
-export declare function isInviteTemplate(value: unknown): value is InviteTemplate;

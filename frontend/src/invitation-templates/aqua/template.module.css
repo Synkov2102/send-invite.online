@@ -449,6 +449,45 @@
   padding: clamp(16px, 3.5vw, 24px);
 }
 
+.rsvpHeader {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  margin: 10px auto 30px;
+  text-align: center;
+}
+
+.rsvpEyebrow {
+  color: var(--glass-accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+.rsvpHeader .heading,
+.rsvpCopy {
+  margin: 0;
+}
+
+.rsvpCopy {
+  max-width: 430px;
+  color: var(--glass-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.rsvpDeadline {
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--glass-foam) 26%, transparent);
+  padding: 8px 13px;
+  color: var(--glass-accent);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .dressSection :global(h2),
 .rsvpSection :global(h2) {
   color: var(--glass-ink) !important;

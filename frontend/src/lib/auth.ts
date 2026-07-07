@@ -2,7 +2,7 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export const authSessionCookieName = "invite_session";
 

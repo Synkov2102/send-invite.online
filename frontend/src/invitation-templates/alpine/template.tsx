@@ -276,15 +276,20 @@ export default function AlpineTemplate({
         <motion.section
           className="invite-rsvp"
           initial="hidden"
-          variants={sectionReveal}
-          viewport={revealViewport}
-          whileInView="visible"
-        >
+        variants={sectionReveal}
+        viewport={revealViewport}
+        whileInView="visible"
+      >
+          <div className="invite-rsvp__header">
+            <InvitationSectionEyebrow>RSVP</InvitationSectionEyebrow>
+            <h2 className="invite-heading">Анкета гостя</h2>
+            <p>{invite.rsvpText}</p>
+            <span>Ждем ваш ответ до {formatDate(invite.rsvpDate)}</span>
+          </div>
           <InvitationRsvpForm
             questions={invite.rsvpQuestions}
             rsvpDate={invite.rsvpDate}
             siteId={siteId}
-            text={invite.rsvpText}
             variant="alpine"
           />
         </motion.section>

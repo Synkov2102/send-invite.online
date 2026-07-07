@@ -4,13 +4,19 @@ import { useMemo } from "react";
 import {
   getTemplateKind,
   isWideTemplateKind,
-  type InviteSitePalette,
-  type InviteState,
   type InviteTemplate,
-} from "@invite/shared";
+} from "@/lib/invite-templates";
+import type { InviteSitePalette } from "@/lib/invite-site-types";
+import type { InviteState } from "@/lib/invite-state";
 import { getCalendarDays } from "@/lib/invite-date";
 import { alpineRenderer as AlpineRenderer, sharedTemplateRenderers } from "@/invitation-templates/registry";
-import { createInviteVars, createRingColor, inviteImages, silkImages } from "@/lib/invite-theme";
+import {
+  clarityImages,
+  createInviteVars,
+  createRingColor,
+  inviteImages,
+  silkImages,
+} from "@/lib/invite-theme";
 
 export type InviteSiteRendererProps = {
   asMain?: boolean;
@@ -33,7 +39,12 @@ export function InviteSiteRenderer({
   const calendarDays = useMemo(() => getCalendarDays(invite.date), [invite.date]);
   const inviteVars = useMemo(() => createInviteVars(palette), [palette]);
   const ringColor = useMemo(() => createRingColor(invite.ringMetal), [invite.ringMetal]);
-  const templateImages = templateKind === "silk" ? silkImages : inviteImages;
+  const templateImages =
+    templateKind === "silk"
+      ? silkImages
+      : templateKind === "clarity"
+        ? clarityImages
+        : inviteImages;
   const coverImage = invite.coverImageUrl || templateImages.cover;
   const portraitImage = invite.portraitImageUrl || templateImages.portrait;
   const venueImage = invite.venueImageUrl || templateImages.venue;

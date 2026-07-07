@@ -268,13 +268,15 @@ function RsvpSection({
     <section className={cx(styles.section, styles.rsvpSection)} id="rsvp">
       <h2>Анкета гостя</h2>
       <p>{invite.rsvpText}</p>
+      <span className={styles.rsvpDeadline}>
+        Ждем ваш ответ до {formatNumericDate(invite.rsvpDate)}
+      </span>
       <div className={styles.rsvpFormWrap} id="silk-rsvp-form">
         <InvitationRsvpForm
           className={styles.rsvpForm}
           questions={invite.rsvpQuestions}
           rsvpDate={invite.rsvpDate}
           siteId={siteId}
-          text={invite.rsvpText}
           variant="aqua"
         />
       </div>

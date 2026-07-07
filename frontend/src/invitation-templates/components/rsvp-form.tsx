@@ -4,7 +4,6 @@ import { Button, Checkbox, CheckboxGroup, Input, Radio, RadioGroup } from "@hero
 import { useId, useState } from "react";
 import { formatDate } from "@/lib/invite-date";
 import type { InviteRsvpQuestion } from "@/lib/invite-state";
-import { InvitationSectionEyebrow } from "./section-eyebrow";
 import styles from "./rsvp-form.module.css";
 
 type InvitationRsvpFormProps = Readonly<{
@@ -12,7 +11,6 @@ type InvitationRsvpFormProps = Readonly<{
   questions: InviteRsvpQuestion[];
   rsvpDate: string;
   siteId?: string;
-  text: string;
   variant?: "alpine" | "vanilla" | "aqua";
 }>;
 
@@ -25,7 +23,6 @@ export function InvitationRsvpForm({
   questions,
   rsvpDate,
   siteId,
-  text,
   variant = "alpine",
 }: InvitationRsvpFormProps) {
   const [error, setError] = useState<string | null>(null);
@@ -106,13 +103,6 @@ export function InvitationRsvpForm({
         }
       }}
     >
-      <header className={styles.header}>
-        <InvitationSectionEyebrow>RSVP</InvitationSectionEyebrow>
-        <h2 className={styles.title}>Анкета гостя</h2>
-        <p className={styles.copy}>{text}</p>
-        <p className={styles.deadline}>Ждем ваш ответ до {formatDate(rsvpDate)}</p>
-      </header>
-
       <section className={styles.section}>
         <div className={styles.sectionHeading}>
           <span className={styles.step}>01</span>

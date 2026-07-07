@@ -1,6 +1,6 @@
 import "server-only";
 
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function confirmRobokassaSuccessRedirect(input: {
   invId: string;

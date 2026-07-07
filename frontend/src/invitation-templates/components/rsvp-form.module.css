@@ -67,76 +67,10 @@
   --rsvp-shadow: 0 18px 48px rgba(6, 28, 33, 0.12);
 }
 
-.aqua .title {
-  color: var(--rsvp-ink);
-  font-size: clamp(28px, 5.5vw, 40px);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  text-transform: none;
-}
-
-.form.aqua .title {
-  color: var(--rsvp-ink);
-  font-size: clamp(28px, 5.5vw, 40px);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  text-transform: none;
-}
-
-.header {
-  display: grid;
-  justify-items: center;
-  gap: 15px;
-  padding-inline: 10px;
-  text-align: center;
-}
-
-.form .title {
-  margin: 0;
-  color: var(--rsvp-accent);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(44px, 7vw, 66px);
-  font-weight: 400;
-  letter-spacing: -0.035em;
-  line-height: 0.98;
-  text-transform: uppercase;
-}
-
-.alpine .title {
-  color: var(--rsvp-ink);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(30px, 8vw, 38px);
-  letter-spacing: -0.045em;
-  text-transform: none;
-}
-
-.alpine .copy {
-  font-size: 15px;
-}
-
 @media (min-width: 1200px) {
   .form.alpine {
     width: min(100%, 720px);
     gap: clamp(24px, 2.2vw, 34px);
-  }
-
-  .alpine .header {
-    gap: clamp(16px, 1.4vw, 22px);
-  }
-
-  .alpine .title {
-    font-size: clamp(48px, 4.4vw, 72px);
-  }
-
-  .alpine .copy {
-    width: min(100%, 540px);
-    font-size: clamp(16px, 1.3vw, 20px);
-    line-height: 1.62;
-  }
-
-  .alpine .deadline {
-    padding: 10px 16px;
-    font-size: clamp(12px, 1vw, 14px);
   }
 
   .alpine .section {
@@ -187,29 +121,6 @@
   .alpine .helper {
     font-size: clamp(12px, 1vw, 14px);
   }
-}
-
-.form .copy {
-  width: min(100%, 470px);
-  margin: 0 auto;
-  color: var(--rsvp-muted);
-  font-size: 16px;
-  font-weight: 300;
-  line-height: 1.65;
-}
-
-.form .deadline {
-  margin: 0;
-  border: 1px solid var(--rsvp-line);
-  border-radius: 999px;
-  background: var(--rsvp-accent-soft);
-  padding: 8px 13px;
-  color: var(--rsvp-accent);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
 }
 
 .section {
@@ -558,16 +469,6 @@
 @media (max-width: 560px) {
   .form {
     gap: 18px;
-  }
-
-  .form .title,
-  .alpine .title {
-    font-size: clamp(36px, 12vw, 48px);
-  }
-
-  .form .copy {
-    font-size: 14px;
-    line-height: 1.55;
   }
 
   .section {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function GET(
   request: NextRequest,

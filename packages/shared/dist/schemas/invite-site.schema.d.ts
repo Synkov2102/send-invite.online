@@ -1,0 +1,1041 @@
+import { z } from "zod";
+export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
+    invite: z.ZodObject<{
+        address: z.ZodString;
+        bride: z.ZodString;
+        city: z.ZodString;
+        coverImageUrl: z.ZodString;
+        date: z.ZodString;
+        dressCode: z.ZodString;
+        dressCodeColors: z.ZodArray<z.ZodString, "many">;
+        groom: z.ZodString;
+        lead: z.ZodString;
+        mapUrl: z.ZodOptional<z.ZodString>;
+        musicEnabled: z.ZodBoolean;
+        musicTitle: z.ZodString;
+        musicUrl: z.ZodString;
+        paletteId: z.ZodString;
+        portraitImageUrl: z.ZodString;
+        ringMetal: z.ZodString;
+        rsvpDate: z.ZodString;
+        rsvpQuestions: z.ZodArray<z.ZodObject<{
+            options: z.ZodArray<z.ZodString, "many">;
+            title: z.ZodString;
+            type: z.ZodEnum<["multiple", "single"]>;
+        }, "strip", z.ZodTypeAny, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }>, "many">;
+        rsvpText: z.ZodString;
+        schedule: z.ZodArray<z.ZodObject<{
+            description: z.ZodString;
+            time: z.ZodString;
+            title: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            description: string;
+            time: string;
+            title: string;
+        }, {
+            description: string;
+            time: string;
+            title: string;
+        }>, "many">;
+        showRsvp: z.ZodBoolean;
+        time: z.ZodString;
+        venue: z.ZodString;
+        venueImageUrl: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }>;
+    palette: z.ZodObject<{
+        accent: z.ZodString;
+        background: z.ZodString;
+        id: z.ZodString;
+        ink: z.ZodString;
+        label: z.ZodString;
+        line: z.ZodString;
+        mood: z.ZodString;
+        muted: z.ZodString;
+        photoText: z.ZodString;
+        surface: z.ZodString;
+        veil: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }>;
+    templateId: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+}, {
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+}>;
+export declare const createInviteSitePayloadSchema: z.ZodObject<{
+    invite: z.ZodObject<{
+        musicEnabled: z.ZodBoolean;
+        showRsvp: z.ZodBoolean;
+    } & {
+        address: z.ZodString;
+        bride: z.ZodString;
+        city: z.ZodString;
+        coverImageUrl: z.ZodEffects<z.ZodString, string, string>;
+        date: z.ZodString;
+        dressCode: z.ZodString;
+        dressCodeColors: z.ZodArray<z.ZodString, "many">;
+        groom: z.ZodString;
+        lead: z.ZodString;
+        mapUrl: z.ZodOptional<z.ZodString>;
+        musicTitle: z.ZodString;
+        musicUrl: z.ZodEffects<z.ZodString, string, string>;
+        paletteId: z.ZodString;
+        portraitImageUrl: z.ZodEffects<z.ZodString, string, string>;
+        ringMetal: z.ZodString;
+        rsvpDate: z.ZodString;
+        rsvpQuestions: z.ZodArray<z.ZodObject<{
+            options: z.ZodArray<z.ZodString, "many">;
+            title: z.ZodString;
+            type: z.ZodEnum<["multiple", "single"]>;
+        }, "strip", z.ZodTypeAny, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }>, "many">;
+        rsvpText: z.ZodString;
+        schedule: z.ZodArray<z.ZodObject<{
+            description: z.ZodString;
+            time: z.ZodString;
+            title: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            description: string;
+            time: string;
+            title: string;
+        }, {
+            description: string;
+            time: string;
+            title: string;
+        }>, "many">;
+        time: z.ZodString;
+        venue: z.ZodString;
+        venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
+    }, "strip", z.ZodTypeAny, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }>;
+    palette: z.ZodObject<{
+        accent: z.ZodString;
+        background: z.ZodString;
+        id: z.ZodString;
+        ink: z.ZodString;
+        label: z.ZodString;
+        line: z.ZodString;
+        mood: z.ZodString;
+        muted: z.ZodString;
+        photoText: z.ZodString;
+        surface: z.ZodString;
+        veil: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }>;
+    templateId: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+}, {
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+}>;
+export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
+    invite: z.ZodObject<{
+        address: z.ZodString;
+        bride: z.ZodString;
+        city: z.ZodString;
+        coverImageUrl: z.ZodString;
+        date: z.ZodString;
+        dressCode: z.ZodString;
+        dressCodeColors: z.ZodArray<z.ZodString, "many">;
+        groom: z.ZodString;
+        lead: z.ZodString;
+        mapUrl: z.ZodOptional<z.ZodString>;
+        musicEnabled: z.ZodBoolean;
+        musicTitle: z.ZodString;
+        musicUrl: z.ZodString;
+        paletteId: z.ZodString;
+        portraitImageUrl: z.ZodString;
+        ringMetal: z.ZodString;
+        rsvpDate: z.ZodString;
+        rsvpQuestions: z.ZodArray<z.ZodObject<{
+            options: z.ZodArray<z.ZodString, "many">;
+            title: z.ZodString;
+            type: z.ZodEnum<["multiple", "single"]>;
+        }, "strip", z.ZodTypeAny, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }>, "many">;
+        rsvpText: z.ZodString;
+        schedule: z.ZodArray<z.ZodObject<{
+            description: z.ZodString;
+            time: z.ZodString;
+            title: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            description: string;
+            time: string;
+            title: string;
+        }, {
+            description: string;
+            time: string;
+            title: string;
+        }>, "many">;
+        showRsvp: z.ZodBoolean;
+        time: z.ZodString;
+        venue: z.ZodString;
+        venueImageUrl: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }>;
+    palette: z.ZodObject<{
+        accent: z.ZodString;
+        background: z.ZodString;
+        id: z.ZodString;
+        ink: z.ZodString;
+        label: z.ZodString;
+        line: z.ZodString;
+        mood: z.ZodString;
+        muted: z.ZodString;
+        photoText: z.ZodString;
+        surface: z.ZodString;
+        veil: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }>;
+    templateId: z.ZodString;
+} & {
+    createdAt: z.ZodString;
+    id: z.ZodString;
+    updatedAt: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+    createdAt: string;
+    updatedAt: string;
+}, {
+    id: string;
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+    createdAt: string;
+    updatedAt: string;
+}>;
+export declare const publishedInviteSiteSchema: z.ZodObject<{
+    invite: z.ZodObject<{
+        musicEnabled: z.ZodBoolean;
+        showRsvp: z.ZodBoolean;
+    } & {
+        address: z.ZodString;
+        bride: z.ZodString;
+        city: z.ZodString;
+        coverImageUrl: z.ZodEffects<z.ZodString, string, string>;
+        date: z.ZodString;
+        dressCode: z.ZodString;
+        dressCodeColors: z.ZodArray<z.ZodString, "many">;
+        groom: z.ZodString;
+        lead: z.ZodString;
+        mapUrl: z.ZodOptional<z.ZodString>;
+        musicTitle: z.ZodString;
+        musicUrl: z.ZodEffects<z.ZodString, string, string>;
+        paletteId: z.ZodString;
+        portraitImageUrl: z.ZodEffects<z.ZodString, string, string>;
+        ringMetal: z.ZodString;
+        rsvpDate: z.ZodString;
+        rsvpQuestions: z.ZodArray<z.ZodObject<{
+            options: z.ZodArray<z.ZodString, "many">;
+            title: z.ZodString;
+            type: z.ZodEnum<["multiple", "single"]>;
+        }, "strip", z.ZodTypeAny, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }, {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }>, "many">;
+        rsvpText: z.ZodString;
+        schedule: z.ZodArray<z.ZodObject<{
+            description: z.ZodString;
+            time: z.ZodString;
+            title: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            description: string;
+            time: string;
+            title: string;
+        }, {
+            description: string;
+            time: string;
+            title: string;
+        }>, "many">;
+        time: z.ZodString;
+        venue: z.ZodString;
+        venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
+    }, "strip", z.ZodTypeAny, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }, {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    }>;
+    palette: z.ZodObject<{
+        accent: z.ZodString;
+        background: z.ZodString;
+        id: z.ZodString;
+        ink: z.ZodString;
+        label: z.ZodString;
+        line: z.ZodString;
+        mood: z.ZodString;
+        muted: z.ZodString;
+        photoText: z.ZodString;
+        surface: z.ZodString;
+        veil: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }, {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    }>;
+    templateId: z.ZodString;
+} & {
+    createdAt: z.ZodString;
+    id: z.ZodString;
+    updatedAt: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+    createdAt: string;
+    updatedAt: string;
+}, {
+    id: string;
+    invite: {
+        time: string;
+        date: string;
+        address: string;
+        bride: string;
+        city: string;
+        coverImageUrl: string;
+        dressCode: string;
+        dressCodeColors: string[];
+        groom: string;
+        lead: string;
+        musicEnabled: boolean;
+        musicTitle: string;
+        musicUrl: string;
+        paletteId: string;
+        portraitImageUrl: string;
+        ringMetal: string;
+        rsvpDate: string;
+        rsvpQuestions: {
+            options: string[];
+            type: "multiple" | "single";
+            title: string;
+        }[];
+        rsvpText: string;
+        schedule: {
+            description: string;
+            time: string;
+            title: string;
+        }[];
+        showRsvp: boolean;
+        venue: string;
+        venueImageUrl: string;
+        mapUrl?: string | undefined;
+    };
+    palette: {
+        accent: string;
+        background: string;
+        id: string;
+        ink: string;
+        label: string;
+        line: string;
+        mood: string;
+        muted: string;
+        photoText: string;
+        surface: string;
+        veil: string;
+    };
+    templateId: string;
+    createdAt: string;
+    updatedAt: string;
+}>;
+export type CreateInviteSitePayload = z.infer<typeof createInviteSitePayloadShapeSchema>;
+export type PublishedInviteSite = z.infer<typeof publishedInviteSiteShapeSchema>;

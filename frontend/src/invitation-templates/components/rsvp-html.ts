@@ -1,16 +1,11 @@
 import { formatDate } from "@/lib/invite-date";
 import type { InviteRsvpQuestion } from "@/lib/invite-state";
-import {
-  createSectionEyebrowHtml,
-  createSectionEyebrowStyles,
-} from "./section-eyebrow-html";
 
 type RsvpHtmlVariant = "alpine" | "vanilla";
 
 type CreateRsvpFormHtmlOptions = {
   questions: InviteRsvpQuestion[];
   rsvpDate: string;
-  text: string;
   variant: RsvpHtmlVariant;
 };
 
@@ -25,7 +20,6 @@ function escapeHtml(value: string) {
 
 export function createRsvpFormStyles() {
   return `
-    ${createSectionEyebrowStyles()}
     .rsvp-form {
       --rsvp-accent: var(--invite-accent, #c89d60);
       --rsvp-accent-soft: color-mix(in srgb, var(--rsvp-accent) 11%, transparent);
@@ -64,11 +58,6 @@ export function createRsvpFormStyles() {
       --rsvp-surface: rgba(255,255,255,.68);
       --rsvp-section: rgba(255,255,255,.42);
     }
-    .rsvp-form__header { display: grid; justify-items: center; gap: 15px; padding-inline: 10px; text-align: center; }
-    .rsvp-form .rsvp-form__title { margin: 0; color: var(--rsvp-accent); font-family: Georgia,serif; font-size: clamp(44px,7vw,66px); font-weight: 400; letter-spacing: -.035em; line-height: .98; text-transform: uppercase; }
-    .rsvp-form--alpine .rsvp-form__title { color: var(--rsvp-ink); font-size: clamp(42px,6vw,58px); letter-spacing: -.045em; text-transform: none; }
-    .rsvp-form .rsvp-form__copy { width: min(100%,470px); margin: 0 auto; color: var(--rsvp-muted); font-size: 16px; font-weight: 300; line-height: 1.65; }
-    .rsvp-form .rsvp-form__deadline { margin: 0; border: 1px solid var(--rsvp-line); border-radius: 999px; background: var(--rsvp-accent-soft); padding: 8px 13px; color: var(--rsvp-accent); font-size: 11px; font-weight: 700; letter-spacing: .08em; line-height: 1.2; text-transform: uppercase; }
     .rsvp-form__section { display: grid; gap: 18px; border: 1px solid var(--rsvp-line); border-radius: var(--rsvp-radius); background: var(--rsvp-section); padding: 22px; box-shadow: 0 18px 50px rgba(43,48,42,.07); backdrop-filter: blur(12px); }
     .rsvp-form__section-heading { display: flex; align-items: flex-start; gap: 13px; }
     .rsvp-form__step { display: grid; flex: 0 0 30px; width: 30px; height: 30px; place-items: center; border: 1px solid var(--rsvp-line); border-radius: 50%; background: var(--rsvp-accent-soft); color: var(--rsvp-accent); font-size: 10px; font-weight: 750; }
@@ -108,8 +97,6 @@ export function createRsvpFormStyles() {
     .rsvp-form__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
     @media (max-width: 560px) {
       .rsvp-form { gap: 18px; }
-      .rsvp-form .rsvp-form__title,.rsvp-form--alpine .rsvp-form__title { font-size: clamp(36px,12vw,48px); }
-      .rsvp-form .rsvp-form__copy { font-size: 14px; line-height: 1.55; }
       .rsvp-form__section { gap: 15px; padding: 16px; }
       .rsvp-form__drinks { grid-template-columns: 1fr; }
       .rsvp-form__option { padding: 12px; }
@@ -120,7 +107,6 @@ export function createRsvpFormStyles() {
 export function createRsvpFormHtml({
   questions,
   rsvpDate,
-  text,
   variant,
 }: CreateRsvpFormHtmlOptions) {
   const variantClass = variant === "vanilla" ? "rsvp-form--vanilla" : "rsvp-form--alpine";
@@ -151,12 +137,6 @@ export function createRsvpFormHtml({
     .join("");
 
   return `<form class="rsvp-form ${variantClass}" data-rsvp-form>
-    <header class="rsvp-form__header">
-      ${createSectionEyebrowHtml("RSVP")}
-      <h2 class="rsvp-form__title">Анкета гостя</h2>
-      <p class="rsvp-form__copy">${escapeHtml(text)}</p>
-      <p class="rsvp-form__deadline">Ждем ваш ответ до ${deadline}</p>
-    </header>
     <section class="rsvp-form__section">
       <div class="rsvp-form__section-heading"><span class="rsvp-form__step">01</span><div><h3>Расскажите о себе</h3><p>Чтобы мы правильно подписали ваше место</p></div></div>
       <label class="rsvp-form__field"><span class="rsvp-form__label">Имя и фамилия</span><input class="rsvp-form__input" name="guestName" placeholder="Например, Анна Иванова" required type="text" autocomplete="name" /></label>

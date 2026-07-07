@@ -291,11 +291,18 @@ export default function AquaTemplate({
           {invite.showRsvp ? (
             <GlassSection className={styles.rsvpSection} id="rsvp">
               <span className={styles.sectionNumber}>06</span>
+              <div className={styles.rsvpHeader}>
+                <span className={styles.rsvpEyebrow}>RSVP</span>
+                <h2 className={styles.heading}>Анкета гостя</h2>
+                <p className={styles.rsvpCopy}>{invite.rsvpText}</p>
+                <span className={styles.rsvpDeadline}>
+                  Ждем ваш ответ до {formatDate(invite.rsvpDate)}
+                </span>
+              </div>
               <InvitationRsvpForm
                 questions={invite.rsvpQuestions}
                 rsvpDate={invite.rsvpDate}
                 siteId={siteId}
-                text={invite.rsvpText}
                 variant="aqua"
               />
             </GlassSection>

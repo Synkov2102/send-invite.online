@@ -111,8 +111,11 @@
 .template-card:hover { border-color: transparent; box-shadow: none; transform: none; }
 .template-card__image { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border: 1px solid var(--product-line); border-radius: 20px; background: var(--product-soft); }
 .template-card__image img { object-fit: cover; object-position: top; transition: transform 420ms cubic-bezier(.2,.8,.2,1); }
+.template-card--phone-preview .template-card__image { background: #b8b4aa; }
+.template-card--phone-preview .template-card__image img { object-fit: contain; }
 .template-card__image > span { position: absolute; top: 14px; left: 14px; border-radius: 999px; background: rgba(255,253,250,.88); padding: 7px 10px; font-family: var(--font-geist-mono), monospace; font-size: .58rem; backdrop-filter: blur(12px); }
 .template-card:hover .template-card__image img { transform: scale(1.035); }
+.template-card--phone-preview:hover .template-card__image img { transform: none; }
 .template-card__meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 4px 0; }
 .template-card__meta small { color: var(--product-muted); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
 .template-card__meta h2,

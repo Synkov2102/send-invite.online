@@ -1,13 +1,12 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
-import { getServerApiBaseUrl } from "@/lib/backend-api";
+import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   context: RouteContext<"/dashboard/actions/sites/[id]">,
 ) {
-  const sessionToken = (await cookies()).get(authSessionCookieName)?.value;
+  const sessionToken = request.cookies.get(authSessionCookieName)?.value;
 
   if (!sessionToken) {
     return NextResponse.json({ error: "Войдите в аккаунт." }, { status: 401 });

@@ -1,4 +1,4 @@
-import { isInviteState, type InviteState } from "@invite/shared";
+import { isInviteState, type InviteState } from "@/lib/invite-state";
 import type { InvitePalette } from "@/lib/invite-theme";
 
 export const editorDraftStorageKey = "invite.editor.draft.v1";

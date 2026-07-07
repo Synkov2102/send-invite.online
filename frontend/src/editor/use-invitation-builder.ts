@@ -8,11 +8,14 @@ import {
 } from "@/lib/api/sites";
 import {
   getTemplateKind,
-  type InviteRsvpQuestion,
-  type InviteScheduleItem,
-  type InviteState,
-} from "@invite/shared";
+} from "@/lib/invite-templates";
+import type {
+  InviteRsvpQuestion,
+  InviteScheduleItem,
+  InviteState,
+} from "@/lib/invite-state";
 import {
+  clarityImages,
   createRingColor,
   defaultCustomPalette,
   getTemplatePalettes,
@@ -85,7 +88,12 @@ export function useInvitationBuilder({
     resolvedPaletteId === "custom"
       ? customPalette
       : templatePalette ?? palettes.find((item) => item.id === resolvedPaletteId) ?? palettes[0];
-  const templateImages = templateKind === "silk" ? silkImages : inviteImages;
+  const templateImages =
+    templateKind === "silk"
+      ? silkImages
+      : templateKind === "clarity"
+        ? clarityImages
+        : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

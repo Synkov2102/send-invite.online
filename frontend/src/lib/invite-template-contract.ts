@@ -360,7 +360,7 @@ export const inviteSharedComponentsContract = {
   rsvp: {
     importPath: "@/invitation-templates/components",
     component: "InvitationRsvpForm",
-    props: ["text", "rsvpDate", "questions", "variant?"],
+    props: ["rsvpDate", "questions", "variant?"],
     variants: ["alpine", "aqua", "vanilla"] as InviteSharedComponentVariant[],
     renderWhen: "invite.showRsvp === true",
   },
@@ -529,7 +529,7 @@ ${renderCssVarsTable()}
 ## Общие компоненты (обязательно переиспользовать)
 
 1. **Дресс-код** — \`InvitationDressCodeBlock\` с props \`text\`, \`colors\`, \`variant\`.
-2. **RSVP** — \`InvitationRsvpForm\` с props \`text\`, \`rsvpDate\`, \`questions\`, \`variant\`. Рендерить только если \`invite.showRsvp\`.
+2. **RSVP** — шаблон сам рисует заголовок, текст и дедлайн, затем \`InvitationRsvpForm\` с props \`rsvpDate\`, \`questions\`, \`variant\`. Рендерить только если \`invite.showRsvp\`.
 3. **Музыка** — \`InvitationMusicPlayer\` с props \`enabled\`, \`title\`, \`url\`.
 
 Импорт: \`@/invitation-templates/components\`.

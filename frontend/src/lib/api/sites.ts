@@ -1,4 +1,4 @@
-import type { CreateInviteSitePayload } from "@invite/shared";
+import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
 
 type SiteMutationResult = {
   error?: string;

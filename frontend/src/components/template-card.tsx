@@ -31,7 +31,9 @@ export default function TemplateCard({
     editorParams.set("site", siteId);
   }
 
-  const rootClassName = className ? `template-card ${className}` : "template-card";
+  const previewClassName =
+    template.id === "clarity-editorial" ? " template-card--phone-preview" : "";
+  const rootClassName = `template-card${previewClassName}${className ? ` ${className}` : ""}`;
 
   return (
     <Link className={rootClassName} href={`/editor?${editorParams.toString()}`}>

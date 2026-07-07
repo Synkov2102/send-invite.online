@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import type { ComponentType } from "react";
-import type { CoverType, TemplateKind } from "@invite/shared";
+import type { CoverType, TemplateKind } from "@/lib/invite-templates";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
 import type { getCalendarDays } from "@/lib/invite-date";
@@ -36,6 +36,10 @@ export const sharedTemplateRenderers: Record<
   ComponentType<SharedTemplateViewProps>
 > = {
   aqua: dynamic(() => import("./aqua").then((module) => module.AquaTemplate), { ssr: true }),
+  clarity: dynamic(
+    () => import("./clarity").then((module) => module.ClarityTemplate),
+    { ssr: true },
+  ),
   silk: dynamic(() => import("./silk").then((module) => module.SilkTemplate), { ssr: true }),
   vanilla: dynamic(
     () => import("./vanilla").then((module) => module.VanillaTemplate),
