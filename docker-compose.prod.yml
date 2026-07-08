@@ -21,6 +21,7 @@ services:
       NODE_ENV: production
       PORT: 3000
       HOSTNAME: 0.0.0.0
+      FRONTEND_ORIGIN: https://send-invite.online
       BACKEND_API_URL: http://backend:3001
     ports:
       - "127.0.0.1:8090:3000"

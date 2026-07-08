@@ -21,11 +21,26 @@ function normalizeHost(host: string) {
   }
 }
 
+function normalizeConfiguredOrigin(origin: string) {
+  try {
+    const parsed = new URL(origin);
+    const hostname = parsed.hostname.replace(/^\[|\]$/g, "");
+
+    if (localHostnames.has(hostname)) {
+      parsed.hostname = "localhost";
+    }
+
+    return parsed.origin;
+  } catch {
+    return origin.replace(/\/$/, "");
+  }
+}
+
 export function getRequestOrigin(request: NextRequest) {
-  const configuredOrigin = process.env.FRONTEND_ORIGIN?.replace(/\/$/, "");
+  const configuredOrigin = process.env.FRONTEND_ORIGIN?.trim();
 
   if (configuredOrigin) {
-    return configuredOrigin;
+    return normalizeConfiguredOrigin(configuredOrigin);
   }
 
   const forwardedHost = getFirstHeaderValue(request.headers.get("x-forwarded-host"));

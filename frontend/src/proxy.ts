@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const canonicalHostname = "send-invite.online";
 const legacyHostname = `www.${canonicalHostname}`;
 const localHostname = "localhost";
-const localAliases = new Set(["127.0.0.1", "::1"]);
+const localAliases = new Set(["0.0.0.0", "127.0.0.1", "::1"]);
 
 function getRequestHostname(request: NextRequest) {
   const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();

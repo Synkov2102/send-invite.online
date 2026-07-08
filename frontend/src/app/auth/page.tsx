@@ -16,9 +16,13 @@ type AuthPageProps = {
 };
 
 const errorMessages: Record<string, string> = {
+  backend_unreachable: "Сервер авторизации временно недоступен. Попробуйте через минуту.",
   invalid_oauth_state: "Не удалось проверить OAuth-сессию. Попробуйте войти еще раз.",
+  missing_code_verifier: "Сессия входа истекла или была сброшена. Нажмите кнопку входа еще раз.",
   missing_yandex_config: "Yandex ID пока не настроен на сервере.",
+  redirect_uri_not_allowed: "Неверный redirect URI для Yandex ID. Проверьте FRONTEND_ORIGIN и YANDEX_REDIRECT_URI.",
   yandex_auth_failed: "Yandex ID не подтвердил вход. Попробуйте еще раз.",
+  yandex_token_exchange_failed: "Yandex ID не принял код авторизации. Попробуйте войти еще раз.",
 };
 
 function getParam(value: string | string[] | undefined) {

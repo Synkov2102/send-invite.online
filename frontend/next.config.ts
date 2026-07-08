@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
     return [
       {
         destination: `${apiBaseUrl}/api/:path*`,
-        source: "/api/:path*",
+        source: "/api/:path((?!auth/yandex).*)",
       },
     ];
   },

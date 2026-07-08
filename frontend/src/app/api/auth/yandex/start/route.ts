@@ -2,6 +2,7 @@ import { createHash, randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookieOptions, isSafeReturnPath } from "@/lib/auth";
 import { getRequestUrl } from "@/lib/request-origin";
+import { getYandexRedirectUri } from "@/lib/yandex-oauth";
 
 const stateCookieName = "yandex_oauth_state";
 const verifierCookieName = "yandex_oauth_code_verifier";
@@ -12,10 +13,7 @@ function base64Url(buffer: Buffer) {
 }
 
 function getRedirectUri(request: NextRequest) {
-  return (
-    process.env.YANDEX_REDIRECT_URI ||
-    getRequestUrl(request, "/api/auth/yandex/callback").toString()
-  );
+  return getYandexRedirectUri(request);
 }
 
 export async function GET(request: NextRequest) {

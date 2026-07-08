@@ -60,23 +60,27 @@ export class AuthService {
   }
 
   private assertAllowedRedirectUri(redirectUri: string) {
+    const normalizedRedirectUri = this.normalizeRedirectUri(redirectUri);
     const allowed = new Set(
       [
         process.env.YANDEX_REDIRECT_URI,
         process.env.FRONTEND_ORIGIN
           ? new URL("/api/auth/yandex/callback", process.env.FRONTEND_ORIGIN).toString()
           : null,
-      ].filter((value): value is string => Boolean(value)),
+      ]
+        .filter((value): value is string => Boolean(value))
+        .map((value) => this.normalizeRedirectUri(value)),
     );
 
-    if (!allowed.has(redirectUri)) {
+    if (!allowed.has(normalizedRedirectUri)) {
       throw new BadRequestException("Redirect URI is not allowed.");
     }
 
     try {
-      const parsed = new URL(redirectUri);
+      const parsed = new URL(normalizedRedirectUri);
+      const localHosts = new Set(["localhost", "127.0.0.1", "::1", "0.0.0.0"]);
 
-      if (parsed.protocol !== "https:" && parsed.hostname !== "localhost") {
+      if (parsed.protocol !== "https:" && !localHosts.has(parsed.hostname)) {
         throw new BadRequestException("Redirect URI must use HTTPS.");
       }
     } catch (error) {
@@ -86,5 +90,22 @@ export class AuthService {
 
       throw new BadRequestException("Redirect URI is invalid.");
     }
+  }
+
+  private normalizeRedirectUri(redirectUri: string) {
+    const parsed = new URL(redirectUri);
+    const localHosts = new Set(["localhost", "127.0.0.1", "::1", "0.0.0.0"]);
+
+    if (localHosts.has(parsed.hostname)) {
+      parsed.hostname = "localhost";
+    }
+
+    parsed.hash = "";
+
+    if (parsed.pathname.endsWith("/") && parsed.pathname !== "/") {
+      parsed.pathname = parsed.pathname.replace(/\/$/, "");
+    }
+
+    return parsed.toString();
   }
 }
