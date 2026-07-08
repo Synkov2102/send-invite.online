@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { brand } from "@/lib/brand";
+import { createRootMetadata } from "@/lib/seo";
 import "./globals.css";
 import "./product-theme.css";
 
@@ -14,16 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(brand.url),
-  title: {
-    default: `${brand.name} — сайты-приглашения на свадьбу`,
-    template: `%s · ${brand.name}`,
-  },
-  description:
-    "Создайте красивый сайт-приглашение на свадьбу: выберите шаблон, настройте тексты и поделитесь с гостями.",
-  applicationName: brand.name,
-};
+export const metadata: Metadata = createRootMetadata();
 
 export default function RootLayout({
   children,

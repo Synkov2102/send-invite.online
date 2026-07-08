@@ -1,10 +1,19 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import CommerceFooter from "@/components/commerce-footer";
 import InvitationBuilder from "@/editor/invitation-builder";
 import { getManagedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
 import { getInviteTemplate } from "@/lib/invite-templates";
+import { createPageMetadata, privateRobots } from "@/lib/seo";
 import { notFound, redirect } from "next/navigation";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Редактор приглашения",
+  description: "Редактор сайта-приглашения Send Invite.",
+  path: "/editor",
+  robots: privateRobots,
+});
 
 type EditorPageProps = {
   searchParams: Promise<{

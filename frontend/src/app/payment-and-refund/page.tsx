@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/legal-page";
 import { formatInviteSitePrice, seller } from "@/lib/commerce";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Оплата и возврат",
   description: "Стоимость, порядок получения услуги и возврата денежных средств.",
-};
+  path: "/payment-and-refund",
+});
 
 export default function PaymentAndRefundPage() {
   return (

@@ -1,15 +1,18 @@
+import type { Metadata } from "next";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
 import { getCurrentUser } from "@/lib/auth";
 import { brand } from "@/lib/brand";
+import { createPageMetadata, privateRobots } from "@/lib/seo";
 import { ArrowRight, LogIn, UserPlus } from "lucide-react";
 import Link from "next/link";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Вход и регистрация",
   description: `Войдите или зарегистрируйтесь в ${brand.name} через Yandex ID.`,
-};
+  path: "/auth",
+  robots: privateRobots,
+});
 
 type AuthPageProps = {
   searchParams: Promise<{ error?: string | string[]; mode?: string | string[]; returnTo?: string | string[] }>;

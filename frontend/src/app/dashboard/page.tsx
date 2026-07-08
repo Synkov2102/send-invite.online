@@ -14,11 +14,14 @@ import CommerceFooter from "@/components/commerce-footer";
 import SiteHeader from "@/components/site-header";
 import { getOwnedInviteSites, type OwnedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
+import { createPageMetadata, privateRobots } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Личный кабинет",
   description: "Сайты-приглашения и ответы гостей.",
-};
+  path: "/dashboard",
+  robots: privateRobots,
+});
 
 export const dynamic = "force-dynamic";
 

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/legal-page";
 import { brand } from "@/lib/brand";
 import { formatSellerLegalName, seller } from "@/lib/commerce";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Политика обработки персональных данных",
   description: "Порядок обработки персональных данных в Send Invite.",
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

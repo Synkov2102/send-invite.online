@@ -1,10 +1,18 @@
 import CommerceFooter from "@/components/commerce-footer";
+import JsonLd from "@/components/json-ld";
 import SiteHeader from "@/components/site-header";
 import TemplateCard from "@/components/template-card";
 import WaterBackground from "@/invitation-templates/aqua/water-background";
 import { brand } from "@/lib/brand";
 import { defaultInviteTemplates } from "@/lib/invite-templates";
 import { formatInviteSitePrice } from "@/lib/commerce";
+import {
+  buildOrganizationJsonLd,
+  buildProductJsonLd,
+  buildWebSiteJsonLd,
+  createPageMetadata,
+} from "@/lib/seo";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   CalendarDays,
@@ -22,6 +30,12 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
+
+export const metadata: Metadata = createPageMetadata({
+  path: "/",
+  description:
+    "Создайте сайт-приглашение на свадьбу за один вечер: шаблоны, редактор, RSVP и публикация по ссылке.",
+});
 
 const HERO_CHECKS = ["Без кода", "Адаптивно", "RSVP внутри"] as const;
 
@@ -96,6 +110,9 @@ export default function HomePage() {
 
   return (
     <div className={styles.page}>
+      <JsonLd
+        data={[buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildProductJsonLd()]}
+      />
       <WaterBackground className={styles.liquidBackground} {...LANDING_BACKGROUND} />
       <SiteHeader active="home" />
 
@@ -153,7 +170,7 @@ export default function HomePage() {
                   fill
                   priority
                   sizes="(max-width: 899px) 92vw, 48vw"
-                  src="/images/wedding-mountain-cover.png"
+                  src="/images/clarity-wedding-cover.png"
                 />
                 <div className={styles.previewShade} />
                 <div className={styles.previewCopy}>
@@ -253,7 +270,7 @@ export default function HomePage() {
               alt="Молодожёны в день свадьбы"
               fill
               sizes="(max-width: 899px) 92vw, 42vw"
-              src="/images/wedding-mountain-portrait.png"
+              src="/images/clarity-wedding-venue.png"
             />
           </div>
           <div className={styles.storyCopy}>

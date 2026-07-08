@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/legal-page";
 import { brand } from "@/lib/brand";
 import { formatInviteSitePrice, formatSellerLegalName, seller } from "@/lib/commerce";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Публичная оферта",
   description: "Условия оказания услуг Send Invite.",
-};
+  path: "/offer",
+});
 
 export default function OfferPage() {
   return (

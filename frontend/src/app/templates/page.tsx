@@ -1,14 +1,17 @@
+import type { Metadata } from "next";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
 import TemplateCard from "@/components/template-card";
 import { getEditorReadyTemplates } from "@/lib/invite-templates";
-import type { Metadata } from "next";
 import { formatInviteSitePrice } from "@/lib/commerce";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Шаблоны приглашений",
-  description: "Выберите стиль свадебного приглашения и откройте его в редакторе.",
-};
+  description:
+    "Каталог шаблонов свадебных сайтов-приглашений: выберите стиль и откройте редактор Send Invite.",
+  path: "/templates",
+});
 
 type TemplatesPageProps = {
   searchParams: Promise<{ site?: string | string[] }>;

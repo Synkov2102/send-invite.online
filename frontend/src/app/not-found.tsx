@@ -1,0 +1,36 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import CommerceFooter from "@/components/commerce-footer";
+import SiteHeader from "@/components/site-header";
+import { createPageMetadata, privateRobots } from "@/lib/seo";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Страница не найдена",
+  description: "Запрошенная страница не найдена на Send Invite.",
+  path: "/404",
+  robots: privateRobots,
+});
+
+export default function NotFoundPage() {
+  return (
+    <div className="marketing-page">
+      <SiteHeader />
+      <main className="legal-shell">
+        <header className="legal-hero">
+          <p className="marketing-eyebrow">404</p>
+          <h1>Страница не найдена</h1>
+          <p>Возможно, ссылка устарела или страница была удалена.</p>
+        </header>
+        <div className="auth-actions">
+          <Link className="marketing-button marketing-button--primary" href="/">
+            На главную
+          </Link>
+          <Link className="marketing-button marketing-button--ghost" href="/templates">
+            К шаблонам
+          </Link>
+        </div>
+      </main>
+      <CommerceFooter />
+    </div>
+  );
+}

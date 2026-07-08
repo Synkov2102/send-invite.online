@@ -6,11 +6,14 @@ import {
   confirmRobokassaSuccessRedirect,
   readRobokassaSearchParam,
 } from "@/lib/payments";
+import { createPageMetadata, privateRobots } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Статус оплаты",
-  robots: { index: false, follow: false },
-};
+  description: "Проверка статуса оплаты сайта-приглашения.",
+  path: "/payment/success",
+  robots: privateRobots,
+});
 
 export default async function PaymentSuccessPage({
   searchParams,

@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import PaymentStatus from "@/components/payment-status";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
+import { createPageMetadata, privateRobots } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Оплата не завершена",
-  robots: { index: false, follow: false },
-};
+  description: "Оплата сайта-приглашения не была завершена.",
+  path: "/payment/fail",
+  robots: privateRobots,
+});
 
 export default async function PaymentFailPage({
   searchParams,
