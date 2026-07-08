@@ -3,7 +3,7 @@
 import { Button } from "@heroui/react";
 import { Check, Palette } from "lucide-react";
 import { themeFields } from "../constants";
-import { FieldGroup } from "../components";
+import { ColorField, FieldGroup } from "../components";
 import { useEditor } from "../editor-context";
 
 type StepPanelProps = {
@@ -32,7 +32,7 @@ export function DesignStep({ isActive }: StepPanelProps) {
       <FieldGroup
         title="Палитра"
         description="Выберите готовое настроение или настройте цвета вручную."
-        hint="После выбора палитры откройте предпросмотр: контраст текста на фото особенно важен на телефоне."
+        hint="Меняйте цвета ниже — мини-превью сверху обновляется сразу. Для проверки на телефоне откройте «Предпросмотр»."
       >
         <div className="editor-palette-mode" aria-label="Режим настройки палитры">
           <button
@@ -44,7 +44,14 @@ export function DesignStep({ isActive }: StepPanelProps) {
           </button>
           <button
             className={paletteMode === "custom" ? "is-active" : ""}
-            onClick={() => setPaletteMode("custom")}
+            onClick={() => {
+              if (resolvedPaletteId !== "custom") {
+                customizeSelectedPalette();
+                return;
+              }
+
+              setPaletteMode("custom");
+            }}
             type="button"
           >
             Своя палитра
@@ -138,19 +145,13 @@ export function DesignStep({ isActive }: StepPanelProps) {
                   resolvedPaletteId === "custom" ? customPalette[item.field] : palette[item.field];
 
                 return (
-                  <label className="editor-color-field" key={item.field}>
-                    <input
-                      aria-label={item.label}
-                      onChange={(event) => updateCustomPalette(item.field, event.target.value)}
-                      type="color"
-                      value={value}
-                    />
-                    <span>
-                      <strong>{item.label}</strong>
-                      <small>{item.description}</small>
-                    </span>
-                    <code>{value}</code>
-                  </label>
+                  <ColorField
+                    description={item.description}
+                    key={item.field}
+                    label={item.label}
+                    onChange={(nextValue) => updateCustomPalette(item.field, nextValue)}
+                    value={value}
+                  />
                 );
               })}
             </div>
@@ -179,7 +180,7 @@ export function DesignStep({ isActive }: StepPanelProps) {
               </span>
               <input
                 aria-label="Цвет металла колец"
-                className="h-2 w-full cursor-pointer accent-[#8b7960]"
+                className="editor-ring-slider"
                 max="100"
                 min="0"
                 onChange={(event) => updateInvite("ringMetal", event.target.value)}

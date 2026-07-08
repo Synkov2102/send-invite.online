@@ -38,20 +38,28 @@ function useMediaQuery(query: string, serverSnapshot = false) {
   );
 }
 
-function scrollToCard(
-  track: HTMLDivElement,
-  index: number,
-  behavior: ScrollBehavior,
-) {
-  const card = track.children.item(index) as HTMLElement | null;
-  if (!card) {
-    return;
+function getCardScrollLeft(track: HTMLDivElement, card: HTMLElement) {
+  return track.scrollLeft + card.getBoundingClientRect().left - track.getBoundingClientRect().left;
+}
+
+function getNearestCardIndex(track: HTMLDivElement) {
+  const cards = Array.from(track.children) as HTMLElement[];
+  if (cards.length === 0) {
+    return 0;
   }
 
-  track.scrollTo({
-    left: card.offsetLeft - track.offsetLeft,
-    behavior,
+  let nearestIndex = 0;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  cards.forEach((card, index) => {
+    const distance = Math.abs(getCardScrollLeft(track, card));
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearestIndex = index;
+    }
   });
+
+  return nearestIndex;
 }
 
 export default function ValuePropsCarousel({
@@ -61,14 +69,46 @@ export default function ValuePropsCarousel({
   iconClassName,
 }: ValuePropsCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const activeIndexRef = useRef(0);
+  const isProgrammaticScrollRef = useRef(false);
   const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const scrollUnlockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  const scrollToIndex = useCallback(
+    (index: number, behavior: ScrollBehavior) => {
+      const track = trackRef.current;
+      const card = track?.children.item(index) as HTMLElement | null;
+      if (!track || !card) {
+        return;
+      }
+
+      isProgrammaticScrollRef.current = true;
+      activeIndexRef.current = index;
+      setActiveIndex(index);
+
+      track.scrollTo({
+        left: getCardScrollLeft(track, card),
+        behavior,
+      });
+
+      if (scrollUnlockTimerRef.current) {
+        clearTimeout(scrollUnlockTimerRef.current);
+      }
+
+      scrollUnlockTimerRef.current = setTimeout(() => {
+        isProgrammaticScrollRef.current = false;
+      }, behavior === "smooth" ? 520 : 0);
+    },
+    [],
+  );
+
   const pauseAutoScroll = useCallback(() => {
     setIsPaused(true);
+    isProgrammaticScrollRef.current = false;
 
     if (pauseTimeoutRef.current) {
       clearTimeout(pauseTimeoutRef.current);
@@ -84,6 +124,9 @@ export default function ValuePropsCarousel({
       if (pauseTimeoutRef.current) {
         clearTimeout(pauseTimeoutRef.current);
       }
+      if (scrollUnlockTimerRef.current) {
+        clearTimeout(scrollUnlockTimerRef.current);
+      }
     };
   }, []);
 
@@ -93,48 +136,62 @@ export default function ValuePropsCarousel({
       return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting || entry.intersectionRatio < 0.55) {
-            return;
-          }
+    const syncActiveIndex = () => {
+      if (isProgrammaticScrollRef.current) {
+        return;
+      }
 
-          const index = Number((entry.target as HTMLElement).dataset.index);
-          if (!Number.isNaN(index)) {
-            setActiveIndex(index);
-          }
-        });
-      },
-      { root: track, threshold: [0.55, 0.75, 1] },
-    );
+      const nearestIndex = getNearestCardIndex(track);
+      if (nearestIndex === activeIndexRef.current) {
+        return;
+      }
 
-    Array.from(track.children).forEach((child) => observer.observe(child));
+      activeIndexRef.current = nearestIndex;
+      setActiveIndex(nearestIndex);
+    };
 
-    return () => observer.disconnect();
+    const onScrollEnd = () => {
+      isProgrammaticScrollRef.current = false;
+      syncActiveIndex();
+    };
+
+    let scrollSyncTimer: ReturnType<typeof setTimeout> | null = null;
+    const onScroll = () => {
+      if (isProgrammaticScrollRef.current) {
+        return;
+      }
+
+      if (scrollSyncTimer) {
+        clearTimeout(scrollSyncTimer);
+      }
+
+      scrollSyncTimer = setTimeout(syncActiveIndex, 120);
+    };
+
+    track.addEventListener("scrollend", onScrollEnd, { passive: true });
+    track.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      track.removeEventListener("scrollend", onScrollEnd);
+      track.removeEventListener("scroll", onScroll);
+      if (scrollSyncTimer) {
+        clearTimeout(scrollSyncTimer);
+      }
+    };
   }, [isMobile]);
 
   useEffect(() => {
-    const track = trackRef.current;
-    if (!track || !isMobile || prefersReducedMotion || isPaused) {
+    if (!isMobile || prefersReducedMotion || isPaused) {
       return;
     }
 
     const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % homeValueProps.length);
+      const nextIndex = (activeIndexRef.current + 1) % homeValueProps.length;
+      scrollToIndex(nextIndex, "smooth");
     }, AUTO_SCROLL_MS);
 
     return () => window.clearInterval(timer);
-  }, [isMobile, isPaused, prefersReducedMotion]);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track || !isMobile) {
-      return;
-    }
-
-    scrollToCard(track, activeIndex, prefersReducedMotion ? "instant" : "smooth");
-  }, [activeIndex, isMobile, prefersReducedMotion]);
+  }, [isMobile, isPaused, prefersReducedMotion, scrollToIndex]);
 
   const trackClassName = [
     gridClassName,
@@ -183,7 +240,7 @@ export default function ValuePropsCarousel({
               key={item.title}
               onClick={() => {
                 pauseAutoScroll();
-                setActiveIndex(index);
+                scrollToIndex(index, prefersReducedMotion ? "instant" : "smooth");
               }}
               tabIndex={-1}
               type="button"

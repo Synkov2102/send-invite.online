@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { ImagePlus, RotateCcw } from "lucide-react";
-import { imageUploadTypes } from "../constants";
+import { imageUploadAccept } from "../lib/prepare-image-upload";
 import { FieldGroup, TextInput } from "../components";
 import { useEditor } from "../editor-context";
 
@@ -49,43 +49,60 @@ export function MediaStep({ isActive }: StepPanelProps) {
       <FieldGroup
         title="Фото"
         description="Загрузите изображения, которые зададут настроение приглашения."
-        hint="Вертикальные фото пары и светлое фото площадки лучше всего заполняют мобильный экран."
+        hint="Нажмите на область фото или кнопку ниже — откроется галерея телефона."
       >
         <div className="editor-photo-grid">
           {photoSlots.map((item) => (
             <div className="editor-photo-upload" key={item.field}>
-              <div
-                aria-hidden
-                className="editor-photo-upload__preview"
-                style={{ backgroundImage: `url(${item.src})` }}
-              />
-              <div className="editor-photo-upload__copy">
-                <strong>{item.label}</strong>
-                <small>{item.description}</small>
-              </div>
-              <div className="editor-photo-upload__actions">
-                <label className="editor-photo-upload__button">
-                  <ImagePlus aria-hidden size={14} />
-                  <span>Загрузить</span>
-                  <input
-                    accept={imageUploadTypes.join(",")}
-                    onChange={(event) => {
-                      selectImageFile(item.field, event.target.files?.[0]);
-                      event.currentTarget.value = "";
-                    }}
-                    type="file"
-                  />
-                </label>
-                <Button
-                  aria-label={`Сбросить ${item.label.toLowerCase()}`}
-                  className="editor-photo-upload__reset"
-                  isDisabled={!invite[item.field]}
-                  onClick={() => resetImage(item.field)}
-                  type="button"
-                  variant="outline"
-                >
-                  <RotateCcw aria-hidden size={13} />
-                </Button>
+              <label className="editor-photo-upload__picker">
+                <div
+                  aria-hidden
+                  className="editor-photo-upload__preview"
+                  style={{ backgroundImage: `url(${item.src})` }}
+                />
+                <span className="editor-photo-upload__picker-label">
+                  <ImagePlus aria-hidden size={18} />
+                  <span>{item.src ? "Заменить фото" : "Выбрать фото"}</span>
+                </span>
+                <input
+                  accept={imageUploadAccept}
+                  onChange={(event) => {
+                    void selectImageFile(item.field, event.target.files?.[0]);
+                    event.currentTarget.value = "";
+                  }}
+                  type="file"
+                />
+              </label>
+
+              <div className="editor-photo-upload__body">
+                <div className="editor-photo-upload__copy">
+                  <strong>{item.label}</strong>
+                  <small>{item.description}</small>
+                </div>
+                <div className="editor-photo-upload__actions">
+                  <label className="editor-photo-upload__button">
+                    <ImagePlus aria-hidden size={15} />
+                    <span>Загрузить</span>
+                    <input
+                      accept={imageUploadAccept}
+                      onChange={(event) => {
+                        void selectImageFile(item.field, event.target.files?.[0]);
+                        event.currentTarget.value = "";
+                      }}
+                      type="file"
+                    />
+                  </label>
+                  <Button
+                    aria-label={`Сбросить ${item.label.toLowerCase()}`}
+                    className="editor-photo-upload__reset"
+                    isDisabled={!invite[item.field]}
+                    onClick={() => resetImage(item.field)}
+                    type="button"
+                    variant="outline"
+                  >
+                    <RotateCcw aria-hidden size={15} />
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
@@ -96,8 +113,8 @@ export function MediaStep({ isActive }: StepPanelProps) {
           </p>
         ) : null}
         <p className="editor-music-note">
-          JPG, PNG, WEBP или GIF до 8 МБ. При публикации фото будут сохранены в
-          S3-хранилище.
+          JPG, PNG, WEBP, GIF или HEIC до 8 МБ. Фото автоматически сжимается для
+          предпросмотра и сохраняется в S3 при публикации.
         </p>
       </FieldGroup>
 

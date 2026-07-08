@@ -26,7 +26,8 @@ import {
 } from "@/lib/invite-theme";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { imageUploadTypes, maxImageUploadBytes, themeFields, editorSteps } from "./constants";
+import { prepareImageUpload } from "./lib/prepare-image-upload";
+import { themeFields, editorSteps } from "./constants";
 import {
   isLocalMusicSource,
   readEditorDraft,
@@ -352,7 +353,7 @@ export function useInvitationBuilder({
     reader.readAsDataURL(file);
   }
 
-  function selectImageFile(
+  async function selectImageFile(
     field: "coverImageUrl" | "portraitImageUrl" | "venueImageUrl",
     file: File | undefined,
   ) {
@@ -360,26 +361,32 @@ export function useInvitationBuilder({
       return;
     }
 
-    if (!imageUploadTypes.includes(file.type)) {
-      setPhotoError("Поддерживаются только JPG, PNG, WEBP и GIF.");
-      return;
-    }
+    try {
+      const dataUrl = await prepareImageUpload(file);
+      setPhotoError(null);
+      updateInvite(field, dataUrl);
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : "unknown";
 
-    if (file.size > maxImageUploadBytes) {
-      setPhotoError("Фото должно быть меньше 8 МБ.");
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      if (typeof reader.result !== "string") {
+      if (reason === "size") {
+        setPhotoError("Фото должно быть меньше 8 МБ.");
         return;
       }
 
-      setPhotoError(null);
-      updateInvite(field, reader.result);
-    });
-    reader.readAsDataURL(file);
+      if (reason === "heic") {
+        setPhotoError(
+          "Этот формат не открылся в браузере. Сохраните фото как JPG в галерее и загрузите снова.",
+        );
+        return;
+      }
+
+      if (reason === "type") {
+        setPhotoError("Поддерживаются JPG, PNG, WEBP, GIF и HEIC.");
+        return;
+      }
+
+      setPhotoError("Не удалось обработать фото. Попробуйте другой файл.");
+    }
   }
 
   function resetImage(field: "coverImageUrl" | "portraitImageUrl" | "venueImageUrl") {

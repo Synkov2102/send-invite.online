@@ -1,3 +1,4 @@
+export { ColorField } from "./color-field";
 export { EditorPreviewPanel } from "./editor-preview-panel";
 export { EditorSidebar } from "./editor-sidebar";
 export { EditorSidebarHeader, EditorStepNav } from "./editor-sidebar-header";
