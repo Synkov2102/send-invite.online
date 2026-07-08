@@ -23,6 +23,7 @@ COPY backend/package.json backend/package.json
 COPY frontend/package.json frontend/package.json
 COPY packages/shared/package.json packages/shared/package.json
 RUN npm ci --omit=dev
+RUN mkdir -p packages/shared/node_modules
 
 FROM node:24-alpine AS runner
 WORKDIR /app
@@ -31,6 +32,7 @@ ENV NODE_ENV=production
 ENV PORT=3001
 
 COPY --from=production-deps /app/node_modules ./node_modules
+COPY --from=production-deps /app/packages/shared/node_modules ./packages/shared/node_modules
 COPY --from=production-deps /app/backend/package.json ./backend/package.json
 COPY --from=production-deps /app/packages/shared/package.json ./packages/shared/package.json
 COPY --from=build /app/backend/dist ./backend/dist
