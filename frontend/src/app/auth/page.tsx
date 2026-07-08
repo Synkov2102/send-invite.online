@@ -100,17 +100,14 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
               </div>
 
               <div className="auth-actions">
-                <Link
-                  className="yandex-auth-button"
-                  href={getStartHref(mode, returnTo)}
-                >
+                <a className="yandex-auth-button" href={getStartHref(mode, returnTo)}>
                   {mode === "register" ? (
                     <UserPlus aria-hidden size={18} />
                   ) : (
                     <LogIn aria-hidden size={18} />
                   )}
                   <span>{mode === "register" ? "Зарегистрироваться" : "Войти"} через Яндекс</span>
-                </Link>
+                </a>
               </div>
             </>
           )}

@@ -4,6 +4,7 @@ import {
   getAuthCookieOptions,
   isSafeReturnPath,
 } from "@/lib/auth";
+import { getRequestUrl } from "@/lib/request-origin";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 const stateCookieName = "yandex_oauth_state";
@@ -18,7 +19,7 @@ type AuthSessionResponse = {
 function getRedirectUri(request: NextRequest) {
   return (
     process.env.YANDEX_REDIRECT_URI ||
-    new URL("/api/auth/yandex/callback", request.url).toString()
+    getRequestUrl(request, "/api/auth/yandex/callback").toString()
   );
 }
 
@@ -29,7 +30,9 @@ function clearOAuthCookies(response: NextResponse) {
 }
 
 function getErrorRedirect(request: NextRequest, error: string) {
-  return NextResponse.redirect(new URL(`/auth?error=${encodeURIComponent(error)}`, request.url));
+  return NextResponse.redirect(
+    getRequestUrl(request, `/auth?error=${encodeURIComponent(error)}`),
+  );
 }
 
 export async function GET(request: NextRequest) {
@@ -78,7 +81,7 @@ export async function GET(request: NextRequest) {
       throw new Error("Backend auth response is incomplete.");
     }
 
-    const response = NextResponse.redirect(new URL(returnTo, request.url));
+    const response = NextResponse.redirect(getRequestUrl(request, returnTo));
     const expiresAt = new Date(session.expiresAt);
     const maxAge = Math.max(0, Math.floor((expiresAt.getTime() - Date.now()) / 1000));
 

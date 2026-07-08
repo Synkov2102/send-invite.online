@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthCookieOptions, isSafeReturnPath } from "@/lib/auth";
+import { getRequestUrl } from "@/lib/request-origin";
 
 const stateCookieName = "yandex_oauth_state";
 const verifierCookieName = "yandex_oauth_code_verifier";
@@ -13,7 +14,7 @@ function base64Url(buffer: Buffer) {
 function getRedirectUri(request: NextRequest) {
   return (
     process.env.YANDEX_REDIRECT_URI ||
-    new URL("/api/auth/yandex/callback", request.url).toString()
+    getRequestUrl(request, "/api/auth/yandex/callback").toString()
   );
 }
 
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
   const clientId = process.env.YANDEX_CLIENT_ID;
 
   if (!clientId) {
-    return NextResponse.redirect(new URL("/auth?error=missing_yandex_config", request.url));
+    return NextResponse.redirect(getRequestUrl(request, "/auth?error=missing_yandex_config"));
   }
 
   const state = base64Url(randomBytes(24));
