@@ -45,7 +45,7 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
 
   return (
     <div className="marketing-page auth-page">
-      <SiteHeader />
+      <SiteHeader initialUser={user} />
 
       <main className="auth-shell">
         <section className="auth-panel" aria-labelledby="auth-title">

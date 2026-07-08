@@ -1,17 +1,15 @@
-import { getCurrentUser } from "@/lib/auth";
 import { brand } from "@/lib/brand";
-import { ArrowUpRight, LayoutDashboard, LogIn, LogOut } from "lucide-react";
-import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import BrandLockup from "./brand-lockup";
+import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
 
 type SiteHeaderProps = {
   active?: "home" | "templates";
+  initialUser?: HeaderUser | null;
 };
 
-export default async function SiteHeader({ active }: SiteHeaderProps) {
-  const user = await getCurrentUser();
-
+export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <Link aria-label={brand.homeAriaLabel} className="site-header__brand" href="/">
@@ -37,32 +35,7 @@ export default async function SiteHeader({ active }: SiteHeaderProps) {
       </nav>
 
       <div className="site-header__actions">
-        {user ? (
-          <div className="site-header__user">
-            <Link className="site-header__dashboard" href="/dashboard">
-              <LayoutDashboard aria-hidden size={15} />
-              <span>Мои сайты</span>
-            </Link>
-            <Link className="site-header__profile" href="/dashboard">
-              {user.avatarUrl ? (
-                <Image alt="" height={32} src={user.avatarUrl} width={32} />
-              ) : (
-                <span>{user.name.slice(0, 1).toUpperCase()}</span>
-              )}
-              <strong>{user.name}</strong>
-            </Link>
-            <form action="/api/auth/logout" method="post">
-              <button aria-label="Выйти" title="Выйти" type="submit">
-                <LogOut aria-hidden size={14} />
-              </button>
-            </form>
-          </div>
-        ) : (
-          <Link className="site-header__login" href="/auth">
-            <LogIn aria-hidden size={14} />
-            <span>Войти</span>
-          </Link>
-        )}
+        <SiteHeaderUserActions initialUser={initialUser} />
 
         <Link className="site-header__cta" href="/templates">
           Создать приглашение

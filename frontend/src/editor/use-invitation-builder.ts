@@ -113,14 +113,14 @@ export function useInvitationBuilder({
       }),
     [customPalette, effectiveInvite, hasLocalMusic],
   );
-  const lastSafeEditorSnapshotRef = useRef(currentEditorSnapshot);
+  const [lastSafeEditorSnapshot, setLastSafeEditorSnapshot] = useState(currentEditorSnapshot);
   const hasHistoryGuardRef = useRef(false);
   const ignoreNextPopStateRef = useRef(false);
   const shouldWarnBeforeLeaveRef = useRef(false);
   const hasRingControls = template.coverType === "rings";
   const stepErrors = useMemo(() => getEditorStepErrors(effectiveInvite), [effectiveInvite]);
   const allErrors = stepErrors.slice(0, 3).flat();
-  const hasUnsavedChanges = lastSafeEditorSnapshotRef.current !== currentEditorSnapshot;
+  const hasUnsavedChanges = lastSafeEditorSnapshot !== currentEditorSnapshot;
   const shouldWarnBeforeLeave = !isPublishing && hasUnsavedChanges;
 
   function confirmLeaveEditor() {
@@ -486,7 +486,7 @@ export function useInvitationBuilder({
         template.id,
       );
       if (didSave) {
-        lastSafeEditorSnapshotRef.current = snapshot;
+        setLastSafeEditorSnapshot(snapshot);
       }
       setSaveStatus(didSave ? "saved" : "error");
     }, 450);

@@ -58,7 +58,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="dashboard-page">
-      <SiteHeader />
+      <SiteHeader initialUser={user} />
 
       <main className="dashboard-shell">
         <header className="dashboard-heading">

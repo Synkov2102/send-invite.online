@@ -21,20 +21,61 @@ export default function WaterBackground({
   useEffect(() => {
     let cancelled = false;
     let frameId: number | null = null;
+    let idleId: number | null = null;
+    let timeoutId: ReturnType<typeof globalThis.setTimeout> | null = null;
     const staticBackground = window.matchMedia(STATIC_BACKGROUND_QUERY);
 
+    const cancelScheduledLoad = () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+        frameId = null;
+      }
+
+      if (idleId !== null) {
+        window.cancelIdleCallback(idleId);
+        idleId = null;
+      }
+
+      if (timeoutId !== null) {
+        globalThis.clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+    };
+
+    const loadRenderer = () => {
+      void import("./water-background-renderer").then((module) => {
+        if (!cancelled && !staticBackground.matches) {
+          setRenderer(() => module.WaterBackgroundRenderer);
+        }
+      });
+    };
+
     const updateRenderer = () => {
+      cancelScheduledLoad();
+
       if (staticBackground.matches) {
         setRenderer(null);
         return;
       }
 
       frameId = window.requestAnimationFrame(() => {
-        void import("./water-background-renderer").then((module) => {
-          if (!cancelled && !staticBackground.matches) {
-            setRenderer(() => module.WaterBackgroundRenderer);
-          }
-        });
+        frameId = null;
+
+        if ("requestIdleCallback" in window) {
+          idleId = window.requestIdleCallback(
+            () => {
+              idleId = null;
+              loadRenderer();
+            },
+            { timeout: 1200 },
+          );
+          return;
+        }
+
+        timeoutId = globalThis.setTimeout(() => {
+          timeoutId = null;
+          loadRenderer();
+        }, 350);
       });
     };
 
@@ -44,9 +85,7 @@ export default function WaterBackground({
     return () => {
       cancelled = true;
       staticBackground.removeEventListener("change", updateRenderer);
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
+      cancelScheduledLoad();
     };
   }, []);
 

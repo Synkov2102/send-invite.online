@@ -24,8 +24,7 @@
 .marketing-page,
 .dashboard-page {
   min-height: 100vh;
-  background: var(--product-grid), var(--product-paper);
-  background-size: 42px 42px;
+  background: var(--product-paper);
   color: var(--product-ink);
 }
 
@@ -219,7 +218,7 @@
 .dashboard-site__actions a[href^="/downloads/"] { border-color: var(--product-ink); background: var(--product-ink); color: #fff; }
 .dashboard-table thead th { background: var(--product-soft); color: #675b63; }
 
-.editor-shell { background: var(--product-grid), var(--product-paper); background-size: 42px 42px; color: var(--product-ink); }
+.editor-shell { background: var(--product-paper); color: var(--product-ink); }
 .editor-layout { background: transparent; }
 .editor-sidebar { border-color: var(--product-line); background: rgba(255,253,250,.96); }
 .editor-sidebar__topbar { border-color: var(--product-line); background: rgba(255,253,250,.92); }
@@ -250,7 +249,7 @@
 .editor-step-actions__next:hover, .editor-action--primary:hover { background: var(--product-accent); }
 .editor-step-actions__back, .editor-action--secondary { border-color: var(--product-line); background: #fff; color: #5c5158; }
 .editor-step-actions__back, .editor-step-actions__next, .editor-action { border-radius: 999px; }
-.editor-preview { background: var(--product-grid), var(--product-soft); background-size: 42px 42px; }
+.editor-preview { background: var(--product-soft); }
 .editor-preview__toolbar { border-color: var(--product-line); border-radius: 18px; background: rgba(255,253,250,.92); box-shadow: 0 12px 36px rgba(57,43,52,.09); }
 .editor-preview__toolbar p { color: var(--product-muted); }
 .editor-save-status { color: var(--product-muted); }
@@ -286,7 +285,7 @@
 .editor-device-switch { border-color: var(--product-line); background: var(--product-soft); }
 .editor-device-switch button.is-selected { background: var(--product-ink) !important; }
 .editor-preview__canvas { border-color: rgba(255,255,255,.8); border-radius: 26px; background: rgba(255,255,255,.32); box-shadow: 0 30px 90px rgba(57,43,52,.14); }
-.editor-loading { background: var(--product-grid), var(--product-paper); background-size: 42px 42px; color: var(--product-ink); }
+.editor-loading { background: var(--product-paper); color: var(--product-ink); }
 .editor-loading__mark span { border-color: var(--product-ink); }
 .editor-loading__mark span:last-child { border-color: var(--product-accent); }
 
