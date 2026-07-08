@@ -1,21 +1,51 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { AuthStore } from "./auth.store";
 import { YandexIdService } from "./yandex-id.service";
+import { LogStore } from "../logs/log.store";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly authStore: AuthStore,
     private readonly yandexId: YandexIdService,
+    private readonly logStore: LogStore,
   ) {}
 
   async createYandexSession(body: unknown) {
     const payload = this.parseYandexCallbackPayload(body);
-    const accessToken = await this.yandexId.exchangeCodeForToken(payload);
-    const yandexUser = await this.yandexId.getUserInfo(accessToken);
-    const user = await this.authStore.upsertYandexUser(yandexUser);
 
-    return this.authStore.createSession(user);
+    try {
+      const accessToken = await this.yandexId.exchangeCodeForToken(payload);
+      const yandexUser = await this.yandexId.getUserInfo(accessToken);
+      const user = await this.authStore.upsertYandexUser(yandexUser);
+      const session = await this.authStore.createSession(user);
+
+      void this.logStore.write({
+        level: "info",
+        message: "Yandex auth session created",
+        source: "auth.yandex",
+        context: {
+          userId: user.id,
+          yandexId: user.yandexId,
+        },
+      });
+
+      return session;
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown Yandex auth error.";
+
+      void this.logStore.write({
+        level: "error",
+        message: "Yandex auth failed",
+        source: "auth.yandex",
+        context: {
+          error: errorMessage,
+        },
+      });
+
+      throw error;
+    }
   }
 
   getCurrentUser(token: string) {

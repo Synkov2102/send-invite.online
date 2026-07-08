@@ -140,6 +140,21 @@ export async function GET(request: NextRequest) {
 
     return response;
   } catch (caughtError) {
+    const backendUrl = `${getServerApiBaseUrl()}/api/auth/yandex/callback`;
+
+    // Log for troubleshooting production connectivity issues.
+    // Avoid logging OAuth codes/secrets; only safe identifiers are included.
+    if (caughtError instanceof Error) {
+      console.error("[auth/yandex/callback] backend fetch failed", {
+        message: caughtError.message,
+        backendUrl,
+      });
+    } else {
+      console.error("[auth/yandex/callback] backend fetch failed", {
+        backendUrl,
+      });
+    }
+
     const knownErrors = new Set([
       "backend_unreachable",
       "missing_code_verifier",
