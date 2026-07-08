@@ -2,6 +2,7 @@ import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
 import SiteHeader from "@/components/site-header";
 import TemplateCard from "@/components/template-card";
+import ValuePropsCarousel from "@/components/value-props-carousel";
 import WaterBackground from "@/invitation-templates/aqua/water-background";
 import { brand } from "@/lib/brand";
 import { defaultInviteTemplates } from "@/lib/invite-templates";
@@ -19,8 +20,6 @@ import {
   Check,
   Heart,
   LayoutTemplate,
-  MessageCircle,
-  Palette,
   Send,
   Sparkles,
   Wand2,
@@ -34,10 +33,14 @@ import styles from "./page.module.css";
 export const metadata: Metadata = createPageMetadata({
   path: "/",
   description:
-    "Создайте сайт-приглашение на свадьбу за один вечер: шаблоны, редактор, RSVP и публикация по ссылке.",
+    "Сайт-приглашение на свадьбу за 10 минут: готовые шаблоны, редактор с превью, RSVP и публикация по ссылке. Разовая оплата — без подрядчиков и долгих правок.",
 });
 
-const HERO_CHECKS = ["Без кода", "Адаптивно", "RSVP внутри"] as const;
+const HERO_CHECKS = [
+  "Сборка примерно за 10 минут",
+  "Удобно на телефоне и компьютере",
+  "RSVP и ответы в одном месте",
+] as const;
 
 const LANDING_BACKGROUND = {
   deep: "#fffaf7",
@@ -51,44 +54,21 @@ type FeatureItem = {
   text: string;
 };
 
-const benefits: FeatureItem[] = [
-  {
-    icon: LayoutTemplate,
-    title: "Дизайн с характером",
-    text: "Современные шаблоны, которые выглядят как работа студии, а не конструктор.",
-  },
-  {
-    icon: Palette,
-    title: "Ваши цвета и детали",
-    text: "Настройте палитру, фотографии, тексты и атмосферу именно вашего дня.",
-  },
-  {
-    icon: MessageCircle,
-    title: "RSVP без переписок",
-    text: "Ответы гостей, пожелания и важные детали собираются в одном месте.",
-  },
-  {
-    icon: Send,
-    title: "Одна красивая ссылка",
-    text: "Отправьте приглашение в мессенджере — оно идеально откроется на любом экране.",
-  },
-];
-
 const steps: FeatureItem[] = [
   {
     icon: LayoutTemplate,
-    title: "Выберите основу",
-    text: "Найдите дизайн, который совпадает с настроением свадьбы.",
+    title: "Выберите шаблон",
+    text: "Найдите оформление под настроение свадьбы — от минимализма и editorial до живых фото и анимации.",
   },
   {
     icon: Wand2,
-    title: "Добавьте свою историю",
-    text: "Заполните детали дня, загрузите фотографии и настройте цвета.",
+    title: "Заполните детали",
+    text: "Добавьте дату, адрес, программу, фотографии и пожелания. Палитру и тексты можно менять в любой момент.",
   },
   {
     icon: Send,
-    title: "Поделитесь с гостями",
-    text: "Опубликуйте сайт и отправьте одну аккуратную ссылку.",
+    title: "Опубликуйте и отправьте",
+    text: "После оплаты получите персональную ссылку — одну, аккуратную, готовую для мессенджера.",
   },
 ];
 
@@ -119,23 +99,24 @@ export default function HomePage() {
       <main>
         <section className={styles.hero}>
           <div className={styles.heroCopy}>
-            <Eyebrow>Сайты-приглашения для свадьбы</Eyebrow>
+            <Eyebrow>Свадебные сайты-приглашения</Eyebrow>
             <h1>
-              Ваш день.
-              <span>В одном красивом сайте.</span>
+              Приглашение, которое
+              <span>хочется открыть.</span>
             </h1>
             <p className={styles.heroLead}>
-              Создайте современное приглашение с программой, адресом, дресс-кодом
-              и RSVP. Без дизайнера, кода и десятков сообщений.
+              Соберите сайт с программой, адресом, дресс-кодом и формой RSVP.
+              Редактор показывает результат сразу — без дизайнера, кода и бесконечных
+              правок в переписке.
             </p>
             <div className={styles.heroPrice}>
-              <span>Создание и публикация сайта-приглашения</span>
+              <span>Создание и публикация одного сайта-приглашения</span>
               <strong>{formatInviteSitePrice()}</strong>
               <small>разовая оплата · электронная услуга</small>
             </div>
             <div className={styles.heroActions}>
               <Link className={styles.primaryButton} href="/templates">
-                Создать приглашение <ArrowRight aria-hidden size={17} />
+                Выбрать шаблон <ArrowRight aria-hidden size={17} />
               </Link>
               <Link
                 className={styles.secondaryButton}
@@ -144,7 +125,7 @@ export default function HomePage() {
                 Открыть редактор
               </Link>
             </div>
-            <ul className={styles.heroChecks} aria-label="Преимущества сервиса">
+            <ul className={styles.heroChecks} aria-label="Ключевые преимущества">
               {HERO_CHECKS.map((item) => (
                 <li key={item}>
                   <Check aria-hidden size={14} />
@@ -185,7 +166,7 @@ export default function HomePage() {
             <div className={styles.dateBadge}>
               <CalendarDays aria-hidden size={17} />
               <span>14 сентября</span>
-              <strong>Сохрани дату</strong>
+              <strong>Сохраните дату</strong>
             </div>
             <div className={styles.rsvpBadge}>
               <span className={styles.rsvpIcon}>
@@ -193,35 +174,44 @@ export default function HomePage() {
               </span>
               <div>
                 <strong>Гость ответил</strong>
-                <span>Буду с радостью</span>
+                <span>Приду с радостью</span>
               </div>
             </div>
           </div>
         </section>
 
-        <section className={styles.benefits} aria-label={`Возможности ${brand.name}`}>
-          {benefits.map((benefit, index) => (
-            <article key={benefit.title}>
-              <span className={styles.benefitNumber}>{formatSectionIndex(index)}</span>
-              <benefit.icon aria-hidden size={20} />
-              <h2>{benefit.title}</h2>
-              <p>{benefit.text}</p>
-            </article>
-          ))}
+        <section className={styles.valueProps} aria-label="Преимущества сервиса">
+          <div className={styles.valuePropsPanel}>
+            <div className={styles.valuePropsIntro}>
+              <Eyebrow>Почему {brand.name}</Eyebrow>
+              <h2>Всё нужное — без лишних хлопот</h2>
+              <p>
+                Вы сами собираете приглашение за вечер, видите каждую деталь до
+                публикации, собираете ответы гостей в одном месте и отправляете одну
+                ссылку. Без подрядчиков, долгих согласований и сюрпризов в финале.
+              </p>
+            </div>
+            <ValuePropsCarousel
+              cardClassName={styles.valuePropsCard}
+              gridClassName={styles.valuePropsGrid}
+              iconClassName={styles.valuePropsIcon}
+              numberClassName={styles.valuePropsNumber}
+            />
+          </div>
         </section>
 
         <section className={styles.templates}>
           <div className={styles.sectionHeading}>
             <div>
-              <Eyebrow>Коллекция</Eyebrow>
+              <Eyebrow>Шаблоны</Eyebrow>
               <h2>
-                Начните с дизайна,
+                Выберите настроение —
                 <br />
-                который уже всё чувствует.
+                остальное подстроите сами.
               </h2>
             </div>
             <Link href="/templates">
-              Все шаблоны <ArrowRight aria-hidden size={16} />
+              Смотреть все шаблоны <ArrowRight aria-hidden size={16} />
             </Link>
           </div>
           <div className={styles.templateGrid}>
@@ -240,11 +230,12 @@ export default function HomePage() {
 
         <section className={styles.workflow}>
           <div className={styles.workflowIntro}>
-            <Eyebrow>Три простых шага</Eyebrow>
-            <h2>От идеи до ссылки — за один вечер.</h2>
+            <Eyebrow>Как это работает</Eyebrow>
+            <h2>Три шага до готовой ссылки</h2>
             <p>
-              Редактор ведёт по шагам и сразу показывает результат. Вы занимаетесь
-              свадьбой, а не настройками сайта.
+              Редактор не перегружает деталями: понятные этапы, живое превью и
+              возможность вернуться к любому полю. Вы готовите свадьбу — а не
+              разбираетесь в настройках сайта.
             </p>
             <Link href="/templates">
               Начать с шаблона <ArrowRight aria-hidden size={16} />
@@ -275,21 +266,22 @@ export default function HomePage() {
           </div>
           <div className={styles.storyCopy}>
             <Heart aria-hidden size={22} />
-            <Eyebrow>Больше, чем приглашение</Eyebrow>
-            <h2>Первое впечатление от вашего дня.</h2>
+            <Eyebrow>Что получат гости</Eyebrow>
+            <h2>Не просто дата — целое настроение дня</h2>
             <p>
-              Гости почувствуют атмосферу свадьбы ещё до праздника. Все важные
-              детали будут рядом — красиво, понятно и в вашем стиле.
+              Гости сразу понимают, чего ждать: где собраться, во что одеться,
+              как ответить. А вы собираете RSVP без бесконечных сообщений
+              «а во сколько?» и «где это?».
             </p>
             <ul>
               <li>
-                <Check aria-hidden size={15} /> Программа и адрес площадки
+                <Check aria-hidden size={15} /> Программа дня и адрес с картой
               </li>
               <li>
-                <Check aria-hidden size={15} /> Дресс-код и пожелания
+                <Check aria-hidden size={15} /> Дресс-код, пожелания и детали
               </li>
               <li>
-                <Check aria-hidden size={15} /> Ответы гостей через RSVP
+                <Check aria-hidden size={15} /> Форма RSVP с ответами в личном кабинете
               </li>
             </ul>
           </div>
@@ -297,8 +289,8 @@ export default function HomePage() {
 
         <section className={styles.cta}>
           <Sparkles aria-hidden size={22} />
-          <p>Ваше приглашение может быть готово сегодня</p>
-          <h2>Создайте красивое начало вашей истории.</h2>
+          <p>Начните сегодня — первый шаблон уже ждёт</p>
+          <h2>Соберите приглашение, которым захочется поделиться</h2>
           <Link href="/templates">
             Выбрать шаблон <ArrowRight aria-hidden size={17} />
           </Link>

@@ -347,7 +347,7 @@
   box-shadow: none !important;
 }
 
-.martiniPhoto {
+.dressPhoto {
   position: relative;
   min-height: 690px;
   overflow: hidden;
@@ -439,7 +439,7 @@
   }
 
   .dressBlock.dressBlock,
-  .martiniPhoto {
+  .dressPhoto {
     min-height: 560px;
   }
 
@@ -555,7 +555,7 @@
     padding-inline: 18px;
   }
 
-  .martiniPhoto {
+  .dressPhoto {
     min-height: 460px;
   }
 

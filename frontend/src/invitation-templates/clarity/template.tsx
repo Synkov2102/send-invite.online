@@ -32,8 +32,6 @@ type ClarityStyle = CSSProperties & {
   "--clarity-accent": string;
 };
 
-const martiniImage = "/images/clarity-wedding-martini.png";
-
 function cx(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
 }
@@ -181,7 +179,10 @@ function ScheduleSection({ invite }: Readonly<{ invite: InviteState }>) {
   );
 }
 
-function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
+function DressCodeSection({
+  invite,
+  portraitImage,
+}: Readonly<{ invite: InviteState; portraitImage: string }>) {
   return (
     <section className={styles.dressSection}>
       <InvitationDressCodeBlock
@@ -190,15 +191,15 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
         text={invite.dressCode}
         variant="aqua"
       />
-      <div className={styles.martiniPhoto}>
+      <div className={styles.dressPhoto}>
         <Image
-          alt=""
+          alt="Свадебный портрет пары"
           className={styles.photo}
           fill
           loading="eager"
           sizes="(max-width: 760px) 100vw, 50vw"
-          src={martiniImage}
-          unoptimized
+          src={portraitImage}
+          unoptimized={isRuntimeImageSource(portraitImage)}
         />
       </div>
     </section>
@@ -235,6 +236,7 @@ export default function ClarityTemplate({
   coverImage,
   invite,
   inviteVars,
+  portraitImage,
   siteId,
   venueImage,
 }: ClarityTemplateProps) {
@@ -251,7 +253,7 @@ export default function ClarityTemplate({
           <DateSection invite={invite} venueImage={venueImage} />
           <ScheduleSection invite={invite} />
           <RsvpSection invite={invite} siteId={siteId} />
-          <DressCodeSection invite={invite} />
+          <DressCodeSection invite={invite} portraitImage={portraitImage} />
         </main>
       </article>
     </>

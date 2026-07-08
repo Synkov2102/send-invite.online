@@ -4,7 +4,8 @@
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
  * 2. Укажите `kind` (alpine | aqua | clarity | silk | vanilla) и `editorReady: true`.
- * 3. Положите скриншот в frontend/public/images/templates/.
+ * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
+ *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
  * Чтобы добавить новый движок рендера:
  * 1. Создайте папку frontend/src/invitation-templates/<kind>/.
@@ -120,7 +121,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "alpine",
     recommendedPaletteIds: ["alpine", "pine", "granite", "frost", "dawn", "pearl"],
     tags: ["3D", "минимализм"],
-    screenshot: "/images/templates/alpine-rings.png",
+    screenshot: "/images/templates/alpine-rings-mobile.png",
     preview: {
       background: "#dfe8e7",
       surface: "#f7fbf8",
@@ -147,7 +148,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "fjord",
     ],
     tags: ["анимация", "вода"],
-    screenshot: "/images/templates/lagoon-wave.png",
+    screenshot: "/images/templates/lagoon-wave-mobile.png",
     preview: {
       background: "#0e3a44",
       surface: "#eafaf9",
@@ -166,7 +167,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "vanilla",
     recommendedPaletteIds: ["vanilla", "lavender", "clay", "pearl", "champagne"],
     tags: ["фото", "дневная свадьба"],
-    screenshot: "/images/templates/vanilla-arch.png",
+    screenshot: "/images/templates/vanilla-arch-mobile.png",
     preview: {
       background: "#f7d9e7",
       surface: "#f7f8f5",
@@ -185,7 +186,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "silk",
     recommendedPaletteIds: ["silk", "pearl", "graphite", "champagne", "nocturne"],
     tags: ["фото", "классика"],
-    screenshot: "/images/templates/silk-monogram-screen.png",
+    screenshot: "/images/templates/silk-monogram-mobile.png",
     preview: {
       background: "#d5c7bd",
       surface: "#fffefd",

@@ -1,0 +1,61 @@
+import { mkdir } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { chromium } from "playwright";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const templatesDir = path.join(__dirname, "../public/images/templates");
+const baseUrl = (process.env.TEMPLATE_CAPTURE_URL ?? "http://localhost:3000").replace(/\/$/, "");
+
+const templateIds = [
+  "alpine-rings",
+  "lagoon-wave",
+  "vanilla-arch",
+  "silk-monogram",
+  "clarity-editorial",
+];
+
+const waitMsByTemplate = {
+  "alpine-rings": 4500,
+  "lagoon-wave": 3500,
+  "vanilla-arch": 2500,
+  "silk-monogram": 2500,
+  "clarity-editorial": 2500,
+};
+
+const preparePageByTemplate = {
+  "vanilla-arch": async (page) => {
+    await page.getByRole("button", { name: /пластинку/i }).click();
+    await page.waitForTimeout(1200);
+  },
+};
+
+await mkdir(templatesDir, { recursive: true });
+
+const browser = await chromium.launch();
+const page = await browser.newPage({
+  deviceScaleFactor: 2,
+  viewport: { width: 390, height: 844 },
+});
+
+for (const templateId of templateIds) {
+  const url = `${baseUrl}/templates/capture/${templateId}`;
+
+  await page.goto(url, { waitUntil: "networkidle", timeout: 120_000 });
+  await page.waitForSelector(`[data-template-capture="${templateId}"] .template-capture__screen`, {
+    timeout: 30_000,
+  });
+  await page.waitForTimeout(waitMsByTemplate[templateId] ?? 3000);
+  await preparePageByTemplate[templateId]?.(page);
+
+  const mobileName = `${templateId}-mobile.png`;
+
+  await page.locator(".template-capture__screen").screenshot({
+    path: path.join(templatesDir, mobileName),
+    type: "png",
+  });
+
+  console.log(`Wrote ${mobileName}`);
+}
+
+await browser.close();

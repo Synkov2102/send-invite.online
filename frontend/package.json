@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "capture:template-screenshots": "node scripts/build-template-mobile-screenshots.mjs"
   },
   "dependencies": {
     "@heroui/react": "^3.1.0",

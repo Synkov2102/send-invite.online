@@ -31,20 +31,25 @@ export default function TemplateCard({
     editorParams.set("site", siteId);
   }
 
-  const previewClassName =
-    template.id === "clarity-editorial" ? " template-card--phone-preview" : "";
-  const rootClassName = `template-card${previewClassName}${className ? ` ${className}` : ""}`;
+  const rootClassName = `template-card${className ? ` ${className}` : ""}`;
 
   return (
     <Link className={rootClassName} href={`/editor?${editorParams.toString()}`}>
-      <div className="template-card__image">
-        <Image
-          alt={`Шаблон «${template.name}»`}
-          fill
-          sizes={imageSizes}
-          src={template.screenshot}
-        />
-        <span>{formatCardIndex(index)}</span>
+      <div className="template-card__showcase">
+        <span className="template-card__index">{formatCardIndex(index)}</span>
+        <div className="template-card__device">
+          <div
+            className="template-card__device-screen"
+            style={{ backgroundColor: template.preview.background }}
+          >
+            <Image
+              alt={`Шаблон «${template.name}»`}
+              fill
+              sizes={imageSizes}
+              src={template.screenshot}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="template-card__meta">

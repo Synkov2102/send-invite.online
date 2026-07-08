@@ -1,0 +1,53 @@
+.trackCarousel {
+  display: flex !important;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 0;
+  scroll-padding-inline: 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.trackCarousel::-webkit-scrollbar {
+  display: none;
+}
+
+.trackCarousel > * {
+  flex: 0 0 calc(100% - 48px);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.trackCarousel > *:first-child {
+  margin-inline-start: 20px;
+}
+
+.trackCarousel > *:last-child {
+  margin-inline-end: 20px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  padding: 0;
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease;
+}
+
+.dotActive {
+  background: #fff;
+  transform: scale(1.2);
+}

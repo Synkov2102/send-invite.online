@@ -49,7 +49,7 @@ export function EditorStepNav() {
 }
 
 export function EditorSidebarHeader() {
-  const { confirmLeaveEditor, saveStatus, setMobileView, siteId, template } = useEditor();
+  const { confirmLeaveEditor, saveStatus, setIsFullscreenPreview, siteId, template } = useEditor();
 
   function handleEditorExit(event: MouseEvent<HTMLAnchorElement>) {
     if (!confirmLeaveEditor()) {
@@ -93,7 +93,7 @@ export function EditorSidebarHeader() {
         </span>
         <button
           className="editor-preview-jump"
-          onClick={() => setMobileView("preview")}
+          onClick={() => setIsFullscreenPreview(true)}
           type="button"
         >
           <Eye aria-hidden size={14} />

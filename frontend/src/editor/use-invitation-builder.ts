@@ -71,7 +71,6 @@ export function useInvitationBuilder({
   const [paletteMode, setPaletteMode] = useState<"custom" | "presets">("presets");
   const [isFullscreenPreview, setIsFullscreenPreview] = useState(false);
   const [previewDevice, setPreviewDevice] = useState<"desktop" | "mobile">("desktop");
-  const [mobileView, setMobileView] = useState<"edit" | "preview">("edit");
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("saved");
   const [isPublishing, setIsPublishing] = useState(false);
   const [acceptedPurchaseTerms, setAcceptedPurchaseTerms] = useState(false);
@@ -635,7 +634,6 @@ export function useInvitationBuilder({
     isFullscreenPreview,
     isPublishing,
     isWideTemplate,
-    mobileView,
     openStep,
     palette,
     paletteMode,
@@ -651,7 +649,6 @@ export function useInvitationBuilder({
     saveStatus,
     setAcceptedPurchaseTerms,
     setIsFullscreenPreview,
-    setMobileView,
     setPaletteMode,
     setPreviewDevice,
     siteId,

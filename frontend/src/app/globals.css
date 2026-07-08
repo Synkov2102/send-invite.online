@@ -1016,10 +1016,6 @@ textarea {
   white-space: nowrap;
 }
 
-.editor-mobile-edit {
-  display: none;
-}
-
 .editor-preview__canvas.is-readonly > .published-site,
 .editor-preview__canvas.is-readonly > .invite-shell {
   pointer-events: none;
@@ -1032,26 +1028,6 @@ textarea {
 @media (max-width: 899px) {
   .editor-layout {
     overflow-x: hidden;
-  }
-
-  .editor-layout .editor-preview {
-    display: none;
-  }
-
-  .editor-layout.is-mobile-preview .editor-sidebar {
-    display: none;
-  }
-
-  .editor-layout.is-mobile-preview .editor-preview {
-    display: block;
-    min-width: 0;
-  }
-
-  .editor-mobile-edit {
-    display: inline-flex;
-    min-height: 40px;
-    gap: 6px;
-    border-radius: 7px;
   }
 
   .editor-preview__inner {
@@ -1120,10 +1096,6 @@ textarea {
 
   .editor-preview__actions {
     width: auto;
-  }
-
-  .editor-mobile-edit {
-    flex: 1;
   }
 
   .editor-preview__canvas,
@@ -5055,6 +5027,38 @@ textarea {
   background: #20251f;
 }
 
+@media (max-width: 899px) {
+  .fullscreen-preview__toolbar {
+    top: auto;
+    right: auto;
+    bottom: max(16px, env(safe-area-inset-bottom));
+    left: 50%;
+    width: auto;
+    min-height: 0;
+    justify-content: center;
+    padding: 4px;
+    transform: translateX(-50%);
+    box-shadow: 0 12px 36px rgba(38, 44, 38, 0.22);
+  }
+
+  .fullscreen-preview__toolbar > div:first-child {
+    display: none;
+  }
+
+  .fullscreen-preview__action {
+    min-height: 44px;
+    padding-inline: 16px;
+  }
+
+  .fullscreen-preview__action span {
+    display: none;
+  }
+
+  .fullscreen-preview__action--close::after {
+    content: "Редактор";
+  }
+}
+
 .fullscreen-preview__page {
   width: 100%;
   min-height: 100vh;
@@ -6085,30 +6089,6 @@ textarea {
     display: none;
   }
 
-  .fullscreen-preview__toolbar {
-    top: 8px;
-    width: calc(100% - 16px);
-    padding-left: 9px;
-  }
-
-  .fullscreen-preview__toolbar > div:first-child span,
-  .fullscreen-preview__action span {
-    display: none;
-  }
-
-  .fullscreen-preview__action {
-    min-width: 38px;
-    padding-inline: 9px;
-  }
-
-  .fullscreen-preview__action--close {
-    min-width: auto;
-  }
-
-  .fullscreen-preview__action--close::after {
-    content: "Редактор";
-  }
-
   .fullscreen-preview__page {
     padding: 0;
   }
@@ -6567,25 +6547,6 @@ textarea {
 
 .editor-preview .invite-music {
   display: none;
-}
-
-@media (max-width: 899px) {
-  .editor-layout .editor-preview {
-    display: none;
-  }
-
-  .editor-layout.is-mobile-preview .editor-sidebar {
-    display: none;
-  }
-
-  .editor-layout.is-mobile-preview .editor-preview {
-    display: block;
-    min-width: 0;
-  }
-
-  .editor-mobile-edit {
-    display: inline-flex;
-  }
 }
 
 @media (max-width: 640px) {

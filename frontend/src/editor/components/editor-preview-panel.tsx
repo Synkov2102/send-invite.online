@@ -1,13 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import {
-  ArrowLeft,
-  Eye,
-  Maximize2,
-  Monitor,
-  Smartphone,
-} from "lucide-react";
+import { Eye, Maximize2, Monitor, Smartphone } from "lucide-react";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import { MobilePreviewFrame } from "./mobile-preview-frame";
 import { useEditor } from "../editor-context";
@@ -20,12 +14,12 @@ export function EditorPreviewPanel() {
     palette,
     previewDevice,
     setIsFullscreenPreview,
-    setMobileView,
     setPreviewDevice,
     siteId,
     template,
     templateKind,
   } = useEditor();
+  const showPhoneChrome = previewDevice === "mobile";
 
   const invitation = (
     <InviteSiteRenderer
@@ -51,16 +45,10 @@ export function EditorPreviewPanel() {
             </h2>
           </div>
           <div className="editor-preview__actions">
-            <Button
-              className="editor-mobile-edit"
-              onClick={() => setMobileView("edit")}
-              type="button"
-              variant="outline"
+            <div
+              className="editor-device-switch"
+              aria-label="Размер предпросмотра"
             >
-              <ArrowLeft aria-hidden size={15} />
-              К настройкам
-            </Button>
-            <div className="editor-device-switch" aria-label="Размер предпросмотра">
               <Button
                 aria-label="Предпросмотр на компьютере"
                 className={previewDevice === "desktop" ? "is-selected" : ""}
@@ -97,9 +85,9 @@ export function EditorPreviewPanel() {
             isWideTemplate
               ? "editor-preview__canvas--vanilla"
               : "editor-preview__canvas--alpine"
-          } ${previewDevice === "mobile" ? "editor-preview__canvas--mobile" : ""} is-readonly`}
+          } ${showPhoneChrome ? "editor-preview__canvas--mobile" : ""} is-readonly`}
         >
-          {previewDevice === "mobile" ? (
+          {showPhoneChrome ? (
             <MobilePreviewFrame>{invitation}</MobilePreviewFrame>
           ) : (
             invitation

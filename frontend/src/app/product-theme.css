@@ -73,10 +73,16 @@
 
 .marketing-eyebrow { color: var(--product-accent); }
 
-.templates-page { padding: 72px 0 100px; }
+.templates-page {
+  width: min(1240px, calc(100% - 48px));
+  margin-inline: auto;
+  padding: 72px 0 100px;
+  box-sizing: border-box;
+}
 .templates-page__hero { max-width: 760px; padding: 18px 0 56px; }
 .templates-page__hero .marketing-eyebrow {
   width: fit-content;
+  margin: 0;
   border: 1px solid var(--product-line);
   border-radius: 999px;
   background: rgba(255,253,250,.76);
@@ -86,7 +92,7 @@
 }
 .templates-page__hero h1 {
   max-width: 12ch;
-  margin-top: 24px;
+  margin: 20px 0 0;
   color: var(--product-ink);
   font-family: var(--font-geist-sans), sans-serif;
   font-size: clamp(3.2rem, 6vw, 6rem);
@@ -94,7 +100,13 @@
   letter-spacing: -.07em;
   line-height: .9;
 }
-.templates-page__hero p:last-child { max-width: 58ch; color: var(--product-muted); font-size: .92rem; line-height: 1.75; }
+.templates-page__hero > p:not(.marketing-eyebrow):not(.templates-page__service) {
+  max-width: 58ch;
+  margin: 18px 0 0;
+  color: var(--product-muted);
+  font-size: .92rem;
+  line-height: 1.72;
+}
 .templates-page__grid { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; }
 
 .template-card {
@@ -107,14 +119,45 @@
   color: var(--product-ink);
   box-shadow: none;
 }
+.marketing-page .template-card {
+  overflow: visible;
+}
 .template-card:hover { border-color: transparent; box-shadow: none; transform: none; }
-.template-card__image { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border: 1px solid var(--product-line); border-radius: 20px; background: var(--product-soft); }
-.template-card__image img { object-fit: cover; object-position: top; transition: transform 420ms cubic-bezier(.2,.8,.2,1); }
-.template-card--phone-preview .template-card__image { background: #b8b4aa; }
-.template-card--phone-preview .template-card__image img { object-fit: contain; }
-.template-card__image > span { position: absolute; top: 14px; left: 14px; border-radius: 999px; background: rgba(255,253,250,.88); padding: 7px 10px; font-family: var(--font-geist-mono), monospace; font-size: .58rem; backdrop-filter: blur(12px); }
-.template-card:hover .template-card__image img { transform: scale(1.035); }
-.template-card--phone-preview:hover .template-card__image img { transform: none; }
+.template-card__showcase {
+  width: min(100%, 280px);
+  margin: 0 auto;
+  overflow: visible;
+}
+.template-card__index {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--product-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+}
+.template-card__device {
+  position: relative;
+  width: 100%;
+  padding: 11px;
+  border-radius: 36px;
+  background: linear-gradient(160deg, #343338 0%, #121214 100%);
+  box-shadow:
+    0 22px 48px rgba(32, 24, 28, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.template-card__device-screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 28px;
+  background: #101012;
+}
+.template-card__device-screen img {
+  object-fit: cover;
+  object-position: top center;
+}
 .template-card__meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 4px 0; }
 .template-card__meta small { color: var(--product-muted); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
 .template-card__meta h2,
@@ -138,7 +181,7 @@
   padding: 16px 18px;
 }
 .templates-page__price span { color: var(--product-muted); font-size: .76rem; }
-.templates-page__service { max-width: 58ch; margin: 18px 0 0; color: var(--product-muted); font-size: .82rem; line-height: 1.65; }
+.templates-page__service { max-width: 58ch; margin: 14px 0 0; color: var(--product-muted); font-size: .82rem; line-height: 1.65; }
 .templates-page__price strong { grid-row: 1 / 3; grid-column: 2; font-size: 1.45rem; letter-spacing: -.05em; }
 .templates-page__price small { color: var(--product-accent); font-size: .58rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
 
@@ -290,6 +333,28 @@
 .editor-loading__mark span:last-child { border-color: var(--product-accent); }
 
 @media (max-width: 899px) {
+  .site-header { width: min(100% - 34px, 720px); }
+  .templates-page {
+    width: min(100% - 34px, 720px);
+    padding: 44px 0 80px;
+  }
+  .templates-page__hero {
+    max-width: none;
+    padding: 12px 0 44px;
+  }
+  .templates-page__hero h1 {
+    max-width: none;
+    margin-top: 18px;
+    line-height: 0.92;
+  }
+  .templates-page__hero > p:not(.marketing-eyebrow):not(.templates-page__service),
+  .templates-page__service {
+    max-width: none;
+  }
+  .templates-page__price {
+    width: 100%;
+    margin-top: 22px;
+  }
   .templates-page__grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
 
@@ -298,10 +363,30 @@
   .brand-lockup__mark { width: 44px; height: 44px; border-radius: 13px; }
   .brand-mark { width: 32px; height: 32px; }
   .brand-lockup__send, .brand-lockup__invite { font-size: 1.2rem; }
-  .templates-page { padding-top: 48px; }
-  .templates-page__hero h1 { font-size: clamp(2.8rem, 14vw, 4.2rem); }
+  .templates-page {
+    width: calc(100% - 32px);
+    padding-top: 28px;
+    padding-bottom: 64px;
+  }
+  .templates-page__hero { padding: 8px 0 36px; }
+  .templates-page__hero h1 {
+    margin-top: 14px;
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+    line-height: 0.93;
+  }
+  .templates-page__hero > p:not(.marketing-eyebrow):not(.templates-page__service) {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    line-height: 1.68;
+  }
+  .templates-page__service {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  .templates-page__price { margin-top: 18px; padding: 14px 16px; }
   .templates-page__grid { grid-template-columns: 1fr; gap: 36px; }
-  .template-card__image { aspect-ratio: 4 / 4.7; }
+  .template-card__showcase { width: min(100%, 320px); }
   .auth-panel { border-radius: 22px; }
   .templates-page__price { grid-template-columns: 1fr; }
   .templates-page__price strong { grid-row: auto; grid-column: auto; margin-top: 8px; }

@@ -1,0 +1,26 @@
+.template-capture-layout {
+  width: 390px;
+  min-height: 844px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.template-capture {
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  margin: 0;
+  background: #101012;
+}
+
+.template-capture__screen {
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+}
+
+.template-capture__screen > .published-site,
+.template-capture__screen > div {
+  width: 390px;
+  min-height: 844px;
+}

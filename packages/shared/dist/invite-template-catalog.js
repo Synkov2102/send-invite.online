@@ -93,7 +93,7 @@ exports.inviteTemplateCatalog = [
         defaultPaletteId: "alpine",
         recommendedPaletteIds: ["alpine", "pine", "granite", "frost", "dawn", "pearl"],
         tags: ["3D", "минимализм"],
-        screenshot: "/images/templates/alpine-rings.png",
+        screenshot: "/images/templates/alpine-rings-mobile.png",
         preview: {
             background: "#dfe8e7",
             surface: "#f7fbf8",
@@ -120,7 +120,7 @@ exports.inviteTemplateCatalog = [
             "fjord",
         ],
         tags: ["анимация", "вода"],
-        screenshot: "/images/templates/lagoon-wave.png",
+        screenshot: "/images/templates/lagoon-wave-mobile.png",
         preview: {
             background: "#0e3a44",
             surface: "#eafaf9",
@@ -139,7 +139,7 @@ exports.inviteTemplateCatalog = [
         defaultPaletteId: "vanilla",
         recommendedPaletteIds: ["vanilla", "lavender", "clay", "pearl", "champagne"],
         tags: ["фото", "дневная свадьба"],
-        screenshot: "/images/templates/vanilla-arch.png",
+        screenshot: "/images/templates/vanilla-arch-mobile.png",
         preview: {
             background: "#f7d9e7",
             surface: "#f7f8f5",
@@ -158,7 +158,7 @@ exports.inviteTemplateCatalog = [
         defaultPaletteId: "silk",
         recommendedPaletteIds: ["silk", "pearl", "graphite", "champagne", "nocturne"],
         tags: ["фото", "классика"],
-        screenshot: "/images/templates/silk-monogram-screen.png",
+        screenshot: "/images/templates/silk-monogram-mobile.png",
         preview: {
             background: "#d5c7bd",
             surface: "#fffefd",
