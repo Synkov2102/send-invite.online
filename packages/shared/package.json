@@ -13,7 +13,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "tsc --noEmit -p tsconfig.json"
+    "lint": "eslint . --max-warnings=0 && tsc --noEmit -p tsconfig.json",
+    "lint:fix": "eslint . --fix --max-warnings=0"
   },
   "dependencies": {
     "zod": "^3.25.76"

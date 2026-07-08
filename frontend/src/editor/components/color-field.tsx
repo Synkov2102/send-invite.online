@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 
 type ColorFieldProps = {
   description: string;
@@ -21,11 +21,8 @@ function normalizeHex(value: string) {
 
 export function ColorField({ description, label, onChange, value }: ColorFieldProps) {
   const inputId = useId();
+  const [isHexFocused, setIsHexFocused] = useState(false);
   const [hexDraft, setHexDraft] = useState(value);
-
-  useEffect(() => {
-    setHexDraft(value);
-  }, [value]);
 
   return (
     <label className="editor-color-field" htmlFor={inputId}>
@@ -33,7 +30,13 @@ export function ColorField({ description, label, onChange, value }: ColorFieldPr
         aria-label={label}
         className="editor-color-field__picker"
         id={inputId}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) => {
+          const next = event.target.value;
+          onChange(next);
+          if (!isHexFocused) {
+            setHexDraft(next);
+          }
+        }}
         type="color"
         value={value}
       />
@@ -49,14 +52,20 @@ export function ColorField({ description, label, onChange, value }: ColorFieldPr
           const next = normalizeHex(hexDraft);
           if (next) {
             onChange(next);
-            return;
+            setHexDraft(next);
+          } else {
+            setHexDraft(value);
           }
 
-          setHexDraft(value);
+          setIsHexFocused(false);
         }}
         onChange={(event) => setHexDraft(event.target.value)}
+        onFocus={() => {
+          setHexDraft(value);
+          setIsHexFocused(true);
+        }}
         spellCheck={false}
-        value={hexDraft}
+        value={isHexFocused ? hexDraft : value}
       />
     </label>
   );

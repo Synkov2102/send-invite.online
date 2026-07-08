@@ -6,7 +6,8 @@
     "build": "npm run build --workspace @invite/shared && nest build",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
-    "lint": "tsc --noEmit -p tsconfig.json"
+    "lint": "eslint . --max-warnings=0 && tsc --noEmit -p tsconfig.json",
+    "lint:fix": "eslint . --fix --max-warnings=0"
   },
   "dependencies": {
     "@invite/shared": "*",
