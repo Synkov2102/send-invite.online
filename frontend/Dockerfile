@@ -1,6 +1,8 @@
 FROM node:24-alpine AS deps
 WORKDIR /app
 
+RUN apk add --no-cache libc6-compat
+
 COPY package.json package-lock.json ./
 COPY backend/package.json backend/package.json
 COPY frontend/package.json frontend/package.json
@@ -20,6 +22,8 @@ RUN npm run build --workspace @invite/shared \
 
 FROM node:24-alpine AS runner
 WORKDIR /app
+
+RUN apk add --no-cache libc6-compat
 
 ENV HOSTNAME=0.0.0.0
 ENV NODE_ENV=production

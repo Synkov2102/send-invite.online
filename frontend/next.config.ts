@@ -17,10 +17,21 @@ const nextConfig: NextConfig = {
     proxyClientMaxBodySize: "30mb",
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         hostname: "avatars.yandex.net",
         pathname: "/get-yapic/**",
+        protocol: "https",
+      },
+      {
+        hostname: "storage.yandexcloud.net",
+        pathname: "/**",
+        protocol: "https",
+      },
+      {
+        hostname: "static.tildacdn.com",
+        pathname: "/**",
         protocol: "https",
       },
     ],

@@ -170,7 +170,7 @@ export default function HomePage() {
                   fill
                   priority
                   sizes="(max-width: 899px) 92vw, 48vw"
-                  src="/images/clarity-wedding-cover.png"
+                  src="/images/wedding-mountain-cover.png"
                 />
                 <div className={styles.previewShade} />
                 <div className={styles.previewCopy}>
@@ -270,7 +270,7 @@ export default function HomePage() {
               alt="Молодожёны в день свадьбы"
               fill
               sizes="(max-width: 899px) 92vw, 42vw"
-              src="/images/clarity-wedding-venue.png"
+              src="/images/wedding-mountain-portrait.png"
             />
           </div>
           <div className={styles.storyCopy}>
