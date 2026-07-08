@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
+import { getRequestUrl } from "@/lib/request-origin";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function POST(
@@ -9,7 +10,7 @@ export async function POST(
   const sessionToken = request.cookies.get(authSessionCookieName)?.value;
 
   if (!sessionToken) {
-    return NextResponse.redirect(new URL("/auth?returnTo=%2Fdashboard", request.url));
+    return NextResponse.redirect(getRequestUrl(request, "/auth?returnTo=%2Fdashboard"));
   }
 
   const { id } = await context.params;
@@ -29,8 +30,8 @@ export async function POST(
   );
 
   if (!response.ok) {
-    return NextResponse.redirect(new URL("/dashboard?error=visibility", request.url));
+    return NextResponse.redirect(getRequestUrl(request, "/dashboard?error=visibility"));
   }
 
-  return NextResponse.redirect(new URL("/dashboard", request.url));
+  return NextResponse.redirect(getRequestUrl(request, "/dashboard"));
 }
