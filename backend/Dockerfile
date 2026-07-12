@@ -1,6 +1,8 @@
 FROM node:24-alpine AS deps
 WORKDIR /app
 
+ENV HUSKY=0
+
 COPY package.json package-lock.json ./
 COPY backend/package.json backend/package.json
 COPY frontend/package.json frontend/package.json
@@ -17,6 +19,8 @@ RUN npm run build --workspace @invite/shared \
 
 FROM node:24-alpine AS production-deps
 WORKDIR /app
+
+ENV HUSKY=0
 
 COPY package.json package-lock.json ./
 COPY backend/package.json backend/package.json

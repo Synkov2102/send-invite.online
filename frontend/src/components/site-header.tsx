@@ -2,6 +2,7 @@ import { brand } from "@/lib/brand";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import BrandLockup from "./brand-lockup";
+import SiteHeaderMobileMenu from "./site-header-mobile-menu";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
 
 type SiteHeaderProps = {
@@ -35,7 +36,11 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
       </nav>
 
       <div className="site-header__actions">
-        <SiteHeaderUserActions initialUser={initialUser} />
+        <div className="site-header__desktop-user-actions">
+          <SiteHeaderUserActions initialUser={initialUser} />
+        </div>
+
+        <SiteHeaderMobileMenu active={active} initialUser={initialUser} />
 
         <Link className="site-header__cta" href="/templates">
           Создать приглашение

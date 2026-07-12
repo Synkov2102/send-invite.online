@@ -3,6 +3,8 @@ WORKDIR /app
 
 RUN apk add --no-cache libc6-compat
 
+ENV HUSKY=0
+
 COPY package.json package-lock.json ./
 COPY backend/package.json backend/package.json
 COPY frontend/package.json frontend/package.json

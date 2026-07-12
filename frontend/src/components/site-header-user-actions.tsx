@@ -16,10 +16,12 @@ type AuthMeResponse = {
 
 type SiteHeaderUserActionsProps = {
   initialUser?: HeaderUser | null;
+  variant?: "desktop" | "mobile";
 };
 
 export default function SiteHeaderUserActions({
   initialUser,
+  variant = "desktop",
 }: SiteHeaderUserActionsProps) {
   const [user, setUser] = useState<HeaderUser | null>(initialUser ?? null);
 
@@ -60,10 +62,41 @@ export default function SiteHeaderUserActions({
 
   if (!user) {
     return (
-      <Link className="site-header__login" href="/auth">
+      <Link className={variant === "mobile" ? "site-header__mobile-login" : "site-header__login"} href="/auth">
         <LogIn aria-hidden size={14} />
         <span>Войти</span>
       </Link>
+    );
+  }
+
+  if (variant === "mobile") {
+    return (
+      <div className="site-header__mobile-user">
+        <Link className="site-header__mobile-profile" href="/dashboard">
+          {user.avatarUrl ? (
+            <Image alt="" height={40} src={user.avatarUrl} width={40} />
+          ) : (
+            <span>{user.name.slice(0, 1).toUpperCase()}</span>
+          )}
+          <span>
+            <small>Профиль</small>
+            <strong>{user.name}</strong>
+          </span>
+        </Link>
+
+        <div className="site-header__mobile-user-actions">
+          <Link href="/dashboard">
+            <LayoutDashboard aria-hidden size={17} />
+            Мои сайты
+          </Link>
+          <form action="/api/auth/logout" method="post">
+            <button type="submit">
+              <LogOut aria-hidden size={17} />
+              Выйти
+            </button>
+          </form>
+        </div>
+      </div>
     );
   }
 

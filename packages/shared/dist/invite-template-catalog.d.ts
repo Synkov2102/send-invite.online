@@ -4,7 +4,8 @@
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
  * 2. Укажите `kind` (alpine | aqua | clarity | silk | vanilla) и `editorReady: true`.
- * 3. Положите скриншот в frontend/public/images/templates/.
+ * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
+ *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
  * Чтобы добавить новый движок рендера:
  * 1. Создайте папку frontend/src/invitation-templates/<kind>/.
