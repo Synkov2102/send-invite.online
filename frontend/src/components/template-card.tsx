@@ -6,6 +6,7 @@ import { formatInviteSitePrice } from "@/lib/commerce";
 
 type TemplateCardProps = {
   className?: string;
+  eagerImage?: boolean;
   imageSizes?: string;
   index: number;
   siteId?: string;
@@ -19,6 +20,7 @@ function formatCardIndex(index: number) {
 
 export default function TemplateCard({
   className,
+  eagerImage = false,
   imageSizes = "(max-width: 640px) 92vw, (max-width: 899px) 46vw, 31vw",
   index,
   siteId,
@@ -45,6 +47,7 @@ export default function TemplateCard({
             <Image
               alt={`Шаблон «${template.name}»`}
               fill
+              loading={eagerImage ? "eager" : undefined}
               sizes={imageSizes}
               src={template.screenshot}
             />

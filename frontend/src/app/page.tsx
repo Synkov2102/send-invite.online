@@ -1,5 +1,6 @@
 import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
+import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
 import TemplateCard from "@/components/template-card";
 import ValuePropsCarousel from "@/components/value-props-carousel";
@@ -89,7 +90,7 @@ export default function HomePage() {
   const featured = defaultInviteTemplates.slice(0, 3);
 
   return (
-    <div className={styles.page}>
+    <ProductPageShell className={styles.page}>
       <JsonLd
         data={[buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildProductJsonLd()]}
       />
@@ -298,6 +299,6 @@ export default function HomePage() {
       </main>
 
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }

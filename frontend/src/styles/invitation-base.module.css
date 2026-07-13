@@ -1,0 +1,932 @@
+.scope:global(.invite-music),
+.scope :global(.invite-music) {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  max-width: min(290px, calc(100vw - 36px));
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 8px;
+  background: rgba(31, 37, 33, 0.84);
+  padding: 6px 11px 6px 6px;
+  color: white;
+  box-shadow: 0 14px 38px rgba(20, 24, 21, 0.22);
+  backdrop-filter: blur(16px);
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.scope:global(.invite-music):global(.is-playing),
+.scope :global(.invite-music):global(.is-playing) {
+  background: rgba(49, 61, 51, 0.92);
+}
+
+.scope:global(.invite-music__toggle),
+.scope :global(.invite-music__toggle) {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.14);
+  color: white;
+  cursor: pointer;
+}
+
+.scope:global(.invite-music__copy),
+.scope :global(.invite-music__copy) {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+.scope:global(.invite-music__copy) > span,
+.scope :global(.invite-music__copy) > span {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.scope:global(.invite-music__copy) small,
+.scope :global(.invite-music__copy) small {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-music__copy) strong,
+.scope :global(.invite-music__copy) strong {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.scope:global(.invite-workspace),
+.scope :global(.invite-workspace) {
+  background: #eef0eb;
+}
+
+.scope:global(.published-site),
+.scope :global(.published-site) {
+  overflow-x: hidden;
+  min-height: 100svh;
+  padding: 0;
+}
+
+.scope:global(.published-site--alpine),
+.scope :global(.published-site--alpine) {
+  display: grid;
+  align-items: stretch;
+  justify-items: stretch;
+  background: #dfe7e3;
+}
+
+.scope:global(.published-site--vanilla),
+.scope :global(.published-site--vanilla) {
+  background: #f7d9e7;
+}
+
+.scope:global(.published-site--aqua),
+.scope :global(.published-site--aqua) {
+  background: #0c2a33;
+}
+
+.scope:global(.published-site) > article,
+.scope :global(.published-site) > article,
+.scope:global(.published-site) > :global(.invite-shell),
+.scope :global(.published-site) > :global(.invite-shell) {
+  width: 100% !important;
+  margin: 0;
+  box-shadow: none;
+}
+
+.scope:global(.published-site--alpine) > :global(.invite-shell),
+.scope :global(.published-site--alpine) > :global(.invite-shell) {
+  min-height: 100svh;
+  border: 0;
+  border-radius: 0;
+}
+
+.scope:global(.published-site--alpine) :global(.invite-shell--alpine-rings),
+.scope :global(.published-site--alpine) :global(.invite-shell--alpine-rings) {
+  --published-alpine-gutter: 14px;
+  --published-alpine-bleed: 28px;
+  gap: var(--published-alpine-gutter);
+  padding: 0 var(--published-alpine-gutter) var(--published-alpine-gutter);
+}
+
+.scope:global(.published-site--alpine) :global(.invite-shell--alpine-rings) :global(.invite-cover),
+.scope
+  :global(.published-site--alpine)
+  :global(.invite-shell--alpine-rings)
+  :global(.invite-cover) {
+  width: calc(100% + var(--published-alpine-bleed));
+  margin-inline: calc(-1 * var(--published-alpine-gutter));
+  height: 100svh !important;
+  min-height: 100svh !important;
+  border-radius: 0 !important;
+}
+
+.scope:global(.published-site--vanilla) > article,
+.scope :global(.published-site--vanilla) > article,
+.scope:global(.published-site--vanilla) > article > button,
+.scope :global(.published-site--vanilla) > article > button {
+  min-height: 100svh !important;
+}
+
+.scope:global(.site-loading),
+.scope :global(.site-loading) {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  gap: 14px;
+  background: #f8f6ef;
+  color: #343a33;
+  text-align: center;
+}
+
+.scope:global(.site-loading__mark),
+.scope :global(.site-loading__mark) {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.scope:global(.site-loading__mark) span,
+.scope :global(.site-loading__mark) span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(52, 58, 51, 0.22);
+  border-radius: 50%;
+  animation: site-loading-ring 1.4s ease-in-out infinite;
+}
+
+.scope:global(.site-loading__mark) span:last-child,
+.scope :global(.site-loading__mark) span:last-child {
+  animation-delay: 180ms;
+}
+
+.scope:global(.site-loading) p,
+.scope :global(.site-loading) p {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+@keyframes site-loading-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.62);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+.scope:global(.invite-shell),
+.scope :global(.invite-shell) {
+  position: relative;
+  width: min(100%, 520px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 8px;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  box-shadow: 0 34px 120px rgba(35, 39, 34, 0.28);
+  isolation: isolate;
+}
+
+.scope:global(.invite-shell),
+.scope :global(.invite-shell),
+.scope:global(.invite-panel),
+.scope :global(.invite-panel),
+.scope:global(.invite-details),
+.scope :global(.invite-details),
+.scope:global(.invite-rsvp),
+.scope :global(.invite-rsvp),
+.scope:global(.invite-pill),
+.scope :global(.invite-pill),
+.scope:global(.invite-calendar) strong,
+.scope :global(.invite-calendar) strong,
+.scope:global(.invite-details__row),
+.scope :global(.invite-details__row),
+.scope:global(.invite-program) div,
+.scope :global(.invite-program) div {
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.scope:global(.invite-shell)::before,
+.scope :global(.invite-shell)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 34%);
+}
+
+.scope:global(.invite-cover),
+.scope :global(.invite-cover) {
+  position: relative;
+  height: 620px;
+  overflow: hidden;
+  padding: 0;
+  background: var(--invite-ink);
+}
+
+.scope:global(.invite-cover--three)::after,
+.scope :global(.invite-cover--three)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 42%, transparent 0 34%, rgba(0, 0, 0, 0.16) 72%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.28));
+}
+
+.scope:global(.invite-cover__three-bg),
+.scope :global(.invite-cover__three-bg) {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.scope:global(.invite-arch),
+.scope :global(.invite-arch) {
+  position: relative;
+  height: 548px;
+  overflow: hidden;
+  border-radius: 0 0 280px 280px;
+  background: var(--invite-bg);
+}
+
+.scope:global(.invite-photo),
+.scope :global(.invite-photo) {
+  box-shadow: 0 24px 80px rgba(37, 41, 35, 0.18);
+}
+
+.scope:global(.invite-photo__image),
+.scope :global(.invite-photo__image) {
+  object-fit: cover;
+  object-position: center;
+}
+
+.scope:global(.invite-image-motion),
+.scope :global(.invite-image-motion) {
+  position: absolute;
+  inset: 0;
+}
+
+.scope:global(.invite-photo)::after,
+.scope :global(.invite-photo)::after,
+.scope:global(.invite-photo-band)::after,
+.scope :global(.invite-photo-band)::after,
+.scope:global(.invite-final)::after,
+.scope :global(.invite-final)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scope:global(.invite-photo)::after,
+.scope :global(.invite-photo)::after {
+  background: linear-gradient(180deg, rgba(44, 48, 48, 0.08), rgba(26, 30, 28, 0.22));
+}
+
+.scope:global(.invite-hero-copy),
+.scope :global(.invite-hero-copy) {
+  position: absolute;
+  inset: auto 28px 54px;
+  z-index: 2;
+  text-align: center;
+  color: var(--invite-photo-text);
+  text-shadow: 0 3px 26px rgba(26, 30, 28, 0.34);
+}
+
+.scope:global(.invite-cover--three) :global(.invite-hero-copy),
+.scope :global(.invite-cover--three) :global(.invite-hero-copy) {
+  pointer-events: none;
+}
+
+.scope:global(.invite-hero-copy) p,
+.scope :global(.invite-hero-copy) p {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.scope:global(.invite-hero-copy) h1,
+.scope :global(.invite-hero-copy) h1 {
+  margin-top: 30px;
+  display: grid;
+  gap: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 62px;
+  font-weight: 400;
+  line-height: 0.96;
+  overflow-wrap: anywhere;
+}
+
+.scope:global(.invite-hero-copy) span,
+.scope :global(.invite-hero-copy) span {
+  color: color-mix(in srgb, var(--invite-photo-text) 68%, transparent);
+  font-style: italic;
+}
+
+.scope:global(.invite-panel),
+.scope :global(.invite-panel) {
+  margin: -42px 34px 0;
+  padding: 94px 32px 72px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 250px 250px 8px 8px;
+  background: var(--invite-veil);
+  backdrop-filter: blur(16px);
+}
+
+.scope:global(.invite-small),
+.scope :global(.invite-small) {
+  text-align: center;
+  color: var(--invite-muted);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.scope:global(.invite-heading),
+.scope :global(.invite-heading) {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.08;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-calendar),
+.scope :global(.invite-calendar) {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.scope:global(.invite-calendar) div,
+.scope :global(.invite-calendar) div {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  color: var(--invite-muted);
+  font-size: 12px;
+}
+
+.scope:global(.invite-calendar) strong,
+.scope :global(.invite-calendar) strong {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--invite-ink);
+  font-weight: 400;
+}
+
+.scope:global(.invite-calendar) :global(.is-selected) strong,
+.scope :global(.invite-calendar) :global(.is-selected) strong {
+  background: white;
+  box-shadow: 0 12px 32px rgba(50, 54, 50, 0.12);
+}
+
+.scope:global(.invite-photo-band),
+.scope :global(.invite-photo-band) {
+  position: relative;
+  min-height: 640px;
+  margin-top: -1px;
+  overflow: hidden;
+}
+
+.scope:global(.invite-when),
+.scope :global(.invite-when) {
+  display: grid;
+  gap: 22px;
+  margin-top: 32px;
+}
+
+.scope:global(.invite-when__photo),
+.scope :global(.invite-when__photo) {
+  position: relative;
+  width: min(100%, 320px);
+  aspect-ratio: 16 / 11;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--invite-bg);
+  box-shadow: 0 18px 42px rgba(36, 42, 39, 0.14);
+}
+
+.scope:global(.invite-when__content),
+.scope :global(.invite-when__content) {
+  display: grid;
+  gap: 18px;
+}
+
+.scope:global(.invite-when__month),
+.scope :global(.invite-when__month) {
+  margin: 0;
+  color: var(--invite-muted);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-when--photo),
+.scope :global(.invite-when--photo) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 22px 55px rgba(36, 42, 39, 0.22);
+}
+
+.scope:global(.invite-when--photo)::after,
+.scope :global(.invite-when--photo)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(21, 26, 28, 0.08), rgba(20, 25, 24, 0.66));
+}
+
+.scope:global(.invite-when--photo) :global(.invite-when__content),
+.scope :global(.invite-when--photo) :global(.invite-when__content) {
+  position: relative;
+  z-index: 2;
+  padding: 22px var(--alpine-pad-x, 22px) 24px;
+  color: var(--invite-photo-text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.32);
+}
+
+.scope:global(.invite-when--photo) :global(.invite-heading),
+.scope :global(.invite-when--photo) :global(.invite-heading),
+.scope:global(.invite-shell--alpine-rings) :global(.invite-when--photo) :global(.invite-heading),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-when--photo) :global(.invite-heading) {
+  color: var(--invite-photo-text);
+}
+
+.scope:global(.invite-when--photo) :global(.invite-when__month),
+.scope :global(.invite-when--photo) :global(.invite-when__month) {
+  color: color-mix(in srgb, var(--invite-photo-text) 82%, transparent);
+}
+
+.scope:global(.invite-when--photo) :global(.invite-calendar) div,
+.scope :global(.invite-when--photo) :global(.invite-calendar) div {
+  color: color-mix(in srgb, var(--invite-photo-text) 80%, transparent);
+}
+
+.scope:global(.invite-when--photo) :global(.invite-calendar) strong,
+.scope :global(.invite-when--photo) :global(.invite-calendar) strong {
+  color: var(--invite-photo-text);
+}
+
+.scope:global(.invite-when--photo) :global(.invite-calendar) :global(.is-selected) strong,
+.scope :global(.invite-when--photo) :global(.invite-calendar) :global(.is-selected) strong {
+  color: var(--invite-ink);
+}
+
+.scope:global(.invite-three-canvas),
+.scope :global(.invite-three-canvas) {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: 100%;
+}
+
+.scope:global(.invite-three-canvas) canvas,
+.scope :global(.invite-three-canvas) canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.scope:global(.invite-photo-band)::after,
+.scope :global(.invite-photo-band)::after {
+  background: linear-gradient(180deg, rgba(21, 26, 28, 0.02), rgba(23, 28, 27, 0.54));
+}
+
+.scope:global(.invite-photo-band__content),
+.scope :global(.invite-photo-band__content) {
+  position: absolute;
+  inset: auto 34px 44px;
+  z-index: 2;
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  color: var(--invite-photo-text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.28);
+}
+
+.scope:global(.invite-photo-band__content) p,
+.scope :global(.invite-photo-band__content) p {
+  font-size: 18px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.scope:global(.invite-details),
+.scope :global(.invite-details) {
+  padding: 68px 34px 82px;
+  background: var(--invite-surface);
+}
+
+.scope:global(.invite-dress-code),
+.scope :global(.invite-dress-code) {
+  padding: 0 28px 70px;
+  background: var(--invite-surface);
+}
+
+.scope:global(.invite-details__row),
+.scope :global(.invite-details__row) {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 18px;
+  align-items: center;
+  border-top: 1px solid var(--invite-line);
+  padding: 22px 0;
+}
+
+.scope:global(.invite-details__row) p,
+.scope :global(.invite-details__row) p {
+  color: var(--invite-muted);
+  font-size: 13px;
+}
+
+.scope:global(.invite-details__row) strong,
+.scope :global(.invite-details__row) strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 20px;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+.scope:global(.invite-details),
+.scope :global(.invite-details) {
+  --plan-bg: var(--invite-surface);
+}
+
+.scope:global(.invite-plan__head),
+.scope :global(.invite-plan__head) {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+.scope:global(.invite-section-eyebrow),
+.scope :global(.invite-section-eyebrow) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--invite-accent);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-section-eyebrow) strong,
+.scope :global(.invite-section-eyebrow) strong {
+  font-weight: 750;
+}
+
+.scope:global(.invite-section-eyebrow) span,
+.scope :global(.invite-section-eyebrow) span {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.scope:global(.invite-plan__title),
+.scope :global(.invite-plan__title) {
+  margin: 0;
+}
+
+.scope:global(.invite-plan__meta),
+.scope :global(.invite-plan__meta) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.scope:global(.invite-plan__chip),
+.scope :global(.invite-plan__chip) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--invite-line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  color: var(--invite-ink);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.scope:global(.invite-plan__chip) svg,
+.scope :global(.invite-plan__chip) svg {
+  color: var(--invite-accent);
+}
+
+.scope:global(.invite-program),
+.scope :global(.invite-program) {
+  margin: 30px auto 0;
+  display: grid;
+  width: 100%;
+  max-width: 460px;
+  padding: 0;
+  list-style: none;
+}
+
+.scope:global(.invite-timeline__item),
+.scope :global(.invite-timeline__item) {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70px 22px minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: start;
+  padding: 14px 0;
+}
+
+.scope:global(.invite-timeline__time),
+.scope :global(.invite-timeline__time) {
+  padding-top: 0;
+  color: var(--invite-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+.scope:global(.invite-timeline__rail),
+.scope :global(.invite-timeline__rail) {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.scope:global(.invite-timeline__rail)::before,
+.scope :global(.invite-timeline__rail)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--invite-line);
+}
+
+.scope:global(.invite-timeline__item):first-child :global(.invite-timeline__rail)::before,
+.scope :global(.invite-timeline__item):first-child :global(.invite-timeline__rail)::before {
+  top: 22px;
+}
+
+.scope:global(.invite-timeline__item):last-child :global(.invite-timeline__rail)::before,
+.scope :global(.invite-timeline__item):last-child :global(.invite-timeline__rail)::before {
+  bottom: auto;
+  height: 22px;
+}
+
+.scope:global(.invite-timeline__dot),
+.scope :global(.invite-timeline__dot) {
+  position: relative;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--plan-bg);
+  border: 2px solid var(--invite-accent);
+  box-shadow: 0 0 0 5px var(--plan-bg);
+}
+
+.scope:global(.invite-timeline__body) strong,
+.scope :global(.invite-timeline__body) strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.scope:global(.invite-timeline__body) p,
+.scope :global(.invite-timeline__body) p {
+  margin-top: 4px;
+  color: var(--invite-muted);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.scope:global(.invite-rsvp),
+.scope :global(.invite-rsvp) {
+  position: relative;
+  z-index: 2;
+  margin: -56px 26px 0;
+  padding: 88px 28px 104px;
+  border: 1px solid rgba(220, 224, 216, 0.9);
+  border-radius: 260px;
+  background: rgba(255, 255, 255, 0.94);
+  text-align: center;
+}
+
+.scope:global(.invite-rsvp__header),
+.scope :global(.invite-rsvp__header) {
+  display: grid;
+  width: min(100%, 640px);
+  justify-items: center;
+  gap: 15px;
+  margin: 0 auto 34px;
+}
+
+.scope:global(.invite-rsvp__header) h2,
+.scope :global(.invite-rsvp__header) h2,
+.scope:global(.invite-rsvp__header) p,
+.scope :global(.invite-rsvp__header) p {
+  margin: 0;
+}
+
+.scope:global(.invite-rsvp__header) > p,
+.scope :global(.invite-rsvp__header) > p {
+  max-width: 470px;
+  color: var(--invite-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.scope:global(.invite-rsvp__header) > span:last-child,
+.scope :global(.invite-rsvp__header) > span:last-child {
+  border: 1px solid var(--invite-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--invite-accent) 10%, transparent);
+  padding: 8px 13px;
+  color: var(--invite-accent);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-pill),
+.scope :global(.invite-pill) {
+  min-height: 48px;
+  border-color: var(--invite-ink) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  padding-inline: 34px !important;
+  color: var(--invite-ink) !important;
+  font-size: 13px !important;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-portrait),
+.scope :global(.invite-portrait) {
+  position: relative;
+  width: min(100%, 318px);
+  height: 390px;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.scope:global(.invite-person-marker),
+.scope :global(.invite-person-marker) {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  z-index: 2;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(55, 61, 52, 0.82);
+  color: white;
+}
+
+.scope:global(.invite-final),
+.scope :global(.invite-final) {
+  position: relative;
+  min-height: 690px;
+  overflow: hidden;
+}
+
+.scope:global(.invite-final)::after,
+.scope :global(.invite-final)::after {
+  background: linear-gradient(180deg, rgba(20, 25, 24, 0.02), rgba(18, 24, 22, 0.5));
+}
+
+.scope:global(.invite-final__content),
+.scope :global(.invite-final__content) {
+  position: absolute;
+  inset: auto 28px 48px;
+  z-index: 2;
+  color: var(--invite-photo-text);
+  text-align: center;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.28);
+}
+
+.scope:global(.invite-final__content) h2,
+.scope :global(.invite-final__content) h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.12;
+  text-transform: uppercase;
+}
+
+.scope:global(.invite-final__content) p,
+.scope :global(.invite-final__content) p {
+  margin-top: 18px;
+  font-size: 24px;
+  font-weight: 300;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .scope:global(.invite-cover),
+  .scope :global(.invite-cover) {
+    height: clamp(520px, 145vw, 580px);
+  }
+
+  .scope:global(.invite-arch),
+  .scope :global(.invite-arch) {
+    height: calc(clamp(520px, 145vw, 580px) - 72px);
+  }
+
+  .scope:global(.invite-hero-copy) h1,
+  .scope :global(.invite-hero-copy) h1 {
+    font-size: clamp(44px, 13vw, 54px);
+  }
+
+  .scope:global(.invite-panel),
+  .scope :global(.invite-panel) {
+    margin-inline: 18px;
+    padding: clamp(68px, 20vw, 80px) 24px 62px;
+  }
+
+  .scope:global(.invite-heading),
+  .scope :global(.invite-heading) {
+    font-size: clamp(38px, 11vw, 44px);
+  }
+
+  .scope:global(.invite-details),
+  .scope :global(.invite-details) {
+    padding-inline: 24px;
+  }
+
+  .scope:global(.invite-dress-code),
+  .scope :global(.invite-dress-code) {
+    padding-inline: 22px;
+    padding-bottom: 58px;
+  }
+
+  .scope:global(.invite-rsvp),
+  .scope :global(.invite-rsvp) {
+    margin-inline: 14px;
+    padding-inline: 20px;
+  }
+
+  .scope:global(.invite-photo-band),
+  .scope :global(.invite-photo-band) {
+    min-height: clamp(500px, 160vw, 640px);
+  }
+
+  .scope:global(.invite-final),
+  .scope :global(.invite-final) {
+    min-height: clamp(540px, 175vw, 690px);
+  }
+}

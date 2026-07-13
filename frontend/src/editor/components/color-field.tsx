@@ -1,6 +1,8 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
+import { ColorPicker } from "./color-picker";
+import styles from "./color-field.module.css";
 
 type ColorFieldProps = {
   description: string;
@@ -20,33 +22,24 @@ function normalizeHex(value: string) {
 }
 
 export function ColorField({ description, label, onChange, value }: ColorFieldProps) {
-  const inputId = useId();
   const [isHexFocused, setIsHexFocused] = useState(false);
   const [hexDraft, setHexDraft] = useState(value);
 
   return (
-    <label className="editor-color-field" htmlFor={inputId}>
-      <input
-        aria-label={label}
-        className="editor-color-field__picker"
-        id={inputId}
-        onChange={(event) => {
-          const next = event.target.value;
-          onChange(next);
-          if (!isHexFocused) {
-            setHexDraft(next);
-          }
-        }}
-        type="color"
+    <div className={styles.root}>
+      <ColorPicker
+        ariaLabel={`Выбрать цвет: ${label}`}
+        className={styles.picker}
+        onChange={onChange}
         value={value}
       />
-      <span className="editor-color-field__copy">
+      <span className={styles.copy}>
         <strong>{label}</strong>
         <small>{description}</small>
       </span>
       <input
         aria-label={`${label}, hex-код`}
-        className="editor-color-field__hex"
+        className={styles.hex}
         inputMode="text"
         onBlur={() => {
           const next = normalizeHex(hexDraft);
@@ -67,6 +60,6 @@ export function ColorField({ description, label, onChange, value }: ColorFieldPr
         spellCheck={false}
         value={isHexFocused ? hexDraft : value}
       />
-    </label>
+    </div>
   );
 }

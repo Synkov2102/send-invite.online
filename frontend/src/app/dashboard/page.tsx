@@ -15,6 +15,7 @@ import SiteHeader from "@/components/site-header";
 import { getOwnedInviteSites, type OwnedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
+import dashboardStyles from "@/styles/dashboard.module.css";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Личный кабинет",
@@ -60,7 +61,7 @@ export default async function DashboardPage() {
     .sort((left, right) => new Date(left.date).getTime() - new Date(right.date).getTime())[0];
 
   return (
-    <div className="dashboard-page">
+    <div className={`${dashboardStyles.scope} dashboard-page`}>
       <SiteHeader initialUser={user} />
 
       <main className="dashboard-shell">

@@ -1,11 +1,11 @@
-.template-capture-layout {
+.layout {
   width: 390px;
   min-height: 844px;
   margin: 0;
   overflow: hidden;
 }
 
-.template-capture {
+.root {
   width: 390px;
   height: 844px;
   overflow: hidden;
@@ -13,14 +13,14 @@
   background: #101012;
 }
 
-.template-capture__screen {
+.screen {
   width: 390px;
   height: 844px;
   overflow: hidden;
 }
 
-.template-capture__screen > .published-site,
-.template-capture__screen > div {
+.screen > :global(.published-site),
+.screen > div {
   width: 390px;
   min-height: 844px;
 }

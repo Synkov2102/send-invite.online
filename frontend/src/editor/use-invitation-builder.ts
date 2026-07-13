@@ -53,19 +53,15 @@ export function useInvitationBuilder({
   const router = useRouter();
   const templateKind = getTemplateKind(template.id);
   const isWideTemplate = templateKind !== "alpine";
-  const [initialDraft] = useState(() =>
-    siteId ? null : readEditorDraft(template.id),
-  );
+  const [initialDraft, setInitialDraft] = useState<ReturnType<typeof readEditorDraft>>(null);
 
   const [invite, setInvite] = useState<InviteState>(
-    () => initialInvite ?? initialDraft?.invite ?? getInitialInvite(template),
+    () => initialInvite ?? getInitialInvite(template),
   );
   const [customPalette, setCustomPalette] = useState<InvitePalette>(
-    () => initialPalette ?? initialDraft?.customPalette ?? defaultCustomPalette,
+    () => initialPalette ?? defaultCustomPalette,
   );
-  const [hasLocalMusic, setHasLocalMusic] = useState(
-    () => initialDraft?.hasLocalMusic ?? false,
-  );
+  const [hasLocalMusic, setHasLocalMusic] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [visitedSteps, setVisitedSteps] = useState(() => new Set<number>([0]));
   const [visibleValidationStep, setVisibleValidationStep] = useState<number | null>(null);
@@ -393,6 +389,35 @@ export function useInvitationBuilder({
     setPhotoError(null);
     updateInvite(field, "");
   }
+
+  useEffect(() => {
+    if (siteId) {
+      return;
+    }
+
+    const draft = readEditorDraft(template.id);
+
+    if (!draft) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setInitialDraft(draft);
+      setInvite(draft.invite);
+      setCustomPalette(draft.customPalette);
+      setHasLocalMusic(draft.hasLocalMusic);
+      setPaletteMode(draft.invite.paletteId === "custom" ? "custom" : "presets");
+      setLastSafeEditorSnapshot(
+        JSON.stringify({
+          customPalette: draft.customPalette,
+          hasLocalMusic: draft.hasLocalMusic,
+          invite: draft.invite,
+        }),
+      );
+    }, 0);
+
+    return () => window.clearTimeout(timeout);
+  }, [siteId, template.id]);
 
   async function publishSite() {
     if (isPublishing) {

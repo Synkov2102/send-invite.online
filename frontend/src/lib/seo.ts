@@ -71,7 +71,7 @@ export function createPageMetadata(options: {
   const socialTitle = buildSocialTitle(options.title);
 
   return {
-    title: options.title,
+    ...(options.title ? { title: options.title } : {}),
     description,
     keywords: [...defaultKeywords],
     alternates: {

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import CommerceFooter from "./commerce-footer";
+import ProductPageShell from "./product-page-shell";
 import SiteHeader from "./site-header";
 
 export default function LegalPage({
@@ -14,7 +15,7 @@ export default function LegalPage({
   title: string;
 }) {
   return (
-    <div className="marketing-page legal-page">
+    <ProductPageShell className="marketing-page legal-page">
       <SiteHeader />
       <main className="legal-shell">
         <header className="legal-hero">
@@ -25,6 +26,6 @@ export default function LegalPage({
         <article className="legal-document">{children}</article>
       </main>
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }

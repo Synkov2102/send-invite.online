@@ -7,7 +7,8 @@ import {
 } from "next/font/google";
 import { createRootMetadata } from "@/lib/seo";
 import "./globals.css";
-import "./product-theme.css";
+import "@/styles/product.module.css";
+import "@/styles/responsive-shells.module.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

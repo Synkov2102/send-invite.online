@@ -1,0 +1,1341 @@
+/* Shared responsive rules for invitation, product, and editor shells. */
+.scope:global(.invite-shell--alpine-rings),
+.scope :global(.invite-shell--alpine-rings) {
+  --alpine-card: color-mix(in srgb, var(--invite-surface) 90%, var(--invite-bg));
+  --alpine-card-soft: color-mix(in srgb, var(--invite-veil) 82%, var(--invite-surface));
+  --alpine-border: color-mix(in srgb, var(--invite-line) 72%, transparent);
+  --alpine-pad-y: 36px;
+  --alpine-pad-x: 22px;
+  --alpine-heading: clamp(30px, 8vw, 38px);
+  --alpine-title: 16px;
+  --alpine-body: 15px;
+  --alpine-label: 12px;
+  background: linear-gradient(
+    180deg,
+    var(--invite-surface),
+    var(--alpine-card-soft) 48%,
+    var(--invite-surface)
+  );
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-cover--three),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-cover--three) {
+  min-height: 590px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-cover--three)::after,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-cover--three)::after {
+  background:
+    radial-gradient(circle at 50% 36%, transparent 0 28%, rgba(0, 0, 0, 0.2) 78%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.42));
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-hero-copy),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-hero-copy) {
+  inset: auto 24px 48px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-hero-copy) p,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-hero-copy) p {
+  font-size: var(--alpine-body);
+  letter-spacing: 0.08em;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-hero-copy) h1,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-hero-copy) h1 {
+  margin-top: 16px;
+  font-size: clamp(44px, 12vw, 58px);
+  letter-spacing: -0.05em;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-panel),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-panel) {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  margin: -24px 14px 14px;
+  border-color: var(--alpine-border);
+  border-radius: 28px;
+  background: var(--alpine-card-soft);
+  padding: 48px var(--alpine-pad-x) var(--alpine-pad-y);
+  box-shadow: 0 20px 55px color-mix(in srgb, var(--invite-ink) 8%, transparent);
+}
+
+.scope:global(.invite-shell--alpine-rings)
+  :global(.invite-panel)
+  > :global(.invite-section-eyebrow),
+.scope
+  :global(.invite-shell--alpine-rings)
+  :global(.invite-panel)
+  > :global(.invite-section-eyebrow) {
+  margin-bottom: 20px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-panel) > svg,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-panel) > svg {
+  margin-bottom: 14px !important;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-heading),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-heading) {
+  color: var(--invite-ink);
+  font-size: var(--alpine-heading);
+  letter-spacing: -0.045em;
+  text-transform: none;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-when),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-when) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin-top: 24px;
+  min-height: 0;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-when--photo),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-when--photo) {
+  flex: 1 1 auto;
+  min-height: clamp(280px, 52vh, 520px);
+  border-radius: 20px;
+  box-shadow: 0 14px 36px color-mix(in srgb, var(--invite-ink) 14%, transparent);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-when--photo)::after,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-when--photo)::after {
+  background: linear-gradient(180deg, rgba(21, 26, 28, 0.02), rgba(20, 25, 24, 0.62));
+}
+
+.scope:global(.invite-shell--alpine-rings)
+  :global(.invite-when--photo)
+  :global(.invite-image-motion)
+  :global(.invite-photo__image),
+.scope
+  :global(.invite-shell--alpine-rings)
+  :global(.invite-when--photo)
+  :global(.invite-image-motion)
+  :global(.invite-photo__image) {
+  object-position: center 28%;
+}
+
+.scope:global(.invite-shell--alpine-rings)
+  :global(.invite-when--photo)
+  :global(.invite-when__content),
+.scope
+  :global(.invite-shell--alpine-rings)
+  :global(.invite-when--photo)
+  :global(.invite-when__content) {
+  gap: 12px;
+  padding: 18px var(--alpine-pad-x) 20px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-when--photo) :global(.invite-heading),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-when--photo) :global(.invite-heading) {
+  font-size: clamp(26px, 7vw, 34px);
+  letter-spacing: -0.04em;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-photo-band),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-photo-band) {
+  min-height: 480px;
+  margin: 0 14px 14px;
+  border-radius: 28px;
+  box-shadow: 0 20px 55px color-mix(in srgb, var(--invite-ink) 12%, transparent);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-photo-band__content),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-photo-band__content) {
+  inset: auto 18px 18px;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  background: rgba(15, 25, 24, 0.34);
+  padding: 18px;
+  backdrop-filter: blur(14px);
+}
+
+.scope:global(.invite-shell--alpine-rings)
+  :global(.invite-photo-band__content)
+  :global(.invite-heading),
+.scope
+  :global(.invite-shell--alpine-rings)
+  :global(.invite-photo-band__content)
+  :global(.invite-heading) {
+  color: var(--invite-photo-text);
+  font-size: var(--alpine-heading);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-photo-band__content) p,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-photo-band__content) p {
+  font-size: var(--alpine-body);
+  line-height: 1.5;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-details),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-details),
+.scope:global(.invite-shell--alpine-rings) :global(.invite-dress-code),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-dress-code) {
+  margin: 0 14px 14px;
+  border: 1px solid var(--alpine-border);
+  border-radius: 28px;
+  background: var(--alpine-card);
+  padding: var(--alpine-pad-y) var(--alpine-pad-x);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-details),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-details) {
+  --plan-bg: var(--alpine-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-timeline__rail)::before,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-timeline__rail)::before,
+.scope:global(.invite-shell--alpine-rings) :global(.invite-timeline__dot),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-timeline__dot) {
+  border-color: var(--invite-accent);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-timeline__rail)::before,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-timeline__rail)::before {
+  background: var(--alpine-border);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-timeline__body) strong,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-timeline__body) strong {
+  font-size: clamp(20px, 1.55vw, 24px);
+  font-weight: 650;
+  line-height: 1.18;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-timeline__body) p,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-timeline__body) p {
+  margin-top: 8px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-dress-code),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-dress-code) {
+  display: grid;
+  align-items: center;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-dress-code) > div,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-dress-code) > div {
+  border-color: transparent;
+  border-radius: 20px;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-rsvp),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-rsvp) {
+  margin: 0 14px 14px;
+  border-color: var(--alpine-border);
+  border-radius: 28px;
+  background: var(--alpine-card-soft);
+  padding: 44px var(--alpine-pad-x) 52px;
+  box-shadow: 0 20px 55px color-mix(in srgb, var(--invite-ink) 8%, transparent);
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-portrait),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-portrait) {
+  width: min(100%, 340px);
+  margin-top: 48px;
+  border-radius: 180px 180px 18px 18px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-pill),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-pill) {
+  border-color: var(--invite-accent) !important;
+  color: var(--invite-accent) !important;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-final),
+.scope :global(.invite-shell--alpine-rings) :global(.invite-final) {
+  min-height: 520px;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-final__content) h2,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-final__content) h2 {
+  font-size: clamp(44px, 12vw, 58px);
+  letter-spacing: -0.045em;
+  text-transform: none;
+}
+
+.scope:global(.invite-shell--alpine-rings) :global(.invite-final__content) p,
+.scope :global(.invite-shell--alpine-rings) :global(.invite-final__content) p {
+  margin-top: 12px;
+  font-size: var(--alpine-body);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 380px) {
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-panel),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-panel),
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-photo-band),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-photo-band),
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-details),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-details),
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-dress-code),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-dress-code),
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-rsvp),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-rsvp) {
+    margin-right: 8px;
+    margin-left: 8px;
+    border-radius: 22px;
+  }
+
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-panel),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-panel),
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-details),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-details),
+  .scope:global(.invite-shell--alpine-rings) :global(.invite-rsvp),
+  .scope :global(.invite-shell--alpine-rings) :global(.invite-rsvp) {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .scope:global(.published-site--alpine) :global(.invite-shell--alpine-rings),
+  .scope :global(.published-site--alpine) :global(.invite-shell--alpine-rings) {
+    --published-alpine-gutter: 16px;
+    --published-alpine-bleed: 32px;
+    gap: 16px;
+    padding: 0 16px 16px;
+  }
+
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-shell--alpine-rings),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-shell--alpine-rings) {
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final) {
+    border-radius: 28px;
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope:global(.published-site--alpine) :global(.invite-shell--alpine-rings) :global(.invite-rsvp),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp) {
+    width: auto;
+    margin: 0;
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel) {
+    display: flex;
+    flex-direction: column;
+    min-height: clamp(700px, 40vw, 860px);
+    padding: clamp(40px, 4vw, 52px) var(--alpine-pad-x) clamp(32px, 3vw, 40px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo) {
+    flex: 1 1 auto;
+    min-height: clamp(320px, 34vw, 560px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code) {
+    align-self: stretch;
+    min-height: clamp(620px, 36vw, 760px);
+    height: 100%;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-shell--alpine-rings) :global(.invite-rsvp),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp) {
+    width: min(980px, 100%);
+    margin: 28px auto;
+    border-radius: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .scope:global(.fullscreen-preview__page--alpine) :global(.invite-shell--alpine-rings),
+  .scope :global(.fullscreen-preview__page--alpine) :global(.invite-shell--alpine-rings) {
+    gap: 18px;
+    padding: 18px;
+  }
+
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final) {
+    border-radius: 32px;
+  }
+
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp) {
+    width: auto;
+    margin: 0;
+  }
+
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel) {
+    display: flex;
+    flex-direction: column;
+    min-height: min(860px, 78svh);
+    padding: clamp(40px, 4vw, 52px) var(--alpine-pad-x) clamp(32px, 3vw, 40px);
+  }
+
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo) {
+    flex: 1 1 auto;
+    min-height: clamp(320px, 34vw, 560px);
+  }
+
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-details),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band),
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-dress-code) {
+    align-self: stretch;
+    min-height: min(720px, 78svh);
+    height: 100%;
+  }
+
+  .scope:global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp),
+  .scope
+    :global(.fullscreen-preview__page--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-rsvp) {
+    width: min(980px, 100%);
+    margin: 36px auto;
+    border-radius: 42px;
+  }
+}
+
+.scope:global(.editor-loading),
+.scope :global(.editor-loading) {
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  justify-items: center;
+  background:
+    radial-gradient(circle at 50% 43%, rgba(255, 255, 255, 0.9), transparent 19rem), #e4e8e2;
+  color: #343a33;
+}
+
+.scope:global(.editor-loading__mark),
+.scope :global(.editor-loading__mark) {
+  position: relative;
+  width: 66px;
+  height: 44px;
+  margin-bottom: 22px;
+}
+
+.scope:global(.editor-loading__mark) span,
+.scope :global(.editor-loading__mark) span {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #7b8873;
+  border-radius: 50%;
+  animation: editor-loading-pulse 1.8s ease-in-out infinite alternate;
+}
+
+.scope:global(.editor-loading__mark) span:last-child,
+.scope :global(.editor-loading__mark) span:last-child {
+  right: 0;
+  border-color: #b4a173;
+  animation-delay: -0.9s;
+}
+
+.scope:global(.editor-loading) p,
+.scope :global(.editor-loading) p {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.7rem;
+}
+
+.scope:global(.editor-loading) small,
+.scope :global(.editor-loading) small {
+  margin-top: 7px;
+  color: #7b8178;
+  font-size: 0.68rem;
+}
+
+@keyframes editor-loading-pulse {
+  from {
+    opacity: 0.55;
+    transform: translateX(0) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(2px) scale(1.04);
+  }
+}
+
+@media (max-width: 1050px) {
+  .scope:global(.marketing-hero),
+  .scope :global(.marketing-hero) {
+    grid-template-columns: 1fr 0.85fr;
+    gap: 35px;
+  }
+
+  .scope:global(.marketing-hero__copy) h1,
+  .scope :global(.marketing-hero__copy) h1 {
+    font-size: clamp(3.4rem, 7vw, 5.4rem);
+  }
+
+  .scope:global(.marketing-featured),
+  .scope :global(.marketing-featured) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scope:global(.marketing-featured__card):last-child,
+  .scope :global(.marketing-featured__card):last-child {
+    grid-column: 1 / -1;
+    min-height: 320px;
+  }
+
+  .scope:global(.editor-layout),
+  .scope :global(.editor-layout) {
+    grid-template-columns: 360px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 899px) {
+  .scope:global(.site-header),
+  .scope :global(.site-header) {
+    width: min(100% - 34px, 720px);
+  }
+
+  .scope:global(.site-header__brand) small,
+  .scope :global(.site-header__brand) small {
+    display: none;
+  }
+
+  .scope:global(.marketing-hero),
+  .scope :global(.marketing-hero),
+  .scope:global(.marketing-section),
+  .scope :global(.marketing-section),
+  .scope:global(.marketing-cta),
+  .scope :global(.marketing-cta),
+  .scope:global(.templates-page),
+  .scope :global(.templates-page) {
+    width: min(100% - 34px, 720px);
+  }
+
+  .scope:global(.marketing-hero),
+  .scope :global(.marketing-hero) {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 52px;
+  }
+
+  .scope:global(.marketing-hero__copy),
+  .scope :global(.marketing-hero__copy) {
+    text-align: center;
+  }
+
+  .scope:global(.marketing-hero__copy) h1,
+  .scope :global(.marketing-hero__copy) h1,
+  .scope:global(.marketing-hero__lead),
+  .scope :global(.marketing-hero__lead) {
+    margin-inline: auto;
+  }
+
+  .scope:global(.marketing-hero__actions),
+  .scope :global(.marketing-hero__actions),
+  .scope:global(.marketing-assurances),
+  .scope :global(.marketing-assurances) {
+    justify-content: center;
+  }
+
+  .scope:global(.marketing-hero__visual),
+  .scope :global(.marketing-hero__visual) {
+    min-height: 630px;
+    margin-top: 15px;
+  }
+
+  .scope:global(.marketing-promise),
+  .scope :global(.marketing-promise),
+  .scope:global(.marketing-process),
+  .scope :global(.marketing-process),
+  .scope:global(.marketing-story),
+  .scope :global(.marketing-story) {
+    grid-template-columns: 1fr;
+  }
+
+  .scope:global(.marketing-promise),
+  .scope :global(.marketing-promise) {
+    padding: 34px max(20px, calc((100vw - 720px) / 2));
+  }
+
+  .scope:global(.marketing-process__intro),
+  .scope :global(.marketing-process__intro) {
+    position: static;
+  }
+
+  .scope:global(.marketing-story__photo),
+  .scope :global(.marketing-story__photo) {
+    min-height: 520px;
+  }
+
+  .scope:global(.marketing-story__copy),
+  .scope :global(.marketing-story__copy) {
+    padding: 50px 30px 60px;
+  }
+
+  .scope:global(.editor-layout),
+  .scope :global(.editor-layout) {
+    display: block;
+  }
+
+  .scope:global(.editor-sidebar),
+  .scope :global(.editor-sidebar),
+  .scope:global(.editor-preview),
+  .scope :global(.editor-preview) {
+    height: auto;
+    overflow: visible;
+  }
+
+  .scope:global(.editor-sidebar),
+  .scope :global(.editor-sidebar) {
+    border-right: 0;
+    border-bottom: 1px solid rgba(48, 53, 46, 0.1);
+  }
+
+  .scope:global(.editor-sidebar__topbar),
+  .scope :global(.editor-sidebar__topbar) {
+    position: static;
+  }
+
+  .scope:global(.editor-brand),
+  .scope :global(.editor-brand) {
+    display: none;
+  }
+
+  .scope:global(.editor-preview-jump),
+  .scope :global(.editor-preview-jump) {
+    display: inline-flex;
+    margin-left: auto;
+    color: #65715e;
+  }
+
+  .scope:global(.editor-preview__toolbar),
+  .scope :global(.editor-preview__toolbar) {
+    position: sticky;
+    top: 8px;
+    right: auto;
+    width: min(100%, 1040px);
+    margin: 0 auto 14px;
+    transform: none;
+  }
+
+  .scope:global(.editor-step-actions),
+  .scope :global(.editor-step-actions) {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .scope:global(.invite-music),
+  .scope :global(.invite-music) {
+    right: 10px;
+    bottom: 10px;
+    max-width: calc(100vw - 20px);
+  }
+
+  .scope:global(.invite-music__copy),
+  .scope :global(.invite-music__copy) {
+    max-width: 170px;
+  }
+
+  .scope:global(.site-header),
+  .scope :global(.site-header) {
+    flex-wrap: nowrap;
+    padding: 17px 0;
+  }
+
+  .scope:global(.site-header__nav),
+  .scope :global(.site-header__nav) {
+    display: none;
+  }
+
+  .scope:global(.site-header__cta),
+  .scope :global(.site-header__cta) {
+    min-height: 38px;
+    padding: 8px 13px;
+    font-size: 0.69rem;
+  }
+
+  .scope:global(.site-header__actions),
+  .scope :global(.site-header__actions) {
+    gap: 6px;
+  }
+
+  .scope:global(.site-header__mobile-menu),
+  .scope :global(.site-header__mobile-menu) {
+    display: block;
+  }
+
+  .scope:global(.site-header__desktop-user-actions),
+  .scope :global(.site-header__desktop-user-actions) {
+    display: none;
+  }
+
+  .scope:global(.site-header__menu-button),
+  .scope :global(.site-header__menu-button) {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    place-items: center;
+    border: 1px solid var(--product-line, rgba(49, 51, 42, 0.12));
+    border-radius: 50%;
+    background: rgba(255, 253, 250, 0.88);
+    color: var(--product-ink, var(--studio-ink));
+    cursor: pointer;
+  }
+
+  .scope:global(.site-header__mobile-panel),
+  .scope :global(.site-header__mobile-panel) {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    display: grid;
+    width: min(340px, calc(100vw - 32px));
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--product-line, rgba(49, 51, 42, 0.12));
+    border-radius: 22px;
+    background: rgba(255, 253, 250, 0.98);
+    box-shadow: 0 18px 50px rgba(45, 38, 43, 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .scope:global(.site-header__mobile-panel) nav,
+  .scope :global(.site-header__mobile-panel) nav {
+    display: grid;
+    gap: 4px;
+  }
+
+  .scope:global(.site-header__mobile-panel) nav a,
+  .scope :global(.site-header__mobile-panel) nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    color: var(--product-muted, var(--studio-muted));
+    text-decoration: none;
+  }
+
+  .scope:global(.site-header__mobile-panel) nav a:global(.is-active),
+  .scope :global(.site-header__mobile-panel) nav a:global(.is-active) {
+    background: var(--product-soft, rgba(255, 255, 255, 0.76));
+    color: var(--product-ink, var(--studio-ink));
+  }
+
+  .scope:global(.site-header__mobile-panel) nav a > span,
+  .scope :global(.site-header__mobile-panel) nav a > span {
+    display: grid;
+    gap: 2px;
+  }
+
+  .scope:global(.site-header__mobile-panel) strong,
+  .scope :global(.site-header__mobile-panel) strong {
+    font-size: 0.88rem;
+  }
+
+  .scope:global(.site-header__mobile-panel) small,
+  .scope :global(.site-header__mobile-panel) small {
+    color: var(--product-muted, var(--studio-muted));
+    font-size: 0.7rem;
+  }
+
+  .scope:global(.site-header__mobile-account),
+  .scope :global(.site-header__mobile-account) {
+    display: grid;
+    padding-top: 10px;
+    border-top: 1px solid var(--product-line, rgba(49, 51, 42, 0.12));
+  }
+
+  .scope:global(.site-header__mobile-login),
+  .scope :global(.site-header__mobile-login) {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 1px solid var(--product-line, rgba(49, 51, 42, 0.12));
+    border-radius: 14px;
+    color: var(--product-ink, var(--studio-ink));
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
+
+  .scope:global(.site-header__mobile-user),
+  .scope :global(.site-header__mobile-user) {
+    display: grid;
+    gap: 8px;
+  }
+
+  .scope:global(.site-header__mobile-profile),
+  .scope :global(.site-header__mobile-profile) {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 11px;
+    padding: 6px 8px 10px;
+    color: var(--product-ink, var(--studio-ink));
+    text-decoration: none;
+  }
+
+  .scope:global(.site-header__mobile-profile) > img,
+  .scope :global(.site-header__mobile-profile) > img,
+  .scope:global(.site-header__mobile-profile) > span:first-child,
+  .scope :global(.site-header__mobile-profile) > span:first-child {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--product-accent-soft, #e6eadf);
+    object-fit: cover;
+  }
+
+  .scope:global(.site-header__mobile-profile) > span:last-child,
+  .scope :global(.site-header__mobile-profile) > span:last-child {
+    display: grid;
+    min-width: 0;
+    gap: 2px;
+  }
+
+  .scope:global(.site-header__mobile-profile) small,
+  .scope :global(.site-header__mobile-profile) small {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .scope:global(.site-header__mobile-profile) strong,
+  .scope :global(.site-header__mobile-profile) strong {
+    overflow: hidden;
+    font-size: 0.88rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .scope:global(.site-header__mobile-user-actions),
+  .scope :global(.site-header__mobile-user-actions) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+  }
+
+  .scope:global(.site-header__mobile-user-actions) a,
+  .scope :global(.site-header__mobile-user-actions) a,
+  .scope:global(.site-header__mobile-user-actions) button,
+  .scope :global(.site-header__mobile-user-actions) button {
+    display: flex;
+    width: 100%;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid var(--product-line, rgba(49, 51, 42, 0.12));
+    border-radius: 12px;
+    background: transparent;
+    color: var(--product-ink, var(--studio-ink));
+    font: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .scope:global(.site-header__mobile-cta),
+  .scope :global(.site-header__mobile-cta) {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 14px;
+    background: var(--product-ink, #2d322a);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .scope:global(.site-header__cta),
+  .scope :global(.site-header__cta) {
+    display: none;
+  }
+
+  .scope:global(.site-header__login),
+  .scope :global(.site-header__login) {
+    width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    padding: 8px;
+  }
+
+  .scope:global(.site-header__login) span,
+  .scope :global(.site-header__login) span,
+  .scope:global(.site-header__user) strong,
+  .scope :global(.site-header__user) strong,
+  .scope:global(.site-header__dashboard) span,
+  .scope :global(.site-header__dashboard) span {
+    display: none;
+  }
+
+  .scope:global(.site-header__dashboard),
+  .scope :global(.site-header__dashboard) {
+    width: 32px;
+    justify-content: center;
+    border-right: 0;
+    padding: 5px;
+  }
+
+  .scope:global(.site-header__user),
+  .scope :global(.site-header__user) {
+    gap: 4px;
+    padding-right: 4px;
+  }
+
+  .scope:global(.auth-shell),
+  .scope :global(.auth-shell) {
+    min-height: calc(100vh - 72px);
+    padding: 52px 17px 86px;
+  }
+
+  .scope:global(.auth-panel),
+  .scope :global(.auth-panel) {
+    padding: 28px 20px;
+  }
+
+  .scope:global(.auth-panel) h1,
+  .scope :global(.auth-panel) h1 {
+    font-size: clamp(2.8rem, 17vw, 4.5rem);
+  }
+
+  .scope:global(.auth-mode-switch),
+  .scope :global(.auth-mode-switch),
+  .scope:global(.yandex-auth-button),
+  .scope :global(.yandex-auth-button) {
+    width: 100%;
+  }
+
+  .scope:global(.auth-mode-switch) a,
+  .scope :global(.auth-mode-switch) a {
+    flex: 1;
+    text-align: center;
+  }
+
+  .scope:global(.marketing-hero__copy) h1,
+  .scope :global(.marketing-hero__copy) h1 {
+    font-size: clamp(3rem, 15vw, 4.2rem);
+  }
+
+  .scope:global(.marketing-hero__visual),
+  .scope :global(.marketing-hero__visual) {
+    min-height: 510px;
+  }
+
+  .scope:global(.marketing-hero__photo),
+  .scope :global(.marketing-hero__photo) {
+    inset-inline: 5%;
+  }
+
+  .scope:global(.marketing-date-card),
+  .scope :global(.marketing-date-card) {
+    right: -5px;
+  }
+
+  .scope:global(.marketing-invite-card),
+  .scope :global(.marketing-invite-card) {
+    left: -5px;
+    width: 65%;
+  }
+
+  .scope:global(.marketing-promise) > div,
+  .scope :global(.marketing-promise) > div,
+  .scope:global(.marketing-featured),
+  .scope :global(.marketing-featured) {
+    grid-template-columns: 1fr;
+  }
+
+  .scope:global(.marketing-promise),
+  .scope :global(.marketing-promise) {
+    gap: 28px;
+  }
+
+  .scope:global(.marketing-promise) > div,
+  .scope :global(.marketing-promise) > div {
+    gap: 15px;
+  }
+
+  .scope:global(.marketing-section),
+  .scope :global(.marketing-section) {
+    padding-block: 80px;
+  }
+
+  .scope:global(.marketing-section__head--split),
+  .scope :global(.marketing-section__head--split),
+  .scope:global(.marketing-cta),
+  .scope :global(.marketing-cta) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .scope:global(.marketing-featured__card),
+  .scope :global(.marketing-featured__card),
+  .scope:global(.marketing-featured__card):first-child,
+  .scope :global(.marketing-featured__card):first-child,
+  .scope:global(.marketing-featured__card):last-child,
+  .scope :global(.marketing-featured__card):last-child {
+    grid-column: auto;
+    min-height: 380px;
+  }
+
+  .scope:global(.marketing-steps) article,
+  .scope :global(.marketing-steps) article {
+    grid-template-columns: 28px 40px 1fr;
+    gap: 12px;
+  }
+
+  .scope:global(.marketing-story),
+  .scope :global(.marketing-story) {
+    width: calc(100% - 16px);
+    margin-bottom: 80px;
+  }
+
+  .scope:global(.marketing-story__photo),
+  .scope :global(.marketing-story__photo) {
+    min-height: 430px;
+  }
+
+  .scope:global(.marketing-story) h2,
+  .scope :global(.marketing-story) h2 {
+    font-size: 3rem;
+  }
+
+  .scope:global(.editor-sidebar__intro),
+  .scope :global(.editor-sidebar__intro) {
+    padding-inline: 18px;
+  }
+
+  .scope:global(.editor-form),
+  .scope :global(.editor-form) {
+    padding-inline: 10px;
+  }
+
+  .scope:global(.editor-preview__inner),
+  .scope :global(.editor-preview__inner) {
+    padding: 12px 4px 50px;
+  }
+
+  .scope:global(.editor-preview__toolbar),
+  .scope :global(.editor-preview__toolbar) {
+    position: sticky;
+    top: 8px;
+    right: auto;
+    align-items: flex-start;
+    width: calc(100% - 16px);
+    margin-bottom: 14px;
+    padding: 9px;
+    transform: none;
+  }
+
+  .scope:global(.editor-preview__toolbar) h2,
+  .scope :global(.editor-preview__toolbar) h2,
+  .scope:global(.editor-preview__toolbar) p,
+  .scope :global(.editor-preview__toolbar) p {
+    display: none;
+  }
+
+  .scope:global(.editor-preview__actions),
+  .scope :global(.editor-preview__actions) {
+    width: 100%;
+  }
+
+  .scope:global(.editor-device-switch),
+  .scope :global(.editor-device-switch) {
+    display: none;
+  }
+
+  .scope:global(.editor-action),
+  .scope :global(.editor-action) {
+    flex: 1;
+  }
+
+  .scope:global(.editor-preview__canvas),
+  .scope :global(.editor-preview__canvas) {
+    max-width: 100%;
+    padding: 3px;
+    border-radius: 11px;
+  }
+
+  .scope:global(.editor-action--fullscreen) span,
+  .scope :global(.editor-action--fullscreen) span {
+    display: none;
+  }
+
+  .scope:global(.fullscreen-preview__page),
+  .scope :global(.fullscreen-preview__page) {
+    padding: 0;
+  }
+
+  .scope:global(.fullscreen-preview__page--wide) > article:first-child,
+  .scope :global(.fullscreen-preview__page--wide) > article:first-child,
+  .scope:global(.fullscreen-preview__page--wide) > article:first-child > button,
+  .scope :global(.fullscreen-preview__page--wide) > article:first-child > button {
+    min-height: 100svh !important;
+  }
+
+  .scope:global(.fullscreen-preview__page) > article,
+  .scope :global(.fullscreen-preview__page) > article {
+    box-shadow: none;
+  }
+}

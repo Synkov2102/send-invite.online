@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import CommerceFooter from "@/components/commerce-footer";
+import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function NotFoundPage() {
   return (
-    <div className="marketing-page">
+    <ProductPageShell className="marketing-page">
       <SiteHeader />
       <main className="legal-shell">
         <header className="legal-hero">
@@ -31,6 +32,6 @@ export default function NotFoundPage() {
         </div>
       </main>
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }

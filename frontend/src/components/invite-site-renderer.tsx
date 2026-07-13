@@ -17,6 +17,8 @@ import {
   inviteImages,
   silkImages,
 } from "@/lib/invite-theme";
+import baseStyles from "@/styles/invitation-base.module.css";
+import responsiveStyles from "@/styles/responsive-shells.module.css";
 
 export type InviteSiteRendererProps = {
   asMain?: boolean;
@@ -48,7 +50,9 @@ export function InviteSiteRenderer({
   const coverImage = invite.coverImageUrl || templateImages.cover;
   const portraitImage = invite.portraitImageUrl || templateImages.portrait;
   const venueImage = invite.venueImageUrl || templateImages.venue;
-  const rootClassName = className ?? `published-site published-site--${templateKind}`;
+  const rootClassName = `${baseStyles.scope} ${responsiveStyles.scope} ${
+    className ?? `published-site published-site--${templateKind}`
+  }`;
   const Wrapper = asMain ? "main" : "div";
 
   const sharedProps = {

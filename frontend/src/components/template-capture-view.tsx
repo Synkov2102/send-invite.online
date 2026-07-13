@@ -4,7 +4,7 @@ import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import type { InviteSitePalette } from "@/lib/invite-site-types";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteTemplate } from "@/lib/invite-templates";
-import "./template-capture.css";
+import styles from "./template-capture.module.css";
 
 type TemplateCaptureViewProps = {
   invite: InviteState;
@@ -18,8 +18,8 @@ export default function TemplateCaptureView({
   template,
 }: TemplateCaptureViewProps) {
   return (
-    <div className="template-capture" data-template-capture={template.id}>
-      <div className="template-capture__screen">
+    <div className={styles.root} data-template-capture={template.id}>
+      <div className={styles.screen}>
         <InviteSiteRenderer
           asMain={false}
           invite={invite}

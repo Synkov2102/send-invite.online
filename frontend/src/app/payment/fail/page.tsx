@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PaymentStatus from "@/components/payment-status";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
+import ProductPageShell from "@/components/product-page-shell";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -20,7 +21,7 @@ export default async function PaymentFailPage({
   const orderId = Array.isArray(query.order) ? query.order[0] : query.order;
 
   return (
-    <div className="marketing-page payment-page">
+    <ProductPageShell className="marketing-page payment-page">
       <SiteHeader />
       <main className="payment-shell">
         {orderId ? (
@@ -33,6 +34,6 @@ export default async function PaymentFailPage({
         )}
       </main>
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }

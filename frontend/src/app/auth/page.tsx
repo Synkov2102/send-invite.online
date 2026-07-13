@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/site-header";
+import ProductPageShell from "@/components/product-page-shell";
 import CommerceFooter from "@/components/commerce-footer";
 import { getCurrentUser } from "@/lib/auth";
 import { brand } from "@/lib/brand";
@@ -32,14 +33,22 @@ function getParam(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
 }
 
-function getStartHref(mode: "login" | "register", returnTo: string | undefined) {
+function getAuthParams(mode: "login" | "register", returnTo: string | undefined) {
   const params = new URLSearchParams({ mode });
 
   if (returnTo?.startsWith("/") && !returnTo.startsWith("//")) {
     params.set("returnTo", returnTo);
   }
 
-  return `/api/auth/yandex/start?${params.toString()}`;
+  return params;
+}
+
+function getAuthHref(mode: "login" | "register", returnTo: string | undefined) {
+  return `/auth?${getAuthParams(mode, returnTo).toString()}`;
+}
+
+function getStartHref(mode: "login" | "register", returnTo: string | undefined) {
+  return `/api/auth/yandex/start?${getAuthParams(mode, returnTo).toString()}`;
 }
 
 export default async function AuthPage({ searchParams }: AuthPageProps) {
@@ -51,7 +60,7 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
   const title = mode === "register" ? "Создайте аккаунт" : "Войдите в аккаунт";
 
   return (
-    <div className="marketing-page auth-page">
+    <ProductPageShell className="marketing-page auth-page">
       <SiteHeader initialUser={user} />
 
       <main className="auth-shell">
@@ -94,13 +103,13 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
               <div className="auth-mode-switch" aria-label="Режим авторизации">
                 <Link
                   className={mode === "login" ? "is-active" : undefined}
-                  href="/auth?mode=login"
+                  href={getAuthHref("login", returnTo)}
                 >
                   Вход
                 </Link>
                 <Link
                   className={mode === "register" ? "is-active" : undefined}
-                  href="/auth?mode=register"
+                  href={getAuthHref("register", returnTo)}
                 >
                   Регистрация
                 </Link>
@@ -121,6 +130,6 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
         </section>
       </main>
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }

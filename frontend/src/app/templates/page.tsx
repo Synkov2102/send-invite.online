@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
+import ProductPageShell from "@/components/product-page-shell";
 import TemplateCard from "@/components/template-card";
 import { getEditorReadyTemplates } from "@/lib/invite-templates";
 import { formatInviteSitePrice } from "@/lib/commerce";
@@ -23,7 +24,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
   const templates = getEditorReadyTemplates();
 
   return (
-    <div className="marketing-page">
+    <ProductPageShell className="marketing-page">
       <SiteHeader active="templates" />
 
       <main className="templates-page">
@@ -52,6 +53,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
         <section aria-label="Список шаблонов" className="templates-page__grid">
           {templates.map((template, index) => (
             <TemplateCard
+              eagerImage={index === 0}
               index={index}
               key={template.id}
               siteId={siteId}
@@ -61,6 +63,6 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
         </section>
       </main>
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }

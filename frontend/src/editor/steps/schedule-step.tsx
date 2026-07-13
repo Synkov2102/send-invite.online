@@ -2,8 +2,9 @@
 
 import { Button } from "@heroui/react";
 import { Plus, Trash2 } from "lucide-react";
-import { FieldGroup, TextAreaField, TextInput } from "../components";
+import { ColorPicker, FieldGroup, TextAreaField, TextInput } from "../components";
 import { useEditor } from "../editor-context";
+import styles from "./schedule-step.module.css";
 
 type StepPanelProps = {
   isActive: boolean;
@@ -104,17 +105,15 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
               Добавить
             </Button>
           </div>
-          <div className="editor-dress-code__colors">
+          <div className={styles.dressCodeColors}>
             {invite.dressCodeColors.map((color, index) => (
-              <div className="editor-dress-code__color" key={`dress-color-${index}`}>
-                <label>
-                  <input
-                    aria-label={`Цвет дресс-кода ${index + 1}`}
-                    onChange={(event) => updateDressCodeColor(index, event.target.value)}
-                    type="color"
-                    value={color}
-                  />
-                </label>
+              <div className={styles.dressCodeColor} key={`dress-color-${index}`}>
+                <ColorPicker
+                  ariaLabel={`Выбрать цвет дресс-кода ${index + 1}`}
+                  className={styles.dressCodePicker}
+                  onChange={(value) => updateDressCodeColor(index, value)}
+                  value={color}
+                />
                 <code>{color}</code>
                 <Button
                   aria-label={`Удалить цвет ${index + 1}`}

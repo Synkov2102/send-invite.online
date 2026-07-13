@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PaymentStatus from "@/components/payment-status";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
+import ProductPageShell from "@/components/product-page-shell";
 import {
   confirmRobokassaSuccessRedirect,
   readRobokassaSearchParam,
@@ -39,7 +40,7 @@ export default async function PaymentSuccessPage({
   }
 
   return (
-    <div className="marketing-page payment-page">
+    <ProductPageShell className="marketing-page payment-page">
       <SiteHeader />
       <main className="payment-shell">
         {orderId ? (
@@ -52,6 +53,6 @@ export default async function PaymentSuccessPage({
         )}
       </main>
       <CommerceFooter />
-    </div>
+    </ProductPageShell>
   );
 }
