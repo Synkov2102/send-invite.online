@@ -11,6 +11,15 @@ import type { InvitePalette } from "@/lib/invite-theme";
 export const maxImageUploadBytes = 8 * 1024 * 1024;
 export const imageUploadTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
+export const editorStepIds = [
+  "content",
+  "schedule",
+  "guests",
+  "media",
+  "design",
+  "publish",
+] as const;
+
 export const editorSteps = [
   {
     title: "Содержание",

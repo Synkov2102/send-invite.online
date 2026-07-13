@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import CommerceFooter from "@/components/commerce-footer";
+import { editorStepIds } from "@/editor/constants";
 import InvitationBuilder from "@/editor/invitation-builder";
 import { getManagedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
@@ -22,7 +23,9 @@ export const metadata: Metadata = createPageMetadata({
 
 type EditorPageProps = {
   searchParams: Promise<{
+    preview?: string | string[];
     site?: string | string[];
+    step?: string | string[];
     template?: string | string[];
   }>;
 };
@@ -31,14 +34,26 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
   const query = await searchParams;
   const templateId = Array.isArray(query.template) ? query.template[0] : query.template;
   const siteId = Array.isArray(query.site) ? query.site[0] : query.site;
+  const stepId = Array.isArray(query.step) ? query.step[0] : query.step;
+  const preview = Array.isArray(query.preview) ? query.preview[0] : query.preview;
+  const initialStep = Math.max(0, editorStepIds.findIndex((item) => item === stepId));
   const [user, sessionToken] = await Promise.all([
     getCurrentUser(),
     getAuthSessionToken(),
   ]);
 
   if (siteId && (!user || !sessionToken)) {
+    const returnToParams = new URLSearchParams({ site: siteId });
+
+    if (stepId && editorStepIds.includes(stepId as (typeof editorStepIds)[number])) {
+      returnToParams.set("step", stepId);
+    }
+    if (preview === "1") {
+      returnToParams.set("preview", preview);
+    }
+
     redirect(
-      `/auth?mode=login&returnTo=${encodeURIComponent(`/editor?site=${siteId}`)}`,
+      `/auth?mode=login&returnTo=${encodeURIComponent(`/editor?${returnToParams.toString()}`)}`,
     );
   }
 
@@ -76,8 +91,10 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
       >
         <InvitationBuilder
           initialInvite={managedSite?.invite}
+          initialIsFullscreenPreview={preview === "1"}
           initialIsPaid={managedSite?.isPaid}
           initialPalette={managedSite?.palette}
+          initialStep={initialStep}
           isAuthenticated={Boolean(user)}
           siteId={managedSite?.id}
           template={template}

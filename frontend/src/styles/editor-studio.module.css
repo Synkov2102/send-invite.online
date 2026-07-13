@@ -331,8 +331,9 @@
 
 .scope:global(.editor-field-group__heading),
 .scope :global(.editor-field-group__heading) {
+  position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   min-height: auto;
   padding: 0 0 10px;
@@ -343,7 +344,9 @@
 .scope:global(.editor-field-group__heading) > div,
 .scope :global(.editor-field-group__heading) > div {
   display: grid;
+  flex: 1;
   gap: 4px;
+  min-width: 0;
 }
 
 .scope:global(.editor-field-group__heading) h2,
@@ -368,14 +371,55 @@
 
 .scope:global(.editor-field-group__hint),
 .scope :global(.editor-field-group__hint) {
-  margin: 12px 0 0;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(280px, calc(100vw - 64px));
+  margin: 0;
   border: 1px solid rgba(116, 128, 106, 0.2);
   border-radius: 10px;
   background: rgba(246, 248, 242, 0.86);
   padding: 10px 12px;
+  box-shadow: 0 12px 30px rgba(35, 40, 34, 0.14);
   color: #566153;
   font-size: 0.74rem;
   line-height: 1.45;
+}
+
+.scope:global(.editor-field-group__help),
+.scope :global(.editor-field-group__help) {
+  position: relative;
+  z-index: 20;
+  flex: 0 0 auto;
+}
+
+.scope:global(.editor-field-group__help) > summary,
+.scope :global(.editor-field-group__help) > summary {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  list-style: none;
+  place-items: center;
+  border: 1px solid rgba(116, 128, 106, 0.24);
+  border-radius: 50%;
+  color: #697164;
+}
+
+.scope:global(.editor-field-group__help) > summary::-webkit-details-marker,
+.scope :global(.editor-field-group__help) > summary::-webkit-details-marker {
+  display: none;
+}
+
+.scope:global(.editor-field-group__help) > summary:hover,
+.scope :global(.editor-field-group__help) > summary:hover,
+.scope:global(.editor-field-group__help) > summary:focus-visible,
+.scope :global(.editor-field-group__help) > summary:focus-visible,
+.scope:global(.editor-field-group__help)[open] > summary,
+.scope :global(.editor-field-group__help)[open] > summary {
+  border-color: rgba(116, 128, 106, 0.42);
+  background: rgba(246, 248, 242, 0.92);
+  outline: none;
 }
 
 .scope:global(.editor-field-group__body),
@@ -597,9 +641,9 @@
   gap: 5px;
   margin: 0 !important;
   border-radius: 999px;
-  background: #e7ede4;
+  background: var(--product-accent-soft, #ffe6eb);
   padding: 6px 9px;
-  color: #50604c !important;
+  color: var(--product-accent, #ff4f72) !important;
   font-weight: 700;
 }
 

@@ -7,8 +7,10 @@ export type { InviteVars } from "@/lib/invite-theme";
 
 export type InvitationBuilderProps = {
   initialInvite?: InviteState;
+  initialIsFullscreenPreview?: boolean;
   initialIsPaid?: boolean;
   initialPalette?: InvitePalette;
+  initialStep?: number;
   isAuthenticated: boolean;
   siteId?: string;
   template: InviteTemplate;

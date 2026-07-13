@@ -6,9 +6,8 @@ import {
   Great_Vibes,
 } from "next/font/google";
 import { createRootMetadata } from "@/lib/seo";
+import headerBaseStyles from "@/styles/site-header-base.module.css";
 import "./globals.css";
-import "@/styles/product.module.css";
-import "@/styles/responsive-shells.module.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +44,7 @@ export default function RootLayout({
       lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>{children}</body>
     </html>
   );
 }

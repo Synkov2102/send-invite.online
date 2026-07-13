@@ -1,3 +1,4 @@
+import { CircleHelp } from "lucide-react";
 import type { ReactNode } from "react";
 
 type FieldGroupProps = Readonly<{
@@ -22,8 +23,18 @@ export function FieldGroup({ children, description, hint, title }: FieldGroupPro
           <h2>{title}</h2>
           {description ? <p>{description}</p> : null}
         </div>
+        {hint ? (
+          <details className="editor-field-group__help">
+            <summary
+              aria-label={`Показать подсказку: ${title}`}
+              title="Показать подсказку"
+            >
+              <CircleHelp aria-hidden="true" size={18} strokeWidth={2} />
+            </summary>
+            <p className="editor-field-group__hint">{hint}</p>
+          </details>
+        ) : null}
       </div>
-      {hint ? <p className="editor-field-group__hint">{hint}</p> : null}
       <div className="editor-field-group__body">{children}</div>
     </section>
   );

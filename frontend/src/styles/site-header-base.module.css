@@ -1,0 +1,205 @@
+.scope {
+  --header-ink: #282126;
+  --header-muted: #756c72;
+  --header-line: #e7e0e4;
+  --header-paper: #fffdfa;
+  --header-soft: #f6f1f3;
+  --header-accent: #ff4f72;
+  --header-accent-soft: #ffe6eb;
+}
+
+.scope :global(.site-header) {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  width: min(1240px, calc(100% - 48px));
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-inline: auto;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--header-line);
+}
+
+.scope :global(.site-header__brand),
+.scope :global(.site-header__actions),
+.scope :global(.site-header__login),
+.scope :global(.site-header__user),
+.scope :global(.site-header__dashboard),
+.scope :global(.site-header__profile),
+.scope :global(.site-header__cta) {
+  display: inline-flex;
+  align-items: center;
+}
+
+.scope :global(.site-header__brand) {
+  gap: 10px;
+  color: var(--header-ink);
+  text-decoration: none;
+}
+
+.scope :global(.site-header__nav) {
+  display: flex;
+  gap: 7px;
+  padding: 4px;
+  border: 1px solid var(--header-line);
+  border-radius: 999px;
+  background: rgba(255, 253, 250, 0.88);
+  backdrop-filter: blur(12px);
+}
+
+.scope :global(.site-header__nav) a {
+  padding: 7px 15px;
+  border-radius: 999px;
+  color: var(--header-muted);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.scope :global(.site-header__nav) a:global(.is-active) {
+  background: var(--header-ink);
+  color: #fff;
+}
+
+.scope :global(.site-header__actions) {
+  gap: 10px;
+}
+
+.scope :global(.site-header__desktop-user-actions) {
+  display: contents;
+}
+
+.scope :global(.site-header__mobile-menu) {
+  display: none;
+}
+
+.scope :global(.site-header__login),
+.scope :global(.site-header__user) {
+  min-height: 42px;
+  border: 1px solid var(--header-line);
+  border-radius: 999px;
+  background: rgba(255, 253, 250, 0.82);
+  color: var(--header-ink);
+  font-size: 0.82rem;
+  font-weight: 650;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+}
+
+.scope :global(.site-header__login) {
+  gap: 8px;
+  padding: 9px 15px;
+}
+
+.scope :global(.site-header__user) {
+  gap: 8px;
+  max-width: 420px;
+  padding: 4px 5px 4px 4px;
+}
+
+.scope :global(.site-header__dashboard) {
+  min-height: 32px;
+  gap: 7px;
+  border-right: 1px solid var(--header-line);
+  padding: 5px 11px 5px 8px;
+  color: #554c52;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.scope :global(.site-header__profile) {
+  min-width: 0;
+  gap: 8px;
+  color: inherit;
+}
+
+.scope :global(.site-header__profile) > span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--header-accent-soft);
+  color: #a52f4d;
+}
+
+.scope :global(.site-header__user) form {
+  display: contents;
+}
+
+.scope :global(.site-header__user) button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--header-muted);
+  cursor: pointer;
+}
+
+.scope :global(.site-header__cta) {
+  min-height: 42px;
+  justify-content: center;
+  gap: 9px;
+  padding: 9px 17px;
+  border: 1px solid var(--header-ink);
+  border-radius: 999px;
+  background: var(--header-ink);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.scope :global(.site-header__cta):hover {
+  background: var(--header-accent);
+}
+
+.scope :global(.site-header__login):hover,
+.scope :global(.site-header__user) button:hover {
+  background: var(--header-soft);
+}
+
+@media (max-width: 899px) {
+  .scope :global(.site-header) {
+    width: min(100% - 34px, 720px);
+  }
+
+  .scope :global(.site-header__brand) small {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .scope :global(.site-header) {
+    flex-wrap: nowrap;
+    padding: 17px 0;
+  }
+
+  .scope :global(.site-header__nav) {
+    display: none;
+  }
+
+  .scope :global(.site-header__cta) {
+    min-height: 38px;
+    padding: 8px 13px;
+    font-size: 0.69rem;
+  }
+
+  .scope :global(.site-header__actions) {
+    gap: 6px;
+  }
+
+  .scope :global(.site-header__mobile-menu) {
+    display: block;
+  }
+
+  .scope :global(.site-header__desktop-user-actions) {
+    display: none;
+  }
+}
