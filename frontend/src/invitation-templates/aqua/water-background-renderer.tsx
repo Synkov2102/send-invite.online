@@ -50,10 +50,23 @@ function compileShader(gl: WebGLRenderingContext, type: number, source: string) 
 
 function createProgram(gl: WebGLRenderingContext, fragmentSource: string) {
   const vertex = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
+
+  if (!vertex) {
+    return null;
+  }
+
   const fragment = compileShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+
+  if (!fragment) {
+    gl.deleteShader(vertex);
+    return null;
+  }
+
   const program = gl.createProgram();
 
-  if (!vertex || !fragment || !program) {
+  if (!program) {
+    gl.deleteShader(vertex);
+    gl.deleteShader(fragment);
     return null;
   }
 
@@ -61,7 +74,14 @@ function createProgram(gl: WebGLRenderingContext, fragmentSource: string) {
   gl.attachShader(program, fragment);
   gl.linkProgram(program);
 
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+  const linked = gl.getProgramParameter(program, gl.LINK_STATUS);
+  gl.detachShader(program, vertex);
+  gl.detachShader(program, fragment);
+  gl.deleteShader(vertex);
+  gl.deleteShader(fragment);
+
+  if (!linked) {
+    gl.deleteProgram(program);
     return null;
   }
 
@@ -178,6 +198,13 @@ export function WaterBackgroundRenderer({
       const renderProgram = createProgram(gl, RENDER_FRAGMENT);
 
       if (!simProgram || !renderProgram) {
+        if (simProgram) {
+          gl.deleteProgram(simProgram);
+        }
+        if (renderProgram) {
+          gl.deleteProgram(renderProgram);
+        }
+        gl.deleteBuffer(buffer);
         canvas.style.background = `linear-gradient(160deg, ${deep}, ${shallow})`;
         return;
       }
@@ -345,6 +372,7 @@ export function WaterBackgroundRenderer({
     const program = createProgram(gl, FALLBACK_FRAGMENT);
 
     if (!program) {
+      gl.deleteBuffer(buffer);
       canvas.style.background = `linear-gradient(160deg, ${deep}, ${shallow})`;
       return;
     }

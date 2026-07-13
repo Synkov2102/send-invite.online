@@ -42,7 +42,7 @@ export function InviteSiteRenderer({
   const templateImages =
     templateKind === "silk"
       ? silkImages
-      : templateKind === "clarity"
+      : templateKind === "clarity" || templateKind === "minimal"
         ? clarityImages
         : inviteImages;
   const coverImage = invite.coverImageUrl || templateImages.cover;

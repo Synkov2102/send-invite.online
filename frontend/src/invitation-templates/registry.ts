@@ -40,6 +40,10 @@ export const sharedTemplateRenderers: Record<
     () => import("./clarity").then((module) => module.ClarityTemplate),
     { ssr: true },
   ),
+  minimal: dynamic(
+    () => import("./minimal").then((module) => module.MinimalTemplate),
+    { ssr: true },
+  ),
   silk: dynamic(() => import("./silk").then((module) => module.SilkTemplate), { ssr: true }),
   vanilla: dynamic(
     () => import("./vanilla").then((module) => module.VanillaTemplate),

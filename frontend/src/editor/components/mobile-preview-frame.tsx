@@ -19,6 +19,7 @@ export function MobilePreviewFrame({ children }: MobilePreviewFrameProps) {
 
     frameDocument.body.dataset.previewReady = "true";
     frameDocument.documentElement.lang = "ru";
+    frameDocument.documentElement.className = document.documentElement.className;
     frameDocument.documentElement.classList.add("mobile-preview-document");
     frameDocument.body.style.margin = "0";
     frameDocument.body.style.minHeight = "100%";

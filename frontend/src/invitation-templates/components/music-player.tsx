@@ -17,7 +17,7 @@ type InvitationMusicPlayerProps = Readonly<{
   url: string;
 }>;
 
-function waitUntilPlayable(audio: HTMLAudioElement) {
+function waitUntilPlayable(audio: HTMLAudioElement, signal: AbortSignal) {
   if (audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
     return Promise.resolve();
   }
@@ -26,6 +26,7 @@ function waitUntilPlayable(audio: HTMLAudioElement) {
     function cleanup() {
       audio.removeEventListener("canplay", onReady);
       audio.removeEventListener("error", onError);
+      signal.removeEventListener("abort", onAbort);
     }
 
     function onReady() {
@@ -38,8 +39,14 @@ function waitUntilPlayable(audio: HTMLAudioElement) {
       reject(new Error("Audio failed to load"));
     }
 
+    function onAbort() {
+      cleanup();
+      reject(new DOMException("Audio loading was aborted", "AbortError"));
+    }
+
     audio.addEventListener("canplay", onReady, { once: true });
     audio.addEventListener("error", onError, { once: true });
+    signal.addEventListener("abort", onAbort, { once: true });
   });
 }
 
@@ -57,6 +64,7 @@ export const InvitationMusicPlayer = forwardRef<
   const [playing, setPlaying] = useState(false);
   const [needsGesture, setNeedsGesture] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const playbackAbortRef = useRef<AbortController | null>(null);
   const skipResetRef = useRef(true);
 
   const startPlayback = useCallback(async () => {
@@ -72,22 +80,43 @@ export const InvitationMusicPlayer = forwardRef<
       return true;
     }
 
+    playbackAbortRef.current?.abort();
+    const controller = new AbortController();
+    playbackAbortRef.current = controller;
     audio.volume = 0.45;
 
     try {
-      await waitUntilPlayable(audio);
+      await waitUntilPlayable(audio, controller.signal);
       await audio.play();
+
+      if (controller.signal.aborted) {
+        audio.pause();
+        return false;
+      }
+
       setPlaying(true);
       setNeedsGesture(false);
       return true;
     } catch {
+      if (controller.signal.aborted) {
+        return false;
+      }
+
       setPlaying(false);
       setNeedsGesture(true);
       return false;
+    } finally {
+      if (playbackAbortRef.current === controller) {
+        playbackAbortRef.current = null;
+      }
     }
   }, [enabled, url]);
 
   useImperativeHandle(ref, () => ({ start: startPlayback }), [startPlayback]);
+
+  useEffect(() => {
+    return () => playbackAbortRef.current?.abort();
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -101,6 +130,7 @@ export const InvitationMusicPlayer = forwardRef<
       return;
     }
 
+    playbackAbortRef.current?.abort();
     audio.pause();
     audio.currentTime = 0;
     setPlaying(false);

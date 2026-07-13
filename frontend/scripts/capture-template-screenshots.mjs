@@ -13,6 +13,7 @@ const templateIds = [
   "vanilla-arch",
   "silk-monogram",
   "clarity-editorial",
+  "minimal-paper",
 ];
 
 const waitMsByTemplate = {
@@ -21,6 +22,7 @@ const waitMsByTemplate = {
   "vanilla-arch": 2500,
   "silk-monogram": 2500,
   "clarity-editorial": 2500,
+  "minimal-paper": 2500,
 };
 
 const preparePageByTemplate = {
@@ -45,6 +47,7 @@ for (const templateId of templateIds) {
   await page.waitForSelector(`[data-template-capture="${templateId}"] .template-capture__screen`, {
     timeout: 30_000,
   });
+  await page.addStyleTag({ content: "nextjs-portal { display: none !important; }" });
   await page.waitForTimeout(waitMsByTemplate[templateId] ?? 3000);
   await preparePageByTemplate[templateId]?.(page);
 

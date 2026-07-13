@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Geist,
+  Geist_Mono,
+  Great_Vibes,
+} from "next/font/google";
 import { createRootMetadata } from "@/lib/seo";
 import "./globals.css";
 import "./product-theme.css";
@@ -14,6 +19,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const inviteSerif = Cormorant_Garamond({
+  preload: false,
+  variable: "--font-invite-serif",
+  subsets: ["cyrillic", "latin"],
+});
+
+const inviteScript = Great_Vibes({
+  preload: false,
+  variable: "--font-invite-script",
+  subsets: ["cyrillic", "latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = createRootMetadata();
 
 export default function RootLayout({
@@ -24,7 +42,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -94,7 +94,7 @@ export function useInvitationBuilder({
   const templateImages =
     templateKind === "silk"
       ? silkImages
-      : templateKind === "clarity"
+      : templateKind === "clarity" || templateKind === "minimal"
         ? clarityImages
         : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;

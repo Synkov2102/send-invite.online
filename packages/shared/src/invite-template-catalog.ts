@@ -3,7 +3,7 @@
  *
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
- * 2. Укажите `kind` (alpine | aqua | clarity | silk | vanilla) и `editorReady: true`.
+ * 2. Укажите `kind` (alpine | aqua | clarity | minimal | silk | vanilla) и `editorReady: true`.
  * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
  *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
@@ -17,7 +17,7 @@ import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "silk" | "vanilla";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "minimal" | "silk" | "vanilla";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -108,6 +108,28 @@ const clarityEditorPreset: Partial<InviteState> = {
     "Пожалуйста, подтвердите ваше присутствие. Ответы помогут нам внимательно подготовить этот день.",
   rsvpDate: "2026-06-01",
   paletteId: "clarity",
+};
+
+const minimalEditorPreset: Partial<InviteState> = {
+  bride: "Анна",
+  groom: "Михаил",
+  date: "2026-08-22",
+  time: "16:00",
+  city: "Москва",
+  venue: "Усадьба Муравьёвых-Апостолов",
+  address: "Старая Басманная ул., 23/9с1",
+  lead:
+    "Совсем скоро наступит день, который мы хотим разделить с самыми близкими. Будем счастливы видеть вас рядом и вместе прожить эту красивую историю.",
+  dressCode:
+    "Для нас главное — ваше присутствие. Будем рады, если в образах появятся спокойные природные и молочные оттенки.",
+  dressCodeColors: ["#f4efe6", "#d7c7b2", "#9d8270", "#6f7667", "#3f453e"],
+  schedule: [
+    { time: "15:30", title: "Сбор гостей", description: "Приветственный бокал и первые встречи" },
+    { time: "16:00", title: "Церемония", description: "Самый важный момент этого дня" },
+    { time: "17:00", title: "Ужин", description: "Тёплый вечер, музыка и танцы" },
+  ],
+  rsvpDate: "2026-07-22",
+  paletteId: "porcelain",
 };
 
 export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
@@ -211,6 +233,36 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#f5f3e9",
       ink: "#302f2c",
       accent: "#817017",
+    },
+  },
+  {
+    id: "minimal-paper",
+    name: "Тихая история",
+    description: "Фарфорово-синее приглашение с рукописной типографикой, воздушной вёрсткой и авторской line-art иллюстрацией.",
+    coverType: "arch",
+    kind: "minimal",
+    editorReady: true,
+    editorPreset: minimalEditorPreset,
+    defaultPaletteId: "porcelain",
+    recommendedPaletteIds: [
+      "porcelain",
+      "paper-herbarium",
+      "paper-terracotta",
+      "paper-burgundy",
+      "paper-lavender",
+      "paper-midnight",
+      "paper-peach-sage",
+      "paper-mocha",
+      "paper-mint-bronze",
+      "paper-noir-blush",
+    ],
+    tags: ["минимализм", "бумага"],
+    screenshot: "/images/templates/minimal-paper-mobile.png",
+    preview: {
+      background: "#d9e0e5",
+      surface: "#f7f3ea",
+      ink: "#26394c",
+      accent: "#466f96",
     },
   },
 ];

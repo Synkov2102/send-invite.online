@@ -1,0 +1,851 @@
+.shell {
+  --minimal-bg: #d9e0e5;
+  --minimal-paper: #f7f3ea;
+  --minimal-ink: #26394c;
+  --minimal-photo-text: #fffdf8;
+  --minimal-muted: #70808c;
+  --minimal-accent: #54799f;
+  --minimal-line: #b8c6d0;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background: var(--minimal-paper);
+  color: var(--minimal-ink);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure {
+  margin: 0;
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: max(760px, 100svh);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 5vw, 64px) clamp(20px, 5vw, 54px) 28px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 38%,
+      color-mix(in srgb, var(--minimal-paper) 92%, white) 0 22%,
+      transparent 68%
+    ),
+    var(--minimal-paper);
+  text-align: center;
+}
+
+.heroTopline {
+  position: absolute;
+  top: clamp(26px, 4vw, 46px);
+  right: clamp(20px, 5vw, 54px);
+  left: clamp(20px, 5vw, 54px);
+  display: flex;
+  justify-content: space-between;
+  color: var(--minimal-muted);
+  font-size: 9px;
+  font-weight: 550;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.scriptTitle {
+  color: var(--minimal-accent);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-weight: 400;
+}
+
+.heroNames {
+  display: grid;
+  justify-items: center;
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(70px, 12vw, 126px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.74;
+}
+
+.heroNames i {
+  margin: clamp(9px, 2vw, 18px) 0;
+  color: var(--minimal-accent);
+  font-size: 0.34em;
+  font-weight: 400;
+}
+
+.heroNames > span,
+.closingCopy > div > span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.heroDate {
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) auto minmax(72px, 1fr);
+  align-items: center;
+  margin-top: clamp(30px, 5vw, 50px);
+  color: var(--minimal-muted);
+  font-family: var(--font-invite-serif), Georgia, serif;
+}
+
+.heroDate span {
+  padding: 0 16px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.heroDate strong {
+  padding: 0 clamp(18px, 3vw, 30px);
+  border-right: 1px solid var(--minimal-line);
+  border-left: 1px solid var(--minimal-line);
+  color: var(--minimal-ink);
+  font-size: clamp(31px, 5vw, 46px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.heroIllustration {
+  width: min(100%, 610px);
+  margin-top: clamp(23px, 4vw, 36px);
+  color: var(--minimal-accent);
+}
+
+.tableIllustration {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1672 / 941;
+  background: currentColor;
+  mask: url("/images/wedding-table-line-art.svg") center / contain no-repeat;
+  -webkit-mask: url("/images/wedding-table-line-art.svg") center / contain no-repeat;
+}
+
+.scrollCue {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  margin-top: auto;
+  color: var(--minimal-muted);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.greeting {
+  padding: clamp(88px, 12vw, 160px) clamp(22px, 6vw, 70px);
+  background: color-mix(in srgb, var(--minimal-paper) 86%, white);
+}
+
+.greetingInner {
+  display: grid;
+  max-width: 1040px;
+  margin: 0 auto;
+  grid-template-columns: 44px minmax(250px, 0.9fr) minmax(300px, 0.82fr);
+  align-items: center;
+  gap: clamp(30px, 7vw, 100px);
+}
+
+.sectionNumber {
+  align-self: start;
+  padding-top: 6px;
+  color: var(--minimal-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.greetingCopy {
+  display: grid;
+  justify-items: start;
+  text-align: left;
+}
+
+.scriptTitle {
+  font-size: clamp(38px, 7vw, 65px);
+  line-height: 1.05;
+}
+
+.lead {
+  max-width: 39ch;
+  margin-top: 28px !important;
+  color: var(--minimal-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(17px, 2.3vw, 22px);
+  line-height: 1.7;
+}
+
+.greetingCopy time {
+  margin-top: 30px;
+  padding-top: 13px;
+  border-top: 1px solid var(--minimal-line);
+  color: var(--minimal-muted);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.coverPhoto {
+  position: relative;
+  width: min(100%, 410px);
+  aspect-ratio: 4 / 5.2;
+  justify-self: end;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--minimal-bg);
+}
+
+.coverPhoto::after {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid color-mix(in srgb, var(--minimal-photo-text) 54%, transparent);
+  border-radius: inherit;
+  content: "";
+}
+
+.coverPhoto figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  left: 0;
+  z-index: 1;
+  color: var(--minimal-photo-text);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.dateSection {
+  padding: clamp(90px, 13vw, 170px) clamp(20px, 6vw, 68px);
+  background: color-mix(in srgb, var(--minimal-bg) 46%, var(--minimal-paper));
+}
+
+.dateInner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.sectionHeader,
+.programHeader {
+  display: grid;
+  justify-items: center;
+}
+
+.sectionHeader > span,
+.sectionLabel {
+  color: var(--minimal-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sectionHeader .scriptTitle {
+  margin-top: 25px !important;
+}
+
+.sectionHeader h2 {
+  margin-top: 17px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(35px, 7vw, 62px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.sectionHeader > p:last-child {
+  margin-top: 17px;
+  color: var(--minimal-muted);
+  font-size: 12px;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(4px, 1.2vw, 12px);
+  margin-top: clamp(45px, 7vw, 72px);
+}
+
+.week > div {
+  display: grid;
+  min-width: 0;
+  min-height: 92px;
+  place-content: center;
+  gap: 12px;
+  color: var(--minimal-muted);
+}
+
+.week span {
+  overflow: hidden;
+  font-size: clamp(7px, 1.2vw, 9px);
+  letter-spacing: 0.08em;
+  text-overflow: clip;
+  text-transform: uppercase;
+}
+
+.week strong {
+  color: var(--minimal-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(17px, 3vw, 26px);
+  font-weight: 400;
+}
+
+.week .selectedDay {
+  width: min(100%, 92px);
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: 50%;
+  background: var(--minimal-accent);
+  color: var(--minimal-paper);
+}
+
+.week .selectedDay strong {
+  color: inherit;
+}
+
+.dateOrnament {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 18px;
+  margin-top: clamp(46px, 8vw, 80px);
+}
+
+.dateOrnament span {
+  height: 1px;
+  background: var(--minimal-line);
+}
+
+.dateOrnament i {
+  max-width: 30ch;
+  color: var(--minimal-muted);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.venueSection {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: max(720px, 92svh);
+  place-items: center;
+  padding: clamp(34px, 8vw, 90px) 22px;
+  overflow: hidden;
+}
+
+.venuePhoto,
+.venueShade {
+  position: absolute;
+  inset: 0;
+}
+
+.venuePhoto {
+  z-index: -1;
+  background: var(--minimal-ink);
+}
+
+.venueShade {
+  background:
+    linear-gradient(180deg, rgba(13, 24, 34, 0.18), rgba(13, 24, 34, 0.5)),
+    linear-gradient(90deg, rgba(13, 24, 34, 0.25), transparent 48%);
+}
+
+.venueCard {
+  display: grid;
+  width: min(100%, 480px);
+  justify-items: center;
+  padding: clamp(48px, 8vw, 76px) clamp(28px, 7vw, 64px);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--minimal-paper) 94%, transparent);
+  box-shadow: 0 30px 90px rgba(11, 20, 28, 0.24);
+  text-align: center;
+  backdrop-filter: blur(14px);
+}
+
+.venueCard > svg {
+  margin-top: 32px;
+  color: var(--minimal-accent);
+}
+
+.venueCard h2 {
+  margin-top: 20px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(34px, 7vw, 58px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.venueCard p {
+  margin-top: 22px;
+  color: var(--minimal-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.venueCard a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--minimal-accent);
+  color: var(--minimal-ink);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.program {
+  padding: clamp(90px, 13vw, 170px) clamp(22px, 7vw, 80px);
+  background: var(--minimal-paper);
+}
+
+.programInner {
+  display: grid;
+  max-width: 1040px;
+  margin: 0 auto;
+  grid-template-columns: minmax(230px, 0.65fr) minmax(340px, 1fr);
+  gap: clamp(50px, 10vw, 140px);
+}
+
+.programHeader {
+  align-content: start;
+  justify-items: start;
+  position: sticky;
+  top: 40px;
+  align-self: start;
+}
+
+.programHeader .scriptTitle {
+  margin-top: 25px !important;
+}
+
+.programHeader h2 {
+  max-width: 7ch;
+  margin-top: 15px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(48px, 8vw, 78px);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 34px 76px 1fr;
+  gap: clamp(14px, 3vw, 28px);
+  padding: 28px 0;
+  border-top: 1px solid var(--minimal-line);
+}
+
+.timeline li:last-child {
+  border-bottom: 1px solid var(--minimal-line);
+}
+
+.timelineIndex {
+  padding-top: 6px;
+  color: var(--minimal-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 8px;
+}
+
+.timeline time {
+  color: var(--minimal-accent);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(22px, 3vw, 29px);
+}
+
+.timeline h3 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+
+.timeline p {
+  max-width: 38ch;
+  margin-top: 8px !important;
+  color: var(--minimal-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.dressSection {
+  padding: clamp(88px, 12vw, 150px) clamp(22px, 7vw, 80px);
+  background:
+    radial-gradient(
+      circle at 50% 14%,
+      color-mix(in srgb, var(--minimal-paper) 70%, transparent),
+      transparent 38%
+    ),
+    var(--minimal-bg);
+}
+
+.dressInner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dressBlock.dressBlock {
+  --dress-accent: var(--minimal-accent);
+  --dress-ink: var(--minimal-ink);
+  --dress-muted: var(--minimal-muted);
+  --dress-line: var(--minimal-line);
+  --dress-surface: transparent;
+  --dress-veil: transparent;
+  width: 100%;
+  margin-top: 22px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.dressBlock :global([class*="section-eyebrow"]),
+.dressBlock :global([class*="swatchLabel"]) {
+  display: none;
+}
+
+.dressBlock :global(h2) {
+  color: var(--minimal-accent) !important;
+  font-family: var(--font-invite-script), "Segoe Script", cursive !important;
+  font-size: clamp(42px, 8vw, 68px) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.05 !important;
+  text-transform: none !important;
+}
+
+.dressBlock :global(p) {
+  max-width: 48ch;
+  margin-inline: auto;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.dressBlock :global([class*="swatch_"]) {
+  border-radius: 999px !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--minimal-paper) 45%, transparent) !important;
+}
+
+.rsvp {
+  padding: clamp(90px, 13vw, 170px) clamp(20px, 6vw, 68px);
+  background: color-mix(in srgb, var(--minimal-paper) 90%, white);
+}
+
+.rsvpInner {
+  display: grid;
+  max-width: 960px;
+  margin: 0 auto;
+  grid-template-columns: minmax(240px, 0.68fr) minmax(340px, 1fr);
+  gap: clamp(48px, 9vw, 110px);
+}
+
+.rsvpInner header .scriptTitle {
+  margin-top: 24px !important;
+}
+
+.rsvpInner header h2 {
+  max-width: 8ch;
+  margin-top: 14px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(43px, 7vw, 66px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+}
+
+.rsvpInner header > p:last-of-type {
+  max-width: 34ch;
+  margin-top: 24px;
+  color: var(--minimal-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.rsvpInner header time {
+  display: inline-block;
+  margin-top: 22px;
+  padding-top: 10px;
+  border-top: 1px solid var(--minimal-line);
+  color: var(--minimal-accent);
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--minimal-accent);
+  --rsvp-accent-soft: color-mix(in srgb, var(--minimal-line) 42%, transparent);
+  --rsvp-button-text: var(--minimal-paper);
+  --rsvp-control-radius: 3px;
+  --rsvp-focus-surface: var(--minimal-paper);
+  --rsvp-ink: var(--minimal-ink);
+  --rsvp-line: var(--minimal-line);
+  --rsvp-muted: var(--minimal-muted);
+  --rsvp-radius: 3px;
+  --rsvp-section: transparent;
+  --rsvp-shadow: none;
+  --rsvp-surface: transparent;
+  width: 100%;
+}
+
+.closing {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: max(720px, 100svh);
+  place-items: end center;
+  padding: 70px 24px;
+  overflow: hidden;
+  color: var(--minimal-photo-text);
+  text-align: center;
+}
+
+.closing figure,
+.closingShade {
+  position: absolute;
+  inset: 0;
+}
+
+.closing figure {
+  z-index: -1;
+}
+
+.closingShade {
+  background:
+    linear-gradient(180deg, rgba(12, 20, 27, 0.08) 20%, rgba(12, 20, 27, 0.72) 100%),
+    radial-gradient(circle at center, transparent 25%, rgba(12, 20, 27, 0.2));
+}
+
+.closingCopy {
+  display: grid;
+  justify-items: center;
+}
+
+.closingCopy > p {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.closingCopy > div {
+  display: grid;
+  justify-items: center;
+  margin-top: 24px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(48px, 10vw, 90px);
+  letter-spacing: -0.06em;
+  line-height: 0.78;
+}
+
+.closingCopy i {
+  margin: 11px 0;
+  color: color-mix(in srgb, var(--minimal-photo-text) 72%, var(--minimal-accent));
+  font-size: 0.38em;
+}
+
+.closingCopy time {
+  margin-top: 28px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: 100svh;
+    padding: clamp(52px, 8svh, 70px) 20px clamp(24px, 5svh, 44px);
+  }
+
+  .heroNames {
+    font-size: clamp(67px, 19vw, 86px);
+  }
+
+  .heroIllustration {
+    width: min(112%, 520px);
+    margin-top: 16px;
+  }
+
+  .scrollCue {
+    margin-top: 4px;
+  }
+
+  .greetingInner,
+  .programInner,
+  .rsvpInner {
+    grid-template-columns: 1fr;
+  }
+
+  .greetingInner {
+    gap: 40px;
+  }
+
+  .sectionNumber {
+    display: none;
+  }
+
+  .greetingCopy {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .coverPhoto {
+    width: min(88vw, 410px);
+    justify-self: center;
+  }
+
+  .week {
+    gap: 4px;
+  }
+
+  .week > div {
+    min-height: 56px;
+    gap: 7px;
+  }
+
+  .week .selectedDay {
+    width: min(100%, 54px);
+  }
+
+  .dateOrnament {
+    gap: 10px;
+  }
+
+  .venueSection {
+    min-height: 760px;
+  }
+
+  .venueCard {
+    border-radius: 6px;
+  }
+
+  .programHeader {
+    position: static;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .programHeader h2 {
+    max-width: 9ch;
+  }
+
+  .timeline {
+    margin-top: 48px;
+  }
+
+  .timeline li {
+    grid-template-columns: 24px 64px 1fr;
+    gap: 12px;
+  }
+
+  .rsvpInner header {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .rsvpInner header h2,
+  .rsvpInner header > p:last-of-type {
+    max-width: 100%;
+  }
+
+  .closing {
+    min-height: 760px;
+    padding-bottom: 138px;
+  }
+}
+
+@media (max-width: 420px) {
+  .heroDate {
+    grid-template-columns: minmax(64px, 1fr) auto minmax(64px, 1fr);
+  }
+
+  .heroDate span {
+    padding: 0 9px;
+    font-size: 10px;
+  }
+
+  .heroDate strong {
+    padding: 0 16px;
+  }
+
+  .greeting,
+  .dateSection,
+  .program,
+  .dressSection,
+  .rsvp {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .timeline li {
+    grid-template-columns: 22px 58px 1fr;
+    gap: 10px;
+  }
+
+  .timeline time {
+    font-size: 20px;
+  }
+
+  .timeline h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 420px) and (max-height: 680px) {
+  .hero {
+    padding-top: 46px;
+    padding-bottom: 18px;
+  }
+
+  .heroNames {
+    font-size: clamp(58px, 17vw, 72px);
+  }
+
+  .heroNames i {
+    margin: 6px 0;
+  }
+
+  .heroDate {
+    margin-top: 18px;
+  }
+
+  .heroIllustration {
+    width: 96%;
+    margin-top: 6px;
+  }
+
+  .scrollCue {
+    gap: 2px;
+    margin-top: 0;
+  }
+}

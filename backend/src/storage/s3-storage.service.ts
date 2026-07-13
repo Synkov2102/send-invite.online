@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Injectable } from "@nestjs/common";
+import { Injectable, type OnModuleDestroy } from "@nestjs/common";
 import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 const defaultEndpoint = "https://storage.yandexcloud.net";
@@ -91,7 +91,7 @@ export function parseS3ObjectRef(value: string) {
 }
 
 @Injectable()
-export class S3StorageService {
+export class S3StorageService implements OnModuleDestroy {
   private client: S3Client | undefined;
   private clientConfigKey: string | undefined;
 
@@ -133,6 +133,7 @@ export class S3StorageService {
     ].join(":");
 
     if (!this.client || this.clientConfigKey !== configKey) {
+      this.client?.destroy();
       this.client = new S3Client({
         credentials: {
           accessKeyId: config.accessKeyId,
@@ -146,6 +147,10 @@ export class S3StorageService {
     }
 
     return this.client;
+  }
+
+  onModuleDestroy() {
+    this.client?.destroy();
   }
 
   async uploadInviteMusicObject({
