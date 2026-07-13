@@ -26,7 +26,7 @@ COPY package.json package-lock.json ./
 COPY backend/package.json backend/package.json
 COPY frontend/package.json frontend/package.json
 COPY packages/shared/package.json packages/shared/package.json
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --ignore-scripts
 RUN mkdir -p packages/shared/node_modules
 
 FROM node:24-alpine AS runner
