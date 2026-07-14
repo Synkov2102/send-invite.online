@@ -29,9 +29,43 @@ docker login ghcr.io
 - `VPS_SSH_KEY_B64` — приватный SSH-ключ в base64;
 - `VPS_SSH_HOST` — адрес VPS;
 - `VPS_SSH_USER` — SSH-пользователь;
-- `VPS_DEPLOY_PATH` — необязательно, по умолчанию `/opt/invite`.
+- `VPS_DEPLOY_PATH` — необязательно, production-каталог, по умолчанию `/opt/invite`;
+- `VPS_STAGE_DEPLOY_PATH` — необязательно, stage-каталог, по умолчанию `/opt/invite-dev`.
 
-Workflow запускается для веток `main` и `master`. Production Compose использует образы репозитория `send-invite.online` с тегом `main`.
+Workflow запускается для веток `main`, `master` и `dev`. Production Compose использует образы репозитория
+`send-invite.online` с тегом `main`, а stage Compose — с тегом `dev`.
+
+## Stage (`dev.send-invite.online`)
+
+Push в ветку `dev` разворачивает отдельный Compose-стек из `docker-compose.stage.yml` в `/opt/invite-dev`.
+Путь можно изменить GitHub Secret `VPS_STAGE_DEPLOY_PATH`. Stage использует отдельные порты `8092` (frontend)
+и `8093` (backend), базу MongoDB `invite-dev` и принудительно включает тестовый режим Robokassa.
+
+Перед первым деплоем создайте на VPS каталог `/opt/invite-dev` и положите в него отдельные файлы
+`.env.backend.production` и `.env.frontend.production`. Их можно создать из production example-файлов;
+доменные переменные Compose переопределяет значениями для `https://dev.send-invite.online`.
+
+Добавьте DNS-запись `A` для `dev.send-invite.online`, указывающую на IP VPS. Во внешнем reverse proxy
+направьте этот домен на `http://127.0.0.1:8092` и выпустите для него TLS-сертификат. Например, для nginx:
+
+```nginx
+server {
+    listen 80;
+    server_name dev.send-invite.online;
+
+    location / {
+        proxy_pass http://127.0.0.1:8092;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Также добавьте `https://dev.send-invite.online/api/auth/yandex/callback` в список разрешённых callback URL
+приложения Yandex ID. Для проверки платежей stage использует ResultURL
+`https://dev.send-invite.online/api/payments/robokassa/result`.
 
 ## Локальная проверка контейнеров
 

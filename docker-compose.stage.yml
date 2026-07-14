@@ -1,0 +1,34 @@
+name: invite-stage
+
+services:
+  backend:
+    image: ghcr.io/synkov2102/send-invite.online-backend:dev
+    restart: unless-stopped
+    env_file:
+      - .env.backend.production
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      FRONTEND_ORIGIN: https://dev.send-invite.online
+      YANDEX_REDIRECT_URI: https://dev.send-invite.online/api/auth/yandex/callback
+      MONGODB_DB: invite-dev
+      ROBOKASSA_TEST_MODE: "true"
+    ports:
+      - "127.0.0.1:8093:3001"
+
+  frontend:
+    image: ghcr.io/synkov2102/send-invite.online-frontend:dev
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file:
+      - .env.frontend.production
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      FRONTEND_ORIGIN: https://dev.send-invite.online
+      YANDEX_REDIRECT_URI: https://dev.send-invite.online/api/auth/yandex/callback
+      BACKEND_API_URL: http://backend:3001
+    ports:
+      - "127.0.0.1:8092:3000"
