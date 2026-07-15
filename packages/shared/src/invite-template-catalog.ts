@@ -17,7 +17,7 @@ import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "minimal" | "silk" | "vanilla";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk" | "vanilla";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -132,6 +132,29 @@ const minimalEditorPreset: Partial<InviteState> = {
   paletteId: "porcelain",
 };
 
+const electricEditorPreset: Partial<InviteState> = {
+  bride: "Лера",
+  groom: "Макс",
+  date: "2027-07-17",
+  time: "16:00",
+  city: "Москва",
+  venue: "LOFT HALL",
+  address: "ул. Ленинская Слобода, 26",
+  lead:
+    "Мы решили устроить день, в котором будет много цвета, громкой музыки, объятий и любимых людей. Будем счастливы разделить его с вами.",
+  dressCode:
+    "Поддержите настроение праздника яркой деталью или соберите образ в цветах нашей палитры.",
+  dressCodeColors: ["#fff600", "#5824ff", "#ff5c35", "#111111", "#fffaf0"],
+  schedule: [
+    { time: "15:30", title: "Встречаемся", description: "Приветственный бар и первые фотографии" },
+    { time: "16:00", title: "Церемония", description: "Самая важная часть нашего дня" },
+    { time: "17:00", title: "Ужин", description: "Тосты, разговоры и праздничный стол" },
+    { time: "20:00", title: "Танцы", description: "Музыка громче, каблуки — в сторону" },
+  ],
+  rsvpDate: "2027-06-17",
+  paletteId: "electric-lemon",
+};
+
 export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   {
     id: "alpine-rings",
@@ -233,6 +256,36 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#f5f3e9",
       ink: "#302f2c",
       accent: "#817017",
+    },
+  },
+  {
+    id: "electric-vows",
+    name: "Electric vows",
+    description: "Яркое плакатное приглашение с контрастной типографикой, цветными полями и дерзкой журнальной сеткой.",
+    coverType: "arch",
+    kind: "electric",
+    editorReady: true,
+    editorPreset: electricEditorPreset,
+    defaultPaletteId: "electric-lemon",
+    recommendedPaletteIds: [
+      "electric-lemon",
+      "ultraviolet",
+      "electric-lime",
+      "signal-orange",
+      "electric-cobalt",
+      "hot-pink",
+      "mint-noir",
+      "cherry-flash",
+      "sky-coral",
+      "lavender-pop",
+    ],
+    tags: ["яркий", "editorial"],
+    screenshot: "/images/templates/electric-vows-mobile.png",
+    preview: {
+      background: "#fff600",
+      surface: "#fffaf0",
+      ink: "#0a0a0a",
+      accent: "#5824ff",
     },
   },
   {

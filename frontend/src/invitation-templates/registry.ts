@@ -40,6 +40,10 @@ export const sharedTemplateRenderers: Record<
     () => import("./clarity").then((module) => module.ClarityTemplate),
     { ssr: true },
   ),
+  electric: dynamic(
+    () => import("./electric").then((module) => module.ElectricTemplate),
+    { ssr: true },
+  ),
   minimal: dynamic(
     () => import("./minimal").then((module) => module.MinimalTemplate),
     { ssr: true },

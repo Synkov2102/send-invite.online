@@ -1,0 +1,800 @@
+.shell {
+  --electric-bg: #fff600;
+  --electric-surface: #fffaf0;
+  --electric-ink: #0a0a0a;
+  --electric-muted: #56544d;
+  --electric-accent: #5824ff;
+  --electric-line: #0a0a0a;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--electric-surface);
+  color: var(--electric-ink);
+  font-family: Arial, var(--font-geist-sans), sans-serif;
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+.photo {
+  object-fit: cover;
+}
+
+.loader {
+  position: absolute;
+  z-index: 20;
+  inset: 0 0 auto;
+  display: grid;
+  height: max(720px, 100svh);
+  align-content: center;
+  justify-items: center;
+  gap: 18px;
+  background: #0a0a0a;
+  color: #fffaf0;
+  opacity: 1;
+  transition:
+    opacity 260ms ease,
+    visibility 0s linear 260ms;
+}
+.loader[data-hidden="true"] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.loader span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.loader strong {
+  font-size: clamp(18px, 3vw, 30px);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+.loader i {
+  position: relative;
+  width: min(180px, 48vw);
+  height: 4px;
+  overflow: hidden;
+  background: rgba(255, 250, 240, 0.2);
+}
+.loader i::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fffaf0;
+  animation: electricLoader 700ms ease-in-out infinite;
+  transform-origin: left;
+}
+
+@keyframes electricLoader {
+  0% {
+    transform: translateX(-100%) scaleX(0.35);
+  }
+  50% {
+    transform: translateX(0) scaleX(0.65);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    transition: none;
+  }
+  .loader i::after {
+    animation: none;
+    transform: none;
+  }
+}
+
+.hero {
+  position: relative;
+  min-height: max(720px, 100svh);
+  overflow: hidden;
+  background: var(--electric-bg);
+}
+.masthead {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 20px;
+  padding: 22px clamp(18px, 3vw, 44px);
+  background: var(--electric-ink);
+  color: var(--electric-surface);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.masthead span:last-child {
+  text-align: right;
+}
+.heroNames {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(12px, 3vw, 40px);
+  padding: clamp(28px, 5vw, 68px) clamp(16px, 4vw, 56px) 0;
+  font-size: clamp(48px, 9vw, 138px);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+.heroNames > span:first-child {
+  text-align: right;
+}
+.plus {
+  color: var(--electric-accent);
+  font-weight: 400;
+}
+.heroPhotoMotion {
+  position: absolute;
+  z-index: 1;
+  top: 22%;
+  bottom: 7%;
+  left: 50%;
+  width: min(38vw, 500px);
+  transform: translateX(-50%) rotate(2deg);
+}
+.heroPhotoMotion::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 18px -18px -18px 18px;
+  border-radius: 50% 50% 3px 3px;
+  background: var(--electric-accent);
+}
+.heroPhoto {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 5px solid var(--electric-ink);
+  border-radius: 50% 50% 3px 3px;
+  background: var(--electric-ink);
+}
+.heroDate {
+  position: absolute;
+  z-index: 2;
+  right: clamp(18px, 4vw, 56px);
+  bottom: 5%;
+  display: flex;
+  gap: 0.1em;
+  font-size: clamp(64px, 12vw, 170px);
+  font-weight: 800;
+  letter-spacing: -0.09em;
+  line-height: 0.75;
+}
+.heroDate span:nth-child(2) {
+  color: var(--electric-accent);
+}
+.scrollNote {
+  position: absolute;
+  z-index: 2;
+  bottom: 28px;
+  left: clamp(18px, 4vw, 56px);
+  width: 16ch;
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.sectionNumber {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+.greeting {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 920px) auto;
+  gap: clamp(22px, 6vw, 96px);
+  align-items: start;
+  padding: clamp(72px, 10vw, 150px) clamp(20px, 6vw, 92px);
+  background: var(--electric-ink);
+  color: var(--electric-surface);
+}
+.greeting p {
+  margin: 0;
+  font-size: clamp(32px, 5.5vw, 78px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+.greetingMark {
+  color: var(--electric-accent);
+  font-size: clamp(72px, 10vw, 140px);
+  line-height: 0.55;
+}
+
+.dateSection,
+.programSection {
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
+  background: var(--electric-surface);
+}
+.sectionHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 24px;
+  border-top: 2px solid var(--electric-line);
+  padding-top: 16px;
+}
+.sectionHeading h2,
+.placeCopy h2,
+.rsvpIntro h2 {
+  margin: 0;
+  font-size: clamp(58px, 10vw, 148px);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  text-transform: uppercase;
+}
+.dateCopy {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin: clamp(64px, 9vw, 120px) 0 clamp(36px, 5vw, 64px);
+}
+.dateCopy time {
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.dateCopy strong {
+  color: var(--electric-accent);
+  font-size: clamp(54px, 8vw, 112px);
+  letter-spacing: -0.07em;
+  line-height: 0.75;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 2px solid var(--electric-line);
+}
+.calendar > div {
+  display: grid;
+  min-height: 124px;
+  place-content: center;
+  gap: 12px;
+  border-right: 1px solid var(--electric-line);
+  text-align: center;
+}
+.calendar > div:last-child {
+  border: 0;
+}
+.calendar span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+.calendar strong {
+  font-size: clamp(22px, 3vw, 42px);
+}
+.calendar .selectedDay {
+  background: var(--electric-bg);
+  box-shadow: inset 0 0 0 4px var(--electric-ink);
+}
+
+.placeSection {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  min-height: 780px;
+  background: var(--electric-bg);
+}
+.placePhoto {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  filter: grayscale(1) contrast(1.08);
+}
+.placeCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(42px, 7vw, 100px);
+}
+.placeCopy h2 {
+  margin: auto 0 36px;
+}
+.placeCopy p,
+.placeCopy address {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(24px, 3.2vw, 46px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+}
+.placeCopy address {
+  margin-top: 18px;
+  color: var(--electric-muted);
+  font-size: clamp(16px, 1.8vw, 24px);
+  font-weight: 400;
+  line-height: 1.25;
+}
+.placeCopy a {
+  margin-top: 42px;
+  border-bottom: 2px solid currentColor;
+  color: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.programList {
+  margin: clamp(58px, 8vw, 110px) 0 0;
+  padding: 0;
+  border-top: 2px solid var(--electric-line);
+  list-style: none;
+}
+.programList li {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.35fr) 1fr auto;
+  gap: 28px;
+  align-items: start;
+  padding: clamp(24px, 4vw, 54px) 0;
+  border-bottom: 2px solid var(--electric-line);
+}
+.programList time {
+  font-size: clamp(34px, 5vw, 70px);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+.programList h3,
+.programList p {
+  margin: 0;
+}
+.programList h3 {
+  font-size: clamp(25px, 3.6vw, 50px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+.programList p {
+  max-width: 50ch;
+  margin-top: 9px;
+  color: var(--electric-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.programList > li > span {
+  padding-top: 8px;
+  color: var(--electric-accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dressSection {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
+  background: var(--electric-accent);
+  color: var(--electric-surface);
+}
+.dressBlock.dressBlock {
+  --dress-accent: var(--electric-bg);
+  --dress-ink: var(--electric-surface);
+  --dress-muted: color-mix(in srgb, var(--electric-surface) 72%, transparent);
+  --dress-line: color-mix(in srgb, var(--electric-surface) 42%, transparent);
+  --dress-surface: transparent;
+  --dress-veil: transparent;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}
+.dressBlock :global([class*="section-eyebrow"]),
+.dressBlock :global([class*="swatchLabel"]) {
+  display: none;
+}
+.dressBlock :global(h2) {
+  color: var(--electric-surface) !important;
+  font-family: Arial, sans-serif !important;
+  font-size: clamp(58px, 10vw, 148px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.08em !important;
+  line-height: 0.82 !important;
+  text-transform: uppercase !important;
+}
+.dressBlock :global(p) {
+  max-width: 54ch;
+  font-size: 16px;
+}
+.dressBlock :global(span[class*="swatch"]) {
+  border: 2px solid var(--electric-surface) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.rsvpSection {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(40px, 8vw, 120px);
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
+  background: var(--electric-bg);
+}
+.rsvpIntro {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+}
+.rsvpIntro h2 {
+  font-size: clamp(58px, 8vw, 110px);
+}
+.rsvpIntro p {
+  max-width: 32ch;
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+.rsvpIntro small {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--electric-accent);
+  --rsvp-accent-soft: color-mix(in srgb, var(--electric-accent) 20%, transparent);
+  --rsvp-button-text: var(--electric-ink);
+  --rsvp-control-radius: 0;
+  --rsvp-focus-surface: var(--electric-surface);
+  --rsvp-ink: var(--electric-surface);
+  --rsvp-line: color-mix(in srgb, var(--electric-surface) 42%, transparent);
+  --rsvp-muted: color-mix(in srgb, var(--electric-surface) 70%, transparent);
+  --rsvp-radius: 0;
+  --rsvp-section: color-mix(in srgb, var(--electric-surface) 5%, transparent);
+  --rsvp-shadow: none;
+  --rsvp-surface: color-mix(in srgb, var(--electric-surface) 8%, transparent);
+  position: relative;
+  width: 100%;
+  border: 2px solid var(--electric-ink);
+  background: var(--electric-ink);
+  padding: clamp(28px, 4.5vw, 58px);
+  box-shadow: 12px 12px 0 var(--electric-accent);
+}
+.rsvpForm.rsvpForm::before {
+  content: "RSVP / FORM";
+  display: block;
+  margin-bottom: 4px;
+  color: var(--electric-accent);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+.rsvpForm :global([class*="section"]) {
+  backdrop-filter: none;
+}
+.rsvpForm :global([class*="textInput"]),
+.rsvpForm :global([class*="textarea"]) {
+  color: var(--electric-surface);
+}
+.rsvpForm :global([class*="textInput"]):focus,
+.rsvpForm :global([class*="textarea"]):focus {
+  color: var(--electric-ink);
+}
+.rsvpForm :global([class*="submit"]) {
+  border-color: var(--electric-surface) !important;
+  background: var(--electric-surface) !important;
+  color: var(--electric-ink) !important;
+  box-shadow: 5px 5px 0 var(--electric-accent);
+}
+
+.closing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 780px;
+  background: var(--electric-ink);
+  color: var(--electric-surface);
+}
+.closingPhoto {
+  position: relative;
+  min-height: 620px;
+  filter: grayscale(1);
+}
+.closingCopy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(40px, 7vw, 100px);
+}
+.closingCopy > span {
+  margin-bottom: 56px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.closingCopy p,
+.closingCopy b {
+  margin: 0;
+  font-size: clamp(54px, 8vw, 112px);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 0.78;
+  text-transform: uppercase;
+}
+.closingCopy b {
+  color: var(--electric-accent);
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .rsvpSection {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .rsvpIntro {
+    max-width: 640px;
+  }
+  .rsvpForm.rsvpForm {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero {
+    min-height: min(760px, 100svh);
+    height: 760px;
+  }
+  .masthead {
+    grid-template-columns: 1fr auto;
+  }
+  .masthead span:last-child {
+    display: none;
+  }
+  .heroNames {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 28px 18px 0;
+    font-size: clamp(50px, 17vw, 74px);
+    line-height: 0.88;
+  }
+  .heroNames > span:first-child {
+    text-align: left;
+  }
+  .heroNames > span:last-child {
+    margin-top: 0.04em;
+    text-align: right;
+  }
+  .plus {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    font-size: 0.72em;
+    transform: translate(-50%, -40%);
+  }
+  .heroPhotoMotion {
+    top: 25%;
+    bottom: 13%;
+    width: min(76vw, 360px);
+  }
+  .heroPhotoMotion::after {
+    inset: 10px -10px -10px 10px;
+  }
+  .heroDate {
+    right: 18px;
+    bottom: 5%;
+    font-size: clamp(66px, 22vw, 94px);
+  }
+  .scrollNote {
+    display: none;
+  }
+  .greeting {
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    padding: 72px 20px;
+  }
+  .greeting p {
+    font-size: clamp(30px, 8.8vw, 42px);
+  }
+  .greetingMark {
+    display: none;
+  }
+  .dateSection,
+  .programSection {
+    padding: 68px 22px;
+  }
+  .sectionHeading {
+    gap: 16px;
+  }
+  .sectionHeading h2,
+  .placeCopy h2,
+  .rsvpIntro h2 {
+    font-size: clamp(50px, 15vw, 68px);
+  }
+  .dateCopy {
+    display: grid;
+  }
+  .calendar {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .calendar > div {
+    min-width: 0;
+    min-height: 88px;
+    gap: 8px;
+  }
+  .calendar span {
+    overflow: hidden;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+  .calendar strong {
+    font-size: clamp(18px, 5.4vw, 24px);
+  }
+  .placeSection,
+  .rsvpSection,
+  .closing {
+    grid-template-columns: 1fr;
+  }
+  .placePhoto {
+    min-height: 500px;
+  }
+  .placeCopy {
+    min-height: 450px;
+    padding: 38px 42px;
+  }
+  .placeCopy h2 {
+    margin-bottom: 26px;
+  }
+  .placeCopy a {
+    margin-top: 30px;
+  }
+  .programSection .sectionHeading h2 {
+    font-size: clamp(38px, 11.5vw, 54px);
+    letter-spacing: -0.065em;
+  }
+  .programList {
+    margin-top: 52px;
+  }
+  .programList li {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 14px;
+    padding: 26px 0;
+  }
+  .programList time {
+    font-size: clamp(30px, 9vw, 40px);
+  }
+  .programList h3 {
+    font-size: clamp(21px, 6vw, 28px);
+  }
+  .programList p {
+    font-size: 13px;
+  }
+  .programList > li > span {
+    display: none;
+  }
+  .dressSection {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 68px 22px;
+  }
+  .dressBlock :global([class*="swatches"]) {
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 7px;
+  }
+  .dressBlock :global([class*="swatchItem"]) {
+    min-width: 0;
+    flex: 0 1 46px;
+  }
+  .dressBlock :global(span[class*="swatch"]) {
+    width: 46px !important;
+    border: 1px solid var(--electric-surface) !important;
+    box-shadow: none !important;
+  }
+  .rsvpSection {
+    gap: 56px;
+    padding: 68px 22px 80px;
+  }
+  .rsvpIntro h2 {
+    font-size: clamp(54px, 16vw, 72px);
+  }
+  .rsvpForm.rsvpForm {
+    padding: 24px 16px;
+    box-shadow: 8px 8px 0 var(--electric-accent);
+  }
+  .rsvpForm :global([class*="submit"]) {
+    box-shadow: 4px 4px 0 var(--electric-accent);
+  }
+  .closingPhoto {
+    min-height: 500px;
+  }
+  .closingCopy {
+    min-height: 440px;
+    padding: 48px 42px;
+  }
+  .closingCopy > span {
+    margin-bottom: 42px;
+  }
+  .closingCopy p,
+  .closingCopy b {
+    font-size: clamp(54px, 16vw, 76px);
+  }
+}
+
+@media (max-width: 340px) {
+  .masthead {
+    padding: 18px 14px;
+    font-size: 9px;
+  }
+  .heroNames {
+    padding-inline: 14px;
+    font-size: 50px;
+  }
+  .heroPhotoMotion {
+    top: 24%;
+    bottom: 14%;
+    width: 78vw;
+  }
+  .heroPhoto {
+    border-width: 4px;
+  }
+  .heroDate {
+    right: 14px;
+    font-size: 66px;
+  }
+  .greeting,
+  .dateSection,
+  .programSection,
+  .dressSection,
+  .rsvpSection {
+    padding-inline: 18px;
+  }
+  .greeting p {
+    font-size: 29px;
+  }
+  .sectionHeading h2,
+  .placeCopy h2 {
+    font-size: 48px;
+  }
+  .programSection .sectionHeading h2 {
+    font-size: 36px;
+  }
+  .programList li {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .programList time {
+    font-size: 28px;
+  }
+  .programList h3 {
+    font-size: 20px;
+  }
+  .placePhoto {
+    min-height: 440px;
+  }
+  .placeCopy {
+    min-height: 420px;
+    padding-inline: 32px;
+  }
+  .rsvpIntro h2 {
+    font-size: 50px;
+  }
+  .rsvpForm :global([class*="section"]) {
+    padding: 14px;
+  }
+  .closingPhoto {
+    min-height: 440px;
+  }
+  .closingCopy {
+    min-height: 400px;
+    padding-inline: 32px;
+  }
+}

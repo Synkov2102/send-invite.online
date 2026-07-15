@@ -15,7 +15,7 @@ import type { InviteState } from "./invite-state";
 import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema";
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "minimal" | "silk" | "vanilla";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk" | "vanilla";
 export type InviteTemplateDefinition = InviteTemplate & {
     /** Какой React-движок рисует шаблон. */
     kind: TemplateKind;
@@ -80,6 +80,6 @@ export declare function getEditorPreset(templateId: string): Partial<{
     venueImageUrl: string;
     mapUrl?: string | undefined;
 }> | undefined;
-export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "clarity" | "minimal" | "silk" | "vanilla";
+export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "clarity" | "electric" | "minimal" | "silk" | "vanilla";
 export declare const defaultInviteTemplates: InviteTemplate[];
 export declare function getInviteTemplate(id: string | null | undefined): InviteTemplate;

@@ -44,6 +44,12 @@ export const clarityImages = {
   venue: "/images/clarity-wedding-venue.png",
 } as const;
 
+export const electricImages = {
+  cover: "/images/electric-wedding-cover.png",
+  portrait: "/images/electric-wedding-portrait.png",
+  venue: "/images/clarity-wedding-venue.png",
+} as const;
+
 const ringColors = {
   gold: "#d7a83a",
   silver: "#d8dbe0",

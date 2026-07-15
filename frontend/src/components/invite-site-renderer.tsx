@@ -14,6 +14,7 @@ import {
   clarityImages,
   createInviteVars,
   createRingColor,
+  electricImages,
   inviteImages,
   silkImages,
 } from "@/lib/invite-theme";
@@ -44,6 +45,8 @@ export function InviteSiteRenderer({
   const templateImages =
     templateKind === "silk"
       ? silkImages
+      : templateKind === "electric"
+        ? electricImages
       : templateKind === "clarity" || templateKind === "minimal"
         ? clarityImages
         : inviteImages;

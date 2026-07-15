@@ -14,6 +14,7 @@ const templateIds = [
   "silk-monogram",
   "clarity-editorial",
   "minimal-paper",
+  "electric-vows",
 ];
 
 const waitMsByTemplate = {
@@ -23,6 +24,7 @@ const waitMsByTemplate = {
   "silk-monogram": 2500,
   "clarity-editorial": 2500,
   "minimal-paper": 2500,
+  "electric-vows": 2500,
 };
 
 const preparePageByTemplate = {

@@ -18,6 +18,7 @@ import {
   clarityImages,
   createRingColor,
   defaultCustomPalette,
+  electricImages,
   getTemplatePalettes,
   hexToRgba,
   inviteImages,
@@ -92,6 +93,8 @@ export function useInvitationBuilder({
   const templateImages =
     templateKind === "silk"
       ? silkImages
+      : templateKind === "electric"
+        ? electricImages
       : templateKind === "clarity" || templateKind === "minimal"
         ? clarityImages
         : inviteImages;
