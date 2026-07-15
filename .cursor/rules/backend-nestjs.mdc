@@ -7,6 +7,7 @@ alwaysApply: false
 # Backend
 
 - Префикс `/api`; stores в `*.store.ts`; бизнес-логика в `*.service.ts`.
+- Auth на эндпоинтах: `getSessionToken(authorization, cookie)` — Bearer **или** cookie `invite_session` (rewrite с браузера шлёт cookie без Bearer).
 - Ошибки для клиента: `{ error: "…" }` на русском (`BadRequestException`, …).
 - Парсинг тела сайта: `parseCreateInviteSitePayload` из `@invite/shared`.
 - Публикация только после оплаты: `publishAfterPayment`, проверки `isPaid`.

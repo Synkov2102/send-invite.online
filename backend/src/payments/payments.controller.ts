@@ -14,7 +14,7 @@ import {
 import { SkipThrottle } from "@nestjs/throttler";
 import type { Request } from "express";
 import { AuthService } from "../auth/auth.service";
-import { getBearerToken } from "../auth/bearer-token";
+import { getSessionToken } from "../auth/bearer-token";
 import { PaymentsService } from "./payments.service";
 import { RobokassaExceptionFilter } from "./robokassa-exception.filter";
 
@@ -29,8 +29,11 @@ export class PaymentsController {
   async createCheckout(
     @Body() body: unknown,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.authService.getCurrentUser(getBearerToken(authorization));
+    const user = await this.authService.getCurrentUser(
+      getSessionToken(authorization, cookieHeader),
+    );
 
     if (!user) {
       throw new UnauthorizedException({ error: "Войдите в аккаунт для оплаты." });
@@ -48,8 +51,11 @@ export class PaymentsController {
   async getOrder(
     @Param("id") id: string,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.authService.getCurrentUser(getBearerToken(authorization));
+    const user = await this.authService.getCurrentUser(
+      getSessionToken(authorization, cookieHeader),
+    );
 
     if (!user) {
       throw new UnauthorizedException({ error: "Войдите в аккаунт." });

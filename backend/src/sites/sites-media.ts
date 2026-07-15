@@ -1,22 +1,16 @@
 import { BadRequestException, NotFoundException } from "@nestjs/common";
 import { isS3ObjectRef, S3StorageService } from "../storage/s3-storage.service";
-import { assertAllowedMediaRedirect } from "./media-url";
 import type { InviteImageSlot } from "./media-utils";
 import { parseDataUrl } from "./media-utils";
 
 const IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable";
 
-export type ServedMedia =
-  | {
-      buffer: Buffer;
-      cacheControl: string;
-      contentType: string;
-      kind: "buffer";
-    }
-  | {
-      kind: "redirect";
-      url: string;
-    };
+export type ServedMedia = {
+  buffer: Buffer;
+  cacheControl: string;
+  contentType: string;
+  kind: "buffer";
+};
 
 export class InviteMusicUploadError extends Error {
   constructor() {
@@ -102,13 +96,10 @@ export async function resolveStoredMedia(
     }
   }
 
-  try {
-    assertAllowedMediaRedirect(url);
-  } catch {
-    throw new NotFoundException(notFoundMessage);
-  }
-
-  return { kind: "redirect", url };
+  // External HTTPS media is returned as-is in public site payloads
+  // (getPublicImageUrl / getPublicMusicUrl). Never 307 from this first-party
+  // media endpoint — that would be an open redirect.
+  throw new NotFoundException(notFoundMessage);
 }
 
 export function getCreateSiteErrorMessage(error: unknown) {

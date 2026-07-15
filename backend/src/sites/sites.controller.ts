@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
 import type { Response } from "express";
-import { getBearerToken, getSessionToken } from "../auth/bearer-token";
+import { getSessionToken } from "../auth/bearer-token";
 import { AuthService } from "../auth/auth.service";
 import { sendServedMedia } from "./send-served-media";
 import { SitesService } from "./sites.service";
@@ -28,8 +28,11 @@ export class SitesController {
   async createSite(
     @Body() body: unknown,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.authService.getCurrentUser(getBearerToken(authorization));
+    const user = await this.authService.getCurrentUser(
+      getSessionToken(authorization, cookieHeader),
+    );
 
     if (!user) {
       throw new UnauthorizedException({
@@ -41,8 +44,11 @@ export class SitesController {
   }
 
   @Get("mine")
-  async getOwnedSites(@Headers("authorization") authorization?: string) {
-    const user = await this.getUserOrThrow(authorization);
+  async getOwnedSites(
+    @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
+  ) {
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.getOwnedSites(user.id);
   }
@@ -57,8 +63,9 @@ export class SitesController {
   async getManagedSite(
     @Param("id") id: string,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.getUserOrThrow(authorization);
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.getManagedSite(user.id, id);
   }
@@ -68,8 +75,9 @@ export class SitesController {
     @Param("id") id: string,
     @Body() body: unknown,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.getUserOrThrow(authorization);
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.updateSite(user.id, id, body);
   }
@@ -79,8 +87,9 @@ export class SitesController {
     @Param("id") id: string,
     @Body() body: unknown,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.getUserOrThrow(authorization);
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.setSitePublished(user.id, id, body);
   }
@@ -89,8 +98,9 @@ export class SitesController {
   async getResponses(
     @Param("id") id: string,
     @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
   ) {
-    const user = await this.getUserOrThrow(authorization);
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.getResponses(user.id, id);
   }
@@ -99,9 +109,10 @@ export class SitesController {
   async exportResponses(
     @Param("id") id: string,
     @Headers("authorization") authorization: string | undefined,
+    @Headers("cookie") cookieHeader: string | undefined,
     @Res() response: Response,
   ) {
-    const user = await this.getUserOrThrow(authorization);
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
     const exported = await this.sitesService.exportResponses(user.id, id);
 
     response
@@ -155,8 +166,10 @@ export class SitesController {
     return user?.id ?? null;
   }
 
-  private async getUserOrThrow(authorization?: string) {
-    const user = await this.authService.getCurrentUser(getBearerToken(authorization));
+  private async getUserOrThrow(authorization?: string, cookieHeader?: string) {
+    const user = await this.authService.getCurrentUser(
+      getSessionToken(authorization, cookieHeader),
+    );
 
     if (!user) {
       throw new UnauthorizedException({

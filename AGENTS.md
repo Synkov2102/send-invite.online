@@ -6,11 +6,11 @@
 
 **send-invite.online** — конструктор сайтов-приглашений с оплатой через Robokassa.
 
-| Часть | Стек | Путь |
-|-------|------|------|
-| Frontend | Next.js 16, React 19, App Router | `frontend/` |
-| Backend | NestJS 11, MongoDB, S3 | `backend/` |
-| Общий код | TypeScript, Zod | `packages/shared/` |
+| Часть     | Стек                             | Путь               |
+| --------- | -------------------------------- | ------------------ |
+| Frontend  | Next.js 16, React 19, App Router | `frontend/`        |
+| Backend   | NestJS 11, MongoDB, S3           | `backend/`         |
+| Общий код | TypeScript, Zod                  | `packages/shared/` |
 
 Монорепозиторий на npm workspaces. Сборка из корня: `npm run build`.
 
@@ -29,12 +29,12 @@
 
 Env-файлы лежат **в корне репозитория** (не в `backend/` / `frontend/`):
 
-| Файл | Назначение |
-|------|------------|
-| `.env.backend.local` | локальный backend |
-| `.env.frontend.local` | локальный frontend |
-| `.env.backend.production` | VPS backend |
-| `.env.frontend.production` | VPS frontend |
+| Файл                       | Назначение         |
+| -------------------------- | ------------------ |
+| `.env.backend.local`       | локальный backend  |
+| `.env.frontend.local`      | локальный frontend |
+| `.env.backend.production`  | VPS backend        |
+| `.env.frontend.production` | VPS frontend       |
 
 Шаблоны: `*.example` рядом с docker-compose. Docker local: frontend **8080**, backend **8081**. Подробности — `DEPLOYMENT.md`, `README.md`.
 
@@ -55,7 +55,7 @@ frontend/node_modules/next/dist/docs/
 ### Архитектура
 
 - **App Router**: страницы в `src/app/`, API routes в `src/app/api/`.
-- **Прокси на backend**: `next.config.ts` rewrites `/api/*` → NestJS; route handlers часто проксируют с `getServerApiBaseUrl()` из `@/lib/server-api-base-url`.
+- **Прокси на backend**: `next.config.ts` rewrites `/api/*` → NestJS. Nest принимает и `Authorization: Bearer`, и cookie `invite_session` (`getSessionToken`) — браузерный `fetch("/api/...")` через rewrite авторизуется без отдельного Route Handler. Явные handlers всё ещё полезны для своих 401/прокси-логики (checkout, OAuth).
 - **Серверный код**: `import "server-only"` в `lib/auth.ts`, `lib/payments.ts` и т.п.
 - **Клиент**: `"use client"` только где нужны хуки/события.
 - **Импорт shared**: `@invite/shared` или тонкие re-export в `@/lib/invite-*-types.ts`. Не используйте `export *` из CJS `dist/` — Next transpile из `src` через `transpilePackages`.
@@ -117,13 +117,13 @@ frontend/src/editor/
 
 Runtime-валидация **только через Zod** в `packages/shared/src/schemas/`:
 
-| Схема | Назначение |
-|-------|------------|
-| `invite-state.schema.ts` | `inviteStateShapeSchema` (структура) / `inviteStateSchema` (+ лимиты) |
-| `invite-palette.schema.ts` | палитра |
-| `invite-site.schema.ts` | payload сайта |
-| `invite-template.schema.ts` | шаблон |
-| `invite-validators.ts` | `parseCreateInviteSitePayload`, type guards |
+| Схема                       | Назначение                                                            |
+| --------------------------- | --------------------------------------------------------------------- |
+| `invite-state.schema.ts`    | `inviteStateShapeSchema` (структура) / `inviteStateSchema` (+ лимиты) |
+| `invite-palette.schema.ts`  | палитра                                                               |
+| `invite-site.schema.ts`     | payload сайта                                                         |
+| `invite-template.schema.ts` | шаблон                                                                |
+| `invite-validators.ts`      | `parseCreateInviteSitePayload`, type guards                           |
 
 Типы экспортируются через `z.infer`. **Не добавляйте** ручные `isRecord` / длинные `typeof`-цепочки.
 
@@ -143,7 +143,7 @@ Runtime-валидация **только через Zod** в `packages/shared/s
 
 ## Безопасность
 
-- Сессия: httpOnly cookie `invite_session`, Bearer на backend.
+- Сессия: httpOnly cookie `invite_session` на frontend; backend принимает Bearer **или** эту cookie (`getSessionToken`). Server Components / BFF обычно шлют Bearer.
 - Не ослабляйте проверку подписи Robokassa.
 - Публичный status заказа — только по UUID (capability URL), без лишних PII.
 - Не логируйте пароли и полные payment payload с секретами.
@@ -169,8 +169,8 @@ docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 
 ## Связанные файлы
 
-| Файл | Содержание |
-|------|------------|
-| `README.md` | запуск, env |
-| `DEPLOYMENT.md` | VPS, Robokassa, Docker prod |
+| Файл                  | Содержание                             |
+| --------------------- | -------------------------------------- |
+| `README.md`           | запуск, env                            |
+| `DEPLOYMENT.md`       | VPS, Robokassa, Docker prod            |
 | `.cursor/rules/*.mdc` | краткие правила для Cursor по областям |

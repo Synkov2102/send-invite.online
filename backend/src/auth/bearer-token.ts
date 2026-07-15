@@ -6,6 +6,11 @@ export function getBearerToken(authorization: string | undefined): string {
   return type?.toLowerCase() === "bearer" ? (token ?? "") : "";
 }
 
+/**
+ * Resolves the session token from Bearer and/or the invite session cookie.
+ * Browser calls that hit Nest via Next rewrites often send only the cookie;
+ * server-side and BFF calls send Bearer. Prefer Bearer when both are present.
+ */
 export function getSessionToken(authorization?: string, cookieHeader?: string) {
   const bearerToken = getBearerToken(authorization);
 

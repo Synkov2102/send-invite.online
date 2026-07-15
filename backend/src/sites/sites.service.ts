@@ -35,7 +35,7 @@ import {
 } from "./sites-media";
 import { assertAllowedStoredMediaUrl, assertMediaFileSize } from "./media-url";
 import { sanitizeExcelCell } from "./excel-sanitize";
-import { S3StorageService } from "../storage/s3-storage.service";
+import { isS3ObjectRef, S3StorageService } from "../storage/s3-storage.service";
 
 @Injectable()
 export class SitesService {
@@ -137,7 +137,7 @@ export class SitesService {
       parsed.payload,
       existingSite,
     );
-    const payload = await this.prepareSitePayload(payloadWithExistingMedia);
+    const payload = await this.prepareSitePayload(payloadWithExistingMedia, existingSite.invite);
     const site = await this.inviteSites.updateInviteSite(siteId, ownerId, payload);
 
     if (!site) {
@@ -358,8 +358,11 @@ export class SitesService {
     throw new NotFoundException("Media file not found");
   }
 
-  private async prepareSitePayload(payload: CreateInviteSitePayload) {
-    this.assertStoredMediaUrls(payload);
+  private async prepareSitePayload(
+    payload: CreateInviteSitePayload,
+    existingInvite?: PublishedInviteSite["invite"],
+  ) {
+    this.assertStoredMediaUrls(payload, existingInvite);
     const payloadWithImages = await this.uploadInviteImagesIfNeeded(payload);
 
     return this.uploadInviteMusicIfNeeded(payloadWithImages);
@@ -513,12 +516,31 @@ export class SitesService {
     };
   }
 
-  private assertStoredMediaUrls(payload: CreateInviteSitePayload) {
-    for (const { field } of INVITE_IMAGE_SLOTS) {
-      assertAllowedStoredMediaUrl(payload.invite[field], field);
+  private assertStoredMediaUrls(
+    payload: CreateInviteSitePayload,
+    existingInvite?: PublishedInviteSite["invite"],
+  ) {
+    const allowedS3Refs = new Set<string>();
+
+    if (existingInvite) {
+      for (const { field } of INVITE_IMAGE_SLOTS) {
+        const value = existingInvite[field];
+
+        if (value && isS3ObjectRef(value)) {
+          allowedS3Refs.add(value);
+        }
+      }
+
+      if (existingInvite.musicUrl && isS3ObjectRef(existingInvite.musicUrl)) {
+        allowedS3Refs.add(existingInvite.musicUrl);
+      }
     }
 
-    assertAllowedStoredMediaUrl(payload.invite.musicUrl, "musicUrl");
+    for (const { field } of INVITE_IMAGE_SLOTS) {
+      assertAllowedStoredMediaUrl(payload.invite[field], field, allowedS3Refs);
+    }
+
+    assertAllowedStoredMediaUrl(payload.invite.musicUrl, "musicUrl", allowedS3Refs);
   }
 
   private toPublishedSiteForClient(site: PublishedInviteSite): PublishedInviteSite {

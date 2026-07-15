@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Headers, Post, UnauthorizedException } from "@nestjs/common";
 import { Throttle } from "@nestjs/throttler";
-import { getBearerToken } from "./bearer-token";
+import { getSessionToken } from "./bearer-token";
 import { AuthService } from "./auth.service";
 
 @Controller("auth")
@@ -14,8 +14,13 @@ export class AuthController {
   }
 
   @Get("session")
-  async getCurrentUser(@Headers("authorization") authorization?: string) {
-    const user = await this.authService.getCurrentUser(getBearerToken(authorization));
+  async getCurrentUser(
+    @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
+  ) {
+    const user = await this.authService.getCurrentUser(
+      getSessionToken(authorization, cookieHeader),
+    );
 
     if (!user) {
       throw new UnauthorizedException("Session is not active.");
@@ -25,7 +30,10 @@ export class AuthController {
   }
 
   @Post("logout")
-  logout(@Headers("authorization") authorization?: string) {
-    return this.authService.logout(getBearerToken(authorization));
+  logout(
+    @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
+  ) {
+    return this.authService.logout(getSessionToken(authorization, cookieHeader));
   }
 }

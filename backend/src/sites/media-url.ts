@@ -64,7 +64,11 @@ export function isAllowedStoredS3Ref(url: string) {
   );
 }
 
-export function assertAllowedStoredMediaUrl(url: string, fieldLabel: string) {
+export function assertAllowedStoredMediaUrl(
+  url: string,
+  fieldLabel: string,
+  allowedS3Refs: ReadonlySet<string> = new Set(),
+) {
   if (!url) {
     return;
   }
@@ -74,7 +78,7 @@ export function assertAllowedStoredMediaUrl(url: string, fieldLabel: string) {
   }
 
   if (isS3ObjectRef(url)) {
-    if (!isAllowedStoredS3Ref(url)) {
+    if (!isAllowedStoredS3Ref(url) || !allowedS3Refs.has(url)) {
       throw new BadRequestException({
         error: `Недопустимая ссылка для ${fieldLabel}.`,
       });
@@ -87,12 +91,6 @@ export function assertAllowedStoredMediaUrl(url: string, fieldLabel: string) {
     throw new BadRequestException({
       error: `Недопустимая ссылка для ${fieldLabel}. Разрешены только HTTPS-URL.`,
     });
-  }
-}
-
-export function assertAllowedMediaRedirect(url: string) {
-  if (!isAllowedExternalMediaUrl(url)) {
-    throw new BadRequestException("Invalid media URL");
   }
 }
 
