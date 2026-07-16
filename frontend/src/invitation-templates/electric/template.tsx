@@ -19,7 +19,6 @@ import {
   copyFromRight,
   dateReveal,
   heroSequence,
-  mastheadReveal,
   nameFromLeft,
   nameFromRight,
   photoMaskReveal,
@@ -80,11 +79,6 @@ function HeroSection({ coverImage, invite }: Readonly<{ coverImage: string; invi
 
   return (
     <motion.header animate="visible" className={styles.hero} initial="hidden" variants={heroSequence}>
-      <motion.div className={styles.masthead} variants={mastheadReveal}>
-        <span>Wedding invitation</span>
-        <span>{date.year}</span>
-        <span>{invite.city}</span>
-      </motion.div>
       <motion.div className={styles.heroNames} variants={heroSequence}>
         <motion.span variants={nameFromLeft}>{invite.bride}</motion.span>
         <motion.span className={styles.plus} variants={plusReveal}>+</motion.span>
@@ -94,7 +88,7 @@ function HeroSection({ coverImage, invite }: Readonly<{ coverImage: string; invi
         <motion.div className={styles.heroPhoto} variants={archPhotoReveal}>
           <Image
             alt="Фотография пары"
-            className={styles.photo}
+            className={`${styles.photo} ${styles.heroPhotoImage}`}
             fill
             loading="eager"
             sizes="(max-width: 720px) 78vw, 520px"
@@ -241,7 +235,7 @@ function ClosingSection({ invite, portraitImage }: Readonly<Pick<ElectricTemplat
       <motion.div className={styles.closingPhoto} variants={photoMaskReveal}>
         <Image
           alt="Свадебный портрет пары"
-          className={styles.photo}
+          className={`${styles.photo} ${styles.closingPhotoImage}`}
           fill
           sizes="(max-width: 760px) 100vw, 50vw"
           src={portraitImage}
