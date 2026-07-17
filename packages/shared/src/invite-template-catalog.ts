@@ -3,7 +3,7 @@
  *
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
- * 2. Укажите `kind` (alpine | aqua | clarity | minimal | silk | vanilla) и `editorReady: true`.
+ * 2. Укажите `kind` (alpine | aqua | clarity | minimal | silk | electric) и `editorReady: true`.
  * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
  *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
@@ -17,7 +17,7 @@ import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk" | "vanilla";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -26,29 +26,6 @@ export type InviteTemplateDefinition = InviteTemplate & {
   editorReady: boolean;
   /** Демо-тексты при первом открытии в редакторе (необязательно). */
   editorPreset?: Partial<InviteState>;
-};
-
-const vanillaEditorPreset: Partial<InviteState> = {
-  bride: "Катя",
-  groom: "Миша",
-  date: "2027-11-20",
-  time: "16:30",
-  city: "Павловск",
-  venue: "замке БИП",
-  address: "Мариинская ул., 4",
-  lead:
-    "С огромным волнением и радостью мы приглашаем вас разделить с нами этот особенный день — нашу свадьбу. Это будет незабываемое событие, и мы хотим, чтобы вы стали его частью.",
-  dressCode:
-    "Для нас главное — ваше присутствие. Будем рады, если в вашем образе появятся оттенки нашей свадебной палитры.",
-  dressCodeColors: ["#f6b8d0", "#c48693", "#f4dfbd", "#c77b3a", "#8d9a72"],
-  schedule: [
-    { time: "15:30", title: "Сбор гостей", description: "Игристое, лёгкие закуски и общение" },
-    { time: "16:00", title: "Выездная регистрация", description: "Самый трогательный момент дня" },
-    { time: "16:30", title: "Начало торжества", description: "Ужин, танцы и развлечения" },
-    { time: "00:00", title: "Завершение торжества", description: "Объятия и яркие впечатления" },
-  ],
-  rsvpDate: "2027-10-15",
-  paletteId: "vanilla",
 };
 
 const aquaEditorPreset: Partial<InviteState> = {
@@ -60,6 +37,13 @@ const aquaEditorPreset: Partial<InviteState> = {
   lead:
     "Под шум волн и тёплый закат мы приглашаем вас разделить с нами самый счастливый день. Будет море, музыка и бесконечная любовь.",
   dressCodeColors: ["#eafcff", "#7fd0d6", "#159aa6", "#0b3a44", "#e7d3a8"],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+lagoon-guests",
+  groupChatText:
+    "Общий чат гостей у воды: координация трансфера, новости дня и тёплые фото с праздника.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "До площадки удобнее добираться такси или шаттлом от отеля. Парковка у виллы ограничена — лучше без машины. Если остаётесь на ночь, напишите нам заранее.",
   paletteId: "aqua",
 };
 
@@ -81,6 +65,13 @@ const silkEditorPreset: Partial<InviteState> = {
     { time: "16:00", title: "Фуршет", description: "Легкое общение и поздравления" },
     { time: "16:30", title: "Банкет", description: "Праздничный ужин" },
   ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+silk-guests",
+  groupChatText:
+    "Общий чат гостей: детали дня, размещение и тёплые новости перед торжеством.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Просим подтвердить присутствие заранее. Если планируете остаться в городе на ночь — напишите нам, подскажем отели рядом с площадкой.",
   rsvpText: "Ваши ответы очень помогут нам при организации свадьбы.",
   rsvpDate: "2026-04-20",
   paletteId: "silk",
@@ -104,6 +95,13 @@ const clarityEditorPreset: Partial<InviteState> = {
     { time: "15:30", title: "Церемония", description: "Пожалуйста, не стесняйтесь проявлять ваши искренние эмоции" },
     { time: "16:30", title: "Банкет", description: "Время танцев, веселья, ваших поздравлений и вкусной еды" },
   ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+clarity-guests",
+  groupChatText:
+    "В чате — тайминг дня, логистика и короткие обновления. Пишите сюда, если появятся вопросы до свадьбы.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Парковка во дворе комплекса. Если остаётесь в городе на ночь — напишите нам, подскажем отели в пешей доступности.",
   rsvpText:
     "Пожалуйста, подтвердите ваше присутствие. Ответы помогут нам внимательно подготовить этот день.",
   rsvpDate: "2026-06-01",
@@ -128,6 +126,13 @@ const minimalEditorPreset: Partial<InviteState> = {
     { time: "16:00", title: "Церемония", description: "Самый важный момент этого дня" },
     { time: "17:00", title: "Ужин", description: "Тёплый вечер, музыка и танцы" },
   ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+minimal-guests",
+  groupChatText:
+    "В общем чате — мягкие напоминания о дне, логистика и ответы на вопросы без спешки.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Если планируете остаться в городе на ночь, напишите нам — подскажем спокойные отели рядом с усадьбой. Парковка во дворе ограничена.",
   rsvpDate: "2026-07-22",
   paletteId: "porcelain",
 };
@@ -151,8 +156,25 @@ const electricEditorPreset: Partial<InviteState> = {
     { time: "17:00", title: "Ужин", description: "Тосты, разговоры и праздничный стол" },
     { time: "20:00", title: "Танцы", description: "Музыка громче, каблуки — в сторону" },
   ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+electric-guests",
+  groupChatText:
+    "Чат гостей: тайминг, плейлист и срочные апдейты. Пишите туда — ответим быстро.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Парковка у лофта платная. Если остаётесь в городе — напишите, кинем пару отелей рядом.",
   rsvpDate: "2027-06-17",
   paletteId: "electric-lemon",
+};
+
+const alpineEditorPreset: Partial<InviteState> = {
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+invite-guests",
+  groupChatText:
+    "Присоединяйтесь к общему чату гостей — там будут новости, координация и ответы на вопросы.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Если планируете остаться на ночь, напишите нам заранее — подскажем варианты проживания рядом с площадкой. Парковка бесплатная.",
 };
 
 export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
@@ -163,6 +185,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     coverType: "rings",
     kind: "alpine",
     editorReady: true,
+    editorPreset: alpineEditorPreset,
     defaultPaletteId: "alpine",
     recommendedPaletteIds: ["alpine", "pine", "granite", "frost", "dawn", "pearl"],
     tags: ["3D", "минимализм"],
@@ -199,25 +222,6 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#eafaf9",
       ink: "#0b2a33",
       accent: "#16a3ad",
-    },
-  },
-  {
-    id: "vanilla-arch",
-    name: "Vanilla wedding",
-    description: "Розово-оранжевое приглашение с пластинкой, GIF-коллажем и облачными секциями.",
-    coverType: "arch",
-    kind: "vanilla",
-    editorReady: true,
-    editorPreset: vanillaEditorPreset,
-    defaultPaletteId: "vanilla",
-    recommendedPaletteIds: ["vanilla", "lavender", "clay", "pearl", "champagne"],
-    tags: ["фото", "дневная свадьба"],
-    screenshot: "/images/templates/vanilla-arch-mobile.png",
-    preview: {
-      background: "#f7d9e7",
-      surface: "#f7f8f5",
-      ink: "#49434d",
-      accent: "#f47a23",
     },
   },
   {

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import {
   CalendarDays,
   Clock3,
-  Heart,
   MapPin,
 } from "lucide-react";
 import Image from "next/image";
@@ -14,7 +13,9 @@ import type { InviteVars } from "@/lib/invite-theme";
 import { getCalendarDays } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
   InvitationSectionEyebrow,
@@ -136,10 +137,9 @@ export default function AlpineTemplate({
         viewport={revealViewport}
         whileInView="visible"
       >
-        <InvitationSectionEyebrow>Сохраните дату</InvitationSectionEyebrow>
-        <Heart aria-hidden="true" className="mx-auto mb-4 text-[var(--invite-accent)]" size={22} />
-        <p className="invite-small">Дорогие гости!</p>
-        <p className="mx-auto mt-3 max-w-[330px] text-center text-[15px] leading-relaxed text-[var(--invite-muted)]">
+        <InvitationSectionEyebrow>Приглашение</InvitationSectionEyebrow>
+        <p className="invite-small">Дорогие гости</p>
+        <p className="mx-auto mt-4 max-w-[34ch] text-center text-[var(--invite-muted)]">
           {invite.lead}
         </p>
         <motion.div className="invite-when invite-when--photo" variants={staggerContainer}>
@@ -154,7 +154,7 @@ export default function AlpineTemplate({
             />
           </motion.div>
           <motion.div className="invite-when__content" variants={copyReveal}>
-            <h2 className="invite-heading">Когда?</h2>
+            <h2 className="invite-heading">Дата</h2>
             <p className="invite-when__month">{formatMonth(invite.date)}</p>
             <motion.div
               className="invite-calendar"
@@ -243,8 +243,8 @@ export default function AlpineTemplate({
           />
         </motion.div>
         <motion.div className="invite-photo-band__content" variants={copyReveal}>
-          <MapPin size={28} />
-          <h2 className="invite-heading">Где?</h2>
+          <MapPin aria-hidden="true" size={18} />
+          <h2 className="invite-heading">Место</h2>
           <p>
             {invite.venue}
             <br />
@@ -272,6 +272,39 @@ export default function AlpineTemplate({
         />
       </motion.section>
 
+      {invite.showGroupChat ? (
+        <motion.section
+          className="invite-group-chat"
+          initial="hidden"
+          variants={sectionReveal}
+          viewport={revealViewport}
+          whileInView="visible"
+        >
+          <InvitationGroupChatBlock
+            show={invite.showGroupChat}
+            text={invite.groupChatText}
+            url={invite.groupChatUrl}
+            variant="alpine"
+          />
+        </motion.section>
+      ) : null}
+
+      {invite.showAdditionalInfo ? (
+        <motion.section
+          className="invite-additional-info"
+          initial="hidden"
+          variants={sectionReveal}
+          viewport={revealViewport}
+          whileInView="visible"
+        >
+          <InvitationAdditionalInfoBlock
+            show={invite.showAdditionalInfo}
+            text={invite.additionalInfo}
+            variant="alpine"
+          />
+        </motion.section>
+      ) : null}
+
       {invite.showRsvp ? (
         <motion.section
           className="invite-rsvp"
@@ -281,10 +314,10 @@ export default function AlpineTemplate({
         whileInView="visible"
       >
           <div className="invite-rsvp__header">
-            <InvitationSectionEyebrow>RSVP</InvitationSectionEyebrow>
+            <InvitationSectionEyebrow>Ответ</InvitationSectionEyebrow>
             <h2 className="invite-heading">Анкета гостя</h2>
             <p>{invite.rsvpText}</p>
-            <span>Ждем ваш ответ до {formatDate(invite.rsvpDate)}</span>
+            <span>Ответьте до {formatDate(invite.rsvpDate)}</span>
           </div>
           <InvitationRsvpForm
             questions={invite.rsvpQuestions}
@@ -313,7 +346,7 @@ export default function AlpineTemplate({
           />
         </motion.div>
         <motion.div className="invite-final__content" variants={copyReveal}>
-          <h2>Ждем всех!</h2>
+          <h2>До встречи</h2>
           <p>
             {invite.groom} & {invite.bride}
           </p>

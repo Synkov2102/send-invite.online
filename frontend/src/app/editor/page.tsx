@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import CommerceFooter from "@/components/commerce-footer";
 import { editorStepIds } from "@/editor/constants";
 import InvitationBuilder from "@/editor/invitation-builder";
 import { getManagedInviteSite } from "@/lib/backend-api";
@@ -100,7 +99,6 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
           template={template}
         />
       </Suspense>
-      <CommerceFooter />
     </div>
   );
 }

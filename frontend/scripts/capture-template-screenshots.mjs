@@ -10,7 +10,6 @@ const baseUrl = (process.env.TEMPLATE_CAPTURE_URL ?? "http://localhost:3000").re
 const templateIds = [
   "alpine-rings",
   "lagoon-wave",
-  "vanilla-arch",
   "silk-monogram",
   "clarity-editorial",
   "minimal-paper",
@@ -20,19 +19,13 @@ const templateIds = [
 const waitMsByTemplate = {
   "alpine-rings": 4500,
   "lagoon-wave": 3500,
-  "vanilla-arch": 2500,
   "silk-monogram": 2500,
   "clarity-editorial": 2500,
   "minimal-paper": 2500,
   "electric-vows": 2500,
 };
 
-const preparePageByTemplate = {
-  "vanilla-arch": async (page) => {
-    await page.getByRole("button", { name: /пластинку/i }).click();
-    await page.waitForTimeout(1200);
-  },
-};
+const preparePageByTemplate = {};
 
 await mkdir(templatesDir, { recursive: true });
 

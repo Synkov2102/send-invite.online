@@ -1,6 +1,7 @@
 import { z } from "zod";
 export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
     invite: z.ZodObject<{
+        additionalInfo: z.ZodDefault<z.ZodString>;
         address: z.ZodString;
         bride: z.ZodString;
         city: z.ZodString;
@@ -9,6 +10,8 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         dressCode: z.ZodString;
         dressCodeColors: z.ZodArray<z.ZodString, "many">;
         groom: z.ZodString;
+        groupChatText: z.ZodDefault<z.ZodString>;
+        groupChatUrl: z.ZodDefault<z.ZodString>;
         lead: z.ZodString;
         mapUrl: z.ZodOptional<z.ZodString>;
         musicEnabled: z.ZodBoolean;
@@ -45,6 +48,8 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
             time: string;
             title: string;
         }>, "many">;
+        showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showGroupChat: z.ZodDefault<z.ZodBoolean>;
         showRsvp: z.ZodBoolean;
         time: z.ZodString;
         venue: z.ZodString;
@@ -52,6 +57,7 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -59,6 +65,8 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -78,6 +86,8 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -114,7 +124,12 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -158,6 +173,7 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
     invite: {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -165,6 +181,8 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -184,6 +202,8 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -236,7 +256,12 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     };
     palette: {
         accent: string;
@@ -258,6 +283,7 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         musicEnabled: z.ZodBoolean;
         showRsvp: z.ZodBoolean;
     } & {
+        additionalInfo: z.ZodDefault<z.ZodString>;
         address: z.ZodString;
         bride: z.ZodString;
         city: z.ZodString;
@@ -266,6 +292,8 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         dressCode: z.ZodString;
         dressCodeColors: z.ZodArray<z.ZodString, "many">;
         groom: z.ZodString;
+        groupChatText: z.ZodDefault<z.ZodString>;
+        groupChatUrl: z.ZodDefault<z.ZodString>;
         lead: z.ZodString;
         mapUrl: z.ZodOptional<z.ZodString>;
         musicTitle: z.ZodString;
@@ -301,12 +329,15 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
             time: string;
             title: string;
         }>, "many">;
+        showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showGroupChat: z.ZodDefault<z.ZodBoolean>;
         time: z.ZodString;
         venue: z.ZodString;
         venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -314,6 +345,8 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -333,6 +366,8 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -369,7 +404,12 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -413,6 +453,7 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
     invite: {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -420,6 +461,8 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -439,6 +482,8 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -491,7 +536,12 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     };
     palette: {
         accent: string;
@@ -510,6 +560,7 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
 }>;
 export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
     invite: z.ZodObject<{
+        additionalInfo: z.ZodDefault<z.ZodString>;
         address: z.ZodString;
         bride: z.ZodString;
         city: z.ZodString;
@@ -518,6 +569,8 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         dressCode: z.ZodString;
         dressCodeColors: z.ZodArray<z.ZodString, "many">;
         groom: z.ZodString;
+        groupChatText: z.ZodDefault<z.ZodString>;
+        groupChatUrl: z.ZodDefault<z.ZodString>;
         lead: z.ZodString;
         mapUrl: z.ZodOptional<z.ZodString>;
         musicEnabled: z.ZodBoolean;
@@ -554,6 +607,8 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
             time: string;
             title: string;
         }>, "many">;
+        showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showGroupChat: z.ZodDefault<z.ZodBoolean>;
         showRsvp: z.ZodBoolean;
         time: z.ZodString;
         venue: z.ZodString;
@@ -561,6 +616,7 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -568,6 +624,8 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -587,6 +645,8 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -623,7 +683,12 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -672,6 +737,7 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
     invite: {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -679,6 +745,8 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -698,6 +766,8 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -753,7 +823,12 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     };
     palette: {
         accent: string;
@@ -777,6 +852,7 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         musicEnabled: z.ZodBoolean;
         showRsvp: z.ZodBoolean;
     } & {
+        additionalInfo: z.ZodDefault<z.ZodString>;
         address: z.ZodString;
         bride: z.ZodString;
         city: z.ZodString;
@@ -785,6 +861,8 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         dressCode: z.ZodString;
         dressCodeColors: z.ZodArray<z.ZodString, "many">;
         groom: z.ZodString;
+        groupChatText: z.ZodDefault<z.ZodString>;
+        groupChatUrl: z.ZodDefault<z.ZodString>;
         lead: z.ZodString;
         mapUrl: z.ZodOptional<z.ZodString>;
         musicTitle: z.ZodString;
@@ -820,12 +898,15 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
             time: string;
             title: string;
         }>, "many">;
+        showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showGroupChat: z.ZodDefault<z.ZodBoolean>;
         time: z.ZodString;
         venue: z.ZodString;
         venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -833,6 +914,8 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -852,6 +935,8 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -888,7 +973,12 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -937,6 +1027,7 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
     invite: {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -944,6 +1035,8 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -963,6 +1056,8 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -1018,7 +1113,12 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
+        additionalInfo?: string | undefined;
+        groupChatText?: string | undefined;
+        groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
+        showAdditionalInfo?: boolean | undefined;
+        showGroupChat?: boolean | undefined;
     };
     palette: {
         accent: string;

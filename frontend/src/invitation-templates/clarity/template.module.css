@@ -96,7 +96,7 @@
 
 .heroFooter p:first-child {
   grid-column: 1 / -1;
-  max-width: 25ch;
+  max-width: 32ch;
   font-size: clamp(26px, 3vw, 42px);
   line-height: 1.03;
 }
@@ -106,13 +106,6 @@
   align-self: start;
   font-size: 10px;
   text-transform: uppercase;
-}
-
-.heroFooter p:last-child {
-  grid-column: 2;
-  max-width: 31ch;
-  font-size: clamp(12px, 1.1vw, 15px);
-  line-height: 1.18;
 }
 
 .paper {
@@ -354,6 +347,121 @@
   background: var(--clarity-paper);
 }
 
+.groupChatSection,
+.additionalInfoSection {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 6vw, 96px);
+  align-items: start;
+  border-top: 1px solid var(--clarity-line);
+  padding: clamp(64px, 9vw, 130px) clamp(22px, 7vw, 106px);
+}
+
+.groupChatSection {
+  border-top-color: var(--clarity-ink);
+  background: var(--clarity-ink);
+  color: var(--clarity-paper);
+}
+
+.groupChatIntro,
+.additionalInfoIntro {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.groupChatIntro > span,
+.additionalInfoIntro > span {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.groupChatIntro > span {
+  color: color-mix(in srgb, var(--clarity-paper) 68%, transparent);
+}
+
+.groupChatIntro h2,
+.additionalInfoIntro h2 {
+  margin: 0;
+  font-size: clamp(42px, 5vw, 74px);
+  font-weight: 400;
+  line-height: 0.95;
+  text-transform: lowercase;
+}
+
+.groupChatBlock.groupChatBlock,
+.additionalInfoBlock.additionalInfoBlock {
+  --chat-accent: var(--clarity-paper);
+  --chat-ink: var(--clarity-paper);
+  --chat-muted: color-mix(in srgb, var(--clarity-paper) 72%, transparent);
+  --chat-line: color-mix(in srgb, var(--clarity-paper) 28%, transparent);
+  --chat-surface: transparent;
+  --chat-veil: transparent;
+  --info-accent: var(--clarity-ink);
+  --info-ink: var(--clarity-ink);
+  --info-muted: var(--clarity-muted);
+  --info-line: var(--clarity-line);
+  --info-surface: transparent;
+  --info-veil: transparent;
+  width: 100%;
+  max-width: 40rem;
+  min-width: 0;
+  justify-items: start;
+  gap: 18px;
+  margin: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+  box-shadow: none;
+}
+
+.groupChatBlock :global(.invite-section-eyebrow),
+.additionalInfoBlock :global(.invite-section-eyebrow),
+.groupChatBlock :global(h2),
+.additionalInfoBlock :global(h2) {
+  display: none;
+}
+
+.groupChatBlock :global(p),
+.additionalInfoBlock :global(p) {
+  max-width: 42ch;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.groupChatBlock :global(p) {
+  color: color-mix(in srgb, var(--clarity-paper) 72%, transparent);
+}
+
+.additionalInfoBlock :global(p) {
+  max-width: 48ch;
+  color: var(--clarity-muted);
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.45;
+}
+
+.groupChatBlock :global(a) {
+  justify-self: start;
+  margin-top: 4px;
+  border: 1px solid color-mix(in srgb, var(--clarity-paper) 55%, transparent);
+  border-radius: 0;
+  background: transparent;
+  padding: 14px 22px;
+  color: var(--clarity-paper);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.groupChatBlock :global(a):hover {
+  border-color: var(--clarity-paper);
+  background: var(--clarity-paper);
+  color: var(--clarity-ink);
+}
+
 .rsvpSection {
   display: grid;
   grid-template-columns: minmax(230px, 0.72fr) minmax(0, 1.28fr);
@@ -443,6 +551,8 @@
     min-height: 560px;
   }
 
+  .groupChatSection,
+  .additionalInfoSection,
   .rsvpSection {
     grid-template-columns: 1fr;
   }
@@ -461,9 +571,8 @@
   }
 
   .hero .coverImage {
-    object-position: 52% center;
-    transform: translateY(-20%) scale(1.24);
-    transform-origin: center top;
+    object-position: 72% center;
+    transform: none;
   }
 
   .heroTitle {
@@ -483,20 +592,14 @@
   }
 
   .heroFooter p:first-child {
-    max-width: 18ch;
-    font-size: clamp(27px, 8vw, 32px);
-    line-height: 0.98;
+    max-width: 24ch;
+    font-size: clamp(23px, 6.6vw, 28px);
+    line-height: 1.02;
   }
 
   .heroFooter span {
     display: block;
     font-size: 8px;
-  }
-
-  .heroFooter p:last-child {
-    max-width: 26ch;
-    font-size: 11px;
-    line-height: 1.14;
   }
 
   .dateSection {
@@ -559,8 +662,14 @@
     min-height: 460px;
   }
 
+  .groupChatSection,
+  .additionalInfoSection,
   .rsvpSection {
     padding-inline: 18px;
   }
 
+  .groupChatIntro h2,
+  .additionalInfoIntro h2 {
+    font-size: clamp(36px, 12vw, 52px);
+  }
 }

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.publishedInviteSiteShapeSchema = exports.publishedInviteSiteSchema = exports.createInviteSitePayloadShapeSchema = exports.createInviteSitePayloadSchema = exports.isPublishedInviteSite = exports.isInviteSitePalette = exports.isInviteState = void 0;
+exports.normalizeInviteState = normalizeInviteState;
 exports.parseCreateInviteSitePayload = parseCreateInviteSitePayload;
 exports.validateInviteFieldLimits = validateInviteFieldLimits;
 exports.validatePaletteFieldLimits = validatePaletteFieldLimits;
@@ -15,6 +16,10 @@ const invite_state_schema_1 = require("./invite-state.schema");
 exports.isInviteState = (0, zod_helpers_1.createTypeGuard)(invite_state_schema_1.inviteStateShapeSchema);
 exports.isInviteSitePalette = (0, zod_helpers_1.createTypeGuard)(invite_palette_schema_1.inviteSitePaletteShapeSchema);
 exports.isPublishedInviteSite = (0, zod_helpers_1.createTypeGuard)(invite_site_schema_1.publishedInviteSiteShapeSchema);
+/** Fill defaults for invites saved before newer optional fields existed. */
+function normalizeInviteState(invite) {
+    return invite_state_schema_1.inviteStateShapeSchema.parse(invite);
+}
 function getIssuePath(error) {
     return error.issues[0]?.path.map(String).join(".") ?? "";
 }
@@ -22,6 +27,12 @@ function mapInviteLimitError(error) {
     const path = getIssuePath(error);
     if (path === "mapUrl") {
         return "Ссылка на Яндекс Карты слишком длинная или некорректная.";
+    }
+    if (path === "groupChatUrl") {
+        return "Ссылка на общий чат слишком длинная.";
+    }
+    if (path === "groupChatText" || path === "additionalInfo") {
+        return "Слишком длинный текст дополнительного блока.";
     }
     if (path.startsWith("dressCodeColors")) {
         return "Слишком длинные или некорректные цвета дресс-кода.";

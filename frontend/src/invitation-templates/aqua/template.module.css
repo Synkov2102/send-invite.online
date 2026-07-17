@@ -33,7 +33,11 @@
   right: max(-120px, calc(50% - 520px));
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--glass-foam) 30%, transparent), transparent 68%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--glass-foam) 30%, transparent),
+    transparent 68%
+  );
   opacity: 0.7;
 }
 
@@ -42,7 +46,11 @@
   left: max(-110px, calc(50% - 520px));
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--glass-accent) 38%, transparent), transparent 70%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--glass-accent) 38%, transparent),
+    transparent 70%
+  );
   opacity: 0.55;
 }
 
@@ -77,7 +85,11 @@
   border: 1px solid var(--glass-border);
   border-radius: 34px;
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--glass-foam) 20%, transparent), transparent 36%),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--glass-foam) 20%, transparent),
+      transparent 36%
+    ),
     var(--glass-bg);
   overflow: hidden;
   padding: clamp(22px, 4vw, 36px) clamp(18px, 3.5vw, 28px);
@@ -107,7 +119,11 @@
   width: 190px;
   height: 190px;
   border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--glass-accent) 18%, transparent), transparent 70%);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--glass-accent) 18%, transparent),
+    transparent 70%
+  );
   content: "";
 }
 
@@ -419,7 +435,11 @@
 
 .whenSection {
   background:
-    radial-gradient(circle at 50% -20%, color-mix(in srgb, var(--glass-foam) 32%, transparent), transparent 44%),
+    radial-gradient(
+      circle at 50% -20%,
+      color-mix(in srgb, var(--glass-foam) 32%, transparent),
+      transparent 44%
+    ),
     var(--glass-bg);
 }
 
@@ -445,6 +465,8 @@
 }
 
 .dressSection,
+.groupChatSection,
+.additionalInfoSection,
 .rsvpSection {
   padding: clamp(16px, 3.5vw, 24px);
 }
@@ -489,6 +511,8 @@
 }
 
 .dressSection :global(h2),
+.groupChatSection :global(h2),
+.additionalInfoSection :global(h2),
 .rsvpSection :global(h2) {
   color: var(--glass-ink) !important;
   font-family: Georgia, "Times New Roman", serif;
@@ -542,7 +566,11 @@
 
 .calendarSelected {
   border-color: transparent !important;
-  background: color-mix(in srgb, var(--glass-accent) 82%, var(--invite-surface, #f1fbfb)) !important;
+  background: color-mix(
+    in srgb,
+    var(--glass-accent) 82%,
+    var(--invite-surface, #f1fbfb)
+  ) !important;
   box-shadow: 0 10px 24px color-mix(in srgb, var(--glass-accent) 30%, transparent);
 }
 
@@ -641,7 +669,9 @@
   --timeline-dot-col: 20px;
   --timeline-gap: 18px;
   --timeline-time-col: 78px;
-  --timeline-line-left: calc(var(--timeline-time-col) + var(--timeline-gap) + (var(--timeline-dot-col) / 2));
+  --timeline-line-left: calc(
+    var(--timeline-time-col) + var(--timeline-gap) + (var(--timeline-dot-col) / 2)
+  );
   position: relative;
   display: grid;
   gap: 0;
@@ -659,7 +689,13 @@
   bottom: 18px;
   left: var(--timeline-line-left);
   width: 1px;
-  background: linear-gradient(180deg, transparent, var(--glass-line) 12%, var(--glass-line) 88%, transparent);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--glass-line) 12%,
+    var(--glass-line) 88%,
+    transparent
+  );
   content: "";
 }
 
@@ -741,7 +777,11 @@
   border-top: 1px solid var(--glass-border);
   border-radius: 0;
   background:
-    linear-gradient(145deg, color-mix(in srgb, var(--glass-foam) 16%, transparent), transparent 42%),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--glass-foam) 16%, transparent),
+      transparent 42%
+    ),
     color-mix(in srgb, var(--invite-ink, #0c2730) 24%, transparent);
   padding: clamp(22px, 4.5vw, 36px) clamp(18px, 3.5vw, 28px);
   color: var(--glass-foam);

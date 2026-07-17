@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.INVITE_FIELD_LIMITS = void 0;
 exports.INVITE_FIELD_LIMITS = {
+    additionalInfo: 2000,
     address: 300,
     bride: 120,
     city: 120,
@@ -9,6 +10,8 @@ exports.INVITE_FIELD_LIMITS = {
     dressCodeColor: 40,
     dressCodeColorsMax: 20,
     groom: 120,
+    groupChatText: 500,
+    groupChatUrl: 2048,
     lead: 2000,
     mapUrl: 2048,
     mediaUrl: 2048,

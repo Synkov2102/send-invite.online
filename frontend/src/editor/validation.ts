@@ -1,6 +1,15 @@
 import type { InviteState } from "@/lib/invite-state";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 
+function isHttpUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export function getEditorStepErrors(invite: InviteState) {
   const basicErrors = [
     !invite.groom.trim() ? "Укажите имя жениха" : null,
@@ -14,11 +23,22 @@ export function getEditorStepErrors(invite: InviteState) {
       ? "Добавьте корректную ссылку на место в Яндекс Картах"
       : null,
   ].filter((error): error is string => Boolean(error));
-  const scheduleErrors = invite.schedule.some(
-    (item) => !item.time || !item.title.trim(),
-  )
-    ? ["Заполните время и название каждого события"]
-    : [];
+  const scheduleErrors = [
+    invite.schedule.some((item) => !item.time || !item.title.trim())
+      ? "Заполните время и название каждого события"
+      : null,
+    invite.showGroupChat && !invite.groupChatUrl.trim()
+      ? "Укажите ссылку на общий чат"
+      : null,
+    invite.showGroupChat &&
+    invite.groupChatUrl.trim() &&
+    !isHttpUrl(invite.groupChatUrl.trim())
+      ? "Ссылка на чат должна начинаться с http:// или https://"
+      : null,
+    invite.showAdditionalInfo && !invite.additionalInfo.trim()
+      ? "Добавьте текст дополнительной информации"
+      : null,
+  ].filter((error): error is string => Boolean(error));
   const guestErrors = !invite.showRsvp
     ? []
     : [

@@ -565,6 +565,14 @@
   background: var(--invite-surface);
 }
 
+.scope:global(.invite-group-chat),
+.scope :global(.invite-group-chat),
+.scope:global(.invite-additional-info),
+.scope :global(.invite-additional-info) {
+  padding: 0 28px 70px;
+  background: var(--invite-surface);
+}
+
 .scope:global(.invite-details__row),
 .scope :global(.invite-details__row) {
   display: grid;
@@ -910,6 +918,14 @@
 
   .scope:global(.invite-dress-code),
   .scope :global(.invite-dress-code) {
+    padding-inline: 22px;
+    padding-bottom: 58px;
+  }
+
+  .scope:global(.invite-group-chat),
+  .scope :global(.invite-group-chat),
+  .scope:global(.invite-additional-info),
+  .scope :global(.invite-additional-info) {
     padding-inline: 22px;
     padding-bottom: 58px;
   }

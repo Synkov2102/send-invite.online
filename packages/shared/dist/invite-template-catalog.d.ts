@@ -3,7 +3,7 @@
  *
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
- * 2. Укажите `kind` (alpine | aqua | clarity | minimal | silk | vanilla) и `editorReady: true`.
+ * 2. Укажите `kind` (alpine | aqua | clarity | minimal | silk | electric) и `editorReady: true`.
  * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
  *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
@@ -15,7 +15,7 @@ import type { InviteState } from "./invite-state";
 import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema";
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk" | "vanilla";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk";
 export type InviteTemplateDefinition = InviteTemplate & {
     /** Какой React-движок рисует шаблон. */
     kind: TemplateKind;
@@ -49,6 +49,7 @@ export declare function getEditorReadyTemplates(): {
 export declare function getEditorPreset(templateId: string): Partial<{
     time: string;
     date: string;
+    additionalInfo: string;
     address: string;
     bride: string;
     city: string;
@@ -56,6 +57,8 @@ export declare function getEditorPreset(templateId: string): Partial<{
     dressCode: string;
     dressCodeColors: string[];
     groom: string;
+    groupChatText: string;
+    groupChatUrl: string;
     lead: string;
     musicEnabled: boolean;
     musicTitle: string;
@@ -75,11 +78,13 @@ export declare function getEditorPreset(templateId: string): Partial<{
         time: string;
         title: string;
     }[];
+    showAdditionalInfo: boolean;
+    showGroupChat: boolean;
     showRsvp: boolean;
     venue: string;
     venueImageUrl: string;
     mapUrl?: string | undefined;
 }> | undefined;
-export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "clarity" | "electric" | "minimal" | "silk" | "vanilla";
+export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "clarity" | "electric" | "minimal" | "silk";
 export declare const defaultInviteTemplates: InviteTemplate[];
 export declare function getInviteTemplate(id: string | null | undefined): InviteTemplate;

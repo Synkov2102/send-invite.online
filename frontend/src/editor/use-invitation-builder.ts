@@ -14,7 +14,10 @@ import type {
   InviteScheduleItem,
   InviteState,
 } from "@/lib/invite-state";
+import { normalizeInviteState } from "@/lib/invite-state";
 import {
+  alpineImages,
+  aquaImages,
   clarityImages,
   createRingColor,
   defaultCustomPalette,
@@ -22,6 +25,7 @@ import {
   getTemplatePalettes,
   hexToRgba,
   inviteImages,
+  minimalImages,
   silkImages,
   type InvitePalette,
 } from "@/lib/invite-theme";
@@ -59,7 +63,7 @@ export function useInvitationBuilder({
   const [initialDraft, setInitialDraft] = useState<ReturnType<typeof readEditorDraft>>(null);
 
   const [invite, setInvite] = useState<InviteState>(
-    () => initialInvite ?? getInitialInvite(template),
+    () => (initialInvite ? normalizeInviteState(initialInvite) : getInitialInvite(template)),
   );
   const [customPalette, setCustomPalette] = useState<InvitePalette>(
     () => initialPalette ?? defaultCustomPalette,
@@ -70,6 +74,7 @@ export function useInvitationBuilder({
   const [visibleValidationStep, setVisibleValidationStep] = useState<number | null>(null);
   const [paletteMode, setPaletteMode] = useState<"custom" | "presets">("presets");
   const [isFullscreenPreview, setIsFullscreenPreview] = useState(initialIsFullscreenPreview);
+  const [isTemplateEntryPreview, setIsTemplateEntryPreview] = useState(initialIsFullscreenPreview);
   const [previewDevice, setPreviewDevice] = useState<"desktop" | "mobile">("desktop");
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("saved");
   const [isPublishing, setIsPublishing] = useState(false);
@@ -91,13 +96,19 @@ export function useInvitationBuilder({
       ? customPalette
       : templatePalette ?? palettes.find((item) => item.id === resolvedPaletteId) ?? palettes[0];
   const templateImages =
-    templateKind === "silk"
-      ? silkImages
-      : templateKind === "electric"
-        ? electricImages
-      : templateKind === "clarity" || templateKind === "minimal"
-        ? clarityImages
-        : inviteImages;
+    templateKind === "alpine"
+      ? alpineImages
+      : templateKind === "aqua"
+        ? aquaImages
+        : templateKind === "silk"
+          ? silkImages
+          : templateKind === "electric"
+            ? electricImages
+            : templateKind === "minimal"
+              ? minimalImages
+              : templateKind === "clarity"
+                ? clarityImages
+                : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;
@@ -168,6 +179,7 @@ export function useInvitationBuilder({
     isFullscreenPreviewRef.current = false;
     setActiveStep(index);
     setIsFullscreenPreview(false);
+    setIsTemplateEntryPreview(false);
     setVisitedSteps((current) => new Set(current).add(index));
     setVisibleValidationStep(null);
 
@@ -180,6 +192,10 @@ export function useInvitationBuilder({
     (nextValue: boolean) => {
       if (nextValue === isFullscreenPreviewRef.current) {
         return;
+      }
+
+      if (!nextValue) {
+        setIsTemplateEntryPreview(false);
       }
 
       if (!nextValue && window.history.state?.editorPreviewEntry) {
@@ -463,16 +479,17 @@ export function useInvitationBuilder({
     }
 
     const timeout = window.setTimeout(() => {
+      const inviteFromDraft = normalizeInviteState(draft.invite);
       setInitialDraft(draft);
-      setInvite(draft.invite);
+      setInvite(inviteFromDraft);
       setCustomPalette(draft.customPalette);
       setHasLocalMusic(draft.hasLocalMusic);
-      setPaletteMode(draft.invite.paletteId === "custom" ? "custom" : "presets");
+      setPaletteMode(inviteFromDraft.paletteId === "custom" ? "custom" : "presets");
       setLastSafeEditorSnapshot(
         JSON.stringify({
           customPalette: draft.customPalette,
           hasLocalMusic: draft.hasLocalMusic,
-          invite: draft.invite,
+          invite: inviteFromDraft,
         }),
       );
     }, 0);
@@ -638,6 +655,9 @@ export function useInvitationBuilder({
         isFullscreenPreviewRef.current = nextPreview;
         setActiveStep(nextStep);
         setIsFullscreenPreview(nextPreview);
+        if (!nextPreview) {
+          setIsTemplateEntryPreview(false);
+        }
         setVisitedSteps((current) => new Set(current).add(nextStep));
         setVisibleValidationStep(null);
 
@@ -759,6 +779,7 @@ export function useInvitationBuilder({
     invite,
     isFullscreenPreview,
     isPublishing,
+    isTemplateEntryPreview,
     isWideTemplate,
     openStep,
     palette,

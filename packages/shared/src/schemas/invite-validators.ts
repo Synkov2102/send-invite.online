@@ -13,6 +13,13 @@ export const isInviteState = createTypeGuard(inviteStateShapeSchema);
 export const isInviteSitePalette = createTypeGuard(inviteSitePaletteShapeSchema);
 export const isPublishedInviteSite = createTypeGuard(publishedInviteSiteShapeSchema);
 
+/** Fill defaults for invites saved before newer optional fields existed. */
+export function normalizeInviteState(
+  invite: import("./invite-state.schema").InviteState,
+): import("./invite-state.schema").InviteState {
+  return inviteStateShapeSchema.parse(invite);
+}
+
 type ParsedPayload =
   | { ok: true; payload: import("./invite-site.schema").CreateInviteSitePayload }
   | { error: string; ok: false };
@@ -26,6 +33,14 @@ function mapInviteLimitError(error: ZodError) {
 
   if (path === "mapUrl") {
     return "Ссылка на Яндекс Карты слишком длинная или некорректная.";
+  }
+
+  if (path === "groupChatUrl") {
+    return "Ссылка на общий чат слишком длинная.";
+  }
+
+  if (path === "groupChatText" || path === "additionalInfo") {
+    return "Слишком длинный текст дополнительного блока.";
   }
 
   if (path.startsWith("dressCodeColors")) {

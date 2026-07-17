@@ -5,11 +5,20 @@
   --electric-muted: #56544d;
   --electric-accent: #5824ff;
   --electric-line: #0a0a0a;
+  /* Контраст палитр electric:
+     on-bright → ink (bg / accent могут быть светлыми)
+     on-dark → surface (только панели на ink)
+     on-paper → ink / muted
+     punch-on-paper → bg (насыщенное поле, надёжнее accent) */
+  --electric-on-bright: var(--electric-ink);
+  --electric-on-dark: var(--electric-surface);
+  --electric-on-paper: var(--electric-ink);
+  --electric-punch: var(--electric-bg);
   position: relative;
   width: 100%;
   overflow: hidden;
   background: var(--electric-surface);
-  color: var(--electric-ink);
+  color: var(--electric-on-paper);
   font-family: Arial, var(--font-geist-sans), sans-serif;
 }
 
@@ -191,7 +200,7 @@
   align-items: start;
   padding: clamp(72px, 10vw, 150px) clamp(20px, 6vw, 92px);
   background: var(--electric-ink);
-  color: var(--electric-surface);
+  color: var(--electric-on-dark);
 }
 .greeting p {
   margin: 0;
@@ -281,6 +290,7 @@
   grid-template-columns: 1.12fr 0.88fr;
   min-height: 780px;
   background: var(--electric-bg);
+  color: var(--electric-on-bright);
 }
 .placePhoto {
   position: relative;
@@ -308,7 +318,7 @@
 }
 .placeCopy address {
   margin-top: 18px;
-  color: var(--electric-muted);
+  color: color-mix(in srgb, var(--electric-on-bright) 72%, transparent);
   font-size: clamp(16px, 1.8vw, 24px);
   font-weight: 400;
   line-height: 1.25;
@@ -361,7 +371,7 @@
 }
 .programList > li > span {
   padding-top: 8px;
-  color: var(--electric-accent);
+  color: var(--electric-punch);
   font-size: 12px;
   font-weight: 700;
 }
@@ -372,13 +382,13 @@
   gap: 48px;
   padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
   background: var(--electric-accent);
-  color: var(--electric-surface);
+  color: var(--electric-on-bright);
 }
 .dressBlock.dressBlock {
   --dress-accent: var(--electric-bg);
-  --dress-ink: var(--electric-surface);
-  --dress-muted: color-mix(in srgb, var(--electric-surface) 72%, transparent);
-  --dress-line: color-mix(in srgb, var(--electric-surface) 42%, transparent);
+  --dress-ink: var(--electric-on-bright);
+  --dress-muted: color-mix(in srgb, var(--electric-on-bright) 72%, transparent);
+  --dress-line: color-mix(in srgb, var(--electric-on-bright) 36%, transparent);
   --dress-surface: transparent;
   --dress-veil: transparent;
   width: 100%;
@@ -392,7 +402,7 @@
   display: none;
 }
 .dressBlock :global(h2) {
-  color: var(--electric-surface) !important;
+  color: var(--electric-on-bright) !important;
   font-family: Arial, sans-serif !important;
   font-size: clamp(58px, 10vw, 148px) !important;
   font-weight: 800 !important;
@@ -402,12 +412,136 @@
 }
 .dressBlock :global(p) {
   max-width: 54ch;
+  color: color-mix(in srgb, var(--electric-on-bright) 82%, transparent);
   font-size: 16px;
+  line-height: 1.45;
 }
 .dressBlock :global(span[class*="swatch"]) {
-  border: 2px solid var(--electric-surface) !important;
+  border: 2px solid var(--electric-on-bright) !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+}
+
+.groupChatSection {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
+  background: var(--electric-ink);
+  color: var(--electric-on-dark);
+}
+
+.groupChatIntro {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.groupChatIntro h2,
+.additionalInfoSection .sectionHeading h2 {
+  margin: 0;
+  font-size: clamp(58px, 10vw, 148px);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  text-transform: uppercase;
+}
+
+.groupChatBlock.groupChatBlock,
+.additionalInfoBlock.additionalInfoBlock {
+  --chat-accent: var(--electric-punch);
+  --chat-ink: var(--electric-on-dark);
+  --chat-muted: color-mix(in srgb, var(--electric-on-dark) 82%, transparent);
+  --chat-line: color-mix(in srgb, var(--electric-on-dark) 40%, transparent);
+  --chat-surface: transparent;
+  --chat-veil: transparent;
+  --info-accent: var(--electric-punch);
+  --info-ink: var(--electric-on-paper);
+  --info-muted: var(--electric-muted);
+  --info-line: var(--electric-line);
+  --info-surface: transparent;
+  --info-veil: transparent;
+  width: 100%;
+  max-width: 40rem;
+  min-width: 0;
+  justify-items: start;
+  gap: 22px;
+  margin: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+  box-shadow: none;
+}
+
+.groupChatBlock.groupChatBlock {
+  border: 2px solid var(--electric-on-dark);
+  background: color-mix(in srgb, var(--electric-on-dark) 7%, transparent);
+  padding: clamp(28px, 4.5vw, 48px);
+  box-shadow: 12px 12px 0 var(--electric-punch);
+}
+
+.groupChatBlock :global(.invite-section-eyebrow),
+.additionalInfoBlock :global(.invite-section-eyebrow),
+.groupChatBlock :global(h2),
+.additionalInfoBlock :global(h2) {
+  display: none;
+}
+
+.groupChatBlock :global(p),
+.additionalInfoBlock :global(p) {
+  margin: 0;
+}
+
+.groupChatBlock :global(p) {
+  max-width: 38ch;
+  color: color-mix(in srgb, var(--electric-on-dark) 88%, transparent);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.groupChatSection .groupChatBlock.groupChatBlock :global(a) {
+  justify-self: start;
+  border: 2px solid var(--electric-ink);
+  border-radius: 0;
+  background: var(--electric-surface);
+  padding: 14px 22px;
+  color: var(--electric-ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 5px 5px 0 var(--electric-punch);
+}
+
+.groupChatSection .groupChatBlock.groupChatBlock :global(a):hover {
+  border-color: var(--electric-ink);
+  background: var(--electric-punch);
+  color: var(--electric-ink);
+}
+
+.additionalInfoSection {
+  padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
+  background: var(--electric-surface);
+  color: var(--electric-on-paper);
+}
+
+.additionalInfoBlock.additionalInfoBlock {
+  margin-top: clamp(40px, 6vw, 72px);
+  max-width: 36rem;
+  border-left: 6px solid var(--electric-punch);
+  padding-left: clamp(18px, 3vw, 28px);
+}
+
+.additionalInfoBlock :global(p) {
+  max-width: 34ch;
+  color: var(--electric-on-paper);
+  font-size: clamp(22px, 3.2vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.18;
+  white-space: pre-wrap;
 }
 
 .rsvpSection {
@@ -416,6 +550,7 @@
   gap: clamp(40px, 6vw, 96px);
   padding: clamp(70px, 9vw, 130px) clamp(20px, 6vw, 92px);
   background: var(--electric-bg);
+  color: var(--electric-on-bright);
 }
 .rsvpIntro {
   display: grid;
@@ -428,26 +563,28 @@
 .rsvpIntro p {
   max-width: 32ch;
   margin: 0;
+  color: color-mix(in srgb, var(--electric-on-bright) 88%, transparent);
   font-size: 18px;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 .rsvpIntro small {
+  color: var(--electric-on-bright);
   font-weight: 700;
   text-transform: uppercase;
 }
 .rsvpForm.rsvpForm {
-  --rsvp-accent: var(--electric-accent);
-  --rsvp-accent-soft: color-mix(in srgb, var(--electric-accent) 20%, transparent);
+  --rsvp-accent: var(--electric-punch);
+  --rsvp-accent-soft: color-mix(in srgb, var(--electric-punch) 22%, transparent);
   --rsvp-button-text: var(--electric-ink);
   --rsvp-control-radius: 0;
   --rsvp-focus-surface: var(--electric-surface);
-  --rsvp-ink: var(--electric-surface);
-  --rsvp-line: color-mix(in srgb, var(--electric-surface) 42%, transparent);
-  --rsvp-muted: color-mix(in srgb, var(--electric-surface) 70%, transparent);
+  --rsvp-ink: var(--electric-on-dark);
+  --rsvp-line: color-mix(in srgb, var(--electric-on-dark) 42%, transparent);
+  --rsvp-muted: color-mix(in srgb, var(--electric-on-dark) 72%, transparent);
   --rsvp-radius: 0;
-  --rsvp-section: color-mix(in srgb, var(--electric-surface) 5%, transparent);
+  --rsvp-section: color-mix(in srgb, var(--electric-on-dark) 5%, transparent);
   --rsvp-shadow: none;
-  --rsvp-surface: color-mix(in srgb, var(--electric-surface) 8%, transparent);
+  --rsvp-surface: color-mix(in srgb, var(--electric-on-dark) 8%, transparent);
   position: relative;
   width: 100%;
   border: 2px solid var(--electric-ink);
@@ -459,7 +596,7 @@
   content: "RSVP / FORM";
   display: block;
   margin-bottom: 4px;
-  color: var(--electric-accent);
+  color: var(--electric-punch);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.22em;
@@ -469,17 +606,17 @@
 }
 .rsvpForm :global([class*="textInput"]),
 .rsvpForm :global([class*="textarea"]) {
-  color: var(--electric-surface);
+  color: var(--electric-on-dark);
 }
 .rsvpForm :global([class*="textInput"]):focus,
 .rsvpForm :global([class*="textarea"]):focus {
   color: var(--electric-ink);
 }
 .rsvpForm :global([class*="submit"]) {
-  border-color: var(--electric-surface) !important;
-  background: var(--electric-surface) !important;
+  border-color: var(--electric-on-dark) !important;
+  background: var(--electric-on-dark) !important;
   color: var(--electric-ink) !important;
-  box-shadow: 5px 5px 0 var(--electric-accent);
+  box-shadow: 5px 5px 0 var(--electric-punch);
 }
 
 .closing {
@@ -487,7 +624,7 @@
   grid-template-columns: 1fr 1fr;
   min-height: 780px;
   background: var(--electric-ink);
-  color: var(--electric-surface);
+  color: var(--electric-on-dark);
 }
 .closingPhoto {
   position: relative;
@@ -525,6 +662,7 @@
 }
 
 @media (max-width: 1100px) {
+  .groupChatSection,
   .rsvpSection {
     grid-template-columns: 1fr;
     gap: 48px;
@@ -532,6 +670,7 @@
   .rsvpIntro {
     max-width: 640px;
   }
+  .groupChatBlock.groupChatBlock,
   .rsvpForm.rsvpForm {
     max-width: 720px;
   }
@@ -623,6 +762,7 @@
     font-size: clamp(18px, 5.4vw, 24px);
   }
   .placeSection,
+  .groupChatSection,
   .rsvpSection,
   .closing {
     grid-template-columns: 1fr;
@@ -686,8 +826,31 @@
   }
   .dressBlock :global(span[class*="swatch"]) {
     width: 46px !important;
-    border: 1px solid var(--electric-surface) !important;
+    border: 1px solid var(--electric-on-bright) !important;
     box-shadow: none !important;
+  }
+  .groupChatSection {
+    gap: 40px;
+    padding: 68px 22px;
+  }
+  .groupChatIntro h2,
+  .additionalInfoSection .sectionHeading h2 {
+    font-size: clamp(54px, 16vw, 72px);
+  }
+  .groupChatBlock.groupChatBlock {
+    padding: 24px 16px;
+    box-shadow: 8px 8px 0 var(--electric-punch);
+  }
+  .groupChatSection .groupChatBlock.groupChatBlock :global(a) {
+    box-shadow: 4px 4px 0 var(--electric-punch);
+  }
+  .additionalInfoSection {
+    padding: 68px 22px;
+  }
+  .additionalInfoBlock :global(p) {
+    max-width: 100%;
+    font-size: clamp(22px, 6.4vw, 32px);
+    line-height: 1.2;
   }
   .rsvpSection {
     gap: 56px;
@@ -740,6 +903,8 @@
   .dateSection,
   .programSection,
   .dressSection,
+  .groupChatSection,
+  .additionalInfoSection,
   .rsvpSection {
     padding-inline: 18px;
   }

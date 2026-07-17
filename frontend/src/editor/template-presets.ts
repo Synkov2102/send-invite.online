@@ -1,6 +1,7 @@
-import type { InviteTemplate } from "@/lib/invite-templates";
-import { getTemplateDefinition } from "@/lib/invite-templates";
 import type { InviteState } from "@/lib/invite-state";
+import { normalizeInviteState } from "@/lib/invite-state";
+import { getTemplateDefinition } from "@/lib/invite-templates";
+import type { InviteTemplate } from "@/lib/invite-templates";
 
 export const defaultEditorInvite: InviteState = {
   bride: "Диана",
@@ -22,6 +23,13 @@ export const defaultEditorInvite: InviteState = {
     { time: "18:00", title: "Ужин", description: "Праздничный ужин и поздравления" },
     { time: "20:30", title: "Торт и танцы", description: "Время праздновать и танцевать" },
   ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+invite-guests",
+  groupChatText:
+    "Присоединяйтесь к общему чату гостей — там будут новости, координация и ответы на вопросы.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Если планируете остаться на ночь, напишите нам заранее — подскажем варианты проживания рядом с площадкой. Парковка бесплатная.",
   showRsvp: true,
   rsvpDate: "2026-08-01",
   rsvpText:
@@ -52,9 +60,9 @@ export const defaultEditorInvite: InviteState = {
 export function getInitialInvite(template: InviteTemplate): InviteState {
   const definition = getTemplateDefinition(template.id);
 
-  return {
+  return normalizeInviteState({
     ...defaultEditorInvite,
     ...definition.editorPreset,
     paletteId: definition.defaultPaletteId,
-  };
+  });
 }

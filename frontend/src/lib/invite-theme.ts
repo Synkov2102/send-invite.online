@@ -32,6 +32,18 @@ export const inviteImages = {
   venue: "/images/wedding-mountain-cover.png",
 } as const;
 
+export const alpineImages = {
+  cover: "/images/alpine-rings-cover.png",
+  portrait: "/images/alpine-rings-portrait.png",
+  venue: "/images/alpine-rings-venue.png",
+} as const;
+
+export const aquaImages = {
+  cover: "/images/lagoon-wave-cover.png",
+  portrait: "/images/lagoon-wave-portrait.png",
+  venue: "/images/lagoon-wave-venue.png",
+} as const;
+
 export const silkImages = {
   cover: "/images/silk-wedding-cover.png",
   portrait: "/images/silk-wedding-rings.png",
@@ -39,9 +51,15 @@ export const silkImages = {
 } as const;
 
 export const clarityImages = {
-  cover: "/images/clarity-wedding-cover.png",
-  portrait: "/images/clarity-wedding-cover.png",
-  venue: "/images/clarity-wedding-venue.png",
+  cover: "/images/clarity-editorial-cover.png",
+  portrait: "/images/clarity-editorial-portrait.png",
+  venue: "/images/clarity-editorial-venue.png",
+} as const;
+
+export const minimalImages = {
+  cover: "/images/minimal-paper-couple.png",
+  portrait: "/images/minimal-paper-couple-closing.png",
+  venue: "/images/minimal-paper-venue.png",
 } as const;
 
 export const electricImages = {

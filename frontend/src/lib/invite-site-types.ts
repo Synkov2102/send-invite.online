@@ -7,5 +7,6 @@ export {
   isInviteSitePalette,
   isInviteState,
   isPublishedInviteSite,
+  normalizeInviteState,
   parseCreateInviteSitePayload,
 } from "@invite/shared";

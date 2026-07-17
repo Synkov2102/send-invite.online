@@ -46,20 +46,21 @@ export function createDressCodeBlockStyles() {
       --dress-veil: var(--veil, rgba(249,228,238,.9));
       --dress-radius: clamp(34px, 6vw, 58px);
     }
-    .dress-code--alpine { --dress-radius: 220px 220px 14px 14px; }
+    .dress-code--alpine { --dress-radius: 20px; }
     .dress-code__title { margin: 0; color: var(--dress-accent); font-family: Georgia, "Times New Roman", serif; font-size: clamp(40px, 7vw, 64px); font-weight: 400; letter-spacing: -.035em; line-height: 1; }
     .dress-code--vanilla .dress-code__title { text-transform: uppercase; }
-    .dress-code--alpine .dress-code__title { color: var(--dress-ink); }
+    .dress-code--alpine .dress-code__title { color: var(--dress-ink); font-family: var(--font-invite-serif), Georgia, "Times New Roman", serif; font-size: clamp(34px, 6vw, 48px); letter-spacing: -.035em; }
     .dress-code__text { width: min(100%, 560px); margin: 0; color: var(--dress-muted); font-size: clamp(15px, 2.2vw, 18px); font-weight: 300; line-height: 1.65; }
+    .dress-code--alpine .dress-code__text { font-size: 16px; font-weight: 400; letter-spacing: -0.01em; line-height: 1.6; }
     .dress-code__swatches { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(10px, 2.5vw, 18px); margin: 8px 0 0; padding: 0; list-style: none; }
     .dress-code__swatch-item { display: grid; justify-items: center; gap: 8px; min-width: 54px; }
     .dress-code__swatch { display: block; width: clamp(46px, 8vw, 72px); aspect-ratio: 1; border: 1px solid color-mix(in srgb, var(--dress-ink) 16%, transparent); border-radius: 50%; box-shadow: inset 0 0 0 6px color-mix(in srgb, var(--dress-surface) 32%, transparent), 0 14px 30px color-mix(in srgb, var(--dress-ink) 12%, transparent); }
     .dress-code--vanilla .dress-code__swatch { border-radius: 999px; }
-    .dress-code--alpine .dress-code__swatch { border-radius: 50% 50% 8px 8px; }
+    .dress-code--alpine .dress-code__swatch { border-radius: 12px; box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--dress-surface) 28%, transparent), 0 8px 18px color-mix(in srgb, var(--dress-ink) 8%, transparent); }
     .dress-code__swatch-label { color: var(--dress-muted); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
     @media (max-width: 560px) {
       .dress-code { gap: 15px; padding: 34px 16px; }
-      .dress-code--alpine { --dress-radius: 120px 120px 12px 12px; }
+      .dress-code--alpine { --dress-radius: 16px; }
       .dress-code__swatch-label { display: none; }
     }
   `;

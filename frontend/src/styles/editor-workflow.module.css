@@ -459,6 +459,17 @@
     animation: invite-photo-drift 18s ease-in-out infinite alternate;
   }
 
+  .scope:global(.invite-shell--alpine-rings)
+    :global(.invite-final)
+    :global(.invite-photo__image--slow),
+  .scope
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final)
+    :global(.invite-photo__image--slow) {
+    transform-origin: 50% 22%;
+    animation: invite-photo-drift-alpine 18s ease-in-out infinite alternate;
+  }
+
   .scope:global(.invite-pill),
   .scope :global(.invite-pill) {
     transition:
@@ -506,5 +517,15 @@
 
   to {
     transform: scale(1.08) translateY(-18px);
+  }
+}
+
+@keyframes invite-photo-drift-alpine {
+  from {
+    transform: scale(1.02) translateY(0);
+  }
+
+  to {
+    transform: scale(1.05) translateY(10px);
   }
 }

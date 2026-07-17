@@ -16,7 +16,9 @@ import type { InviteVars } from "@/lib/invite-theme";
 import { mixHexColors } from "@/lib/invite-theme";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
 } from "@/invitation-templates/components";
@@ -288,9 +290,32 @@ export default function AquaTemplate({
             />
           </GlassSection>
 
+          {invite.showGroupChat ? (
+            <GlassSection className={styles.groupChatSection}>
+              <span className={styles.sectionNumber}>06</span>
+              <InvitationGroupChatBlock
+                show={invite.showGroupChat}
+                text={invite.groupChatText}
+                url={invite.groupChatUrl}
+                variant="aqua"
+              />
+            </GlassSection>
+          ) : null}
+
+          {invite.showAdditionalInfo ? (
+            <GlassSection className={styles.additionalInfoSection}>
+              <span className={styles.sectionNumber}>07</span>
+              <InvitationAdditionalInfoBlock
+                show={invite.showAdditionalInfo}
+                text={invite.additionalInfo}
+                variant="aqua"
+              />
+            </GlassSection>
+          ) : null}
+
           {invite.showRsvp ? (
             <GlassSection className={styles.rsvpSection} id="rsvp">
-              <span className={styles.sectionNumber}>06</span>
+              <span className={styles.sectionNumber}>08</span>
               <div className={styles.rsvpHeader}>
                 <span className={styles.rsvpEyebrow}>RSVP</span>
                 <h2 className={styles.heading}>Анкета гостя</h2>

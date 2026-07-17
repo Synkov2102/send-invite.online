@@ -26,6 +26,7 @@ export declare const inviteRsvpQuestionShapeSchema: z.ZodObject<{
     title: string;
 }>;
 export declare const inviteStateShapeSchema: z.ZodObject<{
+    additionalInfo: z.ZodDefault<z.ZodString>;
     address: z.ZodString;
     bride: z.ZodString;
     city: z.ZodString;
@@ -34,6 +35,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     dressCode: z.ZodString;
     dressCodeColors: z.ZodArray<z.ZodString, "many">;
     groom: z.ZodString;
+    groupChatText: z.ZodDefault<z.ZodString>;
+    groupChatUrl: z.ZodDefault<z.ZodString>;
     lead: z.ZodString;
     mapUrl: z.ZodOptional<z.ZodString>;
     musicEnabled: z.ZodBoolean;
@@ -70,6 +73,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
         time: string;
         title: string;
     }>, "many">;
+    showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+    showGroupChat: z.ZodDefault<z.ZodBoolean>;
     showRsvp: z.ZodBoolean;
     time: z.ZodString;
     venue: z.ZodString;
@@ -77,6 +82,7 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     time: string;
     date: string;
+    additionalInfo: string;
     address: string;
     bride: string;
     city: string;
@@ -84,6 +90,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     dressCode: string;
     dressCodeColors: string[];
     groom: string;
+    groupChatText: string;
+    groupChatUrl: string;
     lead: string;
     musicEnabled: boolean;
     musicTitle: string;
@@ -103,6 +111,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
         time: string;
         title: string;
     }[];
+    showAdditionalInfo: boolean;
+    showGroupChat: boolean;
     showRsvp: boolean;
     venue: string;
     venueImageUrl: string;
@@ -139,7 +149,12 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     showRsvp: boolean;
     venue: string;
     venueImageUrl: string;
+    additionalInfo?: string | undefined;
+    groupChatText?: string | undefined;
+    groupChatUrl?: string | undefined;
     mapUrl?: string | undefined;
+    showAdditionalInfo?: boolean | undefined;
+    showGroupChat?: boolean | undefined;
 }>;
 export declare const inviteScheduleItemSchema: z.ZodObject<{
     description: z.ZodString;
@@ -171,6 +186,7 @@ export declare const inviteStateSchema: z.ZodObject<{
     musicEnabled: z.ZodBoolean;
     showRsvp: z.ZodBoolean;
 } & {
+    additionalInfo: z.ZodDefault<z.ZodString>;
     address: z.ZodString;
     bride: z.ZodString;
     city: z.ZodString;
@@ -179,6 +195,8 @@ export declare const inviteStateSchema: z.ZodObject<{
     dressCode: z.ZodString;
     dressCodeColors: z.ZodArray<z.ZodString, "many">;
     groom: z.ZodString;
+    groupChatText: z.ZodDefault<z.ZodString>;
+    groupChatUrl: z.ZodDefault<z.ZodString>;
     lead: z.ZodString;
     mapUrl: z.ZodOptional<z.ZodString>;
     musicTitle: z.ZodString;
@@ -214,12 +232,15 @@ export declare const inviteStateSchema: z.ZodObject<{
         time: string;
         title: string;
     }>, "many">;
+    showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+    showGroupChat: z.ZodDefault<z.ZodBoolean>;
     time: z.ZodString;
     venue: z.ZodString;
     venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
 }, "strip", z.ZodTypeAny, {
     time: string;
     date: string;
+    additionalInfo: string;
     address: string;
     bride: string;
     city: string;
@@ -227,6 +248,8 @@ export declare const inviteStateSchema: z.ZodObject<{
     dressCode: string;
     dressCodeColors: string[];
     groom: string;
+    groupChatText: string;
+    groupChatUrl: string;
     lead: string;
     musicEnabled: boolean;
     musicTitle: string;
@@ -246,6 +269,8 @@ export declare const inviteStateSchema: z.ZodObject<{
         time: string;
         title: string;
     }[];
+    showAdditionalInfo: boolean;
+    showGroupChat: boolean;
     showRsvp: boolean;
     venue: string;
     venueImageUrl: string;
@@ -282,7 +307,12 @@ export declare const inviteStateSchema: z.ZodObject<{
     showRsvp: boolean;
     venue: string;
     venueImageUrl: string;
+    additionalInfo?: string | undefined;
+    groupChatText?: string | undefined;
+    groupChatUrl?: string | undefined;
     mapUrl?: string | undefined;
+    showAdditionalInfo?: boolean | undefined;
+    showGroupChat?: boolean | undefined;
 }>;
 export type InviteScheduleItem = z.infer<typeof inviteScheduleItemShapeSchema>;
 export type InviteRsvpQuestion = z.infer<typeof inviteRsvpQuestionShapeSchema>;

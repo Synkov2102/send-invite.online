@@ -15,6 +15,8 @@ export type InviteTemplateSectionId =
   | "where"
   | "program"
   | "dress-code"
+  | "group-chat"
+  | "additional-info"
   | "rsvp"
   | "closing";
 
@@ -89,6 +91,18 @@ export const inviteTemplateSections: InviteTemplateSectionMeta[] = [
     title: "Дресс-код",
     description: "Текст рекомендаций и палитра цветов для образов гостей.",
     optional: false,
+  },
+  {
+    id: "group-chat",
+    title: "Общий чат",
+    description: "Опциональная ссылка на общий чат гостей (Telegram, WhatsApp и т.п.).",
+    optional: true,
+  },
+  {
+    id: "additional-info",
+    title: "Дополнительная информация",
+    description: "Опциональный свободный абзац с любой важной информацией для гостей.",
+    optional: true,
   },
   {
     id: "rsvp",
@@ -195,6 +209,48 @@ export const inviteContentFields: InviteTemplateFieldMeta[] = [
     usage: "Массив `#RRGGBB`. Передать в `<InvitationDressCodeBlock colors={...} />`.",
     required: true,
     constraints: "1–8 цветов.",
+  },
+  {
+    key: "showGroupChat",
+    section: "group-chat",
+    kind: "boolean",
+    label: "Показывать общий чат",
+    usage: "Если `false`, секцию чата не рендерить.",
+    required: true,
+  },
+  {
+    key: "groupChatUrl",
+    section: "group-chat",
+    kind: "string",
+    label: "Ссылка на чат",
+    usage: "Передать в `<InvitationGroupChatBlock url={...} />`.",
+    required: false,
+    constraints: "Имеет смысл только при `showGroupChat === true`. HTTP(S) URL.",
+  },
+  {
+    key: "groupChatText",
+    section: "group-chat",
+    kind: "string",
+    label: "Текст к чату",
+    usage: "Короткий абзац над кнопкой. Можно пустым.",
+    required: false,
+  },
+  {
+    key: "showAdditionalInfo",
+    section: "additional-info",
+    kind: "boolean",
+    label: "Показывать доп. информацию",
+    usage: "Если `false`, секцию не рендерить.",
+    required: true,
+  },
+  {
+    key: "additionalInfo",
+    section: "additional-info",
+    kind: "string",
+    label: "Дополнительная информация",
+    usage: "Передать в `<InvitationAdditionalInfoBlock text={...} show={...} />`.",
+    required: false,
+    constraints: "Имеет смысл только при `showAdditionalInfo === true`.",
   },
   {
     key: "showRsvp",
@@ -357,6 +413,20 @@ export const inviteSharedComponentsContract = {
     props: ["text", "colors", "variant?"],
     variants: ["alpine", "aqua", "vanilla"] as InviteSharedComponentVariant[],
   },
+  groupChat: {
+    importPath: "@/invitation-templates/components",
+    component: "InvitationGroupChatBlock",
+    props: ["show", "url", "text", "variant?"],
+    variants: ["alpine", "aqua", "vanilla"] as InviteSharedComponentVariant[],
+    renderWhen: "invite.showGroupChat === true",
+  },
+  additionalInfo: {
+    importPath: "@/invitation-templates/components",
+    component: "InvitationAdditionalInfoBlock",
+    props: ["show", "text", "variant?"],
+    variants: ["alpine", "aqua", "vanilla"] as InviteSharedComponentVariant[],
+    renderWhen: "invite.showAdditionalInfo === true",
+  },
   rsvp: {
     importPath: "@/invitation-templates/components",
     component: "InvitationRsvpForm",
@@ -412,6 +482,7 @@ export type InviteRsvpQuestion = {
 };
 
 export type InviteState = {
+  additionalInfo: string;
   bride: string;
   groom: string;
   date: string;
@@ -422,7 +493,11 @@ export type InviteState = {
   lead: string;
   dressCode: string;
   dressCodeColors: string[];
+  groupChatText: string;
+  groupChatUrl: string;
   schedule: InviteScheduleItem[];
+  showAdditionalInfo: boolean;
+  showGroupChat: boolean;
   showRsvp: boolean;
   rsvpDate: string;
   rsvpText: string;
@@ -529,8 +604,10 @@ ${renderCssVarsTable()}
 ## Общие компоненты (обязательно переиспользовать)
 
 1. **Дресс-код** — \`InvitationDressCodeBlock\` с props \`text\`, \`colors\`, \`variant\`.
-2. **RSVP** — шаблон сам рисует заголовок, текст и дедлайн, затем \`InvitationRsvpForm\` с props \`rsvpDate\`, \`questions\`, \`variant\`. Рендерить только если \`invite.showRsvp\`.
-3. **Музыка** — \`InvitationMusicPlayer\` с props \`enabled\`, \`title\`, \`url\`.
+2. **Общий чат** — \`InvitationGroupChatBlock\` с props \`show\`, \`url\`, \`text\`, \`variant\`. Рендерить только если \`invite.showGroupChat\`.
+3. **Доп. информация** — \`InvitationAdditionalInfoBlock\` с props \`show\`, \`text\`, \`variant\`. Рендерить только если \`invite.showAdditionalInfo\`.
+4. **RSVP** — шаблон сам рисует заголовок, текст и дедлайн, затем \`InvitationRsvpForm\` с props \`rsvpDate\`, \`questions\`, \`variant\`. Рендерить только если \`invite.showRsvp\`.
+5. **Музыка** — \`InvitationMusicPlayer\` с props \`enabled\`, \`title\`, \`url\`.
 
 Импорт: \`@/invitation-templates/components\`.
 
@@ -576,13 +653,15 @@ frontend/src/invitation-templates/<slug>/
 - [ ] Where: venue, address, city, \`venueImage\`
 - [ ] Program: \`invite.schedule\` (time + title; description — по желанию)
 - [ ] Dress code: shared block
+- [ ] Group chat: shared block, только если \`showGroupChat\`
+- [ ] Additional info: shared block, только если \`showAdditionalInfo\`
 - [ ] RSVP: shared block, только если \`showRsvp\`
 - [ ] Closing: \`portraitImage\`, повтор имён
 - [ ] Music player снаружи или внутри shell
 
 ## Что нельзя делать
 
-- Не дублировать логику RSVP/дресс-кода/плеера с нуля, если можно использовать shared components.
+- Не дублировать логику RSVP/дресс-кода/чата/доп. информации/плеера с нуля, если можно использовать shared components.
 - Не читать \`paletteId\` напрямую — только \`inviteVars\`.
 - Не предполагать фиксированную длину \`schedule\` или \`rsvpQuestions\`.
 - Не ломать доступность: alt у изображений, семантические \`section\`, читаемый контраст.

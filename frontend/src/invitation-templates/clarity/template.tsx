@@ -7,7 +7,9 @@ import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
 } from "@/invitation-templates/components";
@@ -94,9 +96,8 @@ function HeroSection({
         </time>
       </div>
       <div className={styles.heroFooter}>
-        <p>«это всё потому, что два человека влюбились»</p>
-        <span>wedding day</span>
         <p>{invite.lead}</p>
+        <span>wedding day</span>
       </div>
     </section>
   );
@@ -206,6 +207,49 @@ function DressCodeSection({
   );
 }
 
+function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
+  const showChat = invite.showGroupChat && Boolean(invite.groupChatUrl.trim());
+  const showInfo = invite.showAdditionalInfo && Boolean(invite.additionalInfo.trim());
+
+  if (!showChat && !showInfo) {
+    return null;
+  }
+
+  return (
+    <>
+      {showChat ? (
+        <section className={styles.groupChatSection}>
+          <div className={styles.groupChatIntro}>
+            <span>чат гостей</span>
+            <h2>общий чат</h2>
+          </div>
+          <InvitationGroupChatBlock
+            className={styles.groupChatBlock}
+            show={invite.showGroupChat}
+            text={invite.groupChatText}
+            url={invite.groupChatUrl}
+            variant="aqua"
+          />
+        </section>
+      ) : null}
+      {showInfo ? (
+        <section className={styles.additionalInfoSection}>
+          <div className={styles.additionalInfoIntro}>
+            <span>заметка</span>
+            <h2>важно знать</h2>
+          </div>
+          <InvitationAdditionalInfoBlock
+            className={styles.additionalInfoBlock}
+            show={invite.showAdditionalInfo}
+            text={invite.additionalInfo}
+            variant="aqua"
+          />
+        </section>
+      ) : null}
+    </>
+  );
+}
+
 function RsvpSection({
   invite,
   siteId,
@@ -252,8 +296,9 @@ export default function ClarityTemplate({
         <main className={styles.paper}>
           <DateSection invite={invite} venueImage={venueImage} />
           <ScheduleSection invite={invite} />
-          <RsvpSection invite={invite} siteId={siteId} />
           <DressCodeSection invite={invite} portraitImage={portraitImage} />
+          <DetailsSection invite={invite} />
+          <RsvpSection invite={invite} siteId={siteId} />
         </main>
       </article>
     </>

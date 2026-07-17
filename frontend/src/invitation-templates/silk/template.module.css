@@ -13,7 +13,11 @@
   background:
     radial-gradient(120% 70% at 8% 2%, rgba(255, 255, 255, 0.72), transparent 34%),
     radial-gradient(80% 90% at 96% 18%, rgba(255, 255, 255, 0.62), transparent 32%),
-    linear-gradient(135deg, var(--silk-bg), color-mix(in srgb, var(--silk-accent) 28%, var(--silk-bg)));
+    linear-gradient(
+      135deg,
+      var(--silk-bg),
+      color-mix(in srgb, var(--silk-accent) 28%, var(--silk-bg))
+    );
   color: var(--silk-ink);
   font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
   padding: clamp(18px, 5vw, 58px) clamp(12px, 4vw, 34px);
@@ -21,7 +25,7 @@
 
 .shell::before,
 .shell::after {
-  position: fixed;
+  position: absolute;
   inset: -18% -18%;
   z-index: -1;
   content: "";
@@ -271,11 +275,16 @@
   background: var(--silk-line);
 }
 
-.dressSection {
+.dressSection,
+.groupChatSection,
+.additionalInfoSection {
+  min-width: 0;
   padding-top: 22px;
 }
 
 .dressBlock,
+.groupChatBlock,
+.additionalInfoBlock,
 .rsvpForm {
   width: 100%;
 }
@@ -287,6 +296,24 @@
   --dress-line: var(--silk-line);
   --dress-surface: var(--silk-paper);
   --dress-veil: transparent;
+}
+
+.groupChatBlock.groupChatBlock {
+  --chat-accent: var(--silk-ink);
+  --chat-ink: var(--silk-ink);
+  --chat-muted: var(--silk-muted);
+  --chat-line: var(--silk-line);
+  --chat-surface: transparent;
+  --chat-veil: transparent;
+}
+
+.additionalInfoBlock.additionalInfoBlock {
+  --info-accent: var(--silk-ink);
+  --info-ink: var(--silk-ink);
+  --info-muted: var(--silk-muted);
+  --info-line: var(--silk-line);
+  --info-surface: transparent;
+  --info-veil: transparent;
 }
 
 .rsvpForm.rsvpForm {
@@ -306,21 +333,41 @@
 
 .dressSection :global([class*="section-eyebrow"]),
 .dressSection :global([class*="swatchLabel"]),
+.groupChatSection :global([class*="section-eyebrow"]),
+.additionalInfoSection :global([class*="section-eyebrow"]),
 .rsvpFormWrap :global([class*="section-eyebrow"]) {
   display: none;
 }
 
 .dressSection :global(h2),
+.groupChatSection :global(h2),
+.additionalInfoSection :global(h2),
 .rsvpFormWrap :global(h2) {
+  max-width: 100%;
+  margin-inline: auto;
   font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(34px, 8.4vw, 46px) !important;
+  font-size: clamp(28px, 6.4vw, 42px) !important;
   font-weight: 400 !important;
   letter-spacing: 0.02em !important;
-  line-height: 1.05 !important;
+  line-height: 1.12 !important;
+  overflow-wrap: anywhere;
   text-transform: uppercase !important;
+  text-wrap: balance;
+  white-space: normal;
 }
 
-.dressSection :global(p) {
+.groupChatSection :global(h2),
+.additionalInfoSection :global(h2) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  font-size: clamp(24px, 5.2vw, 34px) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.dressSection :global(p),
+.groupChatSection :global(p),
+.additionalInfoSection :global(p) {
   max-width: 30ch;
 }
 
@@ -330,6 +377,22 @@
 
 .dressSection :global([class*="swatch"]) {
   border-radius: 999px !important;
+}
+
+.groupChatSection :global(a) {
+  border-radius: 0;
+  border-color: color-mix(in srgb, var(--silk-ink) 28%, transparent);
+  background: transparent;
+  color: var(--silk-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.groupChatSection :global(a):hover {
+  border-color: var(--silk-ink);
+  background: color-mix(in srgb, var(--silk-accent) 12%, transparent);
 }
 
 .rsvpSection {
@@ -368,7 +431,7 @@
 
 .closingImage {
   position: relative;
-  width: calc(100% + clamp(44px, 16vw, 96px));
+  width: 100%;
   aspect-ratio: 16 / 8.2;
   margin-top: clamp(28px, 8vw, 48px);
   overflow: hidden;
@@ -517,6 +580,16 @@
     padding-top: clamp(52px, 6vw, 92px);
   }
 
+  .groupChatSection {
+    grid-column: 1;
+    align-content: center;
+  }
+
+  .additionalInfoSection {
+    grid-column: 2;
+    align-content: center;
+  }
+
   .rsvpSection,
   .closing {
     grid-column: 1 / -1;
@@ -552,7 +625,12 @@
     inset: 0;
     z-index: 1;
     background:
-      linear-gradient(90deg, rgba(15, 13, 12, 0.86) 0%, rgba(15, 13, 12, 0.58) 37%, rgba(15, 13, 12, 0.08) 72%),
+      linear-gradient(
+        90deg,
+        rgba(15, 13, 12, 0.86) 0%,
+        rgba(15, 13, 12, 0.58) 37%,
+        rgba(15, 13, 12, 0.08) 72%
+      ),
       linear-gradient(0deg, rgba(15, 13, 12, 0.28), transparent 52%);
     content: "";
     pointer-events: none;

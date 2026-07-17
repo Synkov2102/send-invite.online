@@ -7,7 +7,9 @@ import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
 } from "@/invitation-templates/components";
@@ -256,6 +258,41 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
   );
 }
 
+function GroupChatSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showGroupChat) {
+    return null;
+  }
+
+  return (
+    <section className={cx(styles.section, styles.groupChatSection)}>
+      <InvitationGroupChatBlock
+        className={styles.groupChatBlock}
+        show={invite.showGroupChat}
+        text={invite.groupChatText}
+        url={invite.groupChatUrl}
+        variant="aqua"
+      />
+    </section>
+  );
+}
+
+function AdditionalInfoSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showAdditionalInfo) {
+    return null;
+  }
+
+  return (
+    <section className={cx(styles.section, styles.additionalInfoSection)}>
+      <InvitationAdditionalInfoBlock
+        className={styles.additionalInfoBlock}
+        show={invite.showAdditionalInfo}
+        text={invite.additionalInfo}
+        variant="aqua"
+      />
+    </section>
+  );
+}
+
 function RsvpSection({
   invite,
   siteId,
@@ -339,6 +376,8 @@ export default function SilkTemplate({
           />
           <ProgramSection invite={invite} />
           <DressCodeSection invite={invite} />
+          <GroupChatSection invite={invite} />
+          <AdditionalInfoSection invite={invite} />
           <RsvpSection invite={invite} siteId={siteId} />
           <ClosingSection invite={invite} portraitImage={portraitImage} />
         </main>

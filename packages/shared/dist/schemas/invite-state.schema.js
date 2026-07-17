@@ -16,6 +16,7 @@ exports.inviteRsvpQuestionShapeSchema = zod_1.z.object({
     type: zod_1.z.enum(["multiple", "single"]),
 });
 exports.inviteStateShapeSchema = zod_1.z.object({
+    additionalInfo: zod_1.z.string().default(""),
     address: zod_1.z.string(),
     bride: zod_1.z.string(),
     city: zod_1.z.string(),
@@ -24,6 +25,8 @@ exports.inviteStateShapeSchema = zod_1.z.object({
     dressCode: zod_1.z.string(),
     dressCodeColors: zod_1.z.array(zod_1.z.string()),
     groom: zod_1.z.string(),
+    groupChatText: zod_1.z.string().default(""),
+    groupChatUrl: zod_1.z.string().default(""),
     lead: zod_1.z.string(),
     mapUrl: zod_1.z.string().optional(),
     musicEnabled: zod_1.z.boolean(),
@@ -36,6 +39,8 @@ exports.inviteStateShapeSchema = zod_1.z.object({
     rsvpQuestions: zod_1.z.array(exports.inviteRsvpQuestionShapeSchema),
     rsvpText: zod_1.z.string(),
     schedule: zod_1.z.array(exports.inviteScheduleItemShapeSchema),
+    showAdditionalInfo: zod_1.z.boolean().default(false),
+    showGroupChat: zod_1.z.boolean().default(false),
     showRsvp: zod_1.z.boolean(),
     time: zod_1.z.string(),
     venue: zod_1.z.string(),
@@ -52,6 +57,7 @@ exports.inviteRsvpQuestionSchema = zod_1.z.object({
     type: zod_1.z.enum(["multiple", "single"]),
 });
 exports.inviteStateSchema = exports.inviteStateShapeSchema.extend({
+    additionalInfo: (0, zod_helpers_1.boundedString)(limits.additionalInfo).default(""),
     address: (0, zod_helpers_1.boundedString)(limits.address),
     bride: (0, zod_helpers_1.boundedString)(limits.bride),
     city: (0, zod_helpers_1.boundedString)(limits.city),
@@ -60,6 +66,8 @@ exports.inviteStateSchema = exports.inviteStateShapeSchema.extend({
     dressCode: (0, zod_helpers_1.boundedString)(limits.dressCode),
     dressCodeColors: zod_1.z.array((0, zod_helpers_1.boundedString)(limits.dressCodeColor)).max(limits.dressCodeColorsMax),
     groom: (0, zod_helpers_1.boundedString)(limits.groom),
+    groupChatText: (0, zod_helpers_1.boundedString)(limits.groupChatText).default(""),
+    groupChatUrl: (0, zod_helpers_1.boundedString)(limits.groupChatUrl).default(""),
     lead: (0, zod_helpers_1.boundedString)(limits.lead),
     mapUrl: (0, zod_helpers_1.boundedString)(limits.mapUrl).optional(),
     musicTitle: (0, zod_helpers_1.boundedString)(limits.musicTitle),
@@ -71,6 +79,8 @@ exports.inviteStateSchema = exports.inviteStateShapeSchema.extend({
     rsvpQuestions: zod_1.z.array(exports.inviteRsvpQuestionSchema).max(limits.rsvpQuestionsMax),
     rsvpText: (0, zod_helpers_1.boundedString)(limits.rsvpText),
     schedule: zod_1.z.array(exports.inviteScheduleItemSchema).max(limits.scheduleItemMax),
+    showAdditionalInfo: zod_1.z.boolean().default(false),
+    showGroupChat: zod_1.z.boolean().default(false),
     time: (0, zod_helpers_1.boundedString)(limits.textTime),
     venue: (0, zod_helpers_1.boundedString)(limits.venue),
     venueImageUrl: (0, zod_helpers_1.mediaUrlString)(limits.mediaUrl),

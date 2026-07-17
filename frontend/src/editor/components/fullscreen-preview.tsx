@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { Eye, Minimize2 } from "lucide-react";
+import { Eye, Minimize2, Pencil } from "lucide-react";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import { useEditor } from "../editor-context";
 
@@ -9,6 +9,7 @@ export function FullscreenPreview() {
   const {
     effectiveInvite,
     isFullscreenPreview,
+    isTemplateEntryPreview,
     isWideTemplate,
     palette,
     setIsFullscreenPreview,
@@ -20,6 +21,9 @@ export function FullscreenPreview() {
   if (!isFullscreenPreview) {
     return null;
   }
+
+  const CloseIcon = isTemplateEntryPreview ? Pencil : Minimize2;
+  const closeLabel = isTemplateEntryPreview ? "Редактировать" : "Вернуться в редактор";
 
   return (
     <section className="fullscreen-preview" aria-label="Полноэкранный предпросмотр">
@@ -35,8 +39,8 @@ export function FullscreenPreview() {
             type="button"
             variant="primary"
           >
-            <Minimize2 aria-hidden size={15} />
-            <span>Вернуться в редактор</span>
+            <CloseIcon aria-hidden size={15} />
+            <span>{closeLabel}</span>
           </Button>
         </div>
       </div>

@@ -17,6 +17,7 @@ export const inviteRsvpQuestionShapeSchema = z.object({
 });
 
 export const inviteStateShapeSchema = z.object({
+  additionalInfo: z.string().default(""),
   address: z.string(),
   bride: z.string(),
   city: z.string(),
@@ -25,6 +26,8 @@ export const inviteStateShapeSchema = z.object({
   dressCode: z.string(),
   dressCodeColors: z.array(z.string()),
   groom: z.string(),
+  groupChatText: z.string().default(""),
+  groupChatUrl: z.string().default(""),
   lead: z.string(),
   mapUrl: z.string().optional(),
   musicEnabled: z.boolean(),
@@ -37,6 +40,8 @@ export const inviteStateShapeSchema = z.object({
   rsvpQuestions: z.array(inviteRsvpQuestionShapeSchema),
   rsvpText: z.string(),
   schedule: z.array(inviteScheduleItemShapeSchema),
+  showAdditionalInfo: z.boolean().default(false),
+  showGroupChat: z.boolean().default(false),
   showRsvp: z.boolean(),
   time: z.string(),
   venue: z.string(),
@@ -56,6 +61,7 @@ export const inviteRsvpQuestionSchema = z.object({
 });
 
 export const inviteStateSchema = inviteStateShapeSchema.extend({
+  additionalInfo: boundedString(limits.additionalInfo).default(""),
   address: boundedString(limits.address),
   bride: boundedString(limits.bride),
   city: boundedString(limits.city),
@@ -64,6 +70,8 @@ export const inviteStateSchema = inviteStateShapeSchema.extend({
   dressCode: boundedString(limits.dressCode),
   dressCodeColors: z.array(boundedString(limits.dressCodeColor)).max(limits.dressCodeColorsMax),
   groom: boundedString(limits.groom),
+  groupChatText: boundedString(limits.groupChatText).default(""),
+  groupChatUrl: boundedString(limits.groupChatUrl).default(""),
   lead: boundedString(limits.lead),
   mapUrl: boundedString(limits.mapUrl).optional(),
   musicTitle: boundedString(limits.musicTitle),
@@ -75,6 +83,8 @@ export const inviteStateSchema = inviteStateShapeSchema.extend({
   rsvpQuestions: z.array(inviteRsvpQuestionSchema).max(limits.rsvpQuestionsMax),
   rsvpText: boundedString(limits.rsvpText),
   schedule: z.array(inviteScheduleItemSchema).max(limits.scheduleItemMax),
+  showAdditionalInfo: z.boolean().default(false),
+  showGroupChat: z.boolean().default(false),
   time: boundedString(limits.textTime),
   venue: boundedString(limits.venue),
   venueImageUrl: mediaUrlString(limits.mediaUrl),

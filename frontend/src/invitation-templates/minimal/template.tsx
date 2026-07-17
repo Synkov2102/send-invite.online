@@ -9,7 +9,9 @@ import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
 } from "@/invitation-templates/components";
@@ -292,6 +294,62 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
   );
 }
 
+function GroupChatSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showGroupChat || !invite.groupChatUrl.trim()) {
+    return null;
+  }
+
+  return (
+    <motion.section
+      className={styles.groupChatSection}
+      initial="hidden"
+      variants={sectionReveal}
+      viewport={revealViewport}
+      whileInView="visible"
+    >
+      <motion.div className={styles.groupChatInner} variants={copyReveal}>
+        <span className={styles.sectionLabel}>06 / чат</span>
+        <p className={styles.scriptTitle}>На связи</p>
+        <h2>Общий чат гостей</h2>
+        <InvitationGroupChatBlock
+          className={styles.groupChatBlock}
+          show={invite.showGroupChat}
+          text={invite.groupChatText}
+          url={invite.groupChatUrl}
+          variant="aqua"
+        />
+      </motion.div>
+    </motion.section>
+  );
+}
+
+function AdditionalInfoSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showAdditionalInfo || !invite.additionalInfo.trim()) {
+    return null;
+  }
+
+  return (
+    <motion.section
+      className={styles.additionalInfoSection}
+      initial="hidden"
+      variants={sectionReveal}
+      viewport={revealViewport}
+      whileInView="visible"
+    >
+      <motion.div className={styles.additionalInfoInner} variants={copyReveal}>
+        <span className={styles.sectionLabel}>07 / заметка</span>
+        <p className={styles.scriptTitle}>На всякий случай</p>
+        <InvitationAdditionalInfoBlock
+          className={styles.additionalInfoBlock}
+          show={invite.showAdditionalInfo}
+          text={invite.additionalInfo}
+          variant="aqua"
+        />
+      </motion.div>
+    </motion.section>
+  );
+}
+
 function RsvpSection({
   invite,
   siteId,
@@ -311,7 +369,7 @@ function RsvpSection({
     >
       <div className={styles.rsvpInner}>
         <motion.header variants={copyReveal}>
-          <span className={styles.sectionLabel}>06 / ваш ответ</span>
+          <span className={styles.sectionLabel}>08 / ваш ответ</span>
           <p className={styles.scriptTitle}>Будете с нами?</p>
           <h2>Подтвердите присутствие</h2>
           <p>{invite.rsvpText}</p>
@@ -390,6 +448,8 @@ export default function MinimalTemplate({
         <VenueSection invite={invite} venueImage={venueImage} />
         <ProgramSection invite={invite} />
         <DressCodeSection invite={invite} />
+        <GroupChatSection invite={invite} />
+        <AdditionalInfoSection invite={invite} />
         <RsvpSection invite={invite} siteId={siteId} />
         <ClosingSection invite={invite} portraitImage={portraitImage} />
       </article>

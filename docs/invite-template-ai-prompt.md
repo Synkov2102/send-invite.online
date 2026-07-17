@@ -16,25 +16,27 @@ flowchart LR
   Template --> Shared
 ```
 
-| Слой | Ответственность |
-|------|-----------------|
-| `InviteState` | Тексты, даты, программа, RSVP, медиа-URL, настройки музыки |
-| `InviteSitePalette` → `InviteVars` | Цвета через CSS custom properties |
-| `InviteTemplate` | Метаданные каталога: id, coverType, defaultPaletteId, recommendedPaletteIds |
-| React-шаблон | Вёрстка секций, анимации, композиция |
+| Слой                               | Ответственность                                                              |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| `InviteState`                      | Тексты, даты, программа, RSVP, общий чат, доп. информация, медиа-URL, музыка |
+| `InviteSitePalette` → `InviteVars` | Цвета через CSS custom properties                                            |
+| `InviteTemplate`                   | Метаданные каталога: id, coverType, defaultPaletteId, recommendedPaletteIds  |
+| React-шаблон                       | Вёрстка секций, анимации, композиция                                         |
 
 ## Секции приглашения
 
-| ID | Название | Обязательна | Содержимое |
-|----|----------|-------------|------------|
-| `hero` | Обложка | да | groom, bride, date, cover, music |
-| `greeting` | Приветствие | да | lead |
-| `when` | Когда | да | date, time, calendarDays |
-| `where` | Где | да | venue, address, city, venueImage |
-| `program` | Программа | да | schedule[] |
-| `dress-code` | Дресс-код | да | dressCode, dressCodeColors |
-| `rsvp` | RSVP | нет | showRsvp, rsvpDate, rsvpText, rsvpQuestions |
-| `closing` | Финал | да | portraitImage, groom, bride |
+| ID                | Название        | Обязательна | Содержимое                                  |
+| ----------------- | --------------- | ----------- | ------------------------------------------- |
+| `hero`            | Обложка         | да          | groom, bride, date, cover, music            |
+| `greeting`        | Приветствие     | да          | lead                                        |
+| `when`            | Когда           | да          | date, time, calendarDays                    |
+| `where`           | Где             | да          | venue, address, city, venueImage            |
+| `program`         | Программа       | да          | schedule[]                                  |
+| `dress-code`      | Дресс-код       | да          | dressCode, dressCodeColors                  |
+| `group-chat`      | Общий чат       | нет         | showGroupChat, groupChatUrl, groupChatText  |
+| `additional-info` | Доп. информация | нет         | showAdditionalInfo, additionalInfo          |
+| `rsvp`            | RSVP            | нет         | showRsvp, rsvpDate, rsvpText, rsvpQuestions |
+| `closing`         | Финал           | да          | portraitImage, groom, bride                 |
 
 ## Поля `InviteState`
 
@@ -51,24 +53,26 @@ flowchart LR
 
 ## CSS-переменные темы
 
-| CSS var | Роль |
-|---------|------|
-| `--invite-bg` | Фон страницы |
-| `--invite-surface` | Карточки |
-| `--invite-ink` | Основной текст |
-| `--invite-photo-text` | Текст на фото |
-| `--invite-muted` | Вторичный текст |
-| `--invite-accent` | Акценты |
-| `--invite-line` | Линии / рамки |
-| `--invite-veil` | Полупрозрачные слои |
+| CSS var               | Роль                |
+| --------------------- | ------------------- |
+| `--invite-bg`         | Фон страницы        |
+| `--invite-surface`    | Карточки            |
+| `--invite-ink`        | Основной текст      |
+| `--invite-photo-text` | Текст на фото       |
+| `--invite-muted`      | Вторичный текст     |
+| `--invite-accent`     | Акценты             |
+| `--invite-line`       | Линии / рамки       |
+| `--invite-veil`       | Полупрозрачные слои |
 
 ## Shared components
 
-| Блок | Компонент | Условие рендера |
-|------|-----------|-----------------|
-| Дресс-код | `InvitationDressCodeBlock` | всегда |
-| RSVP | `InvitationRsvpForm` | `invite.showRsvp === true` |
-| Музыка | `InvitationMusicPlayer` | `invite.musicEnabled === true` |
+| Блок            | Компонент                       | Условие рендера                      |
+| --------------- | ------------------------------- | ------------------------------------ |
+| Дресс-код       | `InvitationDressCodeBlock`      | всегда                               |
+| Общий чат       | `InvitationGroupChatBlock`      | `invite.showGroupChat === true`      |
+| Доп. информация | `InvitationAdditionalInfoBlock` | `invite.showAdditionalInfo === true` |
+| RSVP            | `InvitationRsvpForm`            | `invite.showRsvp === true`           |
+| Музыка          | `InvitationMusicPlayer`         | `invite.musicEnabled === true`       |
 
 ---
 
@@ -94,7 +98,7 @@ console.log(
 
 ## PROMPT START
 
-```markdown
+````markdown
 # Задача: сгенерировать шаблон свадебного приглашения
 
 Ты создаёшь React-компонент шаблона для платформы **Invite**. Шаблон — это только визуальная оболочка: **весь пользовательский контент приходит из props**, его нельзя хардкодить.
@@ -134,8 +138,8 @@ export type InviteRsvpQuestion = {
 export type InviteState = {
   bride: string;
   groom: string;
-  date: string;              // ISO YYYY-MM-DD
-  time: string;              // HH:MM
+  date: string; // ISO YYYY-MM-DD
+  time: string; // HH:MM
   city: string;
   venue: string;
   address: string;
@@ -143,12 +147,17 @@ export type InviteState = {
   dressCode: string;
   dressCodeColors: string[]; // #RRGGBB, 1–8
   schedule: InviteScheduleItem[]; // 1–10
+  showGroupChat: boolean;
+  groupChatUrl: string; // HTTP(S) ссылка на чат
+  groupChatText: string; // короткий текст, можно пустым
+  showAdditionalInfo: boolean;
+  additionalInfo: string; // свободный абзац
   showRsvp: boolean;
   rsvpDate: string;
   rsvpText: string;
   rsvpQuestions: InviteRsvpQuestion[]; // 0–8
-  paletteId: string;           // не использовать в стилях напрямую
-  ringMetal: string;           // "0"–"100", только coverType rings
+  paletteId: string; // не использовать в стилях напрямую
+  ringMetal: string; // "0"–"100", только coverType rings
   musicEnabled: boolean;
   musicTitle: string;
   musicUrl: string;
@@ -157,6 +166,7 @@ export type InviteState = {
   venueImageUrl: string;
 };
 ```
+````
 
 ### Обязательные секции
 
@@ -165,9 +175,13 @@ export type InviteState = {
 3. **When** — дата (`formatDate`), время, мини-календарь (`calendarDays`)
 4. **Where** — venue, address, city, фото локации
 5. **Program** — `schedule` (time + title; description опционально)
-6. **Dress code** — shared component
-7. **RSVP** — shared component, только если `showRsvp`
-8. **Closing** — portrait + имена пары
+6. **Dress code** — shared component `InvitationDressCodeBlock`
+7. **Group chat** — shared component `InvitationGroupChatBlock`, только если `showGroupChat`
+8. **Additional info** — shared component `InvitationAdditionalInfoBlock`, только если `showAdditionalInfo`
+9. **RSVP** — shared component, только если `showRsvp`
+10. **Closing** — portrait + имена пары
+
+Опциональные блоки (чат и доп. информация) обычно ставят после дресс-кода и перед RSVP.
 
 ### Форматирование дат
 
@@ -205,11 +219,17 @@ Fallback изображений: `inviteImages` из `@/lib/invite-theme`.
 
 ```tsx
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
-  InvitationRsvpForm,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
+  InvitationRsvpForm,
 } from "@/invitation-templates/components";
 ```
+
+- `InvitationGroupChatBlock` — props `show`, `url`, `text`, `variant?`. Рендерить только если `invite.showGroupChat`.
+- `InvitationAdditionalInfoBlock` — props `show`, `text`, `variant?`. Рендерить только если `invite.showAdditionalInfo`.
+- Не дублируй разметку этих блоков с нуля — используй shared components.
 
 ## Структура файлов
 
@@ -228,7 +248,7 @@ frontend/src/invitation-templates/<slug>/
 
 - `frontend/src/invitation-templates/alpine/template.tsx` — rings/arch, календарь
 - `frontend/src/invitation-templates/aqua/template.tsx` — wave cover
-- `frontend/src/invitation-templates/vanilla/template.tsx` — arch, поп-арт
+- `frontend/src/invitation-templates/silk/template.tsx` — классика, монограмма
 
 ## Формат ответа
 
@@ -240,6 +260,8 @@ frontend/src/invitation-templates/<slug>/
 6. Фрагменты регистрации в builder / published view
 
 Без TODO и без хардкода пользовательских текстов.
+
 ```
 
 ## PROMPT END
+```

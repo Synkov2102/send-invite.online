@@ -130,6 +130,63 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
           </div>
         </div>
       </FieldGroup>
+
+      <FieldGroup
+        title="Общий чат"
+        description="Если у гостей есть общий чат в Telegram, WhatsApp или другом мессенджере — добавьте ссылку."
+        hint="Блок появится на сайте только после включения. Ссылка должна открываться в браузере."
+      >
+        <label className="editor-toggle">
+          <span>
+            <strong>Показать блок «Общий чат»</strong>
+            <small>Гости увидят ссылку и короткий текст</small>
+          </span>
+          <input
+            checked={invite.showGroupChat}
+            onChange={(event) => updateInvite("showGroupChat", event.target.checked)}
+            type="checkbox"
+          />
+        </label>
+        {invite.showGroupChat ? (
+          <>
+            <TextInput
+              label="Ссылка на чат"
+              value={invite.groupChatUrl}
+              onChange={(value) => updateInvite("groupChatUrl", value)}
+            />
+            <TextAreaField
+              label="Текст для гостей (необязательно)"
+              value={invite.groupChatText}
+              onChange={(value) => updateInvite("groupChatText", value)}
+            />
+          </>
+        ) : null}
+      </FieldGroup>
+
+      <FieldGroup
+        title="Дополнительная информация"
+        description="Любой абзац, который важно сообщить гостям: трансфер, парковка, подарки и т.п."
+        hint="Блок появится на сайте только после включения."
+      >
+        <label className="editor-toggle">
+          <span>
+            <strong>Показать блок «Дополнительно»</strong>
+            <small>Гости увидят свободный текст с важными деталями</small>
+          </span>
+          <input
+            checked={invite.showAdditionalInfo}
+            onChange={(event) => updateInvite("showAdditionalInfo", event.target.checked)}
+            type="checkbox"
+          />
+        </label>
+        {invite.showAdditionalInfo ? (
+          <TextAreaField
+            label="Текст"
+            value={invite.additionalInfo}
+            onChange={(value) => updateInvite("additionalInfo", value)}
+          />
+        ) : null}
+      </FieldGroup>
     </section>
   );
 }

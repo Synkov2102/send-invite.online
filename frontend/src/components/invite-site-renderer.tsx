@@ -8,14 +8,18 @@ import {
 } from "@/lib/invite-templates";
 import type { InviteSitePalette } from "@/lib/invite-site-types";
 import type { InviteState } from "@/lib/invite-state";
+import { normalizeInviteState } from "@/lib/invite-state";
 import { getCalendarDays } from "@/lib/invite-date";
 import { alpineRenderer as AlpineRenderer, sharedTemplateRenderers } from "@/invitation-templates/registry";
 import {
+  alpineImages,
+  aquaImages,
   clarityImages,
   createInviteVars,
   createRingColor,
   electricImages,
   inviteImages,
+  minimalImages,
   silkImages,
 } from "@/lib/invite-theme";
 import baseStyles from "@/styles/invitation-base.module.css";
@@ -38,21 +42,28 @@ export function InviteSiteRenderer({
   siteId,
   template,
 }: InviteSiteRendererProps) {
+  const normalizedInvite = useMemo(() => normalizeInviteState(invite), [invite]);
   const templateKind = getTemplateKind(template.id);
-  const calendarDays = useMemo(() => getCalendarDays(invite.date), [invite.date]);
+  const calendarDays = useMemo(() => getCalendarDays(normalizedInvite.date), [normalizedInvite.date]);
   const inviteVars = useMemo(() => createInviteVars(palette), [palette]);
-  const ringColor = useMemo(() => createRingColor(invite.ringMetal), [invite.ringMetal]);
+  const ringColor = useMemo(() => createRingColor(normalizedInvite.ringMetal), [normalizedInvite.ringMetal]);
   const templateImages =
-    templateKind === "silk"
-      ? silkImages
-      : templateKind === "electric"
-        ? electricImages
-      : templateKind === "clarity" || templateKind === "minimal"
-        ? clarityImages
-        : inviteImages;
-  const coverImage = invite.coverImageUrl || templateImages.cover;
-  const portraitImage = invite.portraitImageUrl || templateImages.portrait;
-  const venueImage = invite.venueImageUrl || templateImages.venue;
+    templateKind === "alpine"
+      ? alpineImages
+      : templateKind === "aqua"
+        ? aquaImages
+        : templateKind === "silk"
+          ? silkImages
+          : templateKind === "electric"
+            ? electricImages
+            : templateKind === "minimal"
+              ? minimalImages
+              : templateKind === "clarity"
+                ? clarityImages
+                : inviteImages;
+  const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
+  const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
+  const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;
   const rootClassName = `${baseStyles.scope} ${responsiveStyles.scope} ${
     className ?? `published-site published-site--${templateKind}`
   }`;
@@ -61,7 +72,7 @@ export function InviteSiteRenderer({
   const sharedProps = {
     calendarDays,
     coverImage,
-    invite,
+    invite: normalizedInvite,
     inviteVars,
     portraitImage,
     siteId,

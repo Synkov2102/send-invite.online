@@ -121,9 +121,9 @@ export default function HomePage() {
               </Link>
               <Link
                 className={styles.secondaryButton}
-                href={`/editor?template=${featured[0].id}`}
+                href={`/editor?template=${featured[0].id}&preview=1`}
               >
-                Открыть редактор
+                Посмотреть шаблон
               </Link>
             </div>
             <ul className={styles.heroChecks} aria-label="Ключевые преимущества">

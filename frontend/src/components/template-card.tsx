@@ -27,7 +27,10 @@ export default function TemplateCard({
   template,
   titleAs: Title = "h2",
 }: TemplateCardProps) {
-  const editorParams = new URLSearchParams({ template: template.id });
+  const editorParams = new URLSearchParams({
+    template: template.id,
+    preview: "1",
+  });
 
   if (siteId) {
     editorParams.set("site", siteId);

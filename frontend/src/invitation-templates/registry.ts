@@ -49,8 +49,4 @@ export const sharedTemplateRenderers: Record<
     { ssr: true },
   ),
   silk: dynamic(() => import("./silk").then((module) => module.SilkTemplate), { ssr: true }),
-  vanilla: dynamic(
-    () => import("./vanilla").then((module) => module.VanillaTemplate),
-    { ssr: true },
-  ),
 };

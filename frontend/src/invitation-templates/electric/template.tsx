@@ -8,7 +8,9 @@ import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
 import {
+  InvitationAdditionalInfoBlock,
   InvitationDressCodeBlock,
+  InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
 } from "@/invitation-templates/components";
@@ -205,13 +207,72 @@ function DressSection({ invite }: Readonly<{ invite: InviteState }>) {
   );
 }
 
+function GroupChatSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showGroupChat || !invite.groupChatUrl.trim()) {
+    return null;
+  }
+
+  return (
+    <motion.section
+      className={styles.groupChatSection}
+      initial="hidden"
+      variants={sectionReveal}
+      viewport={revealViewport}
+      whileInView="visible"
+    >
+      <motion.div className={styles.groupChatIntro} variants={copyFromLeft}>
+        <span className={styles.sectionNumber}>06</span>
+        <h2>Чат</h2>
+      </motion.div>
+      <motion.div variants={copyFromRight}>
+        <InvitationGroupChatBlock
+          className={styles.groupChatBlock}
+          show={invite.showGroupChat}
+          text={invite.groupChatText}
+          url={invite.groupChatUrl}
+          variant="aqua"
+        />
+      </motion.div>
+    </motion.section>
+  );
+}
+
+function AdditionalInfoSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showAdditionalInfo || !invite.additionalInfo.trim()) {
+    return null;
+  }
+
+  return (
+    <motion.section
+      className={styles.additionalInfoSection}
+      initial="hidden"
+      variants={sectionReveal}
+      viewport={revealViewport}
+      whileInView="visible"
+    >
+      <motion.div className={styles.sectionHeading} variants={copyFromRight}>
+        <span className={styles.sectionNumber}>07</span>
+        <h2>Инфо</h2>
+      </motion.div>
+      <motion.div variants={copyFromLeft}>
+        <InvitationAdditionalInfoBlock
+          className={styles.additionalInfoBlock}
+          show={invite.showAdditionalInfo}
+          text={invite.additionalInfo}
+          variant="aqua"
+        />
+      </motion.div>
+    </motion.section>
+  );
+}
+
 function RsvpSection({ invite, siteId }: Readonly<Pick<ElectricTemplateProps, "invite" | "siteId">>) {
   if (!invite.showRsvp) return null;
 
   return (
     <motion.section className={styles.rsvpSection} id="rsvp" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.rsvpIntro} variants={copyFromLeft}>
-        <span className={styles.sectionNumber}>06</span>
+        <span className={styles.sectionNumber}>08</span>
         <h2>Вы с нами?</h2>
         <p>{invite.rsvpText}</p>
         <small>Ответьте до {formatDate(invite.rsvpDate)}</small>
@@ -277,6 +338,8 @@ export default function ElectricTemplate(props: ElectricTemplateProps) {
         <PlaceSection invite={invite} venueImage={venueImage} />
         <ProgramSection invite={invite} />
         <DressSection invite={invite} />
+        <GroupChatSection invite={invite} />
+        <AdditionalInfoSection invite={invite} />
         <RsvpSection invite={invite} siteId={siteId} />
         <ClosingSection invite={invite} portraitImage={portraitImage} />
       </article>

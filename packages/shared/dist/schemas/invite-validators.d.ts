@@ -2,6 +2,7 @@ import { createInviteSitePayloadSchema, createInviteSitePayloadShapeSchema, publ
 export declare const isInviteState: (value: unknown) => value is {
     time: string;
     date: string;
+    additionalInfo: string;
     address: string;
     bride: string;
     city: string;
@@ -9,6 +10,8 @@ export declare const isInviteState: (value: unknown) => value is {
     dressCode: string;
     dressCodeColors: string[];
     groom: string;
+    groupChatText: string;
+    groupChatUrl: string;
     lead: string;
     musicEnabled: boolean;
     musicTitle: string;
@@ -28,6 +31,8 @@ export declare const isInviteState: (value: unknown) => value is {
         time: string;
         title: string;
     }[];
+    showAdditionalInfo: boolean;
+    showGroupChat: boolean;
     showRsvp: boolean;
     venue: string;
     venueImageUrl: string;
@@ -51,6 +56,7 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
     invite: {
         time: string;
         date: string;
+        additionalInfo: string;
         address: string;
         bride: string;
         city: string;
@@ -58,6 +64,8 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
         dressCode: string;
         dressCodeColors: string[];
         groom: string;
+        groupChatText: string;
+        groupChatUrl: string;
         lead: string;
         musicEnabled: boolean;
         musicTitle: string;
@@ -77,6 +85,8 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
             time: string;
             title: string;
         }[];
+        showAdditionalInfo: boolean;
+        showGroupChat: boolean;
         showRsvp: boolean;
         venue: string;
         venueImageUrl: string;
@@ -99,6 +109,8 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
     createdAt: string;
     updatedAt: string;
 };
+/** Fill defaults for invites saved before newer optional fields existed. */
+export declare function normalizeInviteState(invite: import("./invite-state.schema").InviteState): import("./invite-state.schema").InviteState;
 type ParsedPayload = {
     ok: true;
     payload: import("./invite-site.schema").CreateInviteSitePayload;

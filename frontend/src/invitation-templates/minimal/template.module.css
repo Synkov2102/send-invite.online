@@ -36,15 +36,15 @@
   position: relative;
   isolation: isolate;
   display: flex;
-  min-height: max(760px, 100svh);
+  min-height: max(720px, 100svh);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(32px, 5vw, 64px) clamp(20px, 5vw, 54px) 28px;
+  padding: clamp(64px, 9vw, 88px) clamp(20px, 5vw, 54px);
   overflow: hidden;
   background:
     radial-gradient(
-      ellipse at 50% 38%,
+      ellipse at 50% 50%,
       color-mix(in srgb, var(--minimal-paper) 92%, white) 0 22%,
       transparent 68%
     ),
@@ -136,15 +136,18 @@
 }
 
 .scrollCue {
+  position: absolute;
+  bottom: clamp(22px, 4vw, 36px);
+  left: 50%;
   display: grid;
   justify-items: center;
   gap: 5px;
-  margin-top: auto;
   color: var(--minimal-muted);
   font-size: 8px;
   letter-spacing: 0.18em;
   text-decoration: none;
   text-transform: uppercase;
+  transform: translateX(-50%);
 }
 
 .greeting {
@@ -556,6 +559,134 @@
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--minimal-paper) 45%, transparent) !important;
 }
 
+.groupChatSection {
+  padding: clamp(88px, 12vw, 150px) clamp(22px, 7vw, 80px);
+  background: color-mix(in srgb, var(--minimal-paper) 88%, white);
+}
+
+.groupChatInner,
+.additionalInfoInner {
+  display: grid;
+  justify-items: center;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.groupChatInner > h2 {
+  max-width: 12ch;
+  margin-top: 12px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(36px, 6vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.groupChatInner .scriptTitle,
+.additionalInfoInner .scriptTitle {
+  margin-top: 22px;
+}
+
+.groupChatBlock.groupChatBlock,
+.additionalInfoBlock.additionalInfoBlock {
+  --chat-accent: var(--minimal-accent);
+  --chat-ink: var(--minimal-ink);
+  --chat-muted: var(--minimal-muted);
+  --chat-line: var(--minimal-line);
+  --chat-surface: transparent;
+  --chat-veil: transparent;
+  --info-accent: var(--minimal-accent);
+  --info-ink: var(--minimal-ink);
+  --info-muted: var(--minimal-muted);
+  --info-line: var(--minimal-line);
+  --info-surface: transparent;
+  --info-veil: transparent;
+  width: 100%;
+  max-width: 36rem;
+  min-width: 0;
+  justify-items: center;
+  gap: 18px;
+  margin: 20px 0 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  text-align: center;
+  box-shadow: none;
+}
+
+.groupChatBlock :global(.invite-section-eyebrow),
+.additionalInfoBlock :global(.invite-section-eyebrow),
+.groupChatBlock :global(h2),
+.additionalInfoBlock :global(h2) {
+  display: none;
+}
+
+.groupChatBlock :global(p),
+.additionalInfoBlock :global(p) {
+  margin: 0;
+  max-width: 42ch;
+}
+
+.groupChatBlock :global(p) {
+  color: var(--minimal-muted);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.groupChatSection .groupChatBlock.groupChatBlock :global(a) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 6px;
+  border: 1px solid var(--minimal-ink);
+  border-radius: 999px;
+  background: var(--minimal-ink);
+  padding: 12px 22px;
+  color: var(--minimal-paper);
+  font-size: 11px;
+  font-weight: 550;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.groupChatSection .groupChatBlock.groupChatBlock :global(a):hover {
+  border-color: var(--minimal-accent);
+  background: var(--minimal-accent);
+  color: var(--minimal-paper);
+}
+
+.additionalInfoSection {
+  padding: clamp(88px, 12vw, 150px) clamp(22px, 7vw, 80px);
+  background:
+    radial-gradient(
+      circle at 50% 18%,
+      color-mix(in srgb, var(--minimal-paper) 72%, transparent),
+      transparent 40%
+    ),
+    var(--minimal-bg);
+}
+
+.additionalInfoBlock.additionalInfoBlock {
+  margin-top: 18px;
+}
+
+.additionalInfoBlock :global(p) {
+  max-width: 36ch;
+  color: var(--minimal-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(17px, 2.4vw, 22px);
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
 .rsvp {
   padding: clamp(90px, 13vw, 170px) clamp(20px, 6vw, 68px);
   background: color-mix(in srgb, var(--minimal-paper) 90%, white);
@@ -683,7 +814,7 @@
 @media (max-width: 760px) {
   .hero {
     min-height: 100svh;
-    padding: clamp(52px, 8svh, 70px) 20px clamp(24px, 5svh, 44px);
+    padding: clamp(64px, 10svh, 80px) 20px;
   }
 
   .heroNames {
@@ -696,7 +827,7 @@
   }
 
   .scrollCue {
-    margin-top: 4px;
+    bottom: clamp(18px, 4svh, 28px);
   }
 
   .greetingInner,
@@ -802,6 +933,8 @@
   .dateSection,
   .program,
   .dressSection,
+  .groupChatSection,
+  .additionalInfoSection,
   .rsvp {
     padding-right: 20px;
     padding-left: 20px;
@@ -823,8 +956,7 @@
 
 @media (max-width: 420px) and (max-height: 680px) {
   .hero {
-    padding-top: 46px;
-    padding-bottom: 18px;
+    padding-block: 56px;
   }
 
   .heroNames {
@@ -845,7 +977,7 @@
   }
 
   .scrollCue {
+    bottom: 16px;
     gap: 2px;
-    margin-top: 0;
   }
 }

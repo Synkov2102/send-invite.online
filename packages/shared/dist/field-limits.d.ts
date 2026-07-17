@@ -1,4 +1,5 @@
 export declare const INVITE_FIELD_LIMITS: {
+    readonly additionalInfo: 2000;
     readonly address: 300;
     readonly bride: 120;
     readonly city: 120;
@@ -6,6 +7,8 @@ export declare const INVITE_FIELD_LIMITS: {
     readonly dressCodeColor: 40;
     readonly dressCodeColorsMax: 20;
     readonly groom: 120;
+    readonly groupChatText: 500;
+    readonly groupChatUrl: 2048;
     readonly lead: 2000;
     readonly mapUrl: 2048;
     readonly mediaUrl: 2048;
