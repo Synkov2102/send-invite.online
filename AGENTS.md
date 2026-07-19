@@ -62,22 +62,40 @@ frontend/node_modules/next/dist/docs/
 
 ### Редактор
 
-Крупная логика вынесена из одного файла:
+Крупная логика вынесена из одного файла. UI — **папка на компонент** (tsx + css рядом):
 
 ```
 frontend/src/editor/
-  invitation-builder.tsx   # тонкая обёртка
+  invitation-builder/
+    invitation-builder.tsx
+    invitation-builder.module.css
+    index.ts
   use-invitation-builder.ts
   editor-context.tsx
-  steps/                   # панели шагов
-  components/              # UI-куски
+  steps/
+    media-step/
+      media-step.tsx
+      media-step.module.css
+      index.ts
+  components/
+    music-library/
+      music-library.tsx
+      music-library.module.css
+      index.ts
+    index.ts                 # barrel re-export
 ```
 
-Новые шаги/поля — в существующую структуру, не раздувайте один файл.
+Новые шаги/поля — в эту структуру, не раздувайте один файл и не кладите «плоские» `foo.tsx` + `foo.module.css` рядом в `components/` / `steps/`.
 
 ### Стили
 
-- Глобальные: `globals.css`, `product-theme.css`, `page.module.css`.
+- **Продуктовый UI** (лендинг, dashboard, редактор-chrome): чёрно-бело-розовая палитра через токены `--product-ink`, `--product-muted`, `--product-line`, `--product-paper`, `--product-soft`, `--product-accent` (`#ff4f72`), `--product-accent-soft`. Не вводите sage/olive/зелёные акценты в chrome.
+- **Редактор и новые UI-компоненты**: только **CSS Modules**, colocated в папке компонента. Классы через `styles.*`, без BEM-строк вида `editor-foo__bar` в JSX (кроме редких global hooks для invite-preview overrides).
+- Общий CSS без своего tsx (toggle, step-panel, text-field) — отдельная папка `components/<name>/<name>.module.css`, импорт из потребителей.
+- Shell редактора подключает `product.module.css` `.scope` (токены + brand-lockup). Компактный логотип в topbar — класс `editor-brand` + стили в sidebar-header.
+- Не восстанавливайте монолиты `styles/editor-studio.module.css` / `editor-responsive` / `editor-workflow` и не складывайте стили редактора обратно в `frontend/src/styles/`.
+- Шаблоны приглашений (`invitation-templates/`, `invite-*`) живут отдельно; их стили не смешивать с editor chrome.
+- Глобальные/продуктовые листы: `globals.css`, `product-theme.css`, `styles/product.module.css`, `page.module.css`.
 - Иконки: `lucide-react`. UI-kit: HeroUI (`@heroui/react`).
 
 ### Платежи (frontend)
@@ -169,8 +187,9 @@ docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 
 ## Связанные файлы
 
-| Файл                  | Содержание                             |
-| --------------------- | -------------------------------------- |
-| `README.md`           | запуск, env                            |
-| `DEPLOYMENT.md`       | VPS, Robokassa, Docker prod            |
-| `.cursor/rules/*.mdc` | краткие правила для Cursor по областям |
+| Файл                                | Содержание                                          |
+| ----------------------------------- | --------------------------------------------------- |
+| `README.md`                         | запуск, env                                         |
+| `DEPLOYMENT.md`                     | VPS, Robokassa, Docker prod                         |
+| `.cursor/rules/*.mdc`               | краткие правила для Cursor по областям              |
+| `.cursor/rules/frontend-styles.mdc` | colocated CSS Modules, палитра, структура editor UI |

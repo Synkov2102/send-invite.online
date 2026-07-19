@@ -2,15 +2,11 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { editorStepIds } from "@/editor/constants";
 import InvitationBuilder from "@/editor/invitation-builder";
+import loadingStyles from "@/editor/components/editor-loading/editor-loading.module.css";
 import { getManagedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
 import { getInviteTemplate } from "@/lib/invite-templates";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
-import responsiveStyles from "@/styles/editor-responsive.module.css";
-import studioStyles from "@/styles/editor-studio.module.css";
-import workflowStyles from "@/styles/editor-workflow.module.css";
-import productStyles from "@/styles/product.module.css";
-import shellStyles from "@/styles/responsive-shells.module.css";
 import { notFound, redirect } from "next/navigation";
 
 export const metadata: Metadata = createPageMetadata({
@@ -73,13 +69,11 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
       : getInviteTemplate(managedSite?.templateId);
 
   return (
-    <div
-      className={`${workflowStyles.scope} ${studioStyles.scope} ${responsiveStyles.scope} ${shellStyles.scope} ${productStyles.scope} editor-shell`}
-    >
+    <div>
       <Suspense
         fallback={
-          <div className="editor-loading">
-            <div className="editor-loading__mark">
+          <div className={loadingStyles.root}>
+            <div className={loadingStyles.mark}>
               <span />
               <span />
             </div>

@@ -7,6 +7,7 @@ export { EditorStepActions } from "./editor-step-actions";
 export { FieldGroup } from "./field-group";
 export { FullscreenPreview } from "./fullscreen-preview";
 export { MobilePreviewFrame } from "./mobile-preview-frame";
+export { MusicLibrary } from "./music-library";
 export { PaymentSummary } from "./payment-summary";
 export { TextAreaField } from "./text-area-field";
 export { TextInput } from "./text-input";

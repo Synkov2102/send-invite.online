@@ -1,0 +1,57 @@
+.root {
+  --product-ink: #282126;
+  --product-muted: #756c72;
+  --product-paper: #fffdfa;
+  --product-accent: #ff4f72;
+
+  display: grid;
+  min-height: 100vh;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  background: var(--product-paper);
+  color: var(--product-ink);
+  text-align: center;
+}
+
+.mark {
+  display: flex;
+  gap: 8px;
+}
+
+.mark span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--product-accent);
+  animation: pulse 1.1s ease-in-out infinite;
+}
+
+.mark span:last-child {
+  animation-delay: 0.2s;
+}
+
+.root p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.root small {
+  color: var(--product-muted);
+  font-size: 0.78rem;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}

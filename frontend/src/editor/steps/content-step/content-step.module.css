@@ -1,0 +1,49 @@
+.mapField {
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid rgba(40, 33, 38, 0.1);
+  padding-top: 16px;
+}
+
+.mapFieldHeading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--product-ink);
+}
+
+.mapFieldHeading > div {
+  display: grid;
+  gap: 1px;
+}
+
+.mapFieldHeading strong {
+  font-size: 0.78rem;
+}
+
+.mapFieldHeading span,
+.mapField p {
+  color: var(--product-muted);
+  font-size: 0.68rem;
+}
+
+.mapField p {
+  margin: -3px 0 0;
+  line-height: 1.45;
+}
+
+.mapField > a {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 36px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(40, 33, 38, 0.14);
+  border-radius: 7px;
+  background: #fff;
+  padding: 7px 10px;
+  color: var(--product-ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+}

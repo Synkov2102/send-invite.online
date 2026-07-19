@@ -1,0 +1,44 @@
+---
+description: Colocated CSS Modules, folder-per-component, product palette
+globs: frontend/src/editor/**/*.{tsx,ts,css}
+alwaysApply: false
+---
+
+# Frontend styles (editor & UI)
+
+Полная инструкция: `AGENTS.md` → Frontend → Редактор / Стили.
+
+## Структура нового компонента
+
+```
+frontend/src/editor/components/<name>/
+  <name>.tsx
+  <name>.module.css
+  index.ts          # export { Name } from "./<name>"
+```
+
+То же для шагов: `editor/steps/<name>/`. После добавления — re-export в `components/index.ts` или `steps/index.ts`.
+
+Не создавайте плоские пары `components/foo.tsx` + `components/foo.module.css`.
+
+## CSS Modules
+
+- В JSX только `styles.className` из `*.module.css`.
+- Не добавляйте глобальные BEM-классы (`editor-*__*`) в новый UI, кроме осознанных hooks для invite overrides (`:global(.invite-*)`, `editor-preview__canvas--*`).
+- Shared-only CSS (без tsx): папка с одним `*.module.css`, импорт относительным путём из потребителей.
+
+## Палитра
+
+Продуктовый chrome — **чёрный / белый / розовый** через CSS variables:
+
+- `--product-ink`, `--product-muted`, `--product-line`
+- `--product-paper`, `--product-soft`
+- `--product-accent` (`#ff4f72`), `--product-accent-soft`
+
+Не используйте sage/olive/зелёные hex в editor chrome. Токены доступны под `product.module.css` `.scope` на shell редактора (см. `invitation-builder`).
+
+## Чего не делать
+
+- Не возвращать стили редактора в `frontend/src/styles/editor-*.module.css`.
+- Не смешивать стили шаблонов приглашений с editor chrome.
+- Не раздувать один файл шага/компонента — выносите UI в папку компонента.

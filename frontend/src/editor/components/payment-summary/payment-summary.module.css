@@ -1,0 +1,58 @@
+.root {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255, 79, 114, 0.24);
+  border-radius: 16px;
+  background: #fff8fa;
+  padding: 18px;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.row span {
+  color: #665b62;
+  font-size: 0.78rem;
+}
+
+.row strong {
+  color: #282126;
+  font-size: 1.35rem;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.root > p {
+  margin: 0;
+  color: #786d74;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.label {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
+  color: #51484e;
+  cursor: pointer;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.label input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: #ff4f72;
+}
+
+.label a {
+  color: #b43151;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

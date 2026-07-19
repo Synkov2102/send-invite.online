@@ -1,0 +1,419 @@
+/* Editor alpine desktop layout overrides */
+
+@media (min-width: 1200px) {
+  .scope:global(.published-site--alpine) > :global(.invite-shell),
+  .scope :global(.published-site--alpine) > :global(.invite-shell),
+  .scope:global(.editor-preview__canvas--alpine) > :global(.invite-shell),
+  .scope :global(.editor-preview__canvas--alpine) > :global(.invite-shell) {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: stretch;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-cover),
+  .scope :global(.published-site--alpine) :global(.invite-cover),
+  .scope:global(.published-site--alpine) :global(.invite-final),
+  .scope :global(.published-site--alpine) :global(.invite-final),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-cover),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-cover),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-final),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-final) {
+    grid-column: 1 / -1;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-cover),
+  .scope :global(.published-site--alpine) :global(.invite-cover) {
+    height: clamp(760px, 46vw, 980px);
+    min-height: 760px;
+  }
+
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-cover) {
+    height: min(clamp(540px, 44vw, 860px), calc(100vh - 72px));
+    min-height: 360px;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-hero-copy),
+  .scope :global(.published-site--alpine) :global(.invite-hero-copy),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-hero-copy),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-hero-copy) {
+    inset: auto clamp(38px, 5vw, 86px) clamp(50px, 7vh, 82px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-hero-copy) p,
+  .scope :global(.published-site--alpine) :global(.invite-hero-copy) p,
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-hero-copy) p,
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-hero-copy) p {
+    font-size: clamp(12px, 0.95vw, 14px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-hero-copy) h1,
+  .scope :global(.published-site--alpine) :global(.invite-hero-copy) h1,
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-hero-copy) h1,
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-hero-copy) h1 {
+    margin-top: 18px;
+    font-size: clamp(84px, 7.2vw, 128px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-panel),
+  .scope :global(.published-site--alpine) :global(.invite-panel),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-panel),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-panel) {
+    align-self: center;
+    margin: clamp(24px, 3vw, 48px);
+    padding: clamp(56px, 5vw, 84px) clamp(34px, 4vw, 62px) clamp(48px, 4.5vw, 72px);
+    border-radius: 24px;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-heading),
+  .scope :global(.published-site--alpine) :global(.invite-heading),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-heading),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-heading) {
+    font-size: clamp(44px, 3.6vw, 64px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-photo-band),
+  .scope :global(.published-site--alpine) :global(.invite-photo-band),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-photo-band),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-photo-band) {
+    min-height: clamp(780px, 44vw, 940px);
+    margin-top: 0;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-photo-band__content),
+  .scope :global(.published-site--alpine) :global(.invite-photo-band__content),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-photo-band__content),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-photo-band__content) {
+    inset: auto clamp(36px, 5vw, 74px) clamp(48px, 6vw, 78px);
+    max-width: 560px;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-details),
+  .scope :global(.published-site--alpine) :global(.invite-details),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-details),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-details) {
+    padding: clamp(72px, 7vw, 110px) clamp(42px, 6vw, 90px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-dress-code),
+  .scope :global(.published-site--alpine) :global(.invite-dress-code),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-dress-code),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-dress-code),
+  .scope:global(.published-site--alpine) :global(.invite-group-chat),
+  .scope :global(.published-site--alpine) :global(.invite-group-chat),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-group-chat),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-group-chat),
+  .scope:global(.published-site--alpine) :global(.invite-additional-info),
+  .scope :global(.published-site--alpine) :global(.invite-additional-info),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-additional-info),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-additional-info) {
+    align-self: center;
+    padding: clamp(24px, 3vw, 48px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-rsvp),
+  .scope :global(.published-site--alpine) :global(.invite-rsvp),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-rsvp),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-rsvp) {
+    grid-column: 1 / -1;
+    width: min(900px, calc(100% - 64px));
+    justify-self: center;
+    align-self: center;
+    margin: clamp(24px, 3vw, 48px);
+    padding: clamp(56px, 5vw, 84px) clamp(34px, 4vw, 62px) clamp(64px, 5.5vw, 96px);
+    border-radius: 24px;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-portrait),
+  .scope :global(.published-site--alpine) :global(.invite-portrait),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-portrait),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-portrait) {
+    width: min(100%, 400px);
+    height: 490px;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-final),
+  .scope :global(.published-site--alpine) :global(.invite-final),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-final),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-final) {
+    min-height: clamp(760px, 46vw, 980px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow) {
+    font-size: clamp(11px, 0.9vw, 12px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow)
+    span,
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow)
+    span,
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow)
+    span,
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-section-eyebrow)
+    span {
+    width: 22px;
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > :global(.invite-small),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > :global(.invite-small),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > :global(.invite-small),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > :global(.invite-small) {
+    font-size: clamp(36px, 3.2vw, 48px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > p:not(:global(.invite-small)),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > p:not(:global(.invite-small)),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > p:not(:global(.invite-small)),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-panel)
+    > p:not(:global(.invite-small)) {
+    max-width: clamp(360px, 32vw, 480px);
+    font-size: clamp(16px, 1.2vw, 18px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo)
+    :global(.invite-heading),
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo)
+    :global(.invite-heading),
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo)
+    :global(.invite-heading),
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-when--photo)
+    :global(.invite-heading) {
+    font-size: clamp(36px, 3vw, 48px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-when__month),
+  .scope :global(.published-site--alpine) :global(.invite-when__month),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-when__month),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-when__month) {
+    font-size: clamp(14px, 1.15vw, 17px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-calendar) div,
+  .scope :global(.published-site--alpine) :global(.invite-calendar) div,
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-calendar) div,
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-calendar) div {
+    font-size: clamp(14px, 1.15vw, 17px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-calendar) strong,
+  .scope :global(.published-site--alpine) :global(.invite-calendar) strong,
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-calendar) strong,
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-calendar) strong {
+    width: clamp(44px, 3.4vw, 54px);
+    height: clamp(44px, 3.4vw, 54px);
+    font-size: clamp(17px, 1.35vw, 21px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-plan__chip),
+  .scope :global(.published-site--alpine) :global(.invite-plan__chip),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-plan__chip),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-plan__chip) {
+    padding: 8px 14px;
+    font-size: clamp(13px, 1.05vw, 15px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-timeline__item),
+  .scope :global(.published-site--alpine) :global(.invite-timeline__item),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-timeline__item),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-timeline__item) {
+    grid-template-columns: clamp(72px, 6vw, 96px) 20px minmax(0, 1fr);
+    column-gap: clamp(14px, 1.2vw, 20px);
+    padding: clamp(16px, 1.3vw, 22px) 0;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-timeline__time),
+  .scope :global(.published-site--alpine) :global(.invite-timeline__time),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-timeline__time),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-timeline__time) {
+    padding-top: 2px;
+    font-size: clamp(15px, 1.2vw, 18px);
+    letter-spacing: -0.02em;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-timeline__dot),
+  .scope :global(.published-site--alpine) :global(.invite-timeline__dot),
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-timeline__dot),
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-timeline__dot) {
+    width: 11px;
+    height: 11px;
+    margin-top: clamp(5px, 0.5vw, 8px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-timeline__item):first-child
+    :global(.invite-timeline__rail)::before,
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-timeline__item):first-child
+    :global(.invite-timeline__rail)::before,
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-timeline__item):first-child
+    :global(.invite-timeline__rail)::before,
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-timeline__item):first-child
+    :global(.invite-timeline__rail)::before {
+    top: clamp(13px, 1.2vw, 18px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-timeline__item):last-child
+    :global(.invite-timeline__rail)::before,
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-timeline__item):last-child
+    :global(.invite-timeline__rail)::before,
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-timeline__item):last-child
+    :global(.invite-timeline__rail)::before,
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-timeline__item):last-child
+    :global(.invite-timeline__rail)::before {
+    height: clamp(13px, 1.2vw, 18px);
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-timeline__body) strong,
+  .scope :global(.published-site--alpine) :global(.invite-timeline__body) strong,
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-timeline__body) strong,
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-timeline__body) strong {
+    font-size: clamp(22px, 1.8vw, 28px);
+    line-height: 1.2;
+  }
+
+  .scope:global(.published-site--alpine) :global(.invite-timeline__body) p,
+  .scope :global(.published-site--alpine) :global(.invite-timeline__body) p,
+  .scope:global(.editor-preview__canvas--alpine) :global(.invite-timeline__body) p,
+  .scope :global(.editor-preview__canvas--alpine) :global(.invite-timeline__body) p {
+    margin-top: 6px;
+    font-size: clamp(15px, 1.2vw, 18px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band__content)
+    p,
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band__content)
+    p,
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band__content)
+    p,
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-photo-band__content)
+    p {
+    font-size: clamp(19px, 1.5vw, 26px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    h2,
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    h2,
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    h2,
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    h2 {
+    font-size: clamp(72px, 6.2vw, 118px);
+  }
+
+  .scope:global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    p,
+  .scope
+    :global(.published-site--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    p,
+  .scope:global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    p,
+  .scope
+    :global(.editor-preview__canvas--alpine)
+    :global(.invite-shell--alpine-rings)
+    :global(.invite-final__content)
+    p {
+    font-size: clamp(23px, 2vw, 34px);
+  }
+}

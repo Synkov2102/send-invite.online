@@ -1,0 +1,350 @@
+.root {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--product-line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 253, 250, 0.98), rgba(255, 248, 250, 0.92)), #fff;
+  padding: 12px;
+  box-shadow: 0 14px 36px rgba(57, 43, 52, 0.05);
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headCopy {
+  display: grid;
+  gap: 2px;
+}
+
+.headCopy strong {
+  color: var(--product-ink);
+  font-size: 0.84rem;
+  font-weight: 750;
+}
+
+.headCopy span {
+  color: var(--product-muted);
+  font-size: 0.68rem;
+}
+
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--product-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sourceLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.search {
+  position: relative;
+  display: grid;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  color: var(--product-muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.search input {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--product-line);
+  border-radius: 999px;
+  background: #fff;
+  padding: 0 14px 0 34px;
+  color: var(--product-ink);
+  font: inherit;
+  font-size: 0.76rem;
+  outline: none;
+}
+
+.search input::placeholder {
+  color: color-mix(in srgb, var(--product-muted) 78%, #fff);
+}
+
+.search input:focus {
+  border-color: color-mix(in srgb, var(--product-accent) 55%, var(--product-line));
+  box-shadow: 0 0 0 3px var(--product-accent-soft);
+}
+
+.list {
+  display: grid;
+  gap: 4px;
+  max-height: min(320px, 42vh);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 2px;
+  scrollbar-color: color-mix(in srgb, var(--product-accent) 35%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+.list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--product-accent) 35%, transparent);
+}
+
+.empty,
+.hint {
+  margin: 0;
+  color: var(--product-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.empty {
+  padding: 18px 8px;
+  text-align: center;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  padding: 7px 8px;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.track:hover {
+  background: var(--product-soft);
+}
+
+.trackSelected {
+  border-color: color-mix(in srgb, var(--product-accent) 28%, transparent);
+  background: var(--product-accent-soft);
+  box-shadow: inset 3px 0 var(--product-accent);
+}
+
+.trackPlaying {
+  border-color: color-mix(in srgb, var(--product-accent) 40%, transparent);
+}
+
+.play {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--product-ink) 12%, transparent);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--product-ink);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.play:hover {
+  border-color: color-mix(in srgb, var(--product-accent) 45%, transparent);
+  color: var(--product-accent);
+  transform: scale(1.03);
+}
+
+.trackSelected .play,
+.trackPlaying .play {
+  border-color: var(--product-accent);
+  background: var(--product-ink);
+  color: #fff;
+}
+
+.bars {
+  position: absolute;
+  inset: auto 6px 6px;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+  height: 8px;
+  pointer-events: none;
+}
+
+.trackPlaying .bars {
+  display: flex;
+}
+
+.bars i {
+  display: block;
+  width: 2px;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--product-accent);
+  transform-origin: bottom;
+  animation: music-bar 720ms ease-in-out infinite;
+}
+
+.bars i:nth-child(2) {
+  height: 70%;
+}
+
+.bars i:nth-child(3) {
+  height: 90%;
+}
+
+.trackBody {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.trackTitle {
+  overflow: hidden;
+  color: var(--product-ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trackMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  color: var(--product-muted);
+  font-size: 0.66rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.duration,
+.selectedMark {
+  display: inline-flex;
+  min-width: 34px;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--product-muted);
+  font-size: 0.66rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.selectedMark {
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--product-accent);
+  color: #fff;
+}
+
+.selectedCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--product-line);
+  padding-top: 12px;
+}
+
+.selectedCard strong {
+  display: block;
+  overflow: hidden;
+  color: var(--product-ink);
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectedCard span {
+  display: block;
+  margin-top: 2px;
+  color: var(--product-muted);
+  font-size: 0.66rem;
+}
+
+.selectedPlay {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--product-ink);
+  border-radius: 999px;
+  background: var(--product-ink);
+  padding: 0 14px;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.selectedPlay:hover {
+  border-color: var(--product-accent);
+  background: var(--product-accent);
+}
+
+@media (max-width: 640px) {
+  .root {
+    padding: 10px;
+  }
+
+  .list {
+    max-height: min(280px, 38vh);
+  }
+
+  .play,
+  .selectedPlay {
+    min-height: 44px;
+  }
+
+  .play {
+    width: 44px;
+    height: 44px;
+  }
+
+  .selectedCard {
+    grid-template-columns: 1fr;
+  }
+
+  .selectedPlay {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@keyframes music-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+
+  50% {
+    transform: scaleY(1);
+  }
+}

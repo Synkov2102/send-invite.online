@@ -13,5 +13,6 @@ Next.js **16** — не опирайтесь на устаревший training 
 - `/api/*` rewrite на Nest; Nest принимает cookie сессии. Явные Route Handlers — по необходимости (OAuth, свои 401), не обязательны для auth.
 - Route Handlers: cookie через `request.cookies` (см. `checkout/route.ts`).
 - `@invite/shared`: `transpilePackages` в `next.config.ts`; re-export явными именами в `@/lib/invite-*.ts`.
-- Редактор: логика в `use-invitation-builder.ts`, шаги в `editor/steps/`, не раздувать один файл.
+- Редактор: логика в `use-invitation-builder.ts`; шаги/UI — **папка на компонент** (`steps/<name>/`, `components/<name>/` с colocated `*.module.css` + `index.ts`). См. `frontend-styles.mdc` и `AGENTS.md`.
+- Стили UI: CSS Modules + product-токены (ink/paper/accent pink). Без зелёного chrome и без монолитов `styles/editor-*.module.css`.
 - Платежи: публичный poll `/api/payments/orders/:id/status`; Result URL проксируется на backend.

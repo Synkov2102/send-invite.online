@@ -1,0 +1,217 @@
+.photoGrid {
+  display: grid;
+  gap: 10px;
+}
+
+.photoUpload {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  border: 1px solid rgba(40, 33, 38, 0.1);
+  border-radius: 8px;
+  background: rgba(246, 241, 243, 0.8);
+  padding: 9px;
+}
+
+@media (max-width: 899px) {
+  .photoUpload {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+.photoUploadPicker {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.photoUploadPicker input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.photoUploadPickerLabel {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(180deg, rgba(20, 24, 19, 0), rgba(20, 24, 19, 0.72));
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+@media (max-width: 899px) {
+  .photoUploadPickerLabel {
+    min-height: 48px;
+    font-size: 0.76rem;
+  }
+}
+
+.photoUploadBody {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.photoUploadPreview {
+  width: 86px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 7px;
+  background-color: #d8ddd4;
+  background-position: center;
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(40, 33, 38, 0.12);
+}
+
+@media (max-width: 899px) {
+  .photoUploadPreview {
+    width: 100%;
+    min-height: clamp(180px, 52vw, 260px);
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .photoUploadPreview {
+    min-height: 170px;
+  }
+}
+
+.photoUploadCopy {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.photoUploadCopy strong {
+  color: var(--product-ink);
+  font-size: 0.82rem;
+}
+
+.photoUploadCopy small {
+  color: var(--product-muted);
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
+.photoUploadActions {
+  display: flex;
+  gap: 7px;
+  min-width: 0;
+}
+
+.photoUploadButton {
+  position: relative;
+  display: inline-flex;
+  min-height: 34px;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px dashed color-mix(in srgb, var(--product-ink) 22%, transparent);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--product-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .photoUploadButton {
+    min-height: 44px !important;
+  }
+}
+
+.photoUploadButton input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.photoUploadReset {
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  padding: 0 !important;
+  border-color: color-mix(in srgb, var(--product-ink) 16%, transparent) !important;
+  color: var(--product-muted) !important;
+}
+
+@media (max-width: 640px) {
+  .photoUploadReset {
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+.photoError {
+  margin: 0;
+  border: 1px solid rgba(158, 61, 48, 0.22);
+  border-radius: 7px;
+  background: rgba(255, 246, 242, 0.8);
+  padding: 9px 11px;
+  color: #9e3d30;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.musicSettings {
+  display: grid;
+  gap: 14px;
+}
+
+.musicNote a {
+  color: var(--product-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.musicUpload {
+  display: grid;
+  gap: 3px;
+  border: 1px dashed color-mix(in srgb, var(--product-ink) 20%, transparent);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.48);
+  padding: 13px;
+  color: var(--product-muted);
+  cursor: pointer;
+}
+
+.musicUpload span {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.musicUpload small,
+.musicNote {
+  color: var(--product-muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.musicUpload input {
+  margin-top: 8px;
+  font-size: 0.72rem;
+}
+
+.musicNote {
+  margin: 0;
+}

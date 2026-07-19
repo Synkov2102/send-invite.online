@@ -1,0 +1,124 @@
+.schedule {
+  display: grid;
+  gap: 10px;
+}
+
+.scheduleItem {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--product-line);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 10px;
+}
+
+.scheduleItemHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--product-muted);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.scheduleAdd {
+  width: 100%;
+  min-height: 38px !important;
+  border-style: dashed !important;
+  border-color: var(--product-line) !important;
+  color: var(--product-muted) !important;
+  font-size: 11px !important;
+}
+
+@media (max-width: 640px) {
+  .scheduleAdd {
+    min-height: 44px !important;
+  }
+}
+
+.dressCode {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(40, 33, 38, 0.1);
+  border-radius: 9px;
+  background: rgba(246, 241, 243, 0.8);
+  padding: 10px;
+}
+
+.dressCodeHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dressCodeHead p {
+  margin: 0;
+  color: var(--product-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.dressCodeHead span {
+  display: block;
+  margin-top: 2px;
+  color: var(--product-muted);
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.dressCodeAdd {
+  min-height: 30px;
+  gap: 5px;
+  border-radius: 7px;
+  padding-inline: 9px;
+  font-size: 0.64rem;
+}
+
+.dressCodeRemove {
+  min-width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  padding: 0;
+}
+
+@media (max-width: 480px) {
+  .dressCodeHead {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dressCodeAdd {
+    width: 100%;
+  }
+}
+
+.dressCodeColors {
+  display: grid;
+  gap: 7px;
+}
+
+.dressCodeColor {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(40, 33, 38, 0.1);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.58);
+  padding: 6px;
+}
+
+.dressCodePicker {
+  --color-picker-popover-offset: 7px;
+  --color-picker-trigger-size: 32px;
+}
+
+.dressCodeColor code {
+  color: var(--product-muted);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}

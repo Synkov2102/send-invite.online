@@ -17,39 +17,6 @@ type InvitationMusicPlayerProps = Readonly<{
   url: string;
 }>;
 
-function waitUntilPlayable(audio: HTMLAudioElement, signal: AbortSignal) {
-  if (audio.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-    return Promise.resolve();
-  }
-
-  return new Promise<void>((resolve, reject) => {
-    function cleanup() {
-      audio.removeEventListener("canplay", onReady);
-      audio.removeEventListener("error", onError);
-      signal.removeEventListener("abort", onAbort);
-    }
-
-    function onReady() {
-      cleanup();
-      resolve();
-    }
-
-    function onError() {
-      cleanup();
-      reject(new Error("Audio failed to load"));
-    }
-
-    function onAbort() {
-      cleanup();
-      reject(new DOMException("Audio loading was aborted", "AbortError"));
-    }
-
-    audio.addEventListener("canplay", onReady, { once: true });
-    audio.addEventListener("error", onError, { once: true });
-    signal.addEventListener("abort", onAbort, { once: true });
-  });
-}
-
 export type InvitationMusicPlayerHandle = {
   start: () => Promise<boolean>;
 };
@@ -62,7 +29,6 @@ export const InvitationMusicPlayer = forwardRef<
   ref,
 ) {
   const [playing, setPlaying] = useState(false);
-  const [needsGesture, setNeedsGesture] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const playbackAbortRef = useRef<AbortController | null>(null);
   const skipResetRef = useRef(true);
@@ -76,7 +42,6 @@ export const InvitationMusicPlayer = forwardRef<
 
     if (!audio.paused) {
       setPlaying(true);
-      setNeedsGesture(false);
       return true;
     }
 
@@ -86,16 +51,13 @@ export const InvitationMusicPlayer = forwardRef<
     audio.volume = 0.45;
 
     try {
-      await waitUntilPlayable(audio, controller.signal);
       await audio.play();
 
       if (controller.signal.aborted) {
-        audio.pause();
         return false;
       }
 
       setPlaying(true);
-      setNeedsGesture(false);
       return true;
     } catch {
       if (controller.signal.aborted) {
@@ -103,7 +65,6 @@ export const InvitationMusicPlayer = forwardRef<
       }
 
       setPlaying(false);
-      setNeedsGesture(true);
       return false;
     } finally {
       if (playbackAbortRef.current === controller) {
@@ -134,7 +95,6 @@ export const InvitationMusicPlayer = forwardRef<
     audio.pause();
     audio.currentTime = 0;
     setPlaying(false);
-    setNeedsGesture(false);
   }, [url, enabled]);
 
   useEffect(() => {
@@ -142,31 +102,11 @@ export const InvitationMusicPlayer = forwardRef<
       return;
     }
 
-    const audio = audioRef.current;
-
-    if (!audio) {
-      return;
-    }
-
-    let disposed = false;
-
-    function handleCanPlay() {
-      if (!disposed) {
-        void startPlayback();
-      }
-    }
-
     void startPlayback();
-    audio.addEventListener("canplay", handleCanPlay);
-
-    return () => {
-      disposed = true;
-      audio.removeEventListener("canplay", handleCanPlay);
-    };
   }, [autoStart, enabled, startPlayback, url]);
 
   useEffect(() => {
-    if (!needsGesture || !enabled || !url) {
+    if (!autoStart || !enabled || !url) {
       return;
     }
 
@@ -174,14 +114,20 @@ export const InvitationMusicPlayer = forwardRef<
       void startPlayback();
     }
 
-    document.addEventListener("pointerdown", handleGesture, { once: true });
-    document.addEventListener("keydown", handleGesture, { once: true });
+    document.addEventListener("click", handleGesture, {
+      capture: true,
+      once: true,
+    });
+    document.addEventListener("keydown", handleGesture, {
+      capture: true,
+      once: true,
+    });
 
     return () => {
-      document.removeEventListener("pointerdown", handleGesture);
-      document.removeEventListener("keydown", handleGesture);
+      document.removeEventListener("click", handleGesture, true);
+      document.removeEventListener("keydown", handleGesture, true);
     };
-  }, [enabled, needsGesture, startPlayback, url]);
+  }, [autoStart, enabled, startPlayback, url]);
 
   async function toggleMusic() {
     const audio = audioRef.current;
@@ -193,7 +139,6 @@ export const InvitationMusicPlayer = forwardRef<
     if (playing) {
       audio.pause();
       setPlaying(false);
-      setNeedsGesture(false);
       return;
     }
 

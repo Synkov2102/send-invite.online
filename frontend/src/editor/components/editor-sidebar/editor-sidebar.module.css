@@ -1,0 +1,46 @@
+.root {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-right: 1px solid var(--product-line);
+  background: rgba(255, 253, 250, 0.96);
+  box-shadow: 14px 0 45px rgba(57, 43, 52, 0.06);
+}
+
+.form {
+  display: grid;
+  gap: 24px;
+  padding: 24px 24px 42px;
+}
+
+@media (min-width: 1600px) {
+  .form {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+@media (min-width: 900px) {
+  .form {
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 899px) {
+  .root {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    border-right: 0;
+    border-bottom: 1px solid rgba(40, 33, 38, 0.1);
+  }
+}
+
+@media (max-width: 640px) {
+  .form {
+    padding-bottom: 96px;
+  }
+}

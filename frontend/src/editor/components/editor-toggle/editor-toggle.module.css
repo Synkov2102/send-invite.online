@@ -1,0 +1,35 @@
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border: 1px solid var(--product-line);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.toggle span {
+  display: grid;
+  gap: 3px;
+}
+
+.toggle strong {
+  color: var(--product-ink);
+  font-size: 12px;
+}
+
+.toggle small {
+  color: var(--product-muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.toggle input {
+  width: 34px;
+  height: 19px;
+  flex: 0 0 auto;
+  accent-color: var(--product-accent);
+  cursor: pointer;
+}

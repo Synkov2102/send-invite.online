@@ -1,0 +1,84 @@
+.root {
+  --color-picker-popover-offset: 8px;
+  --color-picker-trigger-size: 38px;
+  position: relative;
+  width: fit-content;
+}
+
+.trigger {
+  width: var(--color-picker-trigger-size);
+  height: var(--color-picker-trigger-size);
+  border: 1px solid rgba(40, 33, 38, 0.12);
+  border-radius: 50%;
+  padding: 3px;
+  box-shadow: inset 0 0 0 3px white;
+  cursor: pointer;
+}
+
+.trigger:focus-visible {
+  outline: 3px solid rgba(94, 109, 89, 0.22);
+  outline-offset: 2px;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + var(--color-picker-popover-offset));
+  left: 0;
+  z-index: 20;
+  display: grid;
+  width: 238px;
+  gap: 12px;
+  border: 1px solid rgba(40, 33, 38, 0.14);
+  border-radius: 12px;
+  background: #fffdfa;
+  padding: 12px;
+  box-shadow: 0 18px 45px rgba(38, 42, 37, 0.2);
+}
+
+.control:global(.react-colorful) {
+  width: 214px;
+  height: 180px;
+}
+
+.control :global(.react-colorful__saturation) {
+  border-bottom: 0;
+  border-radius: 8px;
+}
+
+.control :global(.react-colorful__hue) {
+  height: 12px;
+  margin-top: 10px;
+  border-radius: 999px;
+}
+
+.control :global(.react-colorful__pointer) {
+  width: 16px;
+  height: 16px;
+}
+
+.hex {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.hex > span {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(40, 33, 38, 0.12);
+  border-radius: 6px;
+}
+
+.hex input {
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid rgba(40, 33, 38, 0.14);
+  border-radius: 7px;
+  background: white;
+  padding: 0 9px;
+  color: var(--product-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}

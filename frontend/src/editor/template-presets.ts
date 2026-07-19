@@ -2,6 +2,7 @@ import type { InviteState } from "@/lib/invite-state";
 import { normalizeInviteState } from "@/lib/invite-state";
 import { getTemplateDefinition } from "@/lib/invite-templates";
 import type { InviteTemplate } from "@/lib/invite-templates";
+import { getTemplateMusicPreset } from "./music-tracks";
 
 export const defaultEditorInvite: InviteState = {
   bride: "Диана",
@@ -48,10 +49,7 @@ export const defaultEditorInvite: InviteState = {
   ],
   paletteId: "alpine",
   ringMetal: "0",
-  musicEnabled: true,
-  musicTitle: "I Want You Back",
-  musicUrl:
-    "https://968f8970-1acf-4a3b-a3cc-475290d4d84e.selstorage.ru/Jackson%205%20-%20I%20Want%20You%20Back.mp3",
+  ...getTemplateMusicPreset("alpine-rings"),
   coverImageUrl: "",
   portraitImageUrl: "",
   venueImageUrl: "",
@@ -63,6 +61,7 @@ export function getInitialInvite(template: InviteTemplate): InviteState {
   return normalizeInviteState({
     ...defaultEditorInvite,
     ...definition.editorPreset,
+    ...getTemplateMusicPreset(template.id),
     paletteId: definition.defaultPaletteId,
   });
 }

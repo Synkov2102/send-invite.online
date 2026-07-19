@@ -1,0 +1,44 @@
+.field {
+  display: block;
+}
+
+.label {
+  display: block;
+  margin: 0 0 6px 1px;
+  color: var(--product-muted);
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(40, 33, 38, 0.13);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0 13px;
+  color: var(--product-ink);
+  font-size: 0.88rem;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease;
+}
+
+.textarea {
+  min-height: 108px;
+  padding-block: 11px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.input:hover {
+  border-color: rgba(40, 33, 38, 0.24);
+}
+
+.input:focus {
+  border-color: var(--product-accent);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 79, 114, 0.13);
+}
