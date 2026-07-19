@@ -17,6 +17,7 @@ export function MediaStep({ isActive }: StepPanelProps) {
   const {
     coverImage,
     invite,
+    isFullscreenPreview,
     photoError,
     portraitImage,
     resetImage,
@@ -140,6 +141,7 @@ export function MediaStep({ isActive }: StepPanelProps) {
         {invite.musicEnabled ? (
           <div className={styles.musicSettings}>
             <MusicLibrary
+              active={isActive && !isFullscreenPreview}
               musicUrl={invite.musicUrl}
               onSelect={(track) => {
                 updateInvite("musicTitle", track.title);

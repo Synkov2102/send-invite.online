@@ -512,6 +512,7 @@
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    /* `transform: none` — иначе fixed-плеер музыки цепляется к низу всей страницы */
+    transform: none;
   }
 }

@@ -21,7 +21,8 @@ export type InvitationMusicPlayerHandle = {
   start: () => Promise<boolean>;
 };
 
-const GESTURE_EVENTS = ["pointerdown", "click", "keydown"] as const;
+const TAP_UNLOCK_EVENTS = ["pointerdown", "touchstart", "click", "keydown"] as const;
+const SCROLL_UNLOCK_EVENTS = ["scroll", "wheel", "touchmove"] as const;
 
 export const InvitationMusicPlayer = forwardRef<
   InvitationMusicPlayerHandle,
@@ -129,8 +130,12 @@ export const InvitationMusicPlayer = forwardRef<
     }
 
     function removeGestureListeners() {
-      for (const eventName of GESTURE_EVENTS) {
+      for (const eventName of TAP_UNLOCK_EVENTS) {
         document.removeEventListener(eventName, handleGesture, true);
+      }
+
+      for (const eventName of SCROLL_UNLOCK_EVENTS) {
+        window.removeEventListener(eventName, handleGesture, true);
       }
     }
 
@@ -160,9 +165,17 @@ export const InvitationMusicPlayer = forwardRef<
       }
     }
 
-    for (const eventName of GESTURE_EVENTS) {
+    for (const eventName of TAP_UNLOCK_EVENTS) {
       document.addEventListener(eventName, handleGesture, {
         capture: true,
+      });
+    }
+
+    // First scroll / swipe also unlocks autoplay (mobile guests rarely tap first).
+    for (const eventName of SCROLL_UNLOCK_EVENTS) {
+      window.addEventListener(eventName, handleGesture, {
+        capture: true,
+        passive: true,
       });
     }
 

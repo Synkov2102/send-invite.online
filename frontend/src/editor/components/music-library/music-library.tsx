@@ -10,6 +10,7 @@ import {
 import styles from "./music-library.module.css";
 
 type MusicLibraryProps = {
+  active?: boolean;
   musicUrl: string;
   onSelect: (track: EditorMusicTrack) => void;
 };
@@ -20,7 +21,11 @@ function matchesQuery(track: EditorMusicTrack, query: string) {
   return haystack.includes(query);
 }
 
-export function MusicLibrary({ musicUrl, onSelect }: MusicLibraryProps) {
+export function MusicLibrary({
+  active = true,
+  musicUrl,
+  onSelect,
+}: MusicLibraryProps) {
   const searchId = useId();
   const listRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -51,6 +56,21 @@ export function MusicLibrary({ musicUrl, onSelect }: MusicLibraryProps) {
       audioRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    if (active) {
+      return;
+    }
+
+    const audio = audioRef.current;
+    if (!audio) {
+      return;
+    }
+
+    audio.pause();
+    audio.currentTime = 0;
+    setPlayingId(null);
+  }, [active]);
 
   useEffect(() => {
     if (!selectedTrack || !listRef.current) return;
