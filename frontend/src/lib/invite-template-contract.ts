@@ -331,7 +331,8 @@ export const inviteContentFields: InviteTemplateFieldMeta[] = [
     section: "hero",
     kind: "url",
     label: "URL музыки",
-    usage: "Прямая ссылка или `/api/sites/:id/music`.",
+    usage:
+      "Каталог: `/api/catalog-music/{id}`; своя загрузка: `/api/sites/:id/music` или HTTPS.",
     required: false,
   },
   {
@@ -613,6 +614,23 @@ ${renderCssVarsTable()}
 
 Выбери один \`variant\` (\`alpine\` | \`aqua\` | \`vanilla\`) или добавь стилизацию через CSS Modules вокруг этих блоков.
 
+## Демо-музыка шаблона (обязательно)
+
+У каждого шаблона должен быть **свой уникальный** трек из коллекции — не переиспользуй id, уже занятые другими шаблонами в \`templateMusicTrackIds\`.
+
+1. Выбери подходящий по настроению трек из \`frontend/src/editor/music-tracks.ts\` (\`editorMusicTracks\`) **или** добавь новый (русское короткое \`title\`, Pixabay \`sourceUrl\`, временный \`audioUrl\` на CDN).
+2. Если трека ещё нет в S3 — **обязательно загрузить** в бакет:
+   \`\`\`bash
+   # из корня репо, с VPN (cdn.pixabay.com) и настроенным .env.backend.local
+   node frontend/scripts/mirror-catalog-music-to-s3.mjs
+   \`\`\`
+   Скрипт кладёт файлы в \`catalog-music/{id}.mp3\` и выставляет \`audioUrl: "/api/catalog-music/{id}"\`. Не оставляй прямые ссылки на \`cdn.pixabay.com\` — из РФ они часто недоступны.
+3. Пропиши пресет в \`templateMusicTrackIds\` (\`frontend/src/editor/music-tracks.ts\`):
+   \`\`\`ts
+   "<template-id>": "<track-id>",
+   \`\`\`
+4. В UI плеера гости видят \`musicTitle\` из пресета — название трека на русском.
+
 ## Вспомогательные данные (передаёт оболочка, не пользователь)
 
 \`\`\`ts
@@ -642,8 +660,10 @@ frontend/src/invitation-templates/<slug>/
 \`\`\`
 
 После генерации нужно:
-1. Добавить объект в \`defaultInviteTemplates\` (\`id\`, \`name\`, \`description\`, \`coverType\`, \`defaultPaletteId\`, \`recommendedPaletteIds\`, \`tags\`, \`screenshot\`, \`preview\`). Первая палитра в \`recommendedPaletteIds\` должна совпадать с \`defaultPaletteId\`.
-2. Подключить компонент в \`invitation-builder.tsx\` и \`published-invite-site.tsx\`.
+1. Добавить объект в \`inviteTemplateCatalog\` (\`packages/shared/src/invite-template-catalog.ts\`) с \`kind\`, \`editorReady\`, русским \`name\`, \`defaultPaletteId\`, \`recommendedPaletteIds\`, скриншотом. Первая палитра в \`recommendedPaletteIds\` = \`defaultPaletteId\`.
+2. Для нового \`kind\` — папка \`frontend/src/invitation-templates/<kind>/\` + запись в \`registry.ts\`.
+3. Назначить **уникальный** демо-трек в \`templateMusicTrackIds\` и при необходимости залить его в S3 (\`mirror-catalog-music-to-s3.mjs\`).
+4. Пересобрать shared: \`npm run build --workspace @invite/shared\`.
 
 ## Обязательный чеклист секций
 

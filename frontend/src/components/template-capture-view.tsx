@@ -19,7 +19,7 @@ export default function TemplateCaptureView({
 }: TemplateCaptureViewProps) {
   return (
     <div className={styles.root} data-template-capture={template.id}>
-      <div className={styles.screen}>
+      <div className={styles.screen} data-template-capture-screen>
         <InviteSiteRenderer
           asMain={false}
           invite={invite}

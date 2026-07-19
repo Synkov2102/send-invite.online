@@ -7,6 +7,9 @@ const defaultRegion = "ru-central1";
 const s3RefPrefix = "s3://";
 const inviteImageKeyPrefix = "invite-images/";
 const inviteMusicKeyPrefix = "invite-music/";
+const catalogMusicKeyPrefix = "catalog-music/";
+
+const catalogTrackIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const audioExtensions: Record<string, string> = {
   "audio/mpeg": "mp3",
@@ -220,7 +223,8 @@ export class S3StorageService implements OnModuleDestroy {
 
     if (
       !parsed.key.startsWith(inviteImageKeyPrefix) &&
-      !parsed.key.startsWith(inviteMusicKeyPrefix)
+      !parsed.key.startsWith(inviteMusicKeyPrefix) &&
+      !parsed.key.startsWith(catalogMusicKeyPrefix)
     ) {
       throw new Error("S3 object key is not allowed.");
     }
@@ -236,6 +240,28 @@ export class S3StorageService implements OnModuleDestroy {
       buffer: await readObjectBody(response.Body),
       cacheControl: response.CacheControl ?? "public, max-age=31536000, immutable",
       contentType: response.ContentType ?? "application/octet-stream",
+    };
+  }
+
+  async getCatalogMusicObject(trackId: string) {
+    if (!catalogTrackIdPattern.test(trackId)) {
+      throw new Error("Invalid catalog track id.");
+    }
+
+    const config = this.getS3Config();
+    const key = `${catalogMusicKeyPrefix}${trackId}.mp3`;
+
+    const response = await this.getS3Client(config).send(
+      new GetObjectCommand({
+        Bucket: config.bucket,
+        Key: key,
+      }),
+    );
+
+    return {
+      buffer: await readObjectBody(response.Body),
+      cacheControl: response.CacheControl ?? "public, max-age=31536000, immutable",
+      contentType: response.ContentType ?? "audio/mpeg",
     };
   }
 }

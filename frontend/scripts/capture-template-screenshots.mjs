@@ -14,6 +14,7 @@ const templateIds = [
   "clarity-editorial",
   "minimal-paper",
   "electric-vows",
+  "editorial-vow",
 ];
 
 const waitMsByTemplate = {
@@ -23,6 +24,7 @@ const waitMsByTemplate = {
   "clarity-editorial": 2500,
   "minimal-paper": 2500,
   "electric-vows": 2500,
+  "editorial-vow": 2500,
 };
 
 const preparePageByTemplate = {};
@@ -39,16 +41,19 @@ for (const templateId of templateIds) {
   const url = `${baseUrl}/templates/capture/${templateId}`;
 
   await page.goto(url, { waitUntil: "networkidle", timeout: 120_000 });
-  await page.waitForSelector(`[data-template-capture="${templateId}"] .template-capture__screen`, {
-    timeout: 30_000,
-  });
+  await page.waitForSelector(
+    `[data-template-capture="${templateId}"] [data-template-capture-screen]`,
+    {
+      timeout: 30_000,
+    },
+  );
   await page.addStyleTag({ content: "nextjs-portal { display: none !important; }" });
   await page.waitForTimeout(waitMsByTemplate[templateId] ?? 3000);
   await preparePageByTemplate[templateId]?.(page);
 
   const mobileName = `${templateId}-mobile.png`;
 
-  await page.locator(".template-capture__screen").screenshot({
+  await page.locator(`[data-template-capture="${templateId}"] [data-template-capture-screen]`).screenshot({
     path: path.join(templatesDir, mobileName),
     type: "png",
   });

@@ -231,16 +231,31 @@ import {
 - `InvitationAdditionalInfoBlock` — props `show`, `text`, `variant?`. Рендерить только если `invite.showAdditionalInfo`.
 - Не дублируй разметку этих блоков с нуля — используй shared components.
 
+## Демо-музыка шаблона (обязательно)
+
+У каждого шаблона — **свой уникальный** трек. Не переиспользуй id из `templateMusicTrackIds` в `frontend/src/editor/music-tracks.ts`.
+
+1. Выбери трек из `editorMusicTracks` или добавь новый (короткое русское `title`, Pixabay `sourceUrl`).
+2. Если файла ещё нет в S3 — залей скриптом (нужен VPN до `cdn.pixabay.com` и `.env.backend.local`):
+
+```bash
+node frontend/scripts/mirror-catalog-music-to-s3.mjs
+```
+
+Скрипт кладёт `catalog-music/{id}.mp3` и ставит `audioUrl: "/api/catalog-music/{id}"`. Прямые ссылки на Pixabay CDN не использовать — из РФ часто недоступны.
+
+3. Пропиши пресет: `"<template-id>": "<track-id>"` в `templateMusicTrackIds`.
+
 ## Структура файлов
 
 ```
-frontend/src/invitation-templates/<slug>/
+frontend/src/invitation-templates/<kind>/
   template.tsx
   template.module.css
   index.ts
 ```
 
-Регистрация: `defaultInviteTemplates`, `invitation-builder.tsx`, `published-invite-site.tsx`.
+Регистрация: `inviteTemplateCatalog` (`packages/shared`), `registry.ts` для нового `kind`, уникальный трек в `templateMusicTrackIds`, затем `npm run build --workspace @invite/shared`.
 
 ## Референсы в репозитории
 
@@ -256,8 +271,8 @@ frontend/src/invitation-templates/<slug>/
 2. `template.tsx`
 3. `template.module.css`
 4. `index.ts`
-5. JSON для `defaultInviteTemplates`
-6. Фрагменты регистрации в builder / published view
+5. Запись для `inviteTemplateCatalog` + id уникального демо-трека
+6. Фрагменты регистрации (`registry.ts` при новом kind)
 
 Без TODO и без хардкода пользовательских текстов.
 

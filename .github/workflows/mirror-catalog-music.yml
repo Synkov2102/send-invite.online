@@ -1,0 +1,50 @@
+name: Mirror catalog music to S3
+
+# Downloads Pixabay catalog tracks on GitHub-hosted runners (outside RU DPI),
+# uploads them to S3, and opens a PR that rewrites music-tracks.ts URLs.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        env:
+          HUSKY: 0
+        run: npm ci --workspace backend --include-workspace-root
+
+      - name: Mirror tracks to S3
+        env:
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          S3_ENDPOINT: ${{ secrets.S3_ENDPOINT }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          S3_FORCE_PATH_STYLE: ${{ secrets.S3_FORCE_PATH_STYLE }}
+        run: node frontend/scripts/mirror-catalog-music-to-s3.mjs
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "fix: serve catalog music from S3"
+          title: "fix: serve catalog music from S3"
+          body: |
+            Mirrors Pixabay catalog tracks into `catalog-music/` on S3 and points
+            `music-tracks.ts` at `/api/catalog-music/{id}` so playback works from RU.
+          branch: chore/mirror-catalog-music
+          delete-branch: true

@@ -159,6 +159,8 @@ Runtime-валидация **только через Zod** в `packages/shared/s
 
 Каталог шаблонов: `invite-template-catalog.ts`. Новый шаблон на существующем движке — запись в `inviteTemplateCatalog` + скриншот в `frontend/public/images/templates/`. Новый движок — папка `frontend/src/invitation-templates/<kind>/` + `registry.ts`.
 
+У каждого шаблона — **уникальный** демо-трек в `templateMusicTrackIds` (`frontend/src/editor/music-tracks.ts`). Новые треки заливать в S3: `node frontend/scripts/mirror-catalog-music-to-s3.mjs` (VPN до Pixabay), URL вида `/api/catalog-music/{id}`.
+
 ## Безопасность
 
 - Сессия: httpOnly cookie `invite_session` на frontend; backend принимает Bearer **или** эту cookie (`getSessionToken`). Server Components / BFF обычно шлют Bearer.

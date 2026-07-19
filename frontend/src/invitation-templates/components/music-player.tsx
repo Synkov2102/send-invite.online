@@ -21,6 +21,8 @@ export type InvitationMusicPlayerHandle = {
   start: () => Promise<boolean>;
 };
 
+const GESTURE_EVENTS = ["pointerdown", "click", "keydown"] as const;
+
 export const InvitationMusicPlayer = forwardRef<
   InvitationMusicPlayerHandle,
   InvitationMusicPlayerProps
@@ -32,6 +34,8 @@ export const InvitationMusicPlayer = forwardRef<
   const audioRef = useRef<HTMLAudioElement>(null);
   const playbackAbortRef = useRef<AbortController | null>(null);
   const skipResetRef = useRef(true);
+  const chipRef = useRef<HTMLButtonElement>(null);
+  const unlockPendingRef = useRef(autoStart);
 
   const startPlayback = useCallback(async () => {
     const audio = audioRef.current;
@@ -95,7 +99,8 @@ export const InvitationMusicPlayer = forwardRef<
     audio.pause();
     audio.currentTime = 0;
     setPlaying(false);
-  }, [url, enabled]);
+    unlockPendingRef.current = autoStart;
+  }, [autoStart, url, enabled]);
 
   useEffect(() => {
     if (!autoStart || !enabled || !url) {
@@ -110,22 +115,60 @@ export const InvitationMusicPlayer = forwardRef<
       return;
     }
 
-    function handleGesture() {
-      void startPlayback();
+    unlockPendingRef.current = true;
+    let active = true;
+    let gestureAttempt = false;
+
+    function isMusicChipEvent(event: Event) {
+      const chip = chipRef.current;
+      const target = event.target;
+
+      return Boolean(
+        chip && target instanceof Node && chip.contains(target),
+      );
     }
 
-    document.addEventListener("click", handleGesture, {
-      capture: true,
-      once: true,
-    });
-    document.addEventListener("keydown", handleGesture, {
-      capture: true,
-      once: true,
-    });
+    function removeGestureListeners() {
+      for (const eventName of GESTURE_EVENTS) {
+        document.removeEventListener(eventName, handleGesture, true);
+      }
+    }
+
+    async function handleGesture(event: Event) {
+      // Ignore chip taps (own toggle) and the click that follows pointerdown.
+      if (
+        !unlockPendingRef.current ||
+        gestureAttempt ||
+        isMusicChipEvent(event)
+      ) {
+        return;
+      }
+
+      gestureAttempt = true;
+
+      try {
+        const started = await startPlayback();
+
+        if (!active || !started) {
+          return;
+        }
+
+        unlockPendingRef.current = false;
+        removeGestureListeners();
+      } finally {
+        gestureAttempt = false;
+      }
+    }
+
+    for (const eventName of GESTURE_EVENTS) {
+      document.addEventListener(eventName, handleGesture, {
+        capture: true,
+      });
+    }
 
     return () => {
-      document.removeEventListener("click", handleGesture, true);
-      document.removeEventListener("keydown", handleGesture, true);
+      active = false;
+      removeGestureListeners();
     };
   }, [autoStart, enabled, startPlayback, url]);
 
@@ -139,9 +182,11 @@ export const InvitationMusicPlayer = forwardRef<
     if (playing) {
       audio.pause();
       setPlaying(false);
+      unlockPendingRef.current = false;
       return;
     }
 
+    unlockPendingRef.current = false;
     await startPlayback();
   }
 
@@ -150,16 +195,19 @@ export const InvitationMusicPlayer = forwardRef<
   }
 
   return (
-    <div className={`invite-music ${playing ? "is-playing" : ""}`}>
+    <button
+      aria-label={playing ? "Отключить музыку" : "Включить музыку"}
+      className={`invite-music ${playing ? "is-playing" : ""}`}
+      onClick={() => {
+        void toggleMusic();
+      }}
+      ref={chipRef}
+      type="button"
+    >
       <audio loop preload={autoStart ? "auto" : "none"} ref={audioRef} src={url} />
-      <button
-        aria-label={playing ? "Отключить музыку" : "Включить музыку"}
-        className="invite-music__toggle"
-        onClick={toggleMusic}
-        type="button"
-      >
-        {playing ? <Volume2 aria-hidden size={18} /> : <VolumeX aria-hidden size={18} />}
-      </button>
+      <span aria-hidden className="invite-music__toggle">
+        {playing ? <Volume2 size={18} /> : <VolumeX size={18} />}
+      </span>
       <span className="invite-music__copy">
         <Music2 aria-hidden size={13} />
         <span>
@@ -167,6 +215,6 @@ export const InvitationMusicPlayer = forwardRef<
           <strong>{title || "Мелодия приглашения"}</strong>
         </span>
       </span>
-    </div>
+    </button>
   );
 });

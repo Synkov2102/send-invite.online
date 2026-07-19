@@ -4,11 +4,12 @@ import { S3StorageService } from "../storage/s3-storage.service";
 import { InviteResponseStore } from "./invite-response.store";
 import { InviteSiteStore } from "./invite-site.store";
 import { InviteTemplateStore } from "./invite-template.store";
+import { CatalogMusicController } from "./catalog-music.controller";
 import { SitesController } from "./sites.controller";
 import { SitesService } from "./sites.service";
 
 @Module({
-  controllers: [SitesController],
+  controllers: [CatalogMusicController, SitesController],
   exports: [SitesService],
   imports: [AuthModule],
   providers: [

@@ -17,7 +17,7 @@ import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "electric" | "minimal" | "silk";
+export type TemplateKind = "alpine" | "aqua" | "clarity" | "editorial" | "electric" | "minimal" | "silk";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -167,6 +167,38 @@ const electricEditorPreset: Partial<InviteState> = {
   paletteId: "electric-lemon",
 };
 
+const editorialEditorPreset: Partial<InviteState> = {
+  bride: "Елизавета",
+  groom: "Максим",
+  date: "2027-04-10",
+  time: "16:00",
+  city: "Санкт-Петербург",
+  venue: "Галерея на Неве",
+  address: "Английская наб., 28",
+  lead: "С любовью и радостью приглашаем вас разделить с нами этот особенный день. Будем счастливы видеть рядом самых близких.",
+  dressCode:
+    "Будем благодарны, если в своих образах вы поддержите спокойную гамму нашего праздника.",
+  dressCodeColors: ["#ded0cb", "#48647c", "#0d0b0d"],
+  schedule: [
+    { time: "16:00", title: "Сбор гостей", description: "Приветственный бокал и первые встречи" },
+    { time: "16:30", title: "Церемония", description: "Самый важный момент этого дня" },
+    { time: "17:30", title: "Ужин", description: "Поздравления, музыка и разговоры" },
+    { time: "20:00", title: "Фотосессия", description: "Поймаем мягкий вечерний свет" },
+    { time: "21:00", title: "Финал", description: "Торт, танцы и объятия" },
+  ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+editorial-guests",
+  groupChatText:
+    "В общем чате гостей будут новости дня, детали трансфера и фотографии после праздника.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "После свадьбы мы отправимся в путешествие. Если вы захотите сделать подарок, будем рады вкладу в наши будущие впечатления вместо цветов.",
+  rsvpText:
+    "Пожалуйста, подтвердите присутствие. Ваши ответы помогут нам внимательно подготовить этот день.",
+  rsvpDate: "2027-03-15",
+  paletteId: "ivory-noir",
+};
+
 const alpineEditorPreset: Partial<InviteState> = {
   showGroupChat: true,
   groupChatUrl: "https://t.me/+invite-guests",
@@ -180,14 +212,25 @@ const alpineEditorPreset: Partial<InviteState> = {
 export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   {
     id: "alpine-rings",
-    name: "Альпийские кольца",
+    name: "Кольца",
     description: "Обложка с 3D-кольцами и спокойной горной палитрой.",
     coverType: "rings",
     kind: "alpine",
     editorReady: true,
     editorPreset: alpineEditorPreset,
     defaultPaletteId: "alpine",
-    recommendedPaletteIds: ["alpine", "pine", "granite", "frost", "dawn", "pearl"],
+    recommendedPaletteIds: [
+      "alpine",
+      "pine",
+      "granite",
+      "frost",
+      "dawn",
+      "pearl",
+      "alpine-twilight",
+      "alpine-lilac",
+      "alpine-berry",
+      "alpine-terracotta",
+    ],
     tags: ["3D", "минимализм"],
     screenshot: "/images/templates/alpine-rings-mobile.png",
     preview: {
@@ -226,7 +269,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   },
   {
     id: "silk-monogram",
-    name: "Silk monogram",
+    name: "Шёлк",
     description: "Классическое приглашение с шелковым фоном, черно-белыми фото и монограммой пары.",
     coverType: "arch",
     kind: "silk",
@@ -245,7 +288,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   },
   {
     id: "clarity-editorial",
-    name: "Clarity",
+    name: "Ясность",
     description: "Минималистичное приглашение с журнальной типографикой, крупной фотографией и ясной композицией.",
     coverType: "arch",
     kind: "clarity",
@@ -264,7 +307,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   },
   {
     id: "electric-vows",
-    name: "Electric vows",
+    name: "Неон",
     description: "Яркое плакатное приглашение с контрастной типографикой, цветными полями и дерзкой журнальной сеткой.",
     coverType: "arch",
     kind: "electric",
@@ -294,7 +337,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   },
   {
     id: "minimal-paper",
-    name: "Тихая история",
+    name: "Бумага",
     description: "Фарфорово-синее приглашение с рукописной типографикой, воздушной вёрсткой и авторской line-art иллюстрацией.",
     coverType: "arch",
     kind: "minimal",
@@ -320,6 +363,37 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#f7f3ea",
       ink: "#26394c",
       accent: "#466f96",
+    },
+  },
+  {
+    id: "editorial-vow",
+    name: "Галерея",
+    description:
+      "Контрастное приглашение с тёплой бумагой, чёрными деталями, крупной антиквой и атмосферной фотосерией.",
+    coverType: "arch",
+    kind: "editorial",
+    editorReady: true,
+    editorPreset: editorialEditorPreset,
+    defaultPaletteId: "ivory-noir",
+    recommendedPaletteIds: [
+      "ivory-noir",
+      "editorial-oxblood",
+      "editorial-midnight",
+      "editorial-forest",
+      "editorial-terracotta",
+      "editorial-plum",
+      "editorial-mocha",
+      "editorial-dusty-rose",
+      "editorial-slate",
+      "editorial-sepia",
+    ],
+    tags: ["фото", "editorial"],
+    screenshot: "/images/templates/editorial-vow-mobile.png",
+    preview: {
+      background: "#09090b",
+      surface: "#f6f1e9",
+      ink: "#121113",
+      accent: "#48647c",
     },
   },
 ];

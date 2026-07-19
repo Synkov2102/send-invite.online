@@ -17,6 +17,7 @@ import {
   clarityImages,
   createInviteVars,
   createRingColor,
+  editorialImages,
   electricImages,
   inviteImages,
   minimalImages,
@@ -56,11 +57,13 @@ export function InviteSiteRenderer({
           ? silkImages
           : templateKind === "electric"
             ? electricImages
-            : templateKind === "minimal"
-              ? minimalImages
-              : templateKind === "clarity"
-                ? clarityImages
-                : inviteImages;
+            : templateKind === "editorial"
+              ? editorialImages
+              : templateKind === "minimal"
+                ? minimalImages
+                : templateKind === "clarity"
+                  ? clarityImages
+                  : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;

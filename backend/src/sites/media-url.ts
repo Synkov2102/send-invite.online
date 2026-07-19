@@ -64,6 +64,12 @@ export function isAllowedStoredS3Ref(url: string) {
   );
 }
 
+const catalogMusicPathPattern = /^\/api\/catalog-music\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export function isCatalogMusicApiPath(url: string) {
+  return catalogMusicPathPattern.test(url);
+}
+
 export function assertAllowedStoredMediaUrl(
   url: string,
   fieldLabel: string,
@@ -74,6 +80,10 @@ export function assertAllowedStoredMediaUrl(
   }
 
   if (url.startsWith("data:")) {
+    return;
+  }
+
+  if (isCatalogMusicApiPath(url)) {
     return;
   }
 

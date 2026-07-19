@@ -27,6 +27,7 @@
 *.pem
 .invite-sites/
 /tmp/
+frontend/.cache/
 
 # debug
 npm-debug.log*

@@ -44,6 +44,9 @@ export const sharedTemplateRenderers: Record<
     () => import("./electric").then((module) => module.ElectricTemplate),
     { ssr: true },
   ),
+  editorial: dynamic(() => import("./editorial").then((module) => module.EditorialTemplate), {
+    ssr: true,
+  }),
   minimal: dynamic(
     () => import("./minimal").then((module) => module.MinimalTemplate),
     { ssr: true },
