@@ -25,4 +25,17 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    files: ["scripts/**/*.{js,mjs,cjs}", "jest.config.cjs"],
+    languageOptions: {
+      globals: {
+        __dirname: "readonly",
+        __filename: "readonly",
+        console: "readonly",
+        module: "readonly",
+        process: "readonly",
+        require: "readonly",
+      },
+    },
+  },
 );
