@@ -4,10 +4,21 @@ import { SitesModule } from "../sites/sites.module";
 import { PaymentOrderStore } from "./payment-order.store";
 import { PaymentsController } from "./payments.controller";
 import { PaymentsService } from "./payments.service";
+import { PromoCodeEventStore } from "./promo-code-event.store";
+import { PromoCodeStore } from "./promo-code.store";
+import { PromoService } from "./promo.service";
+import { PromoUserUsageStore } from "./promo-user-usage.store";
 
 @Module({
   controllers: [PaymentsController],
   imports: [AuthModule, SitesModule],
-  providers: [PaymentOrderStore, PaymentsService],
+  providers: [
+    PaymentOrderStore,
+    PaymentsService,
+    PromoCodeEventStore,
+    PromoCodeStore,
+    PromoService,
+    PromoUserUsageStore,
+  ],
 })
 export class PaymentsModule {}

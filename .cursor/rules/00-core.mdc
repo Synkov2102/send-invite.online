@@ -11,5 +11,6 @@ alwaysApply: true
 - Минимальный diff; не рефакторить без запроса; не коммитить/пушить без просьбы.
 - Env в **корне**: `.env.backend.local`, `.env.frontend.local` (+ production).
 - После правок shared или кросс-пакетных изменений: `npm run build`.
+- Backend-тесты: Jest в `backend/src/**/*.spec.ts`; `npm run test:backend`; на pre-commit при изменениях в `backend/**`.
 - Runtime-валидация только через Zod в `packages/shared/src/schemas/`.
 - Секреты и `.env` (не `.example`) — не в git.

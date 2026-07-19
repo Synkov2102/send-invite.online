@@ -1,0 +1,43 @@
+---
+description: Как писать и запускать тесты backend (NestJS + Jest)
+globs: backend/**/*.{ts,js,cjs},backend/jest.config.cjs
+alwaysApply: false
+---
+
+# Backend testing
+
+Полная инструкция: `AGENTS.md` → раздел «Тесты backend».
+
+## Стек
+
+- **Jest 29** + **ts-jest** + **`@nestjs/testing`**
+- Unit-тесты рядом с кодом: `*.spec.ts` в `backend/src/`
+- Запуск: `npm run test:backend` (из корня) или `npm test` в `backend/`
+- На pre-commit (husky + lint-staged): suite гоняется, если в коммите есть `backend/**`
+
+## Как писать
+
+1. Тестируйте **сервисы и чистые хелперы**, не stores/Mongo напрямую (stores мокайте).
+2. Собирайте модуль через `Test.createTestingModule({ providers: [...] }).compile()`.
+3. Мокайте зависимости (`PaymentOrderStore`, `SitesService`, `PromoService`, …) через `{ provide, useValue }`.
+4. Arrange–Act–Assert; один сценарий = один `it`.
+5. Для платежей выставляйте `ROBOKASSA_TEST_*` env в `beforeEach` и восстанавливайте в `afterEach`.
+6. Не вызывайте `module.init()`, если не нужен `OnModuleInit` (у `PaymentsService` есть interval sweep).
+7. Не пишите e2e/supertest без явной просьбы; сначала unit на критичные флоу.
+
+## Что покрывать в payments/promo
+
+- Checkout: полная цена, reuse pending, смена promo-snapshot (cancel+release+reserve), free-promo, reject promo, free+confirm fail (no publish)
+- `completePayment` / Result URL: success, cancel race, already cancelled, amount mismatch, bad signature
+- Promo reserve/release/TTL expire; per-user store reserve (duplicate key path)
+- Order store cancel: только winners `findOneAndUpdate` попадают в release-list
+- Public order status **без** `promoCode`
+- Подпись Robokassa: create / validate / bad algorithm
+
+Store-тесты: мокайте `MongoDbService` через `payments/test/mongo-collection.mock.ts`, без реальной Mongo.
+
+## Чего не делать
+
+- Не ходить в реальный Mongo/S3/Robokassa из unit-тестов.
+- Не коммитить `.only` / `.skip` без причины.
+- Не дублировать огромные fixture-файлы — фабрики `makeOrder` / `makePromo` в spec.

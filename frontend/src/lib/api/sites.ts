@@ -1,21 +1,10 @@
 import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
+import type { CheckoutResult } from "@/lib/api/payments";
 
 type SiteMutationResult = {
   error?: string;
   id?: string;
   url?: string;
-};
-
-type CheckoutResult = {
-  action?: string;
-  error?: string;
-  fields?: Record<string, string>;
-  order?: {
-    amount: string;
-    id: string;
-    siteId: string;
-    status: "pending";
-  };
 };
 
 export async function saveInviteSite(payload: CreateInviteSitePayload, siteId?: string) {
@@ -42,22 +31,29 @@ export async function saveInviteSite(payload: CreateInviteSitePayload, siteId?: 
 export async function startInviteSiteCheckout(
   payload: CreateInviteSitePayload,
   siteId?: string,
+  promoCode?: string,
 ) {
   const response = await fetch("/api/payments/checkout", {
-    body: JSON.stringify({ site: payload, siteId }),
+    body: JSON.stringify({
+      promoCode: promoCode || undefined,
+      site: payload,
+      siteId,
+    }),
     headers: {
       "Content-Type": "application/json",
     },
     method: "POST",
   });
   const result = (await response.json()) as CheckoutResult;
+  const isFreeCheckout =
+    result.free === true && typeof result.order?.id === "string" && result.order.status === "paid";
+  const isPaidCheckout =
+    typeof result.action === "string" &&
+    Boolean(result.fields) &&
+    typeof result.order?.id === "string";
 
   return {
-    ok:
-      response.ok &&
-      typeof result.action === "string" &&
-      Boolean(result.fields) &&
-      typeof result.order?.id === "string",
+    ok: response.ok && (isFreeCheckout || isPaidCheckout),
     result,
     status: response.status,
   };

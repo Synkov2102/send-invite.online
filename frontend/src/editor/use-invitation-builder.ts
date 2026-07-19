@@ -1,11 +1,13 @@
 "use client";
 
 import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
+import { previewPromoCode } from "@/lib/api/payments";
 import {
   saveInviteSite,
   startInviteSiteCheckout,
   submitRobokassaForm,
 } from "@/lib/api/sites";
+import { getListPromoPricing } from "@/lib/commerce";
 import {
   getTemplateKind,
 } from "@/lib/invite-templates";
@@ -47,6 +49,13 @@ import { getEditorStepErrors } from "./validation";
 const leaveEditorMessage =
   "Есть несохраненные изменения. Выйти из редактора без сохранения?";
 
+export type AppliedPromo = {
+  amount: string;
+  discountAmount: string;
+  originalAmount: string;
+  promoCode: string;
+};
+
 export function useInvitationBuilder({
   initialInvite,
   initialIsFullscreenPreview = false,
@@ -81,7 +90,12 @@ export function useInvitationBuilder({
   const [acceptedPurchaseTerms, setAcceptedPurchaseTerms] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
   const [photoError, setPhotoError] = useState<string | null>(null);
+  const [promoCodeInput, setPromoCodeInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<AppliedPromo | null>(null);
+  const [promoError, setPromoError] = useState<string | null>(null);
+  const [isApplyingPromo, setIsApplyingPromo] = useState(false);
   const requiresPayment = !siteId || !initialIsPaid;
+  const checkoutPricing = appliedPromo ?? getListPromoPricing();
 
   const palettes = useMemo(() => getTemplatePalettes(template.id), [template.id]);
   const templatePalette = palettes.find((item) => item.id === invite.paletteId);
@@ -497,6 +511,65 @@ export function useInvitationBuilder({
     return () => window.clearTimeout(timeout);
   }, [siteId, template.id]);
 
+  async function applyPromoCode() {
+    if (isApplyingPromo || !requiresPayment) {
+      return;
+    }
+
+    const code = promoCodeInput.trim();
+
+    if (!code) {
+      setPromoError("Введите промокод.");
+      return;
+    }
+
+    const returnTo = siteId
+      ? `/editor?site=${encodeURIComponent(siteId)}&template=${encodeURIComponent(template.id)}`
+      : `/editor?template=${encodeURIComponent(template.id)}`;
+
+    if (!isAuthenticated) {
+      router.push(`/auth?mode=login&returnTo=${encodeURIComponent(returnTo)}`);
+      return;
+    }
+
+    setIsApplyingPromo(true);
+    setPromoError(null);
+
+    try {
+      const { ok, result, status } = await previewPromoCode(code);
+
+      if (status === 401) {
+        router.push(`/auth?mode=login&returnTo=${encodeURIComponent(returnTo)}`);
+        return;
+      }
+
+      if (!ok) {
+        setAppliedPromo(null);
+        setPromoError(result.error ?? "Промокод недействителен или уже недоступен.");
+        return;
+      }
+
+      setAppliedPromo({
+        amount: result.amount,
+        discountAmount: result.discountAmount,
+        originalAmount: result.originalAmount,
+        promoCode: result.promoCode,
+      });
+      setPromoCodeInput(result.promoCode);
+    } catch {
+      setAppliedPromo(null);
+      setPromoError("Не удалось проверить промокод.");
+    } finally {
+      setIsApplyingPromo(false);
+    }
+  }
+
+  function clearPromoCode() {
+    setAppliedPromo(null);
+    setPromoCodeInput("");
+    setPromoError(null);
+  }
+
   async function publishSite() {
     if (isPublishing) {
       return;
@@ -523,6 +596,15 @@ export function useInvitationBuilder({
       return;
     }
 
+    if (
+      requiresPayment &&
+      promoCodeInput.trim() &&
+      (!appliedPromo || appliedPromo.promoCode !== promoCodeInput.trim().toUpperCase())
+    ) {
+      setPublishError("Сначала нажмите «Применить», чтобы активировать промокод.");
+      return;
+    }
+
     setIsPublishing(true);
     setPublishError(null);
 
@@ -534,14 +616,27 @@ export function useInvitationBuilder({
 
     try {
       if (requiresPayment) {
-        const { ok, result, status } = await startInviteSiteCheckout(payload, siteId);
+        const { ok, result, status } = await startInviteSiteCheckout(
+          payload,
+          siteId,
+          appliedPromo?.promoCode,
+        );
 
         if (status === 401) {
           router.push(`/auth?mode=login&returnTo=${encodeURIComponent(returnTo)}`);
           return;
         }
 
-        if (!ok || !result.action || !result.fields) {
+        if (!ok) {
+          throw new Error(result.error ?? "Не удалось перейти к оплате.");
+        }
+
+        if (result.free) {
+          router.push(result.order?.siteUrl ?? "/dashboard");
+          return;
+        }
+
+        if (!result.action || !result.fields) {
           throw new Error(result.error ?? "Не удалось перейти к оплате.");
         }
 
@@ -770,6 +865,10 @@ export function useInvitationBuilder({
     acceptedPurchaseTerms,
     activeStep,
     allErrors,
+    appliedPromo,
+    applyPromoCode,
+    checkoutPricing,
+    clearPromoCode,
     continueToNextStep,
     coverImage,
     confirmLeaveEditor,
@@ -777,6 +876,7 @@ export function useInvitationBuilder({
     effectiveInvite,
     hasRingControls,
     invite,
+    isApplyingPromo,
     isFullscreenPreview,
     isPublishing,
     isTemplateEntryPreview,
@@ -788,6 +888,8 @@ export function useInvitationBuilder({
     photoError,
     portraitImage,
     previewDevice,
+    promoCodeInput,
+    promoError,
     publishError,
     publishSite,
     requiresPayment,
@@ -798,6 +900,7 @@ export function useInvitationBuilder({
     setIsFullscreenPreview: setFullscreenPreview,
     setPaletteMode,
     setPreviewDevice,
+    setPromoCodeInput,
     siteId,
     stepErrors,
     template,

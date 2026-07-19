@@ -23,7 +23,7 @@
 5. **Не коммитьте секреты** — `.env.*` (кроме `*.example`) в git не попадают.
 6. **Проверяйте сборку** — после нетривиальных изменений: `npm run build` или хотя бы `npm run build --workspace @invite/shared` + затронутый workspace.
 7. **Комментарии** — только для неочевидной бизнес-логики, не для банальностей.
-8. **Тесты** — добавляйте только если пользователь попросил или они реально ловят регрессию.
+8. **Тесты** — для backend см. раздел «Тесты backend». Платежи/промо без тестов не оставляйте; остальное — по запросу или если ловят регрессию.
 
 ## Окружение
 
@@ -124,10 +124,39 @@ frontend/src/editor/
 
 - Конфиг: `ROBOKASSA_*` в `.env.backend.*`, `ROBOKASSA_TEST_MODE=true` для тестов.
 - Result URL — Password2, Success redirect — Password1.
-- `completePayment` всегда вызывает `publishAfterPayment` (self-healing).
-- Повторный checkout для того же сайта переиспользует pending-заказ.
+- `completePayment` публикует сайт **только** если заказ реально `paid` (после `markPaidIfPending` или уже paid); cancelled mid-flight — отказ, без publish.
+- Повторный checkout с тем же promo-snapshot переиспользует pending; иначе cancel + release reserve + новый заказ.
+- Промо: резерв слота на checkout (`usedCount` + `promo_user_usage`), confirm после оплаты, TTL pending 60 мин.
 
 Подробности настройки — `DEPLOYMENT.md`.
+
+## Тесты backend
+
+Стек: **Jest 29** + **ts-jest** + **`@nestjs/testing`**. Файлы: `backend/src/**/*.spec.ts` (colocated).
+
+### Команды
+
+```bash
+npm run test:backend              # из корня
+npm test --workspace invite-backend
+npm run test:watch --workspace invite-backend
+```
+
+### Husky
+
+`pre-commit` → `lint-staged`. Если в коммите есть `backend/**/*.{ts,js,cjs,mjs}`, дополнительно запускается `npm run test:backend`. Падение suite блокирует коммит.
+
+### Практика для AI / разработчиков
+
+1. **Unit-first** — тестируйте сервисы и чистые функции; Mongo stores / S3 / Robokassa HTTP мокайте.
+2. Модуль: `Test.createTestingModule({ providers: [Service, { provide: Dep, useValue: mock }] }).compile()`.
+3. Не зовите `module.init()` без нужды (`PaymentsService` поднимает interval на `OnModuleInit`).
+4. Платежные тесты: в `beforeEach` задайте `ROBOKASSA_TEST_MODE=true`, `ROBOKASSA_TEST_PASSWORD1/2`, `ROBOKASSA_MERCHANT_LOGIN`; в `afterEach` восстановите env.
+5. Покрывайте критичные флоу: checkout (цена / promo / free / смена snapshot), Result URL (paid / cancel race / mismatch / bad sign), reserve/release/TTL, per-user store, public status без `promoCode`, подпись Robokassa. Store-моки — `payments/test/mongo-collection.mock.ts`.
+6. Стиль: Arrange–Act–Assert, фабрики `makeOrder`/`makePromo` в spec, без `.only` в коммите.
+7. E2E (supertest + реальная Mongo) — только по явной просьбе.
+
+Краткое правило Cursor: `.cursor/rules/backend-testing.mdc`.
 
 ## Shared (`packages/shared/`)
 
@@ -176,6 +205,7 @@ npm run dev:frontend      # :3000
 npm run dev:backend       # :3001, предварительно собирает shared
 npm run build
 npm run lint
+npm run test:backend
 docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 ```
 
@@ -195,3 +225,5 @@ docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 | `DEPLOYMENT.md`                     | VPS, Robokassa, Docker prod                         |
 | `.cursor/rules/*.mdc`               | краткие правила для Cursor по областям              |
 | `.cursor/rules/frontend-styles.mdc` | colocated CSS Modules, палитра, структура editor UI |
+| `.cursor/rules/backend-testing.mdc` | Jest/Nest unit-тесты, husky, паттерны               |
+| `backend/jest.config.cjs`           | конфиг Jest                                         |

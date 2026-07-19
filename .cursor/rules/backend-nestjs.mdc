@@ -12,5 +12,6 @@ alwaysApply: false
 - Парсинг тела сайта: `parseCreateInviteSitePayload` из `@invite/shared`.
 - Публикация только после оплаты: `publishAfterPayment`, проверки `isPaid`.
 - Robokassa: `@SkipThrottle()` на webhook; Password2 (result), Password1 (success); ответ `OK{InvId}`.
-- `completePayment` всегда вызывает `publishAfterPayment` (идемпотентность).
+- `completePayment` публикует только при статусе `paid` (не publish для cancelled).
+- Тесты: `*.spec.ts` + Jest; см. `backend-testing.mdc` / `AGENTS.md` «Тесты backend».
 - Env: `../.env.backend.local` / `../.env.backend.production` (см. `app.module.ts`).

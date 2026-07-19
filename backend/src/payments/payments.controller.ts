@@ -4,6 +4,7 @@ import {
   Get,
   Header,
   Headers,
+  Ip,
   Param,
   Post,
   Query,
@@ -11,7 +12,7 @@ import {
   UnauthorizedException,
   UseFilters,
 } from "@nestjs/common";
-import { SkipThrottle } from "@nestjs/throttler";
+import { SkipThrottle, Throttle } from "@nestjs/throttler";
 import type { Request } from "express";
 import { AuthService } from "../auth/auth.service";
 import { getSessionToken } from "../auth/bearer-token";
@@ -25,9 +26,29 @@ export class PaymentsController {
     private readonly paymentsService: PaymentsService,
   ) {}
 
+  @Throttle({ default: { limit: 20, ttl: 60_000 } })
+  @Post("promo/preview")
+  async previewPromo(
+    @Body() body: unknown,
+    @Ip() ip: string,
+    @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
+  ) {
+    const user = await this.authService.getCurrentUser(
+      getSessionToken(authorization, cookieHeader),
+    );
+
+    if (!user) {
+      throw new UnauthorizedException({ error: "Войдите в аккаунт." });
+    }
+
+    return this.paymentsService.previewPromo(body, user, ip || null);
+  }
+
   @Post("checkout")
   async createCheckout(
     @Body() body: unknown,
+    @Ip() ip: string,
     @Headers("authorization") authorization?: string,
     @Headers("cookie") cookieHeader?: string,
   ) {
@@ -39,7 +60,7 @@ export class PaymentsController {
       throw new UnauthorizedException({ error: "Войдите в аккаунт для оплаты." });
     }
 
-    return this.paymentsService.createCheckout(body, user);
+    return this.paymentsService.createCheckout(body, user, ip || null);
   }
 
   @Get("orders/:id/status")

@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { ArrowRight, ChevronLeft, Sparkles } from "lucide-react";
-import { formatInviteSitePrice } from "@/lib/commerce";
+import { formatRubPriceLabel } from "@/lib/commerce";
 import { editorSteps } from "../../constants";
 import { useEditor } from "../../editor-context";
 import styles from "./editor-step-actions.module.css";
@@ -12,6 +12,7 @@ export function EditorStepActions() {
     acceptedPurchaseTerms,
     activeStep,
     allErrors,
+    checkoutPricing,
     continueToNextStep,
     isPublishing,
     openStep,
@@ -21,6 +22,7 @@ export function EditorStepActions() {
     visibleValidationStep,
     stepErrors,
   } = useEditor();
+  const isFreeCheckout = requiresPayment && Number(checkoutPricing.amount) <= 0;
 
   return (
     <>
@@ -76,10 +78,14 @@ export function EditorStepActions() {
           >
             {isPublishing
               ? requiresPayment
-                ? "Переходим к оплате"
+                ? isFreeCheckout
+                  ? "Публикуем"
+                  : "Переходим к оплате"
                 : "Сохраняем"
               : requiresPayment
-                ? `Оплатить ${formatInviteSitePrice()}`
+                ? isFreeCheckout
+                  ? "Опубликовать бесплатно"
+                  : `Оплатить ${formatRubPriceLabel(checkoutPricing.amount)}`
                 : "Сохранить изменения"}
             <Sparkles aria-hidden size={16} />
           </Button>
