@@ -20,6 +20,7 @@ import { normalizeInviteState } from "@/lib/invite-state";
 import {
   alpineImages,
   aquaImages,
+  chromeImages,
   clarityImages,
   createRingColor,
   defaultCustomPalette,
@@ -114,15 +115,17 @@ export function useInvitationBuilder({
       ? alpineImages
       : templateKind === "aqua"
         ? aquaImages
-        : templateKind === "silk"
-          ? silkImages
-          : templateKind === "electric"
-            ? electricImages
-            : templateKind === "minimal"
-              ? minimalImages
-              : templateKind === "clarity"
-                ? clarityImages
-                : inviteImages;
+        : templateKind === "chrome"
+          ? chromeImages
+          : templateKind === "silk"
+            ? silkImages
+            : templateKind === "electric"
+              ? electricImages
+              : templateKind === "minimal"
+                ? minimalImages
+                : templateKind === "clarity"
+                  ? clarityImages
+                  : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

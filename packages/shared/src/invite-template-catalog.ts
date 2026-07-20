@@ -17,7 +17,7 @@ import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
-export type TemplateKind = "alpine" | "aqua" | "clarity" | "editorial" | "electric" | "minimal" | "silk";
+export type TemplateKind = "alpine" | "aqua" | "chrome" | "clarity" | "editorial" | "electric" | "minimal" | "silk";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -199,6 +199,37 @@ const editorialEditorPreset: Partial<InviteState> = {
   paletteId: "ivory-noir",
 };
 
+const chromeEditorPreset: Partial<InviteState> = {
+  bride: "Алина",
+  groom: "Роман",
+  date: "2026-08-09",
+  time: "15:30",
+  city: "Москва",
+  venue: "Loft Hall Small",
+  address: "ул. Ленинская Слобода, 26",
+  mapUrl: "https://yandex.ru/maps/?text=Loft%20Hall%20Small%20Москва",
+  lead: "Есть встречи, после которых всё становится иначе. Мы нашли друг друга и хотим, чтобы начало нашей новой главы случилось рядом с вами.",
+  dressCode:
+    "Поддержите атмосферу вечера образами в глубоких природных оттенках, графите, молочном и холодном серебре.",
+  dressCodeColors: ["#f0eee7", "#c7d0ce", "#1d211f", "#334336", "#747d61"],
+  schedule: [
+    { time: "15:30", title: "Сбор гостей", description: "Игристое и первые встречи" },
+    { time: "16:30", title: "Церемония", description: "Главный момент нашей истории" },
+    { time: "17:30", title: "Ужин", description: "Тосты, музыка и разговоры" },
+    { time: "23:30", title: "Финал", description: "Последний танец вечера" },
+  ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+chrome-guests",
+  groupChatText:
+    "В свадебном чате появятся новости дня, детали трансфера и фотографии после праздника.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Формат вечера — фуршет и открытый микрофон. Вместо цветов будем рады помощи фонду защиты животных. Пожалуйста, оставьте детей в надёжных руках на этот вечер.",
+  rsvpText: "Подтвердите присутствие, чтобы мы сохранили для вас место за общим столом.",
+  rsvpDate: "2026-07-20",
+  paletteId: "chrome-forest",
+};
+
 const alpineEditorPreset: Partial<InviteState> = {
   showGroupChat: true,
   groupChatUrl: "https://t.me/+invite-guests",
@@ -363,6 +394,37 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#f7f3ea",
       ink: "#26394c",
       accent: "#466f96",
+    },
+  },
+  {
+    id: "chrome-affair",
+    name: "Хром",
+    description:
+      "Модное приглашение с тёмным стеклом, молочной бумагой, серебряными бликами и журнальной типографикой.",
+    coverType: "arch",
+    kind: "chrome",
+    editorReady: true,
+    editorPreset: chromeEditorPreset,
+    defaultPaletteId: "chrome-forest",
+    recommendedPaletteIds: [
+      "chrome-forest",
+      "chrome-graphite",
+      "chrome-midnight",
+      "chrome-burgundy",
+      "chrome-plum",
+      "chrome-mocha",
+      "chrome-copper",
+      "chrome-ice",
+      "chrome-champagne",
+      "chrome-rose",
+    ],
+    tags: ["editorial", "хром"],
+    screenshot: "/images/templates/chrome-affair-mobile.png",
+    preview: {
+      background: "#101712",
+      surface: "#f3f0e8",
+      ink: "#151816",
+      accent: "#7b8580",
     },
   },
   {

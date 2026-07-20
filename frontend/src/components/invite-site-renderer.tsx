@@ -14,6 +14,7 @@ import { alpineRenderer as AlpineRenderer, sharedTemplateRenderers } from "@/inv
 import {
   alpineImages,
   aquaImages,
+  chromeImages,
   clarityImages,
   createInviteVars,
   createRingColor,
@@ -53,17 +54,19 @@ export function InviteSiteRenderer({
       ? alpineImages
       : templateKind === "aqua"
         ? aquaImages
-        : templateKind === "silk"
-          ? silkImages
-          : templateKind === "electric"
-            ? electricImages
-            : templateKind === "editorial"
-              ? editorialImages
-              : templateKind === "minimal"
-                ? minimalImages
-                : templateKind === "clarity"
-                  ? clarityImages
-                  : inviteImages;
+        : templateKind === "chrome"
+          ? chromeImages
+          : templateKind === "silk"
+            ? silkImages
+            : templateKind === "electric"
+              ? electricImages
+              : templateKind === "editorial"
+                ? editorialImages
+                : templateKind === "minimal"
+                  ? minimalImages
+                  : templateKind === "clarity"
+                    ? clarityImages
+                    : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;

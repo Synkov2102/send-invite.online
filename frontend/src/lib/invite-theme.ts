@@ -74,6 +74,12 @@ export const editorialImages = {
   venue: "/images/editorial-vow-venue.png",
 } as const;
 
+export const chromeImages = {
+  cover: "/images/chrome-affair-cover.png",
+  portrait: "/images/chrome-affair-portrait.png",
+  venue: "/images/chrome-affair-venue.png",
+} as const;
+
 const ringColors = {
   gold: "#d7a83a",
   silver: "#d8dbe0",

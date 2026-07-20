@@ -36,6 +36,9 @@ export const sharedTemplateRenderers: Record<
   ComponentType<SharedTemplateViewProps>
 > = {
   aqua: dynamic(() => import("./aqua").then((module) => module.AquaTemplate), { ssr: true }),
+  chrome: dynamic(() => import("./chrome").then((module) => module.ChromeTemplate), {
+    ssr: true,
+  }),
   clarity: dynamic(
     () => import("./clarity").then((module) => module.ClarityTemplate),
     { ssr: true },
