@@ -18,6 +18,7 @@ export const metadata: Metadata = createPageMetadata({
 
 type EditorPageProps = {
   searchParams: Promise<{
+    palette?: string | string[];
     preview?: string | string[];
     site?: string | string[];
     step?: string | string[];
@@ -28,6 +29,7 @@ type EditorPageProps = {
 export default async function EditorPage({ searchParams }: EditorPageProps) {
   const query = await searchParams;
   const templateId = Array.isArray(query.template) ? query.template[0] : query.template;
+  const paletteId = Array.isArray(query.palette) ? query.palette[0] : query.palette;
   const siteId = Array.isArray(query.site) ? query.site[0] : query.site;
   const stepId = Array.isArray(query.step) ? query.step[0] : query.step;
   const preview = Array.isArray(query.preview) ? query.preview[0] : query.preview;
@@ -87,6 +89,7 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
           initialIsFullscreenPreview={preview === "1"}
           initialIsPaid={managedSite?.isPaid}
           initialPalette={managedSite?.palette}
+          initialPaletteId={paletteId}
           initialStep={initialStep}
           isAuthenticated={Boolean(user)}
           siteId={managedSite?.id}

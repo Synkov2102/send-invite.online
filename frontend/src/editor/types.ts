@@ -10,6 +10,7 @@ export type InvitationBuilderProps = {
   initialIsFullscreenPreview?: boolean;
   initialIsPaid?: boolean;
   initialPalette?: InvitePalette;
+  initialPaletteId?: string;
   initialStep?: number;
   isAuthenticated: boolean;
   siteId?: string;

@@ -14,6 +14,7 @@
     "@heroui/react": "^3.1.0",
     "@heroui/styles": "^3.1.0",
     "@invite/shared": "*",
+    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.17.0",
     "next": "16.2.6",

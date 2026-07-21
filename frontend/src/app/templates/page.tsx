@@ -56,6 +56,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
               eagerImage={index === 0}
               index={index}
               key={template.id}
+              paletteCarousel
               siteId={siteId}
               template={template}
             />

@@ -29,6 +29,7 @@ import {
   hexToRgba,
   inviteImages,
   minimalImages,
+  resolveTemplatePaletteId,
   silkImages,
   type InvitePalette,
 } from "@/lib/invite-theme";
@@ -62,6 +63,7 @@ export function useInvitationBuilder({
   initialIsFullscreenPreview = false,
   initialIsPaid = false,
   initialPalette,
+  initialPaletteId,
   initialStep = 0,
   isAuthenticated,
   siteId,
@@ -73,7 +75,18 @@ export function useInvitationBuilder({
   const [initialDraft, setInitialDraft] = useState<ReturnType<typeof readEditorDraft>>(null);
 
   const [invite, setInvite] = useState<InviteState>(
-    () => (initialInvite ? normalizeInviteState(initialInvite) : getInitialInvite(template)),
+    () => {
+      const resolvedInvite = initialInvite
+        ? normalizeInviteState(initialInvite)
+        : getInitialInvite(template);
+
+      return initialPaletteId
+        ? {
+            ...resolvedInvite,
+            paletteId: resolveTemplatePaletteId(template, initialPaletteId),
+          }
+        : resolvedInvite;
+    },
   );
   const [customPalette, setCustomPalette] = useState<InvitePalette>(
     () => initialPalette ?? defaultCustomPalette,
@@ -496,7 +509,13 @@ export function useInvitationBuilder({
     }
 
     const timeout = window.setTimeout(() => {
-      const inviteFromDraft = normalizeInviteState(draft.invite);
+      const normalizedDraftInvite = normalizeInviteState(draft.invite);
+      const inviteFromDraft = initialPaletteId
+        ? {
+            ...normalizedDraftInvite,
+            paletteId: resolveTemplatePaletteId(template, initialPaletteId),
+          }
+        : normalizedDraftInvite;
       setInitialDraft(draft);
       setInvite(inviteFromDraft);
       setCustomPalette(draft.customPalette);
@@ -512,7 +531,7 @@ export function useInvitationBuilder({
     }, 0);
 
     return () => window.clearTimeout(timeout);
-  }, [siteId, template.id]);
+  }, [initialPaletteId, siteId, template]);
 
   async function applyPromoCode() {
     if (isApplyingPromo || !requiresPayment) {
