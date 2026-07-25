@@ -183,6 +183,10 @@ export function buildOrganizationJsonLd() {
       addressLocality: seller.city,
       addressCountry: "RU",
     },
+    areaServed: {
+      "@type": "Country",
+      name: "Россия",
+    },
   };
 }
 

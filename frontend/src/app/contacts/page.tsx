@@ -25,6 +25,13 @@ export default function ContactsPage() {
         </dl>
       </section>
       <section>
+        <h2>География работы</h2>
+        <p>
+          Send Invite оказывает электронные услуги пользователям по всей России.
+          Создание, оплата и публикация сайта-приглашения выполняются онлайн.
+        </p>
+      </section>
+      <section>
         <h2>Реквизиты продавца</h2>
         <dl>
           <div><dt>Исполнитель</dt><dd>{formatSellerLegalName()}</dd></div>

@@ -838,6 +838,11 @@
 }
 
 @media (max-width: 640px) {
+  .page {
+    background: var(--paper);
+    background-size: auto;
+  }
+
   .liquidBackground {
     display: none;
   }
