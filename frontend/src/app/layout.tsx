@@ -5,6 +5,7 @@ import {
   Geist_Mono,
   Great_Vibes,
 } from "next/font/google";
+import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
 import headerBaseStyles from "@/styles/site-header-base.module.css";
 import "./globals.css";
@@ -45,6 +46,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} h-full antialiased`}
     >
       <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>{children}</body>
+      <YandexMetrika />
     </html>
   );
 }

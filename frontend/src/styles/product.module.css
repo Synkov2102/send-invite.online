@@ -2078,7 +2078,7 @@
 }
 .scope:global(.templates-page__hero),
 .scope :global(.templates-page__hero) {
-  max-width: 760px;
+  max-width: 920px;
   padding: 18px 0 56px;
 }
 .scope:global(.templates-page__hero) :global(.marketing-eyebrow),
@@ -2094,14 +2094,15 @@
 }
 .scope:global(.templates-page__hero) h1,
 .scope :global(.templates-page__hero) h1 {
-  max-width: 12ch;
+  max-width: 18ch;
   margin: 20px 0 0;
   color: var(--product-ink);
   font-family: var(--font-geist-sans), sans-serif;
-  font-size: clamp(3.2rem, 6vw, 6rem);
+  font-size: clamp(3.2rem, 5.2vw, 5.3rem);
   font-weight: 700;
-  letter-spacing: -0.07em;
-  line-height: 0.9;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  text-wrap: balance;
 }
 .scope:global(.templates-page__hero)
   > p:not(:global(.marketing-eyebrow)):not(:global(.templates-page__service)),

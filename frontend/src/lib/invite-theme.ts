@@ -80,6 +80,12 @@ export const chromeImages = {
   venue: "/images/chrome-affair-venue.png",
 } as const;
 
+export const crimsonImages = {
+  cover: "/images/crimson-editorial-cover.webp",
+  portrait: "/images/crimson-editorial-portrait.webp",
+  venue: "/images/crimson-editorial-venue.webp",
+} as const;
+
 const ringColors = {
   gold: "#d7a83a",
   silver: "#d8dbe0",

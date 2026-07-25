@@ -258,6 +258,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "alpine-rings": "wedding-the-mountain-522480",
   "chrome-affair": "wedding-background-hitslab-277976",
   "clarity-editorial": "wedding-alexgrohl-546219",
+  "crimson-letter": "love-wedding-paulyudin-160695",
   "editorial-vow": "wedding-ceremony-the-mountain-163870",
   "electric-vows": "energetic-party-humanstudioedm-513983",
   "lagoon-wave": "magical-wedding-daynigthmorning-376131",

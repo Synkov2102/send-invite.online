@@ -43,6 +43,9 @@ export const sharedTemplateRenderers: Record<
     () => import("./clarity").then((module) => module.ClarityTemplate),
     { ssr: true },
   ),
+  crimson: dynamic(() => import("./crimson").then((module) => module.CrimsonTemplate), {
+    ssr: true,
+  }),
   electric: dynamic(
     () => import("./electric").then((module) => module.ElectricTemplate),
     { ssr: true },

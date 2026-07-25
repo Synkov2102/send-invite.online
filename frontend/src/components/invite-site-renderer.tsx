@@ -18,6 +18,7 @@ import {
   clarityImages,
   createInviteVars,
   createRingColor,
+  crimsonImages,
   editorialImages,
   electricImages,
   inviteImages,
@@ -56,17 +57,19 @@ export function InviteSiteRenderer({
         ? aquaImages
         : templateKind === "chrome"
           ? chromeImages
-          : templateKind === "silk"
-            ? silkImages
-            : templateKind === "electric"
-              ? electricImages
-              : templateKind === "editorial"
-                ? editorialImages
-                : templateKind === "minimal"
-                  ? minimalImages
-                  : templateKind === "clarity"
-                    ? clarityImages
-                    : inviteImages;
+          : templateKind === "crimson"
+            ? crimsonImages
+            : templateKind === "silk"
+              ? silkImages
+              : templateKind === "electric"
+                ? electricImages
+                : templateKind === "editorial"
+                  ? editorialImages
+                  : templateKind === "minimal"
+                    ? minimalImages
+                    : templateKind === "clarity"
+                      ? clarityImages
+                      : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;
@@ -89,7 +92,7 @@ export function InviteSiteRenderer({
     templateKind !== "alpine" ? sharedTemplateRenderers[templateKind] : null;
 
   return (
-    <Wrapper className={rootClassName}>
+    <Wrapper className={rootClassName} style={inviteVars}>
       {templateKind === "alpine" ? (
         <AlpineRenderer
           {...sharedProps}

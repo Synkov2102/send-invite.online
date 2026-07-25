@@ -18,6 +18,7 @@ const waitMsByTemplate = {
   "silk-monogram": 2500,
   "chrome-affair": 2500,
   "clarity-editorial": 2500,
+  "crimson-letter": 2500,
   "minimal-paper": 2500,
   "electric-vows": 2500,
   "editorial-vow": 2500,

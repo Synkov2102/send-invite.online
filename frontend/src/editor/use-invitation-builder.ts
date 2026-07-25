@@ -23,6 +23,7 @@ import {
   chromeImages,
   clarityImages,
   createRingColor,
+  crimsonImages,
   defaultCustomPalette,
   electricImages,
   getTemplatePalettes,
@@ -130,15 +131,17 @@ export function useInvitationBuilder({
         ? aquaImages
         : templateKind === "chrome"
           ? chromeImages
-          : templateKind === "silk"
-            ? silkImages
-            : templateKind === "electric"
-              ? electricImages
-              : templateKind === "minimal"
-                ? minimalImages
-                : templateKind === "clarity"
-                  ? clarityImages
-                  : inviteImages;
+          : templateKind === "crimson"
+            ? crimsonImages
+            : templateKind === "silk"
+              ? silkImages
+              : templateKind === "electric"
+                ? electricImages
+                : templateKind === "minimal"
+                  ? minimalImages
+                  : templateKind === "clarity"
+                    ? clarityImages
+                    : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

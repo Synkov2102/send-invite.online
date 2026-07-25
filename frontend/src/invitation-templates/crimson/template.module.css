@@ -1,0 +1,721 @@
+.shell {
+  --crimson-bg: #6c1c22;
+  --crimson-paper: #fffdf9;
+  --crimson-ink: #161313;
+  --crimson-photo-text: #fffdf8;
+  --crimson-muted: #675959;
+  --crimson-accent: #b3000b;
+  --crimson-line: #d8c7c5;
+  width: min(100%, 720px);
+  max-width: 720px;
+  margin: 0 auto;
+  margin-inline: auto !important;
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--crimson-bg);
+  color: var(--crimson-ink);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+}
+
+:global(.published-site--crimson) {
+  background: var(--invite-bg, #6c1c22);
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure,
+.shell ol,
+.shell ul {
+  margin: 0;
+}
+
+.shell ol,
+.shell ul {
+  padding: 0;
+  list-style: none;
+}
+
+.photo {
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #171414;
+  color: var(--crimson-photo-text);
+}
+
+.hero .photo {
+  object-position: center 52%;
+}
+
+.heroShade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 8, 8, 0.56) 0%, transparent 34%),
+    linear-gradient(0deg, rgba(10, 8, 8, 0.86) 0%, transparent 50%);
+}
+
+.heroTopline,
+.heroCopy,
+.heroFooter {
+  position: absolute;
+  z-index: 1;
+  right: clamp(20px, 6vw, 42px);
+  left: clamp(20px, 6vw, 42px);
+}
+
+.heroTopline {
+  top: clamp(22px, 6vw, 44px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+.heroTopline span:nth-child(2) {
+  padding: 5px 12px;
+  border: 1px solid color-mix(in srgb, var(--crimson-photo-text) 76%, transparent);
+  border-radius: 999px;
+}
+
+.heroCopy {
+  top: 16%;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(10, 8, 8, 0.38);
+}
+
+.heroCopy > p {
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.heroCopy h1 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0 0.16em;
+  margin-top: 20px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(54px, 14vw, 94px);
+  font-weight: 300;
+  letter-spacing: -0.065em;
+  line-height: 0.82;
+  text-transform: uppercase;
+}
+
+.heroCopy h1 i {
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: 0.54em;
+  font-weight: 400;
+  text-transform: none;
+  transform: translateY(-0.08em);
+}
+
+.heroFooter {
+  bottom: clamp(96px, 18vw, 124px);
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.heroFooter > time {
+  font-size: clamp(20px, 5vw, 30px);
+  letter-spacing: 0.02em;
+}
+
+.heroFooter > p {
+  max-width: 29ch;
+  margin-top: 18px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.heroFooter > a {
+  width: min(100%, 360px);
+  margin-top: 20px;
+  border: 1px solid color-mix(in srgb, var(--crimson-photo-text) 80%, transparent);
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: inherit;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.greeting {
+  position: relative;
+  min-height: 900px;
+  overflow: hidden;
+  background: var(--crimson-paper);
+  padding: clamp(40px, 9vw, 70px) clamp(22px, 7vw, 54px) 360px;
+}
+
+.loveWord {
+  margin: -0.19em -0.12em 0;
+  color: var(--crimson-accent);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(166px, 54vw, 330px);
+  font-weight: 300;
+  letter-spacing: -0.12em;
+  line-height: 0.6;
+}
+
+.loveWord span {
+  display: block;
+}
+
+.loveWord span:last-child {
+  padding-left: 0.15em;
+}
+
+.greetingCopy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 24px;
+  max-width: 40ch;
+  margin-top: clamp(62px, 14vw, 94px);
+}
+
+.greetingCopy .kicker {
+  max-width: 12ch;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+}
+
+.greetingCopy > p:last-child {
+  max-width: 38ch;
+  color: color-mix(in srgb, var(--crimson-muted) 76%, var(--crimson-ink));
+  font-size: clamp(13px, 2.7vw, 16px);
+  letter-spacing: -0.015em;
+  line-height: 1.48;
+}
+
+.scriptNote {
+  position: absolute;
+  right: -3%;
+  bottom: 230px;
+  left: -8%;
+  z-index: 1;
+  color: var(--crimson-accent);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(64px, 19vw, 120px);
+  line-height: 0.8;
+  text-align: center;
+  transform: rotate(-7deg);
+}
+
+.greetingPhoto {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 330px;
+  overflow: hidden;
+}
+
+.greetingPhoto .photo {
+  object-position: center 58%;
+  filter: grayscale(1) blur(1.2px);
+}
+
+.location {
+  padding: clamp(48px, 10vw, 76px) clamp(22px, 6vw, 46px) clamp(44px, 9vw, 68px);
+  background: var(--crimson-bg);
+  color: var(--crimson-photo-text);
+}
+
+.locationHeading {
+  position: relative;
+  padding-top: 10px;
+}
+
+.locationHeading > span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.locationHeading h2 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(116px, 35vw, 220px);
+  font-weight: 300;
+  letter-spacing: -0.085em;
+  line-height: 0.68;
+}
+
+.locationHeading h2 span {
+  display: block;
+}
+
+.locationMeta {
+  display: grid;
+  gap: 4px;
+  margin-top: clamp(60px, 15vw, 96px);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.locationMeta > p {
+  font-weight: 700;
+}
+
+.locationMeta address {
+  font-style: normal;
+}
+
+.venuePhoto {
+  position: relative;
+  min-height: clamp(420px, 118vw, 680px);
+  margin-top: 28px !important;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--crimson-photo-text) 45%, transparent);
+}
+
+.venuePhoto .photo {
+  object-position: center 48%;
+}
+
+.venuePhoto > a {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--crimson-photo-text) 75%, transparent);
+  border-radius: 999px;
+  background: rgba(22, 12, 12, 0.18);
+  padding: 12px 18px;
+  color: var(--crimson-photo-text);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+
+.locationInvite {
+  max-width: 42ch;
+  margin-top: 30px !important;
+  color: color-mix(in srgb, var(--crimson-photo-text) 72%, transparent);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.dressCode,
+.program,
+.details,
+.rsvp {
+  background: var(--crimson-paper);
+}
+
+.dressCode {
+  padding: clamp(58px, 12vw, 92px) clamp(22px, 7vw, 54px);
+}
+
+.sectionNumber {
+  color: var(--crimson-accent);
+  font-size: 13px;
+}
+
+.dressCode h2,
+.program h2 {
+  margin-top: 14px;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(40px, 11vw, 70px);
+  font-weight: 450;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.dressCode > p:not(.sectionNumber) {
+  max-width: 48ch;
+  margin-top: 28px;
+  color: var(--crimson-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.dressCode ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.dressCode li {
+  display: grid;
+  gap: 7px;
+}
+
+.dressCode li > span {
+  display: block;
+  width: clamp(50px, 12vw, 72px);
+  aspect-ratio: 1;
+  border: 1px solid var(--crimson-line);
+}
+
+.dressCode li small {
+  color: var(--crimson-muted);
+  font-size: 10px;
+}
+
+.program {
+  padding: clamp(56px, 12vw, 90px) clamp(22px, 7vw, 54px);
+  border-top: 1px solid var(--crimson-line);
+}
+
+.program header > time {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--crimson-muted);
+  font-size: 13px;
+  text-transform: lowercase;
+}
+
+.program ol {
+  display: grid;
+  margin-top: 38px;
+}
+
+.program li {
+  display: grid;
+  grid-template-columns: minmax(86px, 0.35fr) 1fr;
+  gap: 22px;
+  padding: 24px 0;
+  border-top: 1px solid var(--crimson-line);
+}
+
+.program li > time {
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(34px, 8vw, 52px);
+  font-weight: 350;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.program li > div {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+}
+
+.program h3 {
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(17px, 3.5vw, 22px);
+  font-weight: 550;
+  letter-spacing: -0.02em;
+}
+
+.program li p {
+  color: var(--crimson-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.details {
+  padding-bottom: clamp(60px, 12vw, 90px);
+  border-top: 1px solid var(--crimson-line);
+}
+
+.details header {
+  position: relative;
+  min-height: clamp(200px, 54vw, 340px);
+  overflow: hidden;
+  padding: clamp(30px, 7vw, 50px) clamp(22px, 7vw, 54px);
+}
+
+.details header > span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: var(--crimson-accent);
+  font-size: 13px;
+}
+
+.details h2 {
+  position: static;
+}
+
+.detailsLetter {
+  position: absolute;
+  right: -0.12em;
+  bottom: -0.42em;
+  color: var(--crimson-accent);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(230px, 62vw, 400px);
+  font-weight: 300;
+  line-height: 1;
+}
+
+.detailsTitle {
+  position: absolute;
+  top: clamp(54px, 14vw, 90px);
+  right: clamp(22px, 7vw, 54px);
+  z-index: 1;
+  display: grid;
+  justify-items: end;
+  color: var(--crimson-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(38px, 10vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.76;
+}
+
+.detailsTitle small {
+  color: var(--crimson-accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.details ol {
+  display: grid;
+  gap: 34px;
+  padding: 0 clamp(22px, 7vw, 54px);
+}
+
+.details li {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 18px;
+}
+
+.details li > span {
+  color: var(--crimson-accent);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.details li p {
+  color: var(--crimson-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.details li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+  color: var(--crimson-accent);
+  font-size: 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.rsvp {
+  display: grid;
+  gap: 38px;
+  padding: clamp(60px, 12vw, 94px) clamp(22px, 7vw, 54px);
+  border-top: 1px solid var(--crimson-line);
+}
+
+.rsvp > header h2 {
+  margin-top: 14px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(66px, 17vw, 110px);
+  font-weight: 300;
+  letter-spacing: -0.07em;
+  line-height: 0.72;
+}
+
+.rsvp > header > p:not(.sectionNumber) {
+  max-width: 40ch;
+  margin-top: 30px;
+  color: var(--crimson-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.rsvp > header > time {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--crimson-accent);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--crimson-accent);
+  --rsvp-accent-soft: color-mix(in srgb, var(--crimson-accent) 10%, transparent);
+  --rsvp-button-text: var(--crimson-paper);
+  --rsvp-control-radius: 0;
+  --rsvp-focus-surface: var(--crimson-paper);
+  --rsvp-ink: var(--crimson-ink);
+  --rsvp-line: var(--crimson-line);
+  --rsvp-muted: var(--crimson-muted);
+  --rsvp-radius: 0;
+  --rsvp-section: transparent;
+  --rsvp-shadow: none;
+}
+
+.closing {
+  position: relative;
+  overflow: hidden;
+  background: var(--crimson-paper);
+  padding-top: clamp(100px, 25vw, 160px);
+}
+
+.closingScript {
+  position: absolute;
+  top: clamp(48px, 11vw, 78px);
+  right: -7%;
+  left: -7%;
+  z-index: 2;
+  color: var(--crimson-accent);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(72px, 20vw, 130px);
+  line-height: 0.8;
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+.closing figure {
+  position: relative;
+  min-height: clamp(600px, 150vw, 930px);
+  overflow: hidden;
+}
+
+.closing figure .photo {
+  object-position: center 49%;
+}
+
+.closing figure::after {
+  position: absolute;
+  z-index: 1;
+  inset: 46% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(15, 8, 9, 0.5));
+  content: "";
+}
+
+.closingArc {
+  position: absolute;
+  right: -20%;
+  bottom: -20%;
+  width: 78%;
+  aspect-ratio: 1;
+  border: clamp(32px, 9vw, 58px) solid var(--crimson-accent);
+  border-left-color: transparent;
+  border-radius: 50%;
+}
+
+.closingCopy {
+  position: absolute;
+  right: clamp(22px, 7vw, 54px);
+  bottom: clamp(138px, 26vw, 168px);
+  left: clamp(22px, 7vw, 54px);
+  z-index: 2;
+  color: var(--crimson-photo-text);
+  text-align: center;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+}
+
+.closingCopy > p {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.closingCopy h2 {
+  margin-top: 12px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(44px, 11vw, 72px);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.closingCopy h2 i {
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: 0.65em;
+  font-weight: 400;
+}
+
+.closingCopy time {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 12px;
+}
+
+@media (min-width: 760px) {
+  .shell {
+    box-shadow:
+      0 0 0 1px rgba(255, 253, 249, 0.06),
+      0 0 110px rgba(35, 5, 9, 0.52);
+  }
+
+  .heroCopy h1 {
+    font-size: 104px;
+  }
+
+  .heroFooter {
+    bottom: 56px;
+  }
+
+  .closingCopy {
+    bottom: 80px;
+  }
+
+  .greeting {
+    min-height: 1020px;
+  }
+
+  .greetingCopy {
+    width: 43%;
+    margin-top: -180px;
+    margin-left: auto;
+  }
+
+  .locationHeading h2 {
+    font-size: 230px;
+  }
+
+  .venuePhoto {
+    min-height: 560px;
+  }
+
+  .rsvp {
+    grid-template-columns: minmax(190px, 0.7fr) minmax(0, 1.3fr);
+    align-items: start;
+  }
+
+  .rsvp > header h2 {
+    font-size: 84px;
+    line-height: 0.8;
+  }
+}

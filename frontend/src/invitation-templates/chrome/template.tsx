@@ -356,8 +356,9 @@ function RsvpSection({ invite, siteId }: Readonly<Pick<ChromeTemplateProps, "inv
       <header>
         <span className={styles.sectionTag}>06 · RSVP</span>
         <h2>
-          Вы с<br />
-          <i>нами?</i>
+          Вы
+          <br />
+          <i>с нами?</i>
         </h2>
         <p>{invite.rsvpText}</p>
         <time dateTime={invite.rsvpDate}>Ответьте до {formatNumericDate(invite.rsvpDate)}</time>
