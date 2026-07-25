@@ -1,15 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import JsonLd from "@/components/json-ld";
 import PublishedInviteSiteView from "@/components/published-invite-site";
 import { getPublishedInviteSite } from "@/lib/backend-api";
 import { getInviteTemplate } from "@/lib/invite-templates";
 import { formatDate } from "@/lib/invite-date";
 import {
-  buildInviteWebPageJsonLd,
   createPageMetadata,
   privateRobots,
-  resolveSeoImageUrl,
 } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -61,6 +58,7 @@ export async function generateMetadata({ params }: InviteSitePageProps): Promise
     description,
     path: `/invite/sites/${id}`,
     images: coverImage ? [coverImage] : undefined,
+    robots: privateRobots,
     type: "article",
   });
 }
@@ -79,21 +77,5 @@ export default async function InviteSitePage({ params }: InviteSitePageProps) {
     notFound();
   }
 
-  const title = `${site.invite.groom} & ${site.invite.bride}`;
-  const description = buildInviteDescription(site.invite);
-  const coverImage = getInviteCoverImage(site.invite.coverImageUrl);
-
-  return (
-    <>
-      <JsonLd
-        data={buildInviteWebPageJsonLd({
-          title,
-          description,
-          path: `/invite/sites/${id}`,
-          image: coverImage ?? resolveSeoImageUrl(undefined),
-        })}
-      />
-      <PublishedInviteSiteView site={site} template={template} />
-    </>
-  );
+  return <PublishedInviteSiteView site={site} template={template} />;
 }

@@ -1,5 +1,4 @@
 import { brand } from "@/lib/brand";
-import { getCurrentUser } from "@/lib/auth";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import BrandLockup from "./brand-lockup";
@@ -11,9 +10,7 @@ type SiteHeaderProps = {
   initialUser?: HeaderUser | null;
 };
 
-export default async function SiteHeader({ active, initialUser }: SiteHeaderProps) {
-  const user = initialUser === undefined ? await getCurrentUser() : initialUser;
-
+export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <Link aria-label={brand.homeAriaLabel} className="site-header__brand" href="/">
@@ -40,10 +37,10 @@ export default async function SiteHeader({ active, initialUser }: SiteHeaderProp
 
       <div className="site-header__actions">
         <div className="site-header__desktop-user-actions">
-          <SiteHeaderUserActions initialUser={user} />
+          <SiteHeaderUserActions initialUser={initialUser} />
         </div>
 
-        <SiteHeaderMobileMenu active={active} initialUser={user} />
+        <SiteHeaderMobileMenu active={active} initialUser={initialUser} />
 
         <Link className="site-header__cta" href="/templates">
           Создать приглашение

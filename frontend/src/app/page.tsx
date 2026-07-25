@@ -10,7 +10,7 @@ import { defaultInviteTemplates } from "@/lib/invite-templates";
 import { formatInviteSitePrice } from "@/lib/commerce";
 import {
   buildOrganizationJsonLd,
-  buildProductJsonLd,
+  buildWebApplicationJsonLd,
   buildWebSiteJsonLd,
   createPageMetadata,
 } from "@/lib/seo";
@@ -32,9 +32,10 @@ import type { ReactNode } from "react";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = createPageMetadata({
+  title: "Сайт-приглашение на свадьбу онлайн за 10 минут",
   path: "/",
   description:
-    "Сайт-приглашение на свадьбу за 10 минут: готовые шаблоны, редактор с превью, RSVP и публикация по ссылке. Разовая оплата — без подрядчиков и долгих правок.",
+    "Создайте сайт-приглашение на свадьбу за 10 минут: выберите шаблон, добавьте детали и соберите ответы гостей через RSVP. Разовая оплата.",
 });
 
 const HERO_CHECKS = [
@@ -73,6 +74,29 @@ const steps: FeatureItem[] = [
   },
 ];
 
+const faqItems = [
+  {
+    question: "Что входит в сайт-приглашение на свадьбу?",
+    answer:
+      "В приглашении можно разместить дату и программу дня, адрес с картой, фотографии, дресс-код, пожелания и форму RSVP. Ответы гостей собираются в личном кабинете.",
+  },
+  {
+    question: "Нужно ли уметь делать сайты?",
+    answer:
+      "Нет. Вы выбираете готовый шаблон и заполняете понятные поля, а изменения сразу видны в превью. Код, отдельный хостинг и помощь дизайнера не нужны.",
+  },
+  {
+    question: "Как отправить готовое приглашение гостям?",
+    answer:
+      "После публикации вы получите персональную ссылку. Её можно отправить в мессенджере, по почте или в SMS — приглашение адаптируется к телефону, планшету и компьютеру.",
+  },
+  {
+    question: "Сколько действует ссылка на приглашение?",
+    answer:
+      "Опубликованный сайт доступен до даты торжества и ещё 10 дней после неё, чтобы гости успели открыть приглашение и подтвердить присутствие.",
+  },
+] as const;
+
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
     <p className={styles.eyebrow}>
@@ -92,7 +116,11 @@ export default function HomePage() {
   return (
     <ProductPageShell className={styles.page}>
       <JsonLd
-        data={[buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildProductJsonLd()]}
+        data={[
+          buildOrganizationJsonLd(),
+          buildWebSiteJsonLd(),
+          buildWebApplicationJsonLd(),
+        ]}
       />
       <WaterBackground className={styles.liquidBackground} {...LANDING_BACKGROUND} />
       <SiteHeader active="home" />
@@ -102,8 +130,8 @@ export default function HomePage() {
           <div className={styles.heroCopy}>
             <Eyebrow>Свадебные сайты-приглашения</Eyebrow>
             <h1>
-              Приглашение, которое
-              <span>хочется открыть.</span>
+              Сайт-приглашение на свадьбу,
+              <span>которое хочется открыть.</span>
             </h1>
             <p className={styles.heroLead}>
               Соберите сайт с программой, адресом, дресс-кодом и формой RSVP.
@@ -285,6 +313,25 @@ export default function HomePage() {
                 <Check aria-hidden size={15} /> Форма RSVP с ответами в личном кабинете
               </li>
             </ul>
+          </div>
+        </section>
+
+        <section className={styles.faq}>
+          <div className={styles.faqIntro}>
+            <Eyebrow>Частые вопросы</Eyebrow>
+            <h2>Что важно знать перед созданием приглашения</h2>
+            <p>
+              Коротко о наполнении, публикации и сроке работы свадебного
+              сайта-приглашения.
+            </p>
+          </div>
+          <div className={styles.faqList}>
+            {faqItems.map((item) => (
+              <details key={item.question}>
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
           </div>
         </section>
 

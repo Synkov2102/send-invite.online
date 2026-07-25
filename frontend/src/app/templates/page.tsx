@@ -8,9 +8,9 @@ import { formatInviteSitePrice } from "@/lib/commerce";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Шаблоны приглашений",
+  title: "Шаблоны сайтов-приглашений на свадьбу",
   description:
-    "Каталог шаблонов свадебных сайтов-приглашений: посмотрите живой превью и откройте редактор Send Invite.",
+    "Выберите шаблон свадебного сайта-приглашения, посмотрите живое превью и настройте тексты, фотографии, палитру и RSVP в редакторе.",
   path: "/templates",
 });
 
@@ -33,7 +33,9 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
             {siteId ? "Смена оформления" : "Каталог"}
           </p>
           <h1>
-            {siteId ? "Выберите новый шаблон" : "Выберите шаблон приглашения"}
+            {siteId
+              ? "Выберите новый шаблон"
+              : "Выберите шаблон свадебного сайта-приглашения"}
           </h1>
           <p>
             Сначала посмотрите живой сайт на весь экран, затем откройте редактор —

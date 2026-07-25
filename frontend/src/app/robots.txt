@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /auth
+Disallow: /dashboard
+Disallow: /editor
+Disallow: /payment/
+Disallow: /downloads/
+Disallow: /templates/capture/
+Clean-param: site /templates
+
+Sitemap: https://send-invite.online/sitemap.xml

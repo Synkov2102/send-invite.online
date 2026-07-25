@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
     proxyClientMaxBodySize: "30mb",
   },
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         hostname: "avatars.yandex.net",

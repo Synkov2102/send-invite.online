@@ -8,10 +8,11 @@ import {
 } from "@/lib/commerce";
 
 export const defaultDescription =
-  "Сайт-приглашение на свадьбу за 10 минут: готовые шаблоны, редактор с превью, RSVP и публикация по ссылке. Разовая оплата — без подрядчиков.";
+  "Создайте сайт-приглашение на свадьбу за 10 минут: готовые шаблоны, редактор с превью, RSVP и публикация по ссылке. Разовая оплата.";
 
 export const defaultKeywords = [
   "сайт приглашение на свадьбу",
+  "сайт-приглашение на свадьбу",
   "свадебное приглашение онлайн",
   "конструктор свадебных приглашений",
   "электронное приглашение на свадьбу",
@@ -115,7 +116,7 @@ export function createRootMetadata(): Metadata {
   return {
     metadataBase: new URL(brand.url),
     title: {
-      default: `${brand.name} — ${brand.tagline}`,
+      default: `Сайт-приглашение на свадьбу онлайн · ${brand.name}`,
       template: `%s · ${brand.name}`,
     },
     description: defaultDescription,
@@ -172,9 +173,10 @@ export function buildOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": absoluteUrl("/#organization"),
     name: brand.name,
     url: brand.url,
-    logo: resolveSeoImageUrl(brand.ogImage),
+    logo: absoluteUrl("/icon.svg"),
     email: seller.email,
     address: {
       "@type": "PostalAddress",
@@ -188,31 +190,39 @@ export function buildWebSiteJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": absoluteUrl("/#website"),
     name: brand.name,
     url: brand.url,
     inLanguage: "ru-RU",
     description: defaultDescription,
     publisher: {
-      "@type": "Organization",
-      name: brand.name,
-      url: brand.url,
+      "@id": absoluteUrl("/#organization"),
     },
   };
 }
 
-export function buildProductJsonLd() {
+export function buildWebApplicationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Product",
-    name: INVITE_SITE_SERVICE_NAME,
+    "@type": "WebApplication",
+    "@id": absoluteUrl("/#web-application"),
+    name: brand.name,
+    url: brand.url,
     description: defaultDescription,
-    brand: {
-      "@type": "Brand",
-      name: brand.name,
-    },
+    applicationCategory: "LifestyleApplication",
+    applicationSubCategory: "Свадьба",
+    operatingSystem: "Windows | Mac | Android | iOS",
+    browserRequirements: "Требуется современный браузер",
+    featureList: [
+      "Редактор свадебного сайта-приглашения",
+      "Адаптивные шаблоны",
+      "Форма RSVP",
+      "Публикация по персональной ссылке",
+    ],
     offers: {
       "@type": "Offer",
       url: absoluteUrl("/templates"),
+      name: INVITE_SITE_SERVICE_NAME,
       priceCurrency: "RUB",
       price: INVITE_SITE_PRICE,
       availability: "https://schema.org/InStock",
@@ -221,7 +231,9 @@ export function buildProductJsonLd() {
         name: formatSellerLegalName(),
       },
     },
-    category: "Wedding invitation website",
+    provider: {
+      "@id": absoluteUrl("/#organization"),
+    },
   };
 }
 
@@ -235,27 +247,5 @@ export function buildBreadcrumbJsonLd(items: Array<{ name: string; path: string 
       name: item.name,
       item: absoluteUrl(item.path),
     })),
-  };
-}
-
-export function buildInviteWebPageJsonLd(options: {
-  title: string;
-  description: string;
-  path: string;
-  image?: string;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: options.title,
-    description: options.description,
-    url: absoluteUrl(options.path),
-    inLanguage: "ru-RU",
-    isPartOf: {
-      "@type": "WebSite",
-      name: brand.name,
-      url: brand.url,
-    },
-    image: resolveSeoImageUrl(options.image),
   };
 }
