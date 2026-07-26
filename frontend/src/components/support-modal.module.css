@@ -1,0 +1,109 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(40, 33, 38, 0.52);
+  backdrop-filter: blur(6px);
+}
+
+.panel {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 30px 26px 26px;
+  border: 1px solid var(--header-line, rgba(49, 51, 42, 0.12));
+  border-radius: 24px;
+  background: var(--header-paper, #fffdfa);
+  box-shadow: 0 24px 60px rgba(45, 38, 43, 0.24);
+  color: var(--header-ink, #282126);
+}
+
+.panel h2 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.panel p {
+  margin: 0 0 18px;
+  color: var(--header-muted, #756c72);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--header-soft, #f6f1f3);
+  color: var(--header-muted, #756c72);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--header-accent-soft, #ffe6eb);
+  color: var(--header-accent, #ff4f72);
+}
+
+.cta {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--header-ink, #282126);
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.cta:hover {
+  background: var(--header-accent, #ff4f72);
+}
+
+/* `p.hint` (not `.hint`) so this beats `.panel p`'s margin on specificity
+   instead of losing to it despite coming later in the file. */
+p.hint {
+  margin: 16px 0 0;
+  font-size: 0.76rem;
+}
+
+.hint a {
+  color: var(--header-ink, #282126);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop {
+    animation: supportFadeIn 160ms ease;
+  }
+
+  .panel {
+    animation: supportPanelIn 180ms ease;
+  }
+}
+
+@keyframes supportFadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes supportPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}

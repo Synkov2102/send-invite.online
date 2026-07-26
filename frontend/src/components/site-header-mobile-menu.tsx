@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowUpRight, House, Mail, Menu, PanelsTopLeft, X } from "lucide-react";
+import { ArrowUpRight, House, LifeBuoy, Menu, PanelsTopLeft, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
+import SupportModal from "./support-modal";
 
 type SiteHeaderMobileMenuProps = {
   active?: "home" | "templates";
@@ -46,10 +47,10 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
               <PanelsTopLeft aria-hidden size={18} />
               <span><strong>Шаблоны</strong><small>Выбрать дизайн приглашения</small></span>
             </Link>
-            <Link href="/contacts" onClick={() => setIsOpen(false)}>
-              <Mail aria-hidden size={18} />
-              <span><strong>Контакты</strong><small>Связаться с нами</small></span>
-            </Link>
+            <SupportModal onTriggerClick={() => setIsOpen(false)}>
+              <LifeBuoy aria-hidden size={18} />
+              <span><strong>Поддержка</strong><small>Мы на связи в ВКонтакте</small></span>
+            </SupportModal>
           </nav>
 
           <div className="site-header__mobile-account">

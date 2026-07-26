@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useSyncExternalStore } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -43,8 +43,27 @@ export default function ValuePropsCarousel({
 }: ValuePropsCarouselProps) {
   const isMobile = useMediaQuery(MOBILE_QUERY);
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-  const swiperRef = useRef<SwiperInstance | null>(null);
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  // Every slide change re-renders this component; a fresh options object each
+  // time makes swiper/react re-apply params instead of leaving autoplay alone.
+  const autoplay = useMemo(
+    () =>
+      prefersReducedMotion
+        ? (false as const)
+        : { delay: AUTOPLAY_DELAY_MS, disableOnInteraction: true, pauseOnMouseEnter: true },
+    [prefersReducedMotion],
+  );
+
+  /** Mirrors autoplay's `disableOnInteraction`, so a picked slide stays put. */
+  function goToSlide(index: number) {
+    if (!swiper || swiper.destroyed) {
+      return;
+    }
+
+    swiper.autoplay?.stop();
+    swiper.slideToLoop(index, prefersReducedMotion ? 0 : undefined);
+  }
 
   if (!isMobile) {
     return (
@@ -72,18 +91,12 @@ export default function ValuePropsCarousel({
       <Swiper
         aria-label="Преимущества сервиса"
         aria-roledescription="карусель"
-        autoplay={
-          prefersReducedMotion
-            ? false
-            : { delay: AUTOPLAY_DELAY_MS, disableOnInteraction: true, pauseOnMouseEnter: true }
-        }
+        autoplay={autoplay}
         className={carouselStyles.trackCarousel}
         loop
         modules={[Autoplay]}
         onSlideChange={(instance) => setActiveIndex(instance.realIndex)}
-        onSwiper={(instance) => {
-          swiperRef.current = instance;
-        }}
+        onSwiper={setSwiper}
         role="region"
         slidesOffsetAfter={20}
         slidesOffsetBefore={20}
@@ -106,17 +119,18 @@ export default function ValuePropsCarousel({
         ))}
       </Swiper>
 
-      <div aria-hidden className={carouselStyles.dots}>
+      <div aria-label="Выбрать преимущество" className={carouselStyles.dots} role="group">
         {homeValueProps.map((item, index) => (
           <button
+            aria-label={`${formatValuePropIndex(index)}. ${item.title}`}
+            aria-pressed={index === activeIndex}
             className={
               index === activeIndex
                 ? `${carouselStyles.dot} ${carouselStyles.dotActive}`
                 : carouselStyles.dot
             }
             key={item.title}
-            onClick={() => swiperRef.current?.slideToLoop(index, prefersReducedMotion ? 0 : undefined)}
-            tabIndex={-1}
+            onClick={() => goToSlide(index)}
             type="button"
           />
         ))}

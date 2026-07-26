@@ -4,6 +4,7 @@ import Link from "next/link";
 import BrandLockup from "./brand-lockup";
 import SiteHeaderMobileMenu from "./site-header-mobile-menu";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
+import SupportModal from "./support-modal";
 
 type SiteHeaderProps = {
   active?: "home" | "templates";
@@ -32,7 +33,7 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
         >
           Шаблоны
         </Link>
-        <Link href="/contacts">Контакты</Link>
+        <SupportModal>Поддержка</SupportModal>
       </nav>
 
       <div className="site-header__actions">

@@ -3,6 +3,7 @@ import LegalPage from "@/components/legal-page";
 import { brand } from "@/lib/brand";
 import { formatSellerLegalName, seller } from "@/lib/commerce";
 import { createPageMetadata } from "@/lib/seo";
+import { support } from "@/lib/support";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Контакты и реквизиты",
@@ -42,8 +43,13 @@ export default function ContactsPage() {
       <section>
         <h2>Поддержка</h2>
         <p>
-          В обращении укажите email аккаунта, номер заказа и кратко опишите вопрос.
-          Обращения принимаются ежедневно; ответ направляется на указанный email.
+          Основной канал поддержки — сообщество{" "}
+          <a href={support.vkGroupUrl} rel="noreferrer" target="_blank">
+            ВКонтакте
+          </a>
+          . В обращении укажите email аккаунта, номер заказа и кратко опишите
+          вопрос — так мы быстрее разберёмся. По вопросам оплаты и возврата
+          также можно написать на email, указанный выше.
         </p>
       </section>
     </LegalPage>
