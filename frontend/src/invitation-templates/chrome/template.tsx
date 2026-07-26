@@ -8,6 +8,7 @@ import { parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
+import { getSafeHttpUrl } from "@/lib/safe-url";
 import { InvitationMusicPlayer, InvitationRsvpForm } from "@/invitation-templates/components";
 import {
   heroItem,
@@ -293,7 +294,8 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
 
 function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
   const showInfo = invite.showAdditionalInfo && Boolean(invite.additionalInfo.trim());
-  const showChat = invite.showGroupChat && Boolean(invite.groupChatUrl.trim());
+  const chatUrl = getSafeHttpUrl(invite.groupChatUrl);
+  const showChat = invite.showGroupChat && Boolean(chatUrl);
 
   if (!showInfo && !showChat) {
     return null;
@@ -329,7 +331,7 @@ function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
             <MessageCircle aria-hidden size={30} strokeWidth={1.25} />
             <h3>Свадебный чат</h3>
             <p>{invite.groupChatText}</p>
-            <a href={invite.groupChatUrl.trim()} rel="noreferrer" target="_blank">
+            <a href={chatUrl ?? undefined} rel="noreferrer" target="_blank">
               Присоединиться <ArrowUpRight aria-hidden size={15} />
             </a>
           </article>

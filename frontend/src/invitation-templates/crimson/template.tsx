@@ -7,6 +7,7 @@ import { parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
+import { getSafeHttpUrl } from "@/lib/safe-url";
 import { InvitationMusicPlayer, InvitationRsvpForm } from "@/invitation-templates/components";
 import styles from "./template.module.css";
 
@@ -219,7 +220,8 @@ function ProgramSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite"
 
 function DetailsSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite">>) {
   const showInfo = invite.showAdditionalInfo && Boolean(invite.additionalInfo.trim());
-  const showChat = invite.showGroupChat && Boolean(invite.groupChatUrl.trim());
+  const chatUrl = getSafeHttpUrl(invite.groupChatUrl);
+  const showChat = invite.showGroupChat && Boolean(chatUrl);
 
   if (!showInfo && !showChat) {
     return null;
@@ -251,7 +253,7 @@ function DetailsSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite"
             <span>{showInfo ? "02" : "01"}</span>
             <div>
               {invite.groupChatText.trim() ? <p>{invite.groupChatText}</p> : null}
-              <a href={invite.groupChatUrl.trim()} rel="noreferrer" target="_blank">
+              <a href={chatUrl ?? undefined} rel="noreferrer" target="_blank">
                 <MessagesSquare aria-hidden size={14} />
                 Открыть чат гостей
               </a>

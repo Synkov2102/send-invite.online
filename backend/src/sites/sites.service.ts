@@ -37,6 +37,17 @@ import { assertAllowedStoredMediaUrl, assertMediaFileSize } from "./media-url";
 import { sanitizeExcelCell } from "./excel-sanitize";
 import { isS3ObjectRef, S3StorageService } from "../storage/s3-storage.service";
 
+const DEFAULT_MAX_RESPONSES_PER_SITE = 500;
+
+/** Hard cap on RSVP rows per site — bounds the damage of a public-form flood. */
+function getMaxResponsesPerSite() {
+  const configured = Number(process.env.MAX_RSVP_RESPONSES_PER_SITE);
+
+  return Number.isInteger(configured) && configured > 0
+    ? configured
+    : DEFAULT_MAX_RESPONSES_PER_SITE;
+}
+
 @Injectable()
 export class SitesService {
   constructor(
@@ -190,13 +201,36 @@ export class SitesService {
     const response = parseRsvpResponse(body, site.invite.rsvpQuestions);
     const saved = await this.inviteResponses.upsertResponse({
       ...response,
+      maxResponses: getMaxResponsesPerSite(),
       siteId,
     });
+
+    if (!saved) {
+      throw new BadRequestException({
+        error: "Достигнут лимит ответов для этого приглашения.",
+      });
+    }
 
     return {
       id: saved.id,
       updatedAt: saved.updatedAt,
     };
+  }
+
+  async deleteResponse(ownerId: string, siteId: string, responseId: string) {
+    await this.getOwnedSite(ownerId, siteId);
+
+    if (!(await this.inviteResponses.deleteResponse(siteId, responseId))) {
+      throw new NotFoundException({ error: "Ответ не найден." });
+    }
+
+    return { id: responseId };
+  }
+
+  async deleteAllResponses(ownerId: string, siteId: string) {
+    await this.getOwnedSite(ownerId, siteId);
+
+    return { deleted: await this.inviteResponses.deleteResponsesBySite(siteId) };
   }
 
   async getOwnedSites(ownerId: string) {

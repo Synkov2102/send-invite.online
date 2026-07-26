@@ -293,7 +293,7 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         dressCodeColors: z.ZodArray<z.ZodString, "many">;
         groom: z.ZodString;
         groupChatText: z.ZodDefault<z.ZodString>;
-        groupChatUrl: z.ZodDefault<z.ZodString>;
+        groupChatUrl: z.ZodDefault<z.ZodEffects<z.ZodString, string, string>>;
         lead: z.ZodString;
         mapUrl: z.ZodOptional<z.ZodString>;
         musicTitle: z.ZodString;
@@ -862,7 +862,7 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         dressCodeColors: z.ZodArray<z.ZodString, "many">;
         groom: z.ZodString;
         groupChatText: z.ZodDefault<z.ZodString>;
-        groupChatUrl: z.ZodDefault<z.ZodString>;
+        groupChatUrl: z.ZodDefault<z.ZodEffects<z.ZodString, string, string>>;
         lead: z.ZodString;
         mapUrl: z.ZodOptional<z.ZodString>;
         musicTitle: z.ZodString;

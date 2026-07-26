@@ -1,4 +1,5 @@
 import { MessagesSquare } from "lucide-react";
+import { getSafeHttpUrl } from "@/lib/safe-url";
 import styles from "./group-chat-block.module.css";
 import { InvitationSectionEyebrow } from "./section-eyebrow";
 
@@ -23,7 +24,7 @@ export function InvitationGroupChatBlock({
   url,
   variant = "alpine",
 }: InvitationGroupChatBlockProps) {
-  const trimmedUrl = url.trim();
+  const trimmedUrl = getSafeHttpUrl(url);
 
   if (!show || !trimmedUrl) {
     return null;

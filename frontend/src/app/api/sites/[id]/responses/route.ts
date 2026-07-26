@@ -40,3 +40,37 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     return NextResponse.json({ error: "Сервис ответов временно недоступен." }, { status: 502 });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const sessionToken = request.cookies.get(authSessionCookieName)?.value;
+  if (!sessionToken) {
+    return NextResponse.json({ error: "Войдите в аккаунт." }, { status: 401 });
+  }
+
+  const { id } = await params;
+  const responseId = request.nextUrl.searchParams.get("responseId");
+  const target = responseId
+    ? `${getServerApiBaseUrl()}/api/sites/${encodeURIComponent(id)}/responses/${encodeURIComponent(responseId)}`
+    : `${getServerApiBaseUrl()}/api/sites/${encodeURIComponent(id)}/responses`;
+
+  try {
+    const response = await fetch(target, {
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+      },
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Не удалось удалить ответы." },
+        { status: response.status },
+      );
+    }
+
+    return NextResponse.json(await response.json());
+  } catch {
+    return NextResponse.json({ error: "Сервис ответов временно недоступен." }, { status: 502 });
+  }
+}

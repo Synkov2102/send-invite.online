@@ -1,14 +1,6 @@
 import type { InviteState } from "@/lib/invite-state";
 import { getYandexMapsUrl } from "@/lib/invite-map";
-
-function isHttpUrl(value: string) {
-  try {
-    const url = new URL(value);
-    return url.protocol === "http:" || url.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
+import { isHttpUrl } from "@/lib/safe-url";
 
 export function getEditorStepErrors(invite: InviteState) {
   const basicErrors = [

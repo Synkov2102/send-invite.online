@@ -18,7 +18,12 @@ import { RequestLoggerMiddleware } from "./logging/request-logger.middleware";
       isGlobal: true,
     }),
     ThrottlerModule.forRoot({
-      throttlers: [{ limit: 120, ttl: 60_000 }],
+      // The hourly bucket is generous globally and tightened per route
+      // (see RSVP in SitesController) to catch slow, sustained flooding.
+      throttlers: [
+        { name: "default", limit: 120, ttl: 60_000 },
+        { name: "hourly", limit: 1_200, ttl: 3_600_000 },
+      ],
     }),
     DatabaseModule,
     AuthModule,

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Headers,
   NotFoundException,
@@ -53,7 +54,10 @@ export class SitesController {
     return this.sitesService.getOwnedSites(user.id);
   }
 
-  @Throttle({ default: { limit: 15, ttl: 60_000 } })
+  @Throttle({
+    default: { limit: 15, ttl: 60_000 },
+    hourly: { limit: 40, ttl: 3_600_000 },
+  })
   @Post(":id/responses")
   saveResponse(@Param("id") id: string, @Body() body: unknown) {
     return this.sitesService.saveResponse(id, body);
@@ -103,6 +107,29 @@ export class SitesController {
     const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.getResponses(user.id, id);
+  }
+
+  @Delete(":id/responses")
+  async deleteAllResponses(
+    @Param("id") id: string,
+    @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
+  ) {
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
+
+    return this.sitesService.deleteAllResponses(user.id, id);
+  }
+
+  @Delete(":id/responses/:responseId")
+  async deleteResponse(
+    @Param("id") id: string,
+    @Param("responseId") responseId: string,
+    @Headers("authorization") authorization?: string,
+    @Headers("cookie") cookieHeader?: string,
+  ) {
+    const user = await this.getUserOrThrow(authorization, cookieHeader);
+
+    return this.sitesService.deleteResponse(user.id, id, responseId);
   }
 
   @Get(":id/responses/export")

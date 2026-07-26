@@ -67,7 +67,7 @@ exports.inviteStateSchema = exports.inviteStateShapeSchema.extend({
     dressCodeColors: zod_1.z.array((0, zod_helpers_1.boundedString)(limits.dressCodeColor)).max(limits.dressCodeColorsMax),
     groom: (0, zod_helpers_1.boundedString)(limits.groom),
     groupChatText: (0, zod_helpers_1.boundedString)(limits.groupChatText).default(""),
-    groupChatUrl: (0, zod_helpers_1.boundedString)(limits.groupChatUrl).default(""),
+    groupChatUrl: (0, zod_helpers_1.httpUrlString)(limits.groupChatUrl).default(""),
     lead: (0, zod_helpers_1.boundedString)(limits.lead),
     mapUrl: (0, zod_helpers_1.boundedString)(limits.mapUrl).optional(),
     musicTitle: (0, zod_helpers_1.boundedString)(limits.musicTitle),

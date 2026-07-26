@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { INVITE_FIELD_LIMITS } from "../field-limits";
-import { boundedString, mediaUrlString } from "./zod-helpers";
+import { boundedString, httpUrlString, mediaUrlString } from "./zod-helpers";
 
 const limits = INVITE_FIELD_LIMITS;
 
@@ -71,7 +71,7 @@ export const inviteStateSchema = inviteStateShapeSchema.extend({
   dressCodeColors: z.array(boundedString(limits.dressCodeColor)).max(limits.dressCodeColorsMax),
   groom: boundedString(limits.groom),
   groupChatText: boundedString(limits.groupChatText).default(""),
-  groupChatUrl: boundedString(limits.groupChatUrl).default(""),
+  groupChatUrl: httpUrlString(limits.groupChatUrl).default(""),
   lead: boundedString(limits.lead),
   mapUrl: boundedString(limits.mapUrl).optional(),
   musicTitle: boundedString(limits.musicTitle),

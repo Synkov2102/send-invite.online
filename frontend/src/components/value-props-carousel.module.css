@@ -1,31 +1,10 @@
 .trackCarousel {
-  display: flex !important;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  gap: 10px;
   margin-top: 22px;
-  padding: 0;
-  scroll-padding-inline: 20px;
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
 
-.trackCarousel::-webkit-scrollbar {
-  display: none;
-}
-
-.trackCarousel > * {
-  flex: 0 0 calc(100% - 48px);
-  scroll-snap-align: start;
-}
-
-.trackCarousel > *:first-child {
-  margin-inline-start: 20px;
-}
-
-.trackCarousel > *:last-child {
-  margin-inline-end: 20px;
+.trackCarousel :global(.swiper-slide) {
+  width: calc(100% - 48px);
+  height: auto;
 }
 
 .dots {

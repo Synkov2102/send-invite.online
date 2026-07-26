@@ -14,11 +14,12 @@ import {
   MessageSquareText,
   PanelsTopLeft,
   Pencil,
+  Trash2,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import type { InviteResponseData, OwnedInviteSite } from "@/lib/backend-api";
-import { fetchInviteResponses } from "@/lib/api/sites";
+import { deleteInviteResponse, fetchInviteResponses } from "@/lib/api/sites";
 import { getInviteTemplateName } from "@/lib/invite-templates";
 
 type DashboardSiteCardProps = {
@@ -62,6 +63,32 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
       setLoadError(true);
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function removeResponses(responseId?: string) {
+    const confirmed = window.confirm(
+      responseId ? "Удалить этот ответ?" : "Удалить все ответы гостей? Отменить нельзя.",
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await deleteInviteResponse(site.id, responseId);
+      setDetails((current) =>
+        !current
+          ? current
+          : {
+              ...current,
+              responses: responseId
+                ? current.responses.filter((item) => item.id !== responseId)
+                : [],
+            },
+      );
+    } catch {
+      setLoadError(true);
     }
   }
 
@@ -205,6 +232,15 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
                       <th key={question}>{question}</th>
                     ))}
                     <th>Обновлено</th>
+                    <th>
+                      <button
+                        onClick={() => void removeResponses()}
+                        title="Удалить все ответы"
+                        type="button"
+                      >
+                        Очистить
+                      </button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -223,6 +259,16 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
                         );
                       })}
                       <td>{formatDateTime(response.updatedAt)}</td>
+                      <td>
+                        <button
+                          aria-label={`Удалить ответ гостя ${response.guestName}`}
+                          onClick={() => void removeResponses(response.id)}
+                          title="Удалить ответ"
+                          type="button"
+                        >
+                          <Trash2 aria-hidden size={15} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

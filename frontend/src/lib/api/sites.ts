@@ -76,6 +76,18 @@ export function submitRobokassaForm(action: string, fields: Record<string, strin
   form.submit();
 }
 
+export async function deleteInviteResponse(siteId: string, responseId?: string) {
+  const base = `/api/sites/${encodeURIComponent(siteId)}/responses`;
+  const response = await fetch(
+    responseId ? `${base}?responseId=${encodeURIComponent(responseId)}` : base,
+    { cache: "no-store", method: "DELETE" },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete responses (${response.status})`);
+  }
+}
+
 export async function fetchInviteResponses(siteId: string) {
   const response = await fetch(`/api/sites/${encodeURIComponent(siteId)}/responses`, {
     cache: "no-store",

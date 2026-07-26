@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { MouseEvent, PointerEvent } from "react";
-import useEmblaCarousel from "embla-carousel-react";
+import { useState } from "react";
+import type { Swiper as SwiperInstance } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import { ArrowLeft, ArrowRight, MoveHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,12 +56,8 @@ export default function TemplateCard({
 }: TemplateCardProps) {
   const palettes = getTemplatePalettes(template);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    active: paletteCarousel && palettes.length > 1,
-    loop: palettes.length > 1,
-  });
-  const pointerOrigin = useRef<{ x: number; y: number } | null>(null);
-  const hasDragged = useRef(false);
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+  const isCarouselActive = paletteCarousel && palettes.length > 1;
   const selectedPalette = palettes[selectedIndex] ?? palettes[0];
   const editorHref = getEditorHref(
     template.id,
@@ -68,55 +65,6 @@ export default function TemplateCard({
     paletteCarousel ? selectedPalette?.id : undefined,
   );
   const rootClassName = `template-card${className ? ` ${className}` : ""}`;
-
-  const updateSelectedIndex = useCallback(() => {
-    if (emblaApi) {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    }
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) {
-      return;
-    }
-
-    emblaApi.on("select", updateSelectedIndex);
-    emblaApi.on("reInit", updateSelectedIndex);
-
-    return () => {
-      emblaApi.off("select", updateSelectedIndex);
-      emblaApi.off("reInit", updateSelectedIndex);
-    };
-  }, [emblaApi, updateSelectedIndex]);
-
-  function handlePointerDown(event: PointerEvent<HTMLAnchorElement>) {
-    pointerOrigin.current = { x: event.clientX, y: event.clientY };
-    hasDragged.current = false;
-  }
-
-  function handlePointerMove(event: PointerEvent<HTMLAnchorElement>) {
-    if (!pointerOrigin.current) {
-      return;
-    }
-
-    const distance = Math.hypot(
-      event.clientX - pointerOrigin.current.x,
-      event.clientY - pointerOrigin.current.y,
-    );
-
-    if (distance > 8) {
-      hasDragged.current = true;
-    }
-  }
-
-  function handleSlideClick(event: MouseEvent<HTMLAnchorElement>) {
-    pointerOrigin.current = null;
-
-    if (hasDragged.current) {
-      event.preventDefault();
-      hasDragged.current = false;
-    }
-  }
 
   const meta = (
     <div className="template-card__meta">
@@ -169,48 +117,50 @@ export default function TemplateCard({
           className="template-card__device"
           role="region"
         >
-          <div className={styles.viewport} ref={emblaRef}>
-            <div className={styles.track}>
-              {palettes.map((palette, paletteIndex) => (
-                <div
-                  aria-label={`${paletteIndex + 1} из ${palettes.length}: ${palette.label}`}
-                  aria-roledescription="слайд"
-                  className={styles.slide}
-                  key={palette.id}
-                  role="group"
+          <Swiper
+            className={styles.viewport}
+            enabled={isCarouselActive}
+            loop={isCarouselActive}
+            onSlideChange={(instance) => setSelectedIndex(instance.realIndex)}
+            onSwiper={setSwiper}
+            slidesPerView={1}
+          >
+            {palettes.map((palette, paletteIndex) => (
+              <SwiperSlide
+                aria-label={`${paletteIndex + 1} из ${palettes.length}: ${palette.label}`}
+                aria-roledescription="слайд"
+                className={styles.slide}
+                key={palette.id}
+                role="group"
+              >
+                <Link
+                  aria-label={`Открыть шаблон «${template.name}» в палитре «${palette.label}»`}
+                  className={styles.previewLink}
+                  draggable={false}
+                  href={getEditorHref(template.id, siteId, palette.id)}
                 >
-                  <Link
-                    aria-label={`Открыть шаблон «${template.name}» в палитре «${palette.label}»`}
-                    className={styles.previewLink}
-                    draggable={false}
-                    href={getEditorHref(template.id, siteId, palette.id)}
-                    onClick={handleSlideClick}
-                    onPointerDown={handlePointerDown}
-                    onPointerMove={handlePointerMove}
+                  <div
+                    className="template-card__device-screen"
+                    style={{ backgroundColor: palette.background }}
                   >
-                    <div
-                      className="template-card__device-screen"
-                      style={{ backgroundColor: palette.background }}
-                    >
-                      <Image
-                        alt={`Шаблон «${template.name}», палитра «${palette.label}»`}
-                        draggable={false}
-                        fill
-                        loading={eagerImage && paletteIndex === 0 ? "eager" : undefined}
-                        sizes={imageSizes}
-                        src={`/images/templates/${template.id}/${palette.id}.webp`}
-                      />
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
+                    <Image
+                      alt={`Шаблон «${template.name}», палитра «${palette.label}»`}
+                      draggable={false}
+                      fill
+                      loading={eagerImage && paletteIndex === 0 ? "eager" : undefined}
+                      sizes={imageSizes}
+                      src={`/images/templates/${template.id}/${palette.id}.webp`}
+                    />
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
           <button
             aria-label="Предыдущая палитра"
             className={`${styles.control} ${styles.previous}`}
-            onClick={() => emblaApi?.scrollPrev()}
+            onClick={() => swiper?.slidePrev()}
             type="button"
           >
             <ArrowLeft aria-hidden size={17} />
@@ -218,7 +168,7 @@ export default function TemplateCard({
           <button
             aria-label="Следующая палитра"
             className={`${styles.control} ${styles.next}`}
-            onClick={() => emblaApi?.scrollNext()}
+            onClick={() => swiper?.slideNext()}
             type="button"
           >
             <ArrowRight aria-hidden size={17} />
@@ -238,7 +188,7 @@ export default function TemplateCard({
                 aria-pressed={paletteIndex === selectedIndex}
                 className={paletteIndex === selectedIndex ? styles.activeDot : styles.dot}
                 key={palette.id}
-                onClick={() => emblaApi?.scrollTo(paletteIndex)}
+                onClick={() => swiper?.slideToLoop(paletteIndex)}
                 style={{ backgroundColor: palette.accent }}
                 type="button"
               />

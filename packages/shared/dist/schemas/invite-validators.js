@@ -29,7 +29,7 @@ function mapInviteLimitError(error) {
         return "Ссылка на Яндекс Карты слишком длинная или некорректная.";
     }
     if (path === "groupChatUrl") {
-        return "Ссылка на общий чат слишком длинная.";
+        return "Ссылка на общий чат слишком длинная или должна начинаться с http:// или https://.";
     }
     if (path === "groupChatText" || path === "additionalInfo") {
         return "Слишком длинный текст дополнительного блока.";

@@ -9,13 +9,8 @@
   cursor: grabbing;
 }
 
-.track {
-  display: flex;
-}
-
 .slide {
-  min-width: 0;
-  flex: 0 0 100%;
+  height: auto;
 }
 
 .previewLink,

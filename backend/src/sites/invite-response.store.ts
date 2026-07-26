@@ -54,9 +54,15 @@ export class InviteResponseStore {
     await collection.createIndex({ siteId: 1, createdAt: -1 });
   }
 
+  /**
+   * Upserts by (siteId, responseKey). New guests are refused once the site
+   * reaches `maxResponses` — edits of existing answers stay allowed, so a flood
+   * can never grow a site beyond the cap.
+   */
   async upsertResponse(input: {
     answers: InviteResponseAnswer[];
     guestName: string;
+    maxResponses: number;
     responseKey: string;
     siteId: string;
   }) {
@@ -67,6 +73,18 @@ export class InviteResponseStore {
       responseKey: input.responseKey,
       siteId: input.siteId,
     });
+
+    if (!existing) {
+      const total = await collection.countDocuments(
+        { siteId: input.siteId },
+        { limit: input.maxResponses },
+      );
+
+      if (total >= input.maxResponses) {
+        return null;
+      }
+    }
+
     const now = new Date().toISOString();
     const response: InviteResponse = {
       ...input,
@@ -90,6 +108,24 @@ export class InviteResponseStore {
     );
 
     return response;
+  }
+
+  async deleteResponse(siteId: string, responseId: string) {
+    await this.ensureIndexes();
+
+    const collection = await this.getCollection();
+    const result = await collection.deleteOne({ id: responseId, siteId });
+
+    return result.deletedCount > 0;
+  }
+
+  async deleteResponsesBySite(siteId: string) {
+    await this.ensureIndexes();
+
+    const collection = await this.getCollection();
+    const result = await collection.deleteMany({ siteId });
+
+    return result.deletedCount;
   }
 
   async listResponsesBySite(siteId: string) {

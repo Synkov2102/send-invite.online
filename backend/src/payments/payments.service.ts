@@ -400,12 +400,14 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   }) {
     const invId = Number(input.invIdRaw);
     const order = await this.orders.getOrderByInvoice(invId);
+    const paidAmount = Number(input.outSum);
+    const orderAmount = order ? Number(order.amount) : Number.NaN;
+    const amountMatches =
+      Number.isFinite(paidAmount) &&
+      Number.isFinite(orderAmount) &&
+      Math.abs(orderAmount - paidAmount) <= 0.000001;
 
-    if (
-      !order ||
-      order.id !== input.orderId ||
-      Math.abs(Number(order.amount) - Number(input.outSum)) > 0.000001
-    ) {
+    if (!order || order.id !== input.orderId || !amountMatches) {
       this.logger.warn(
         `Payment mismatch for order ${input.orderId}, invId ${input.invIdRaw}`,
       );

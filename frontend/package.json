@@ -14,7 +14,6 @@
     "@heroui/react": "^3.1.0",
     "@heroui/styles": "^3.1.0",
     "@invite/shared": "*",
-    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.17.0",
     "next": "16.2.6",
@@ -22,6 +21,7 @@
     "react-colorful": "^5.7.0",
     "react-dom": "19.2.4",
     "sharp": "^0.34.5",
+    "swiper": "^14.0.6",
     "three": "^0.184.0"
   },
   "devDependencies": {
