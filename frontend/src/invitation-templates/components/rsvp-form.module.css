@@ -409,6 +409,29 @@
   outline-offset: 2px;
 }
 
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--rsvp-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.consent input {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  accent-color: var(--rsvp-accent);
+}
+
+.consent a {
+  color: var(--rsvp-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .footer {
   display: grid;
   justify-items: center;

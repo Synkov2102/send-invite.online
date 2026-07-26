@@ -198,6 +198,16 @@ export function InvitationRsvpForm({
         );
       })}
 
+      <label className={styles.consent}>
+        <input required type="checkbox" />
+        <span>
+          Я согласен(на) на{" "}
+          <a href="/privacy" rel="noreferrer" target="_blank">
+            обработку персональных данных
+          </a>
+        </span>
+      </label>
+
       <footer className={styles.footer}>
         <Button
           className={styles.submit}

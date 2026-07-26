@@ -66,7 +66,20 @@ export default function SiteHeaderUserActions({
   }, [initialUser]);
 
   if (isChecking) {
-    return null;
+    // Reserves the guest button's footprint so the CTA next to it doesn't jump
+    // once the session check resolves — invisible rather than absent.
+    return (
+      <Link
+        aria-hidden="true"
+        className={variant === "mobile" ? "site-header__mobile-login" : "site-header__login"}
+        href="/auth"
+        style={{ visibility: "hidden" }}
+        tabIndex={-1}
+      >
+        <LogIn aria-hidden size={14} />
+        <span>Войти</span>
+      </Link>
+    );
   }
 
   if (!user) {
