@@ -24,6 +24,7 @@ export default function SiteHeaderUserActions({
   variant = "desktop",
 }: SiteHeaderUserActionsProps) {
   const [user, setUser] = useState<HeaderUser | null>(initialUser ?? null);
+  const [isChecking, setIsChecking] = useState(initialUser === undefined);
 
   useEffect(() => {
     if (initialUser !== undefined) {
@@ -50,6 +51,10 @@ export default function SiteHeaderUserActions({
         }
       } catch {
         // Public pages should stay fast even if the session endpoint is unavailable.
+      } finally {
+        if (!cancelled) {
+          setIsChecking(false);
+        }
       }
     }
 
@@ -59,6 +64,10 @@ export default function SiteHeaderUserActions({
       cancelled = true;
     };
   }, [initialUser]);
+
+  if (isChecking) {
+    return null;
+  }
 
   if (!user) {
     return (

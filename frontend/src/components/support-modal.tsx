@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, X } from "lucide-react";
 import Link from "next/link";
-import { type ReactNode, useEffect, useId, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { support } from "@/lib/support";
 import styles from "./support-modal.module.css";
@@ -10,8 +10,8 @@ import styles from "./support-modal.module.css";
 type SupportModalProps = {
   /** Trigger content — text for the desktop nav pill, icon + label for the mobile row. */
   children: ReactNode;
-  /** Lets the mobile menu close its own panel when the dialog opens. */
-  onTriggerClick?: () => void;
+  /** Lets the mobile menu close its own panel once the dialog closes. */
+  onClose?: () => void;
 };
 
 /**
@@ -22,9 +22,14 @@ type SupportModalProps = {
  * `nav a` CSS selectors used across the header stylesheets, instead of
  * requiring those selectors to be extended for `button` everywhere.
  */
-export default function SupportModal({ children, onTriggerClick }: SupportModalProps) {
+export default function SupportModal({ children, onClose }: SupportModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const titleId = useId();
+
+  const close = useCallback(() => {
+    setIsOpen(false);
+    onClose?.();
+  }, [onClose]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -33,7 +38,7 @@ export default function SupportModal({ children, onTriggerClick }: SupportModalP
 
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        close();
       }
     }
 
@@ -45,7 +50,7 @@ export default function SupportModal({ children, onTriggerClick }: SupportModalP
       document.body.style.overflow = previousOverflow;
       document.removeEventListener("keydown", closeOnEscape);
     };
-  }, [isOpen]);
+  }, [isOpen, close]);
 
   return (
     <>
@@ -55,7 +60,6 @@ export default function SupportModal({ children, onTriggerClick }: SupportModalP
         href="#support"
         onClick={(event) => {
           event.preventDefault();
-          onTriggerClick?.();
           setIsOpen(true);
         }}
         role="button"
@@ -64,10 +68,7 @@ export default function SupportModal({ children, onTriggerClick }: SupportModalP
       </a>
 
       {isOpen
-        ? createPortal(
-            <SupportDialog onClose={() => setIsOpen(false)} titleId={titleId} />,
-            document.body,
-          )
+        ? createPortal(<SupportDialog onClose={close} titleId={titleId} />, document.body)
         : null}
     </>
   );

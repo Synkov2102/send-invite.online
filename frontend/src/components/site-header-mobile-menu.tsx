@@ -47,7 +47,7 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
               <PanelsTopLeft aria-hidden size={18} />
               <span><strong>Шаблоны</strong><small>Выбрать дизайн приглашения</small></span>
             </Link>
-            <SupportModal onTriggerClick={() => setIsOpen(false)}>
+            <SupportModal onClose={() => setIsOpen(false)}>
               <LifeBuoy aria-hidden size={18} />
               <span><strong>Поддержка</strong><small>Мы на связи в ВКонтакте</small></span>
             </SupportModal>
