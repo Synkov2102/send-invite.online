@@ -2,7 +2,9 @@ import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
 import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
+import StickyTemplatesCta from "@/components/sticky-templates-cta";
 import TemplateCard from "@/components/template-card";
+import TrackedLink from "@/components/tracked-link";
 import ValuePropsCarousel from "@/components/value-props-carousel";
 import WaterBackground from "@/invitation-templates/aqua/water-background";
 import { brand } from "@/lib/brand";
@@ -27,7 +29,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
 
@@ -126,7 +127,7 @@ export default function HomePage() {
       <SiteHeader active="home" />
 
       <main>
-        <section className={styles.hero}>
+        <section className={styles.hero} id="hero">
           <div className={styles.heroCopy}>
             <Eyebrow>Свадебные сайты-приглашения</Eyebrow>
             <h1>
@@ -144,16 +145,24 @@ export default function HomePage() {
               <small>разовая оплата · электронная услуга</small>
             </div>
             <div className={styles.heroActions}>
-              <Link className={styles.primaryButton} href="/templates">
+              <TrackedLink
+                className={styles.primaryButton}
+                goal="hero_primary_click"
+                href="/templates"
+              >
                 Выбрать шаблон <ArrowRight aria-hidden size={17} />
-              </Link>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 className={styles.secondaryButton}
+                goal="hero_secondary_click"
                 href={`/editor?template=${featured[0].id}&preview=1`}
               >
                 Посмотреть шаблон
-              </Link>
+              </TrackedLink>
             </div>
+            <p className={styles.heroTrust}>
+              Результат видно в редакторе бесплатно — платите только за публикацию.
+            </p>
             <ul className={styles.heroChecks} aria-label="Ключевые преимущества">
               {HERO_CHECKS.map((item) => (
                 <li key={item}>
@@ -239,9 +248,9 @@ export default function HomePage() {
                 остальное подстроите сами.
               </h2>
             </div>
-            <Link href="/templates">
+            <TrackedLink goal="templates_section_cta_click" href="/templates">
               Смотреть все шаблоны <ArrowRight aria-hidden size={16} />
-            </Link>
+            </TrackedLink>
           </div>
           <div className={styles.templateGrid}>
             {featured.map((template, index) => (
@@ -252,6 +261,7 @@ export default function HomePage() {
                 key={template.id}
                 template={template}
                 titleAs="h3"
+                trackingGoal="homepage_template_card_click"
               />
             ))}
           </div>
@@ -266,9 +276,9 @@ export default function HomePage() {
               возможность вернуться к любому полю. Вы готовите свадьбу — а не
               разбираетесь в настройках сайта.
             </p>
-            <Link href="/templates">
+            <TrackedLink goal="workflow_cta_click" href="/templates">
               Начать с шаблона <ArrowRight aria-hidden size={16} />
-            </Link>
+            </TrackedLink>
           </div>
           <div className={styles.steps}>
             {steps.map((step, index) => (
@@ -339,12 +349,13 @@ export default function HomePage() {
           <Sparkles aria-hidden size={22} />
           <p>Начните сегодня — первый шаблон уже ждёт</p>
           <h2>Соберите приглашение, которым захочется поделиться</h2>
-          <Link href="/templates">
+          <TrackedLink goal="final_cta_click" href="/templates">
             Выбрать шаблон <ArrowRight aria-hidden size={17} />
-          </Link>
+          </TrackedLink>
         </section>
       </main>
 
+      <StickyTemplatesCta />
       <CommerceFooter />
     </ProductPageShell>
   );

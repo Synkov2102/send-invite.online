@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-const YANDEX_METRIKA_ID = 111031054;
+export const YANDEX_METRIKA_ID = 111031054;
 
 export function YandexMetrika() {
   if (process.env.NODE_ENV !== "production") {
