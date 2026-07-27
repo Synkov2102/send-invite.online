@@ -152,13 +152,6 @@ export default function HomePage() {
               >
                 Выбрать шаблон <ArrowRight aria-hidden size={17} />
               </TrackedLink>
-              <TrackedLink
-                className={styles.secondaryButton}
-                goal="hero_secondary_click"
-                href={`/editor?template=${featured[0].id}&preview=1`}
-              >
-                Посмотреть шаблон
-              </TrackedLink>
             </div>
             <p className={styles.heroTrust}>
               Результат видно в редакторе бесплатно — платите только за публикацию.

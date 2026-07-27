@@ -19,46 +19,60 @@ type SiteHeaderUserActionsProps = {
   variant?: "desktop" | "mobile";
 };
 
+// Shared by every SiteHeaderUserActions instance mounted on the page — the
+// always-present desktop pill and the one inside the mobile menu, which
+// remounts each time the menu opens. Without this cache each remount would
+// redo its own loading flash instead of reusing the already-known session.
+let cachedUser: HeaderUser | null | undefined;
+let pendingSessionFetch: Promise<HeaderUser | null> | null = null;
+
+function fetchSessionUser(): Promise<HeaderUser | null> {
+  if (!pendingSessionFetch) {
+    pendingSessionFetch = fetch("/api/auth/me", {
+      cache: "no-store",
+      credentials: "same-origin",
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          return null;
+        }
+
+        const data = (await response.json()) as AuthMeResponse;
+        return data.user ?? null;
+      })
+      .catch(() => null)
+      .finally(() => {
+        pendingSessionFetch = null;
+      });
+  }
+
+  return pendingSessionFetch;
+}
+
 export default function SiteHeaderUserActions({
   initialUser,
   variant = "desktop",
 }: SiteHeaderUserActionsProps) {
-  const [user, setUser] = useState<HeaderUser | null>(initialUser ?? null);
-  const [isChecking, setIsChecking] = useState(initialUser === undefined);
+  const [user, setUser] = useState<HeaderUser | null>(() => initialUser ?? cachedUser ?? null);
+  const [isChecking, setIsChecking] = useState(
+    () => initialUser === undefined && cachedUser === undefined,
+  );
 
   useEffect(() => {
-    if (initialUser !== undefined) {
+    if (initialUser !== undefined || cachedUser !== undefined) {
       return;
     }
 
     let cancelled = false;
 
-    async function loadUser() {
-      try {
-        const response = await fetch("/api/auth/me", {
-          cache: "no-store",
-          credentials: "same-origin",
-        });
+    fetchSessionUser().then((resolvedUser) => {
+      cachedUser = resolvedUser;
 
-        if (!response.ok) {
-          return;
-        }
-
-        const data = (await response.json()) as AuthMeResponse;
-
-        if (!cancelled) {
-          setUser(data.user);
-        }
-      } catch {
-        // Public pages should stay fast even if the session endpoint is unavailable.
-      } finally {
-        if (!cancelled) {
-          setIsChecking(false);
-        }
+      if (!cancelled) {
+        setUser(resolvedUser);
+        setIsChecking(false);
       }
-    }
-
-    void loadUser();
+    });
 
     return () => {
       cancelled = true;
