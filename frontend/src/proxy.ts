@@ -6,14 +6,7 @@ const legacyHostname = `www.${canonicalHostname}`;
 const localHostname = "localhost";
 const localAliases = new Set(["0.0.0.0", "127.0.0.1", "::1"]);
 
-function getRequestHostname(request: NextRequest) {
-  // No real Host/X-Forwarded-Host header means this isn't a browser request —
-  // e.g. Next's internal self-fetch for local image optimization, which has
-  // no header and would otherwise fall back to nextUrl's 0.0.0.0 bind address
-  // and get redirected into an empty response. Skip host rewriting for those.
-  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
-  const host = forwardedHost || request.headers.get("host");
-
+function parseHostname(host: string | null) {
   if (!host) {
     return null;
   }
@@ -26,9 +19,10 @@ function getRequestHostname(request: NextRequest) {
 }
 
 export function proxy(request: NextRequest) {
-  const requestHostname = getRequestHostname(request);
+  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const externalHostname = parseHostname(forwardedHost || request.headers.get("host"));
 
-  if (requestHostname === legacyHostname) {
+  if (externalHostname === legacyHostname) {
     const destination = request.nextUrl.clone();
     destination.hostname = canonicalHostname;
     destination.port = "";
@@ -37,7 +31,15 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(destination, 308);
   }
 
-  if (requestHostname && localAliases.has(requestHostname)) {
+  // Only the browser-set Host header identifies a real "visited via
+  // 0.0.0.0/127.0.0.1" case. Next sets x-forwarded-host to the server's own
+  // bind address on its internal self-fetches (e.g. the image optimizer
+  // fetching a local /public image), and trusting it here would redirect
+  // that internal request into an empty response — breaking image
+  // optimization whenever the server binds to 0.0.0.0, as it does in Docker.
+  const directHostname = parseHostname(request.headers.get("host"));
+
+  if (directHostname && localAliases.has(directHostname)) {
     const destination = request.nextUrl.clone();
     destination.hostname = localHostname;
 
