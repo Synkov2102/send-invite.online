@@ -15,8 +15,8 @@ type SiteHeaderProps = {
 export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
   return (
     <header className="site-header">
-      <Link aria-label={brand.homeAriaLabel} className="site-header__brand" href="/">
-        <BrandLockup showDomain />
+      <Link className="site-header__brand" href="/">
+        <BrandLockup homeLabelSuffix={brand.homeAriaLabel} showDomain />
       </Link>
 
       <nav aria-label="Основная навигация" className="site-header__nav">

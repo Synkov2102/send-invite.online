@@ -5,6 +5,6 @@ export const brand = {
   locale: "ru_RU",
   tagline: "сайты-приглашения на свадьбу",
   ogImage: "/images/send-invite-og.jpg",
-  homeAriaLabel: "Send Invite — на главную",
+  homeAriaLabel: "— на главную",
   exampleInviteSlug: "anna-maxim",
 } as const;

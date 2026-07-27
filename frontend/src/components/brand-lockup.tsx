@@ -1,10 +1,30 @@
+import type { CSSProperties } from "react";
 import { brand } from "@/lib/brand";
 
 type BrandLockupProps = {
   showDomain?: boolean;
+  /**
+   * Visually-hidden text appended after the wordmark so the link's
+   * accessible name stays a superset of what's actually on screen
+   * (WCAG 2.5.3) — the "send"/"invite" spans render with no space between
+   * them for the tight logo kerning, so an aria-label alone would mismatch.
+   */
+  homeLabelSuffix?: string;
 };
 
-export default function BrandLockup({ showDomain = false }: BrandLockupProps) {
+const visuallyHiddenStyle: CSSProperties = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  border: 0,
+};
+
+export default function BrandLockup({ showDomain = false, homeLabelSuffix }: BrandLockupProps) {
   return (
     <span className="brand-lockup">
       <span className="brand-lockup__mark" aria-hidden>
@@ -21,6 +41,7 @@ export default function BrandLockup({ showDomain = false }: BrandLockupProps) {
         </span>
         {showDomain ? <small>{brand.domain}</small> : null}
       </span>
+      {homeLabelSuffix ? <span style={visuallyHiddenStyle}>{homeLabelSuffix}</span> : null}
     </span>
   );
 }

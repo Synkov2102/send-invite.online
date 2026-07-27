@@ -25,7 +25,12 @@ export default function StickyTemplatesCta() {
 
   return (
     <div aria-hidden={!visible} className={visible ? `${styles.bar} ${styles.visible}` : styles.bar}>
-      <TrackedLink className={styles.cta} goal="sticky_mobile_cta_click" href="/templates">
+      <TrackedLink
+        className={styles.cta}
+        goal="sticky_mobile_cta_click"
+        href="/templates"
+        tabIndex={visible ? undefined : -1}
+      >
         Выбрать шаблон <ArrowRight aria-hidden size={16} />
       </TrackedLink>
     </div>

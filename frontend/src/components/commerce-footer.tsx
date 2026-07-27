@@ -7,8 +7,8 @@ export default function CommerceFooter() {
   return (
     <footer className="commerce-footer">
       <div className="commerce-footer__brand">
-        <Link aria-label={brand.homeAriaLabel} href="/">
-          <BrandLockup showDomain />
+        <Link href="/">
+          <BrandLockup homeLabelSuffix={brand.homeAriaLabel} showDomain />
         </Link>
         <p>
           Создание и публикация сайтов-приглашений. Стоимость услуги указана на

@@ -72,12 +72,11 @@ export function EditorSidebarHeader() {
           Шаблоны
         </Link>
         <Link
-          aria-label="На главную"
           className={`${styles.brand} editor-brand`}
           href="/"
           onClick={handleEditorExit}
         >
-          <BrandLockup />
+          <BrandLockup homeLabelSuffix="на главную" />
         </Link>
         <span
           aria-live="polite"

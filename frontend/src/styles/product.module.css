@@ -1881,12 +1881,13 @@
 
 .scope {
   --product-ink: #282126;
-  --product-muted: #756c72;
+  --product-muted: #6a6167;
   --product-line: #e7e0e4;
   --product-paper: #fffdfa;
   --product-soft: #f6f1f3;
   --product-accent: #ff4f72;
   --product-accent-soft: #ffe6eb;
+  --product-accent-text: #d6355a;
   --product-grid:
     linear-gradient(rgba(40, 33, 38, 0.026) 1px, transparent 1px),
     linear-gradient(90deg, rgba(40, 33, 38, 0.026) 1px, transparent 1px);
@@ -1981,14 +1982,14 @@
 }
 .scope:global(.brand-lockup__invite),
 .scope :global(.brand-lockup__invite) {
-  color: var(--product-accent);
+  color: var(--product-accent-text);
   font-size: 1.48rem;
   font-weight: 560;
   letter-spacing: -0.06em;
 }
 .scope:global(.brand-lockup__wordmark) small,
 .scope :global(.brand-lockup__wordmark) small {
-  color: #8a7c86;
+  color: var(--product-muted);
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.54rem;
   font-weight: 650;

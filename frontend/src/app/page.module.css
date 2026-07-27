@@ -1,10 +1,11 @@
 .page {
   --ink: #282126;
-  --muted: #756c72;
+  --muted: #6a6167;
   --line: #e7e0e4;
   --paper: #fffdfa;
   --soft: #f6f1f3;
   --accent: #ff4f72;
+  --accent-text: #d6355a;
   --product-ink: var(--ink);
   --product-muted: var(--muted);
   --product-line: var(--line);
@@ -185,7 +186,7 @@
   letter-spacing: -0.055em;
 }
 .heroPrice small {
-  color: var(--accent);
+  color: var(--accent-text);
   font-size: 0.62rem;
   font-weight: 720;
   letter-spacing: 0.08em;
@@ -437,7 +438,7 @@
   position: absolute;
   top: 24px;
   right: 26px;
-  color: #c3b8be;
+  color: var(--muted);
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.62rem;
   letter-spacing: 0.1em;
@@ -566,7 +567,7 @@
   padding: 26px 0;
 }
 .steps article > span {
-  color: #b8adb4;
+  color: var(--muted);
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.62rem;
 }
