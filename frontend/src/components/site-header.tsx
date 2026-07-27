@@ -5,6 +5,7 @@ import BrandLockup from "./brand-lockup";
 import SiteHeaderMobileMenu from "./site-header-mobile-menu";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
 import SupportModal from "./support-modal";
+import TrackedLink from "./tracked-link";
 
 type SiteHeaderProps = {
   active?: "home" | "templates";
@@ -26,13 +27,14 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
         >
           Главная
         </Link>
-        <Link
+        <TrackedLink
           aria-current={active === "templates" ? "page" : undefined}
           className={active === "templates" ? "is-active" : undefined}
+          goal="header_nav_templates_click"
           href="/templates"
         >
           Шаблоны
-        </Link>
+        </TrackedLink>
         <SupportModal>Поддержка</SupportModal>
       </nav>
 
@@ -43,10 +45,10 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
 
         <SiteHeaderMobileMenu active={active} initialUser={initialUser} />
 
-        <Link className="site-header__cta" href="/templates">
+        <TrackedLink className="site-header__cta" goal="header_cta_click" href="/templates">
           Создать приглашение
           <ArrowUpRight aria-hidden size={14} />
-        </Link>
+        </TrackedLink>
       </div>
     </header>
   );

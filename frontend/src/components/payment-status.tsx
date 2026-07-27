@@ -3,6 +3,7 @@
 import { CheckCircle2, Clock3, RefreshCw, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { trackGoal } from "@/lib/analytics";
 
 type OrderState = {
   amount: string;
@@ -116,6 +117,20 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
       }
     };
   }, [failed, orderId, refreshKey]);
+
+  useEffect(() => {
+    if (order?.status !== "paid") {
+      return;
+    }
+
+    const sentKey = `payment_goal_sent:${orderId}`;
+    if (window.sessionStorage.getItem(sentKey)) {
+      return;
+    }
+
+    trackGoal("payment_success", { currency: "RUB", order_price: Number(order.amount) });
+    window.sessionStorage.setItem(sentKey, "1");
+  }, [order, orderId]);
 
   if (order?.status === "paid") {
     return (

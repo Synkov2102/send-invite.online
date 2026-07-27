@@ -114,39 +114,53 @@
   margin-top: 35px;
 }
 
-.primaryButton,
-.secondaryButton {
+.primaryButton {
   display: inline-flex;
   min-height: 50px;
   align-items: center;
   justify-content: center;
   gap: 10px;
   border-radius: 999px;
+  background: var(--ink);
   padding: 12px 21px;
+  color: #fff;
   font-size: 0.82rem;
   font-weight: 720;
   transition:
     background-color 160ms ease,
-    color 160ms ease,
     transform 160ms ease;
-}
-
-.primaryButton {
-  background: var(--ink);
-  color: #fff;
 }
 .primaryButton:hover {
   background: var(--accent);
   transform: translateY(-2px);
 }
+
 .secondaryButton {
-  border: 1px solid var(--line);
-  background: rgba(255, 253, 250, 0.74);
-  color: var(--ink);
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 720;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 4px;
+  transition:
+    color 160ms ease,
+    text-decoration-color 160ms ease;
 }
 .secondaryButton:hover {
-  background: #fff;
-  transform: translateY(-2px);
+  color: var(--ink);
+  text-decoration-color: var(--accent);
+}
+
+.heroTrust {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
 }
 
 .heroPrice {
@@ -454,7 +468,7 @@
 }
 .sectionHeading {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 30px;
   margin-bottom: 42px;
@@ -470,14 +484,46 @@
   letter-spacing: -0.065em;
   line-height: 0.95;
 }
-.sectionHeading > a,
 .workflowIntro > a {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 253, 250, 0.74);
+  padding: 12px 20px;
   color: var(--ink);
   font-size: 0.78rem;
   font-weight: 720;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+.workflowIntro > a:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.sectionHeading > a {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  padding: 14px 24px;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 720;
+  box-shadow: 0 14px 34px rgba(255, 79, 114, 0.32);
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+.sectionHeading > a:hover {
+  background: var(--ink);
+  transform: translateY(-2px);
 }
 
 .templateGrid {

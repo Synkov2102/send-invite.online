@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatInviteSitePrice } from "@/lib/commerce";
 import { getTemplatePalettes } from "@/lib/template-palettes";
+import { trackGoal } from "@/lib/analytics";
 import type { InviteTemplate } from "@/lib/invite-templates";
 import styles from "./template-card.module.css";
 
@@ -21,6 +22,7 @@ type TemplateCardProps = {
   siteId?: string;
   template: InviteTemplate;
   titleAs?: "h2" | "h3";
+  trackingGoal?: string;
 };
 
 function formatCardIndex(index: number) {
@@ -53,6 +55,7 @@ export default function TemplateCard({
   siteId,
   template,
   titleAs: Title = "h2",
+  trackingGoal,
 }: TemplateCardProps) {
   const palettes = getTemplatePalettes(template);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -84,7 +87,11 @@ export default function TemplateCard({
 
   if (!paletteCarousel || palettes.length === 0) {
     return (
-      <Link className={rootClassName} href={editorHref}>
+      <Link
+        className={rootClassName}
+        href={editorHref}
+        onClick={trackingGoal ? () => trackGoal(trackingGoal) : undefined}
+      >
         <div className="template-card__showcase">
           <span className="template-card__index">{formatCardIndex(index)}</span>
           <div className="template-card__device">
