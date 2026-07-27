@@ -135,28 +135,6 @@
   transform: translateY(-2px);
 }
 
-.secondaryButton {
-  display: inline-flex;
-  min-height: 50px;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 4px;
-  color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 720;
-  text-decoration: underline;
-  text-decoration-color: var(--line);
-  text-underline-offset: 4px;
-  transition:
-    color 160ms ease,
-    text-decoration-color 160ms ease;
-}
-.secondaryButton:hover {
-  color: var(--ink);
-  text-decoration-color: var(--accent);
-}
-
 .heroTrust {
   margin: 14px 0 0;
   color: var(--muted);
@@ -940,13 +918,11 @@
   }
 
   .heroActions,
-  .primaryButton,
-  .secondaryButton {
+  .primaryButton {
     width: 100%;
   }
 
-  .primaryButton,
-  .secondaryButton {
+  .primaryButton {
     min-height: 48px;
   }
 
