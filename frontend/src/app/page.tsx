@@ -189,7 +189,7 @@ export default function HomePage() {
                   fill
                   priority
                   sizes="(max-width: 899px) 92vw, 48vw"
-                  src="/images/homepage-wedding-couple.png"
+                  src="/images/homepage-wedding-couple.webp"
                 />
                 <div className={styles.previewShade} />
                 <div className={styles.previewCopy}>
@@ -300,7 +300,7 @@ export default function HomePage() {
               alt="Молодожёны в день свадьбы"
               fill
               sizes="(max-width: 899px) 92vw, 42vw"
-              src="/images/homepage-wedding-story.png"
+              src="/images/homepage-wedding-story.webp"
             />
           </div>
           <div className={styles.storyCopy}>

@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import type { Swiper as SwiperInstance } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { ArrowLeft, ArrowRight, MoveHorizontal } from "lucide-react";
+import dynamic from "next/dynamic";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatInviteSitePrice } from "@/lib/commerce";
 import { getTemplatePalettes } from "@/lib/template-palettes";
 import { trackGoal } from "@/lib/analytics";
 import type { InviteTemplate } from "@/lib/invite-templates";
-import styles from "./template-card.module.css";
+import { formatCardIndex, getEditorHref } from "./template-card-helpers";
+
+const TemplateCardCarousel = dynamic(() => import("./template-card-carousel"), {
+  ssr: false,
+});
 
 type TemplateCardProps = {
   className?: string;
@@ -25,27 +26,6 @@ type TemplateCardProps = {
   trackingGoal?: string;
 };
 
-function formatCardIndex(index: number) {
-  return String(index + 1).padStart(2, "0");
-}
-
-function getEditorHref(templateId: string, siteId?: string, paletteId?: string) {
-  const editorParams = new URLSearchParams({
-    template: templateId,
-    preview: "1",
-  });
-
-  if (siteId) {
-    editorParams.set("site", siteId);
-  }
-
-  if (paletteId) {
-    editorParams.set("palette", paletteId);
-  }
-
-  return `/editor?${editorParams.toString()}`;
-}
-
 export default function TemplateCard({
   className,
   eagerImage = false,
@@ -58,15 +38,6 @@ export default function TemplateCard({
   trackingGoal,
 }: TemplateCardProps) {
   const palettes = getTemplatePalettes(template);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
-  const isCarouselActive = paletteCarousel && palettes.length > 1;
-  const selectedPalette = palettes[selectedIndex] ?? palettes[0];
-  const editorHref = getEditorHref(
-    template.id,
-    siteId,
-    paletteCarousel ? selectedPalette?.id : undefined,
-  );
   const rootClassName = `template-card${className ? ` ${className}` : ""}`;
 
   const meta = (
@@ -89,7 +60,7 @@ export default function TemplateCard({
     return (
       <Link
         className={rootClassName}
-        href={editorHref}
+        href={getEditorHref(template.id, siteId)}
         onClick={trackingGoal ? () => trackGoal(trackingGoal) : undefined}
       >
         <div className="template-card__showcase">
@@ -115,98 +86,15 @@ export default function TemplateCard({
   }
 
   return (
-    <article className={rootClassName}>
-      <div className="template-card__showcase">
-        <span className="template-card__index">{formatCardIndex(index)}</span>
-        <div
-          aria-label={`Палитры шаблона «${template.name}»`}
-          aria-roledescription="карусель"
-          className="template-card__device"
-          role="region"
-        >
-          <Swiper
-            className={styles.viewport}
-            enabled={isCarouselActive}
-            loop={isCarouselActive}
-            onSlideChange={(instance) => setSelectedIndex(instance.realIndex)}
-            onSwiper={setSwiper}
-            slidesPerView={1}
-          >
-            {palettes.map((palette, paletteIndex) => (
-              <SwiperSlide
-                aria-label={`${paletteIndex + 1} из ${palettes.length}: ${palette.label}`}
-                aria-roledescription="слайд"
-                className={styles.slide}
-                key={palette.id}
-                role="group"
-              >
-                <Link
-                  aria-label={`Открыть шаблон «${template.name}» в палитре «${palette.label}»`}
-                  className={styles.previewLink}
-                  draggable={false}
-                  href={getEditorHref(template.id, siteId, palette.id)}
-                >
-                  <div
-                    className="template-card__device-screen"
-                    style={{ backgroundColor: palette.background }}
-                  >
-                    <Image
-                      alt={`Шаблон «${template.name}», палитра «${palette.label}»`}
-                      draggable={false}
-                      fill
-                      loading={eagerImage && paletteIndex === 0 ? "eager" : undefined}
-                      sizes={imageSizes}
-                      src={`/images/templates/${template.id}/${palette.id}.webp`}
-                    />
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-
-          <button
-            aria-label="Предыдущая палитра"
-            className={`${styles.control} ${styles.previous}`}
-            onClick={() => swiper?.slidePrev()}
-            type="button"
-          >
-            <ArrowLeft aria-hidden size={17} />
-          </button>
-          <button
-            aria-label="Следующая палитра"
-            className={`${styles.control} ${styles.next}`}
-            onClick={() => swiper?.slideNext()}
-            type="button"
-          >
-            <ArrowRight aria-hidden size={17} />
-          </button>
-        </div>
-
-        <p className={styles.swipeHint}>
-          <MoveHorizontal aria-hidden size={15} />
-          Свайпните, чтобы сменить палитру
-        </p>
-        <div className={styles.paletteMeta}>
-          <span aria-live="polite">{selectedPalette.label}</span>
-          <div aria-label="Выбрать палитру" className={styles.dots} role="group">
-            {palettes.map((palette, paletteIndex) => (
-              <button
-                aria-label={`Палитра «${palette.label}»`}
-                aria-pressed={paletteIndex === selectedIndex}
-                className={paletteIndex === selectedIndex ? styles.activeDot : styles.dot}
-                key={palette.id}
-                onClick={() => swiper?.slideToLoop(paletteIndex)}
-                style={{ backgroundColor: palette.accent }}
-                type="button"
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <Link className={styles.metaLink} href={editorHref}>
-        {meta}
-      </Link>
-    </article>
+    <TemplateCardCarousel
+      className={rootClassName}
+      eagerImage={eagerImage}
+      imageSizes={imageSizes}
+      index={index}
+      meta={meta}
+      palettes={palettes}
+      siteId={siteId}
+      template={template}
+    />
   );
 }

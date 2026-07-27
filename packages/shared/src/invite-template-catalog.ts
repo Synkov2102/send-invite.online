@@ -348,7 +348,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "fjord",
     ],
     tags: ["анимация", "вода"],
-    screenshot: "/images/templates/lagoon-wave-mobile.png",
+    screenshot: "/images/templates/lagoon-wave-mobile.webp",
     preview: {
       background: "#0e3a44",
       surface: "#eafaf9",

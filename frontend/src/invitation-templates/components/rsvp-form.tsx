@@ -2,6 +2,7 @@
 
 import { Button, Checkbox, CheckboxGroup, Input, Radio, RadioGroup } from "@heroui/react";
 import { useId, useState } from "react";
+import "@/styles/heroui.css";
 import { formatDate } from "@/lib/invite-date";
 import type { InviteRsvpQuestion } from "@/lib/invite-state";
 import styles from "./rsvp-form.module.css";

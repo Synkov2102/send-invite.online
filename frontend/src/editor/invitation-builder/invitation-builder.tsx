@@ -7,6 +7,7 @@ import { FullscreenPreview } from "../components/fullscreen-preview";
 import type { InvitationBuilderProps } from "../types";
 import { useCompactEditorViewport } from "../use-compact-editor-viewport";
 import { useInvitationBuilder } from "../use-invitation-builder";
+import "@/styles/heroui.css";
 import productStyles from "@/styles/product.module.css";
 import styles from "./invitation-builder.module.css";
 

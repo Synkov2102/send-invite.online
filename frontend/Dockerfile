@@ -35,6 +35,13 @@ COPY --from=build /app/frontend/.next/standalone ./
 COPY --from=build /app/frontend/public ./frontend/public
 COPY --from=build /app/frontend/.next/static ./frontend/.next/static
 
+# next's standalone output tracing doesn't reliably pick up sharp's native
+# binary in an npm workspaces monorepo; copy it straight from the verified
+# `npm ci` install so image optimization can't silently fall back to a
+# missing/wrong-platform binary.
+COPY --from=deps /app/node_modules/sharp ./node_modules/sharp
+COPY --from=deps /app/node_modules/@img ./node_modules/@img
+
 EXPOSE 3000
 
 CMD ["node", "frontend/server.js"]
