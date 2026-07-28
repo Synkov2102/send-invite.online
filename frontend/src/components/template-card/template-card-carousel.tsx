@@ -23,6 +23,12 @@ type TemplateCardCarouselProps = {
   template: InviteTemplate;
 };
 
+// Слайдов у карточки до десяти, а видно всегда один. Держим смонтированными
+// только активный и соседей — иначе страница каталога тянет ~77 картинок разом.
+function getNeighbourIndexes(index: number, total: number) {
+  return [(index - 1 + total) % total, index, (index + 1) % total];
+}
+
 export default function TemplateCardCarousel({
   className,
   eagerImage,
@@ -35,6 +41,9 @@ export default function TemplateCardCarousel({
 }: TemplateCardCarouselProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+  const [mountedIndexes, setMountedIndexes] = useState(
+    () => new Set(getNeighbourIndexes(0, palettes.length)),
+  );
   const isCarouselActive = palettes.length > 1;
   const selectedPalette = palettes[selectedIndex] ?? palettes[0];
   const editorHref = getEditorHref(template.id, siteId, selectedPalette?.id);
@@ -53,7 +62,18 @@ export default function TemplateCardCarousel({
             className={styles.viewport}
             enabled={isCarouselActive}
             loop={isCarouselActive}
-            onSlideChange={(instance) => setSelectedIndex(instance.realIndex)}
+            onSlideChange={(instance) => {
+              setSelectedIndex(instance.realIndex);
+              setMountedIndexes((previous) => {
+                const next = new Set(previous);
+
+                for (const index of getNeighbourIndexes(instance.realIndex, palettes.length)) {
+                  next.add(index);
+                }
+
+                return next;
+              });
+            }}
             onSwiper={setSwiper}
             slidesPerView={1}
           >
@@ -75,14 +95,16 @@ export default function TemplateCardCarousel({
                     className="template-card__device-screen"
                     style={{ backgroundColor: palette.background }}
                   >
-                    <Image
-                      alt={`Шаблон «${template.name}», палитра «${palette.label}»`}
-                      draggable={false}
-                      fill
-                      loading={eagerImage && paletteIndex === 0 ? "eager" : undefined}
-                      sizes={imageSizes}
-                      src={`/images/templates/${template.id}/${palette.id}.webp`}
-                    />
+                    {mountedIndexes.has(paletteIndex) ? (
+                      <Image
+                        alt={`Шаблон «${template.name}», палитра «${palette.label}»`}
+                        draggable={false}
+                        fill
+                        loading={eagerImage && paletteIndex === 0 ? "eager" : undefined}
+                        sizes={imageSizes}
+                        src={`/images/templates/${template.id}/${palette.id}.webp`}
+                      />
+                    ) : null}
                   </div>
                 </Link>
               </SwiperSlide>

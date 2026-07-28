@@ -29,7 +29,11 @@ type TemplateCardProps = {
 export default function TemplateCard({
   className,
   eagerImage = false,
-  imageSizes = "(max-width: 640px) 92vw, (max-width: 899px) 46vw, 31vw",
+  // Экран «телефона» закапан по ширине (min(100%, 280–300px)) и за вьюпортом не
+  // тянется. Любой vw-токен здесь вреден: next/image парсит vw из `sizes` и,
+  // увидев 100vw, оставляет в srcset только кандидатов от 640w — для бокса
+  // ~258px браузеру не из чего выбрать.
+  imageSizes = "300px",
   index,
   paletteCarousel = false,
   siteId,

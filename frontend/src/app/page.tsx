@@ -249,7 +249,6 @@ export default function HomePage() {
             {featured.map((template, index) => (
               <TemplateCard
                 className={styles.templateCard}
-                imageSizes="min(300px, 100vw)"
                 index={index}
                 key={template.id}
                 template={template}
