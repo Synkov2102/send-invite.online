@@ -1,6 +1,6 @@
 import type { InviteImageSlot } from "./media-utils";
 
-type InviteImageField = "coverImageUrl" | "portraitImageUrl" | "venueImageUrl";
+export type InviteImageField = "coverImageUrl" | "portraitImageUrl" | "venueImageUrl";
 
 export const INVITE_IMAGE_SLOTS: ReadonlyArray<{
   field: InviteImageField;

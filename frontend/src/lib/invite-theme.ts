@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+﻿import type { CSSProperties } from "react";
 import type { InviteSitePalette } from "@/lib/invite-site-types";
 
 export type { InvitePalette, InvitePalettePreset } from "@/lib/invite-palette-catalog";
@@ -27,57 +27,57 @@ export type InviteVars = CSSProperties & {
 };
 
 export const inviteImages = {
-  cover: "/images/wedding-mountain-cover.png",
-  portrait: "/images/wedding-mountain-portrait.png",
-  venue: "/images/wedding-mountain-cover.png",
+  cover: "/images/wedding-mountain-cover.webp",
+  portrait: "/images/wedding-mountain-portrait.webp",
+  venue: "/images/wedding-mountain-cover.webp",
 } as const;
 
 export const alpineImages = {
-  cover: "/images/alpine-rings-cover.png",
-  portrait: "/images/alpine-rings-portrait.png",
-  venue: "/images/alpine-rings-venue.png",
+  cover: "/images/alpine-rings-cover.webp",
+  portrait: "/images/alpine-rings-portrait.webp",
+  venue: "/images/alpine-rings-venue.webp",
 } as const;
 
 export const aquaImages = {
-  cover: "/images/lagoon-wave-cover.png",
-  portrait: "/images/lagoon-wave-portrait.png",
-  venue: "/images/lagoon-wave-venue.png",
+  cover: "/images/lagoon-wave-cover.webp",
+  portrait: "/images/lagoon-wave-portrait.webp",
+  venue: "/images/lagoon-wave-venue.webp",
 } as const;
 
 export const silkImages = {
-  cover: "/images/silk-wedding-cover.png",
-  portrait: "/images/silk-wedding-rings.png",
-  venue: "/images/silk-wedding-venue.png",
+  cover: "/images/silk-wedding-cover.webp",
+  portrait: "/images/silk-wedding-rings.webp",
+  venue: "/images/silk-wedding-venue.webp",
 } as const;
 
 export const clarityImages = {
-  cover: "/images/clarity-editorial-cover.png",
-  portrait: "/images/clarity-editorial-portrait.png",
-  venue: "/images/clarity-editorial-venue.png",
+  cover: "/images/clarity-editorial-cover.webp",
+  portrait: "/images/clarity-editorial-portrait.webp",
+  venue: "/images/clarity-editorial-venue.webp",
 } as const;
 
 export const minimalImages = {
-  cover: "/images/minimal-paper-couple.png",
-  portrait: "/images/minimal-paper-couple-closing.png",
-  venue: "/images/minimal-paper-venue.png",
+  cover: "/images/minimal-paper-couple.webp",
+  portrait: "/images/minimal-paper-couple-closing.webp",
+  venue: "/images/minimal-paper-venue.webp",
 } as const;
 
 export const electricImages = {
-  cover: "/images/electric-wedding-cover.png",
-  portrait: "/images/electric-wedding-portrait.png",
-  venue: "/images/clarity-wedding-venue.png",
+  cover: "/images/electric-wedding-cover.webp",
+  portrait: "/images/electric-wedding-portrait.webp",
+  venue: "/images/clarity-wedding-venue.webp",
 } as const;
 
 export const editorialImages = {
-  cover: "/images/editorial-vow-cover.png",
-  portrait: "/images/editorial-vow-portrait.png",
-  venue: "/images/editorial-vow-venue.png",
+  cover: "/images/editorial-vow-cover.webp",
+  portrait: "/images/editorial-vow-portrait.webp",
+  venue: "/images/editorial-vow-venue.webp",
 } as const;
 
 export const chromeImages = {
-  cover: "/images/chrome-affair-cover.png",
-  portrait: "/images/chrome-affair-portrait.png",
-  venue: "/images/chrome-affair-venue.png",
+  cover: "/images/chrome-affair-cover.webp",
+  portrait: "/images/chrome-affair-portrait.webp",
+  venue: "/images/chrome-affair-venue.webp",
 } as const;
 
 export const crimsonImages = {

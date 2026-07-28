@@ -24,6 +24,7 @@ import {
 import {
   ALLOWED_AUDIO_MIME_TYPES,
   ALLOWED_IMAGE_MIME_TYPES,
+  convertImageToWebp,
   getCreateSiteErrorMessage,
   getPublicImageUrl,
   getPublicMusicUrl,
@@ -31,6 +32,7 @@ import {
   InviteMusicUploadError,
   isS3NotConfiguredError,
   resolveStoredMedia,
+  WEBP_MIME_TYPE,
   type ServedMedia,
 } from "./sites-media";
 import { assertAllowedStoredMediaUrl, assertMediaFileSize } from "./media-url";
@@ -524,10 +526,12 @@ export class SitesService {
 
       assertMediaFileSize(parsedImage.buffer, "изображения");
 
+      const webpBuffer = await convertImageToWebp(parsedImage.buffer);
+
       try {
         const uploadedUrl = await this.s3Storage.uploadInviteImageObject({
-          buffer: parsedImage.buffer,
-          contentType: parsedImage.mime,
+          buffer: webpBuffer,
+          contentType: WEBP_MIME_TYPE,
           slot,
         });
 

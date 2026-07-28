@@ -4,7 +4,7 @@
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
  * 2. Укажите `kind` и `editorReady: true`.
- * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
+ * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.webp`
  *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
  * Чтобы добавить новый движок рендера:

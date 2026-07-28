@@ -1,11 +1,16 @@
 import { randomUUID } from "crypto";
 import { Injectable, type OnModuleDestroy } from "@nestjs/common";
-import { GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from "@aws-sdk/client-s3";
 
 const defaultEndpoint = "https://storage.yandexcloud.net";
 const defaultRegion = "ru-central1";
 const s3RefPrefix = "s3://";
-const inviteImageKeyPrefix = "invite-images/";
+export const inviteImageKeyPrefix = "invite-images/";
 const inviteMusicKeyPrefix = "invite-music/";
 const catalogMusicKeyPrefix = "catalog-music/";
 
@@ -206,6 +211,27 @@ export class S3StorageService implements OnModuleDestroy {
     );
 
     return createS3Ref(config.bucket, key);
+  }
+
+  // Только для миграции webp: удаляет исходник, чей ref уже заменён в Mongo.
+  async deleteInviteImageObject(ref: string) {
+    const parsed = parseS3ObjectRef(ref);
+    const config = this.getS3Config();
+
+    if (!parsed || parsed.bucket !== config.bucket) {
+      throw new Error("Invalid S3 object reference.");
+    }
+
+    if (!parsed.key.startsWith(inviteImageKeyPrefix)) {
+      throw new Error("S3 object key is not allowed.");
+    }
+
+    await this.getS3Client(config).send(
+      new DeleteObjectCommand({
+        Bucket: parsed.bucket,
+        Key: parsed.key,
+      }),
+    );
   }
 
   async getInviteS3Object(ref: string) {

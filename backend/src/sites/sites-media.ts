@@ -1,9 +1,11 @@
 import { BadRequestException, NotFoundException } from "@nestjs/common";
+import sharp from "sharp";
 import { isS3ObjectRef, S3StorageService } from "../storage/s3-storage.service";
 import type { InviteImageSlot } from "./media-utils";
 import { parseDataUrl } from "./media-utils";
 
 const IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable";
+const WEBP_QUALITY = 82;
 
 export type ServedMedia = {
   buffer: Buffer;
@@ -30,6 +32,22 @@ export const ALLOWED_IMAGE_MIME_TYPES = new Set([
   "image/png",
   "image/webp",
 ]);
+
+export const WEBP_MIME_TYPE = "image/webp";
+
+// В S3 попадает только webp: исходные jpg/png/gif весят кратно больше.
+// `animated` сохраняет кадры GIF, `rotate()` без аргументов применяет
+// EXIF-ориентацию из фото с телефона — webp её не переносит.
+export async function convertImageToWebp(buffer: Buffer) {
+  try {
+    return await sharp(buffer, { animated: true })
+      .rotate()
+      .webp({ quality: WEBP_QUALITY })
+      .toBuffer();
+  } catch {
+    throw new InviteImageUploadError();
+  }
+}
 
 export const ALLOWED_AUDIO_MIME_TYPES = new Set([
   "audio/mpeg",

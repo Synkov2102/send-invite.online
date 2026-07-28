@@ -1,10 +1,10 @@
-/**
+﻿/**
  * Каталог шаблонов — единая точка регистрации.
  *
  * Чтобы добавить шаблон на существующем движке:
  * 1. Добавьте объект в `inviteTemplateCatalog` ниже.
  * 2. Укажите `kind` и `editorReady: true`.
- * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.png`
+ * 3. Положите скриншот в frontend/public/images/templates/ и mobile-версию `*-mobile.webp`
  *    (можно собрать: `node frontend/scripts/capture-template-screenshots.mjs` при запущенном frontend).
  *
  * Чтобы добавить новый движок рендера:
@@ -321,7 +321,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "alpine-terracotta",
     ],
     tags: ["3D", "минимализм"],
-    screenshot: "/images/templates/alpine-rings-mobile.png",
+    screenshot: "/images/templates/alpine-rings-mobile.webp",
     preview: {
       background: "#dfe8e7",
       surface: "#f7fbf8",
@@ -367,7 +367,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "silk",
     recommendedPaletteIds: ["silk", "pearl", "graphite", "champagne", "nocturne"],
     tags: ["фото", "классика"],
-    screenshot: "/images/templates/silk-monogram-mobile.png",
+    screenshot: "/images/templates/silk-monogram-mobile.webp",
     preview: {
       background: "#d5c7bd",
       surface: "#fffefd",
@@ -386,7 +386,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "clarity",
     recommendedPaletteIds: ["clarity", "graphite", "pearl", "silk", "nocturne"],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/clarity-editorial-mobile.png",
+    screenshot: "/images/templates/clarity-editorial-mobile.webp",
     preview: {
       background: "#b8b4aa",
       surface: "#f5f3e9",
@@ -416,7 +416,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "lavender-pop",
     ],
     tags: ["яркий", "editorial"],
-    screenshot: "/images/templates/electric-vows-mobile.png",
+    screenshot: "/images/templates/electric-vows-mobile.webp",
     preview: {
       background: "#fff600",
       surface: "#fffaf0",
@@ -446,7 +446,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "paper-noir-blush",
     ],
     tags: ["минимализм", "бумага"],
-    screenshot: "/images/templates/minimal-paper-mobile.png",
+    screenshot: "/images/templates/minimal-paper-mobile.webp",
     preview: {
       background: "#d9e0e5",
       surface: "#f7f3ea",
@@ -477,7 +477,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "chrome-rose",
     ],
     tags: ["editorial", "хром"],
-    screenshot: "/images/templates/chrome-affair-mobile.png",
+    screenshot: "/images/templates/chrome-affair-mobile.webp",
     preview: {
       background: "#101712",
       surface: "#f3f0e8",
@@ -508,7 +508,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "editorial-sepia",
     ],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/editorial-vow-mobile.png",
+    screenshot: "/images/templates/editorial-vow-mobile.webp",
     preview: {
       background: "#09090b",
       surface: "#f6f1e9",
@@ -539,7 +539,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "crimson-champagne-ink",
     ],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/crimson-letter-mobile.png",
+    screenshot: "/images/templates/crimson-letter-mobile.webp",
     preview: {
       background: "#6c1c22",
       surface: "#fffdf9",

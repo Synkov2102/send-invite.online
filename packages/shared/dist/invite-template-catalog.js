@@ -253,7 +253,7 @@ exports.inviteTemplateCatalog = [
             "alpine-terracotta",
         ],
         tags: ["3D", "минимализм"],
-        screenshot: "/images/templates/alpine-rings-mobile.png",
+        screenshot: "/images/templates/alpine-rings-mobile.webp",
         preview: {
             background: "#dfe8e7",
             surface: "#f7fbf8",
@@ -299,7 +299,7 @@ exports.inviteTemplateCatalog = [
         defaultPaletteId: "silk",
         recommendedPaletteIds: ["silk", "pearl", "graphite", "champagne", "nocturne"],
         tags: ["фото", "классика"],
-        screenshot: "/images/templates/silk-monogram-mobile.png",
+        screenshot: "/images/templates/silk-monogram-mobile.webp",
         preview: {
             background: "#d5c7bd",
             surface: "#fffefd",
@@ -318,7 +318,7 @@ exports.inviteTemplateCatalog = [
         defaultPaletteId: "clarity",
         recommendedPaletteIds: ["clarity", "graphite", "pearl", "silk", "nocturne"],
         tags: ["фото", "editorial"],
-        screenshot: "/images/templates/clarity-editorial-mobile.png",
+        screenshot: "/images/templates/clarity-editorial-mobile.webp",
         preview: {
             background: "#b8b4aa",
             surface: "#f5f3e9",
@@ -348,7 +348,7 @@ exports.inviteTemplateCatalog = [
             "lavender-pop",
         ],
         tags: ["яркий", "editorial"],
-        screenshot: "/images/templates/electric-vows-mobile.png",
+        screenshot: "/images/templates/electric-vows-mobile.webp",
         preview: {
             background: "#fff600",
             surface: "#fffaf0",
@@ -378,7 +378,7 @@ exports.inviteTemplateCatalog = [
             "paper-noir-blush",
         ],
         tags: ["минимализм", "бумага"],
-        screenshot: "/images/templates/minimal-paper-mobile.png",
+        screenshot: "/images/templates/minimal-paper-mobile.webp",
         preview: {
             background: "#d9e0e5",
             surface: "#f7f3ea",
@@ -408,7 +408,7 @@ exports.inviteTemplateCatalog = [
             "chrome-rose",
         ],
         tags: ["editorial", "хром"],
-        screenshot: "/images/templates/chrome-affair-mobile.png",
+        screenshot: "/images/templates/chrome-affair-mobile.webp",
         preview: {
             background: "#101712",
             surface: "#f3f0e8",
@@ -438,7 +438,7 @@ exports.inviteTemplateCatalog = [
             "editorial-sepia",
         ],
         tags: ["фото", "editorial"],
-        screenshot: "/images/templates/editorial-vow-mobile.png",
+        screenshot: "/images/templates/editorial-vow-mobile.webp",
         preview: {
             background: "#09090b",
             surface: "#f6f1e9",
@@ -468,7 +468,7 @@ exports.inviteTemplateCatalog = [
             "crimson-champagne-ink",
         ],
         tags: ["фото", "editorial"],
-        screenshot: "/images/templates/crimson-letter-mobile.png",
+        screenshot: "/images/templates/crimson-letter-mobile.webp",
         preview: {
             background: "#6c1c22",
             surface: "#fffdf9",
