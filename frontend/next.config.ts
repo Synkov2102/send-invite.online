@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
     proxyClientMaxBodySize: "30mb",
   },
   images: {
+    localPatterns: [
+      {
+        pathname: "/images/**",
+        search: "",
+      },
+      {
+        pathname: "/images/templates/chapter-ticket/**",
+        search: "?v=20260729-1",
+      },
+      {
+        pathname: "/images/templates/chapter-ticket-mobile.webp",
+        search: "?v=20260728-2",
+      },
+    ],
     remotePatterns: [
       {
         hostname: "avatars.yandex.net",

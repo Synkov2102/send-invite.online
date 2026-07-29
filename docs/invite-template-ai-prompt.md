@@ -213,7 +213,7 @@ type TemplateProps = {
 };
 ```
 
-Fallback изображений: `inviteImages` из `@/lib/invite-theme`.
+Fallback изображений: комплект шаблона из `@/lib/invite-theme` (`<kind>Images`), см. «Демо-фото шаблона».
 
 ## Shared components (переиспользовать)
 
@@ -246,6 +246,28 @@ node frontend/scripts/mirror-catalog-music-to-s3.mjs
 
 3. Пропиши пресет: `"<template-id>": "<track-id>"` в `templateMusicTrackIds`.
 
+## Демо-фото шаблона (обязательно)
+
+У каждого шаблона — **свой комплект из трёх фотографий**, не переиспользуй файлы другого шаблона.
+
+1. Формат — только **`.webp`** (никаких jpg/png в `public/images`), качество ~82, ширина ≤ 1600 px, вес файла ≤ 300 КБ.
+2. Именование: `frontend/public/images/<template-id>-{cover,portrait,venue}.webp` — `cover` и `portrait` вертикальные (~4:5), `venue` горизонтальная (~3:2).
+3. Регистрация в `frontend/src/lib/invite-theme.ts` плюс `kind` в обе цепочки выбора (`invite-site-renderer.tsx`, `editor/use-invitation-builder.ts`):
+
+   ```ts
+   export const <kind>Images = {
+     cover: "/images/<template-id>-cover.webp",
+     portrait: "/images/<template-id>-portrait.webp",
+     venue: "/images/<template-id>-venue.webp",
+   } as const;
+   ```
+
+4. Скриншоты каталога снимаются **после** того, как фото на месте:
+
+   ```bash
+   node frontend/scripts/build-template-mobile-screenshots.mjs
+   ```
+
 ## Структура файлов
 
 ```
@@ -272,7 +294,8 @@ frontend/src/invitation-templates/<kind>/
 3. `template.module.css`
 4. `index.ts`
 5. Запись для `inviteTemplateCatalog` + id уникального демо-трека
-6. Фрагменты регистрации (`registry.ts` при новом kind)
+6. Комплект демо-фото `.webp` (cover / portrait / venue) + запись `<kind>Images` в `invite-theme.ts`
+7. Фрагменты регистрации (`registry.ts` при новом kind)
 
 Без TODO и без хардкода пользовательских текстов.
 

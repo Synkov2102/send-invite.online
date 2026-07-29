@@ -80,6 +80,12 @@ export const chromeImages = {
   venue: "/images/chrome-affair-venue.webp",
 } as const;
 
+export const chapterImages = {
+  cover: "/images/chapter-ticket-cover-back-view.webp",
+  portrait: "/images/chapter-ticket-portrait-back-view.webp",
+  venue: "/images/chapter-ticket-venue.webp",
+} as const;
+
 export const crimsonImages = {
   cover: "/images/crimson-editorial-cover.webp",
   portrait: "/images/crimson-editorial-portrait.webp",

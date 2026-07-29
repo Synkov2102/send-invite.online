@@ -256,6 +256,7 @@ const musicTrackById = new Map(editorMusicTracks.map((track) => [track.id, track
 
 const templateMusicTrackIds: Record<string, string> = {
   "alpine-rings": "wedding-the-mountain-522480",
+  "chapter-ticket": "wedding-trailer-hitslab-269139",
   "chrome-affair": "wedding-background-hitslab-277976",
   "clarity-editorial": "wedding-alexgrohl-546219",
   "crimson-letter": "love-wedding-paulyudin-160695",

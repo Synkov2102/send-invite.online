@@ -1,4 +1,4 @@
-import { mkdir } from "node:fs/promises";
+import { copyFile, mkdir } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -22,6 +22,7 @@ const waitMsByTemplate = {
   "minimal-paper": 2500,
   "electric-vows": 2500,
   "editorial-vow": 2500,
+  "chapter-ticket": 2500,
 };
 
 const preparePageByTemplate = {};
@@ -65,6 +66,14 @@ for (const template of templates) {
 
     console.log(`Wrote ${template.id}/${paletteName}`);
   }
+
+  // Карточка каталога (`screenshot` в inviteTemplateCatalog) — копия дефолтной палитры.
+  await copyFile(
+    path.join(templateDir, `${template.defaultPaletteId}.webp`),
+    path.join(templatesDir, `${template.id}-mobile.webp`),
+  );
+
+  console.log(`Wrote ${template.id}-mobile.webp`);
 }
 
 await browser.close();

@@ -631,6 +631,29 @@ ${renderCssVarsTable()}
    \`\`\`
 4. В UI плеера гости видят \`musicTitle\` из пресета — название трека на русском.
 
+## Демо-фото шаблона (обязательно)
+
+У каждого шаблона — **свой комплект из трёх фотографий**. Не переиспользуй файлы другого шаблона: в каталоге они стоят рядом и повтор сразу заметен.
+
+1. Формат — только **\`.webp\`** (никаких jpg/png в \`public/images\`), качество ~82, ширина ≤ 1600 px, вес одного файла ≤ 300 КБ.
+2. Именование и расположение — \`frontend/public/images/<template-id>-{cover,portrait,venue}.webp\`:
+   - \`cover\` — вертикальная (~4:5), пара на обложке;
+   - \`portrait\` — вертикальная (~4:5), финальный блок; если шаблон рисует её ч/б — годится цветной исходник;
+   - \`venue\` — горизонтальная (~3:2), площадка/сервировка.
+3. Зарегистрируй комплект в \`frontend/src/lib/invite-theme.ts\`:
+   \`\`\`ts
+   export const <kind>Images = {
+     cover: "/images/<template-id>-cover.webp",
+     portrait: "/images/<template-id>-portrait.webp",
+     venue: "/images/<template-id>-venue.webp",
+   } as const;
+   \`\`\`
+   и добавь \`kind\` в обе цепочки выбора: \`invite-site-renderer.tsx\` и \`editor/use-invitation-builder.ts\`.
+4. Скриншоты каталога (\`frontend/public/images/templates/<template-id>/<palette-id>.webp\` + \`<template-id>-mobile.webp\`) снимаются скриптом после того, как фото на месте:
+   \`\`\`bash
+   node frontend/scripts/build-template-mobile-screenshots.mjs
+   \`\`\`
+
 ## Вспомогательные данные (передаёт оболочка, не пользователь)
 
 \`\`\`ts
@@ -663,7 +686,8 @@ frontend/src/invitation-templates/<slug>/
 1. Добавить объект в \`inviteTemplateCatalog\` (\`packages/shared/src/invite-template-catalog.ts\`) с \`kind\`, \`editorReady\`, русским \`name\`, \`defaultPaletteId\`, \`recommendedPaletteIds\`, скриншотом. Первая палитра в \`recommendedPaletteIds\` = \`defaultPaletteId\`.
 2. Для нового \`kind\` — папка \`frontend/src/invitation-templates/<kind>/\` + запись в \`registry.ts\`.
 3. Назначить **уникальный** демо-трек в \`templateMusicTrackIds\` и при необходимости залить его в S3 (\`mirror-catalog-music-to-s3.mjs\`).
-4. Пересобрать shared: \`npm run build --workspace @invite/shared\`.
+4. Подготовить **свой** комплект демо-фото в \`.webp\` и зарегистрировать его в \`invite-theme.ts\` (см. «Демо-фото шаблона»).
+5. Пересобрать shared: \`npm run build --workspace @invite/shared\`.
 
 ## Обязательный чеклист секций
 
@@ -678,6 +702,7 @@ frontend/src/invitation-templates/<slug>/
 - [ ] RSVP: shared block, только если \`showRsvp\`
 - [ ] Closing: \`portraitImage\`, повтор имён
 - [ ] Music player снаружи или внутри shell
+- [ ] Свой комплект демо-фото \`.webp\` (cover / portrait / venue) в \`public/images\` + запись в \`invite-theme.ts\`
 
 ## Что нельзя делать
 

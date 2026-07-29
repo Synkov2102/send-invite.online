@@ -1,0 +1,865 @@
+.shell {
+  --chapter-bg: #2f2721;
+  --chapter-paper: #f7f0e2;
+  --chapter-ink: #241d18;
+  --chapter-photo-text: #fff8ee;
+  --chapter-muted: #7a6a5c;
+  --chapter-accent: #b8503a;
+  --chapter-line: #ddcdb6;
+  --chapter-inline: clamp(20px, 6vw, 44px);
+  --chapter-gap: clamp(30px, 7vw, 52px);
+  --chapter-notch: 26px;
+  width: min(100%, 680px);
+  max-width: 680px;
+  margin: 0 auto;
+  margin-inline: auto !important;
+  min-height: 100%;
+  padding: clamp(14px, 4vw, 32px) clamp(14px, 4vw, 32px) clamp(28px, 7vw, 56px);
+  background: var(--chapter-bg);
+  color: var(--chapter-ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  /*
+   * Длинные названия площадок и имена без пробелов переносим, а не выламываем карточку.
+   * Именно `anywhere`, а не `break-word`: только он уменьшает min-content,
+   * иначе auto-треки гридов растягиваются под длину слова.
+   */
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site--chapter) {
+  background: var(--invite-bg, #2f2721);
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure,
+.shell address,
+.shell ol,
+.shell ul {
+  margin: 0;
+}
+
+.shell ol,
+.shell ul {
+  padding: 0;
+  list-style: none;
+}
+
+.shell address {
+  font-style: normal;
+}
+
+.paper {
+  position: relative;
+  display: grid;
+  gap: var(--chapter-gap);
+  border-radius: 10px;
+  background: var(--chapter-paper);
+  padding-block: clamp(18px, 5vw, 30px) 0;
+}
+
+/* Печатное зерно поверх всей карточки — бумага и фото получают общую фактуру. */
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.photoMono {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+
+/* Вырубка билета: полукруги «съедают» края бумаги фоном страницы. */
+.notch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--chapter-notch);
+}
+
+.notch::before,
+.notch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: var(--chapter-notch);
+  height: var(--chapter-notch);
+  border-radius: 50%;
+  background: var(--chapter-bg);
+  transform: translateY(-50%);
+}
+
+.notch::before {
+  left: calc(var(--chapter-notch) / -2);
+}
+
+.notch::after {
+  right: calc(var(--chapter-notch) / -2);
+}
+
+.notchLine {
+  flex: 1;
+  height: 3px;
+  margin-inline: calc(var(--chapter-notch) / 2 + 10px);
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--chapter-line) 95%, var(--chapter-ink)) 1.4px,
+    transparent 1.5px
+  );
+  background-position: center;
+  background-size: 11px 3px;
+}
+
+.topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-inline: var(--chapter-inline);
+  color: var(--chapter-muted);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.toplineEcho {
+  text-align: right;
+}
+
+.chip {
+  flex: none;
+  border: 1px solid color-mix(in srgb, var(--chapter-line) 92%, transparent);
+  border-radius: 999px;
+  padding: 6px 14px;
+  color: var(--chapter-ink);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--chapter-accent);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrowRule {
+  width: clamp(22px, 8vw, 46px);
+  height: 1px;
+  background: color-mix(in srgb, var(--chapter-accent) 45%, transparent);
+}
+
+.eyebrowIndex {
+  border: 1px solid color-mix(in srgb, var(--chapter-accent) 40%, transparent);
+  border-radius: 999px;
+  padding: 3px 7px 2px;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
+/* Корешок билета — единственная тёмная полоса в свитке, держит ритм страницы. */
+.strip {
+  overflow: hidden;
+  background: var(--chapter-ink);
+  padding-block: 12px;
+  color: color-mix(in srgb, var(--chapter-paper) 88%, transparent);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.strip > span {
+  display: flex;
+  width: max-content;
+  gap: 26px;
+  padding-left: 26px;
+  animation: marquee 34s linear infinite;
+}
+
+.strip i {
+  font-style: normal;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip > span {
+    animation: none;
+  }
+}
+
+.hero {
+  display: grid;
+  gap: clamp(18px, 4vw, 26px);
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.heroTitle,
+.sectionTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0 0.24em;
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(34px, 9vw, 54px);
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+/* Cormorant с низким ростом строчных рядом с капсом Oswald — компенсируем оптику размером. */
+.heroTitle em,
+.sectionTitle em {
+  color: var(--chapter-accent);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 0.86;
+  text-transform: lowercase;
+}
+
+.sectionTitle em {
+  font-size: 2em;
+}
+
+/* «приглашение» длиннее акцентных слов в других заголовках — на узких экранах 2em ломает слово на две строки. */
+.heroTitle em {
+  font-size: 1.5em;
+}
+
+.sectionTitle {
+  font-size: clamp(28px, 7.4vw, 44px);
+}
+
+.hero .heroNote {
+  margin-inline: auto;
+  max-width: 30ch;
+  color: var(--chapter-muted);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(16px, 4.4vw, 19px);
+  font-style: italic;
+  line-height: 1.35;
+}
+
+/* Фото героя — в край карточки, как на билете; плашка с именами садится на его границу. */
+.hero .heroPhoto {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin-top: 10px;
+  margin-inline: calc(var(--chapter-inline) * -1);
+}
+
+.namesBadge {
+  position: absolute;
+  top: 0;
+  right: var(--chapter-inline);
+  z-index: 1;
+  border-radius: 999px;
+  background: var(--chapter-accent);
+  padding: 9px 20px;
+  color: var(--chapter-photo-text);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  transform: translateY(-50%);
+}
+
+/* Штемпель гашения: садится на нижний край обложки по диагонали к плашке с именами. */
+.seal {
+  position: absolute;
+  bottom: clamp(14px, 4vw, 22px);
+  left: var(--chapter-inline);
+  z-index: 1;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2px;
+  width: clamp(76px, 20vw, 92px);
+  height: clamp(76px, 20vw, 92px);
+  border: 1px solid color-mix(in srgb, var(--chapter-photo-text) 78%, transparent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--chapter-ink) 55%, transparent);
+  color: var(--chapter-photo-text);
+  transform: rotate(-9deg);
+}
+
+.seal::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px dashed color-mix(in srgb, var(--chapter-photo-text) 52%, transparent);
+  border-radius: 50%;
+}
+
+.seal em {
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.seal em i {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.seal small {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+.greeting {
+  display: grid;
+  gap: clamp(16px, 4vw, 22px);
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.greeting .lead {
+  margin-inline: auto;
+  max-width: 44ch;
+  color: var(--chapter-muted);
+  font-size: 14px;
+  line-height: 1.62;
+}
+
+.when {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.datePill {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.2em;
+  width: 100%;
+  border-radius: 999px;
+  background: var(--chapter-accent);
+  padding: clamp(14px, 3.6vw, 20px) clamp(20px, 6vw, 40px);
+  color: var(--chapter-photo-text);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(26px, 7.4vw, 40px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.datePill i {
+  font-style: italic;
+}
+
+.timeNote {
+  color: var(--chapter-muted);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  gap: 4px;
+}
+
+.calendar li {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 10px 2px;
+  color: var(--chapter-muted);
+}
+
+.calendar small {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+.calendar strong {
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.calendar li.calendarSelected {
+  background: var(--chapter-accent);
+  color: var(--chapter-photo-text);
+}
+
+.calendarSelected strong {
+  font-weight: 700;
+}
+
+.where {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.venue {
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(22px, 5.6vw, 32px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.address {
+  max-width: 28ch;
+  color: var(--chapter-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.where .venuePhoto {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.where .venuePhoto figcaption {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--chapter-ink) 62%, transparent);
+  padding: 7px 14px;
+  color: var(--chapter-photo-text);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.where .venuePhoto figcaption i {
+  color: color-mix(in srgb, var(--chapter-photo-text) 60%, transparent);
+  font-style: normal;
+}
+
+.mapLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--chapter-ink);
+  border-radius: 999px;
+  padding: 11px 22px;
+  color: var(--chapter-ink);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.mapLink:hover {
+  background: var(--chapter-ink);
+  color: var(--chapter-paper);
+}
+
+.program {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.program .timeline {
+  position: relative;
+  display: grid;
+  width: min(100%, 420px);
+  gap: 0;
+  margin-top: 8px;
+}
+
+/* Перфорированная ось таймлайна проходит по колонке времени. */
+.program .timeline::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 61px;
+  width: 1px;
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--chapter-line) 95%, var(--chapter-ink)) 3px,
+    transparent 3px
+  );
+  background-size: 1px 7px;
+}
+
+.timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 22px;
+  padding: 15px 0;
+  text-align: left;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 58px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--chapter-accent);
+}
+
+.timeline time {
+  color: var(--chapter-ink);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.timeline h3 {
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.timeline p {
+  margin-top: 6px;
+  color: var(--chapter-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.dress {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.dressBlock.dressBlock {
+  --dress-accent: var(--chapter-accent);
+  --dress-ink: var(--chapter-ink);
+  --dress-muted: var(--chapter-muted);
+  --dress-line: var(--chapter-line);
+  --dress-surface: transparent;
+  --dress-veil: transparent;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.dressBlock :global(.invite-section-eyebrow),
+.dressBlock :global([class*="swatchLabel"]) {
+  display: none;
+}
+
+.dressBlock :global(h2) {
+  color: var(--chapter-ink) !important;
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif !important;
+  font-size: clamp(28px, 7.4vw, 44px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.005em !important;
+  line-height: 0.98 !important;
+  text-transform: uppercase !important;
+}
+
+.dressBlock :global(p) {
+  margin-inline: auto;
+  max-width: 42ch;
+  margin-top: 14px !important;
+  color: var(--chapter-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+.dressBlock :global([class*="swatches"]) {
+  justify-content: center !important;
+  margin-top: 22px !important;
+  gap: 10px !important;
+}
+
+.dressBlock :global([class*="swatch_"]) {
+  width: clamp(40px, 8vw, 52px) !important;
+  height: clamp(40px, 8vw, 52px) !important;
+  border: 1px solid color-mix(in srgb, var(--chapter-ink) 16%, transparent) !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+
+.details {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  background: var(--chapter-ink);
+  padding: clamp(30px, 7vw, 46px) var(--chapter-inline);
+  text-align: center;
+}
+
+.details .eyebrow {
+  color: color-mix(in srgb, var(--chapter-paper) 76%, transparent);
+}
+
+.details .eyebrowRule {
+  background: color-mix(in srgb, var(--chapter-paper) 32%, transparent);
+}
+
+.details .eyebrowIndex {
+  border-color: color-mix(in srgb, var(--chapter-paper) 30%, transparent);
+}
+
+.infoBlock.infoBlock,
+.chatBlock.chatBlock {
+  --info-accent: var(--chapter-accent);
+  --info-ink: var(--chapter-ink);
+  --info-muted: var(--chapter-muted);
+  --info-line: var(--chapter-line);
+  --info-surface: transparent;
+  --info-veil: transparent;
+  --chat-accent: var(--chapter-accent);
+  --chat-ink: var(--chapter-ink);
+  --chat-muted: var(--chapter-muted);
+  --chat-line: var(--chapter-line);
+  --chat-surface: transparent;
+  --chat-veil: transparent;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.infoBlock :global(.invite-section-eyebrow),
+.chatBlock :global(.invite-section-eyebrow) {
+  display: none;
+}
+
+.infoBlock :global(h2),
+.chatBlock :global(h2) {
+  color: var(--chapter-paper) !important;
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+.infoBlock :global(p),
+.chatBlock :global(p) {
+  margin-inline: auto;
+  max-width: 42ch;
+  color: color-mix(in srgb, var(--chapter-paper) 74%, transparent) !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+.chatBlock.chatBlock {
+  margin-top: 24px;
+  border-top: 1px dashed color-mix(in srgb, var(--chapter-paper) 26%, transparent);
+  padding-top: 24px;
+}
+
+.chatBlock :global(a) {
+  margin-top: 14px;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--chapter-accent) !important;
+  padding: 11px 22px !important;
+  color: var(--chapter-photo-text) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rsvp {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding-inline: var(--chapter-inline);
+  text-align: center;
+}
+
+.rsvp .rsvpText {
+  margin-inline: auto;
+  max-width: 42ch;
+  color: var(--chapter-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.rsvpDeadline {
+  color: var(--chapter-accent);
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--chapter-accent);
+  --rsvp-accent-soft: color-mix(in srgb, var(--chapter-accent) 12%, transparent);
+  --rsvp-button-text: var(--chapter-photo-text);
+  --rsvp-control-radius: 999px;
+  --rsvp-focus-surface: var(--chapter-paper);
+  --rsvp-ink: var(--chapter-ink);
+  --rsvp-line: var(--chapter-line);
+  --rsvp-muted: var(--chapter-muted);
+  --rsvp-radius: 12px;
+  --rsvp-section: transparent;
+  --rsvp-shadow: none;
+  --rsvp-surface: transparent;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.closing {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(
+    to bottom,
+    var(--chapter-paper) 0 152px,
+    var(--chapter-accent) 152px 100%
+  );
+  padding: 0 var(--chapter-inline) clamp(30px, 7vw, 46px);
+}
+
+.closingPhoto {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: min(58%, 240px);
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.closingCopy {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin-top: clamp(22px, 6vw, 32px);
+  color: var(--chapter-photo-text);
+  text-align: center;
+}
+
+.closingCopy > p {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.closingCopy .closingScript {
+  margin-bottom: -6px;
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(30px, 8vw, 42px);
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none;
+}
+
+.closingCopy h2 {
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(28px, 7.4vw, 42px);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.closingCopy h2 i {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 0.86em;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.closingCopy time {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
+@media (min-width: 720px) {
+  .shell {
+    --chapter-notch: 32px;
+  }
+
+  .timeline li {
+    grid-template-columns: 78px 1fr;
+    gap: 20px;
+  }
+
+  .closing {
+    background: linear-gradient(
+      to bottom,
+      var(--chapter-paper) 0 190px,
+      var(--chapter-accent) 190px 100%
+    );
+  }
+}

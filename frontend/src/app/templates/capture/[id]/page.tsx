@@ -6,6 +6,7 @@ import { getPalettePreset } from "@/lib/invite-theme";
 import { getTemplatePalettes } from "@/lib/template-palettes";
 import { privateRobots } from "@/lib/seo";
 import type { Metadata } from "next";
+import { getCaptureFixture } from "./fixtures";
 
 export const metadata: Metadata = {
   robots: privateRobots,
@@ -13,8 +14,12 @@ export const metadata: Metadata = {
 
 type TemplateCapturePageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ palette?: string | string[] }>;
+  searchParams: Promise<{ fixture?: string | string[]; palette?: string | string[] }>;
 };
+
+function readParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
 
 export default async function TemplateCapturePage({
   params,
@@ -22,7 +27,8 @@ export default async function TemplateCapturePage({
 }: TemplateCapturePageProps) {
   const { id } = await params;
   const query = await searchParams;
-  const paletteId = Array.isArray(query.palette) ? query.palette[0] : query.palette;
+  const paletteId = readParam(query.palette);
+  const fixture = getCaptureFixture(readParam(query.fixture));
   const template = getInviteTemplate(id);
 
   if (!template || template.id !== id) {
@@ -40,7 +46,23 @@ export default async function TemplateCapturePage({
     notFound();
   }
 
-  const invite = { ...initialInvite, paletteId: palette.id };
+  const invite = { ...initialInvite, ...fixture, paletteId: palette.id };
 
-  return <TemplateCaptureView invite={invite} palette={palette} template={template} />;
+  if (!fixture) {
+    return <TemplateCaptureView invite={invite} palette={palette} template={template} />;
+  }
+
+  return (
+    <>
+      <TemplateCaptureView bare invite={invite} palette={palette} template={template} />
+      {/* Тесты сверяют разметку с исходными данными — отдаём их же, без дублирования фикстур. */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(invite).replace(/</g, "\\u003c"),
+        }}
+        id="capture-fixture-invite"
+        type="application/json"
+      />
+    </>
+  );
 }

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix --max-warnings=0",
-    "capture:template-screenshots": "node scripts/build-template-mobile-screenshots.mjs"
+    "capture:template-screenshots": "node scripts/build-template-mobile-screenshots.mjs",
+    "test:templates": "node --test --test-concurrency=1 tests/template-layout.test.mjs"
   },
   "dependencies": {
     "@heroui/react": "^3.1.0",

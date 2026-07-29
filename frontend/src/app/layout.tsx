@@ -4,6 +4,7 @@ import {
   Geist,
   Geist_Mono,
   Great_Vibes,
+  Oswald,
 } from "next/font/google";
 import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
@@ -33,6 +34,12 @@ const inviteScript = Great_Vibes({
   weight: "400",
 });
 
+const inviteCondensed = Oswald({
+  preload: false,
+  variable: "--font-invite-condensed",
+  subsets: ["cyrillic", "latin"],
+});
+
 export const metadata: Metadata = createRootMetadata();
 
 export default function RootLayout({
@@ -43,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} ${inviteCondensed.variable} h-full antialiased`}
     >
       <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>{children}</body>
       <YandexMetrika />

@@ -24,3 +24,20 @@
   width: 390px;
   min-height: 844px;
 }
+
+/* Стресс-режим (?fixture=): рамка телефона снимается, шаблон меряется по ширине окна. */
+.layout:has(.bare) {
+  width: 100%;
+  min-height: 0;
+  overflow: visible;
+}
+
+.bare {
+  width: 100%;
+}
+
+.bare > :global(.published-site),
+.bare > div {
+  width: 100%;
+  min-height: 100svh;
+}

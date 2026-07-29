@@ -17,6 +17,7 @@
     "lint": "npm run lint --workspaces --if-present",
     "lint:fix": "npm run lint:fix --workspaces --if-present",
     "test:backend": "npm run test --workspace invite-backend",
+    "test:templates": "npm run test:templates --workspace frontend",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"

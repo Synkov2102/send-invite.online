@@ -102,7 +102,9 @@ export default function TemplateCardCarousel({
                         fill
                         loading={eagerImage && paletteIndex === 0 ? "eager" : undefined}
                         sizes={imageSizes}
-                        src={`/images/templates/${template.id}/${palette.id}.webp`}
+                        src={`/images/templates/${template.id}/${palette.id}.webp${
+                          template.id === "chapter-ticket" ? "?v=20260729-1" : ""
+                        }`}
                       />
                     ) : null}
                   </div>

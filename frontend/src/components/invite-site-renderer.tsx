@@ -14,6 +14,7 @@ import { alpineRenderer as AlpineRenderer, sharedTemplateRenderers } from "@/inv
 import {
   alpineImages,
   aquaImages,
+  chapterImages,
   chromeImages,
   clarityImages,
   createInviteVars,
@@ -69,7 +70,9 @@ export function InviteSiteRenderer({
                     ? minimalImages
                     : templateKind === "clarity"
                       ? clarityImages
-                      : inviteImages;
+                      : templateKind === "chapter"
+                        ? chapterImages
+                        : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;
