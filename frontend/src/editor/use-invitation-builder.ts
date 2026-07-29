@@ -30,6 +30,7 @@ import {
   getTemplatePalettes,
   hexToRgba,
   inviteImages,
+  memoirImages,
   minimalImages,
   resolveTemplatePaletteId,
   silkImages,
@@ -144,7 +145,9 @@ export function useInvitationBuilder({
                     ? clarityImages
                     : templateKind === "chapter"
                       ? chapterImages
-                      : inviteImages;
+                      : templateKind === "memoir"
+                        ? memoirImages
+                        : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

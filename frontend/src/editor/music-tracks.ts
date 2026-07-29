@@ -264,6 +264,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "electric-vows": "energetic-party-humanstudioedm-513983",
   "lagoon-wave": "magical-wedding-daynigthmorning-376131",
   "minimal-paper": "wedding-romantic-leberch-262606",
+  "midnight-memoir": "forever-starts-today-kaazoom-384989",
   "silk-monogram": "invitation-wedding-leberch-375839",
 };
 

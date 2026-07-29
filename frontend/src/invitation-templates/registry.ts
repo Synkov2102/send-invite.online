@@ -56,6 +56,9 @@ export const sharedTemplateRenderers: Record<
   editorial: dynamic(() => import("./editorial").then((module) => module.EditorialTemplate), {
     ssr: true,
   }),
+  memoir: dynamic(() => import("./memoir").then((module) => module.MemoirTemplate), {
+    ssr: true,
+  }),
   minimal: dynamic(
     () => import("./minimal").then((module) => module.MinimalTemplate),
     { ssr: true },

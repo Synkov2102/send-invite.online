@@ -23,6 +23,7 @@ import {
   editorialImages,
   electricImages,
   inviteImages,
+  memoirImages,
   minimalImages,
   silkImages,
 } from "@/lib/invite-theme";
@@ -72,7 +73,9 @@ export function InviteSiteRenderer({
                       ? clarityImages
                       : templateKind === "chapter"
                         ? chapterImages
-                        : inviteImages;
+                        : templateKind === "memoir"
+                          ? memoirImages
+                          : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;

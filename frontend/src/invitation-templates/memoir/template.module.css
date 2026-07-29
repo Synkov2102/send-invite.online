@@ -1,0 +1,1014 @@
+.shell {
+  --memoir-inline: clamp(22px, 6vw, 42px);
+  width: min(100%, 620px);
+  margin: 0 auto;
+  background: var(--memoir-bg);
+  padding: clamp(10px, 3vw, 24px);
+  color: var(--memoir-ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site--memoir) {
+  background: var(--invite-bg, #151722);
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure,
+.shell address,
+.shell ol {
+  margin: 0;
+}
+
+.shell ol {
+  padding: 0;
+  list-style: none;
+}
+
+.shell address {
+  font-style: normal;
+}
+
+.paper {
+  position: relative;
+  width: min(100%, 620px);
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 20px;
+  background: var(--memoir-paper);
+}
+
+.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.44'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.045;
+  pointer-events: none;
+}
+
+.photo,
+.photoMono {
+  object-fit: cover;
+}
+
+.photoMono {
+  filter: grayscale(1) contrast(1.04);
+}
+
+.hero {
+  display: grid;
+  justify-items: center;
+  padding: clamp(24px, 6vw, 46px) var(--memoir-inline) clamp(28px, 6vw, 44px);
+  text-align: center;
+}
+
+.invitationLabel {
+  color: var(--memoir-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  margin-top: clamp(20px, 5vw, 32px) !important;
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(45px, 12vw, 72px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.92;
+  transform: rotate(-2deg);
+}
+
+.heroNames {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.05em 0.4em;
+  margin-top: 16px !important;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(17px, 4vw, 23px);
+  font-style: italic;
+}
+
+.heroNames i {
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: 1.35em;
+  font-weight: 400;
+}
+
+.childhoodCard {
+  position: relative;
+  width: min(88%, 430px);
+  margin-top: clamp(28px, 6vw, 44px) !important;
+  background: color-mix(in srgb, var(--memoir-paper) 90%, white);
+  padding: 13px 13px 18px;
+  box-shadow:
+    0 22px 46px color-mix(in srgb, var(--memoir-ink) 14%, transparent),
+    0 2px 0 color-mix(in srgb, var(--memoir-ink) 7%, transparent);
+  transform: rotate(-1.6deg);
+}
+
+.childhoodPhoto {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--memoir-line) 60%, var(--memoir-paper));
+}
+
+.tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  z-index: 2;
+  width: 80px;
+  height: 26px;
+  background: color-mix(in srgb, var(--memoir-paper) 65%, #d7d0b9);
+  opacity: 0.8;
+  transform: translateX(-50%) rotate(2deg);
+}
+
+.childhoodCard figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--memoir-ink) 72%, var(--memoir-paper));
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.childhoodCard figcaption time {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+.heroDoodle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  color: var(--memoir-blue);
+  font-size: 18px;
+}
+
+.heroDoodle span:nth-child(2) {
+  font-size: 11px;
+}
+
+.greeting {
+  display: grid;
+  gap: 18px;
+  border-radius: 28px 28px 0 0;
+  background: var(--memoir-blue);
+  padding: clamp(32px, 7vw, 52px) var(--memoir-inline);
+  color: var(--memoir-photo-text);
+  text-align: center;
+}
+
+.greeting > p {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.greetingRule {
+  width: 38px;
+  height: 1px;
+  margin-inline: auto;
+  background: color-mix(in srgb, var(--memoir-photo-text) 42%, transparent);
+}
+
+.greetingCopy {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+}
+
+.greetingCopy p {
+  max-width: 43ch;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(17px, 4vw, 22px);
+  line-height: 1.55;
+}
+
+.greetingCopy time {
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(31px, 8vw, 46px);
+  letter-spacing: -0.04em;
+}
+
+.sectionHeading {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.sectionHeading p {
+  color: var(--memoir-muted);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.sectionHeading h2 {
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(40px, 10vw, 58px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.sectionHeading > span {
+  width: 42px;
+  height: 1px;
+  margin-top: 6px;
+  background: var(--memoir-line);
+}
+
+.when {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  padding: clamp(48px, 11vw, 74px) var(--memoir-inline);
+}
+
+.month {
+  color: var(--memoir-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+  gap: 4px;
+}
+
+.calendar > div {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 7px;
+  min-height: 62px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 8px 1px;
+  color: color-mix(in srgb, var(--memoir-ink) 68%, var(--memoir-paper));
+}
+
+.calendar small {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.calendar strong {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.calendar > div.calendarSelected {
+  border-color: var(--memoir-blue);
+  background: var(--memoir-blue);
+  color: var(--memoir-photo-text);
+  box-shadow:
+    0 0 0 3px var(--memoir-paper),
+    0 0 0 4px color-mix(in srgb, var(--memoir-blue) 36%, transparent);
+}
+
+.startTime {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--memoir-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--memoir-blue) 5%, var(--memoir-paper));
+  padding: 7px 15px;
+  color: var(--memoir-muted);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.startTime strong {
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: 1.85em;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.where {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  border-top: 1px solid var(--memoir-line);
+  padding: clamp(48px, 11vw, 74px) var(--memoir-inline);
+  text-align: center;
+}
+
+.venueCopy {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+}
+
+.venueCopy h3 {
+  max-width: 18ch;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(22px, 5.5vw, 30px);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.venueCopy address {
+  color: var(--memoir-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.venueCopy a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--memoir-line);
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: var(--memoir-ink);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.venuePhoto {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: min(88%, 440px);
+  overflow: hidden;
+  border: 5px solid var(--memoir-blue);
+  border-radius: 48% 48% 18px 18px / 28% 28% 18px 18px;
+  background: var(--memoir-line);
+}
+
+.venuePhoto figcaption {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: var(--memoir-paper);
+  padding: 7px 12px;
+  color: var(--memoir-ink);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.program {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  background: color-mix(in srgb, var(--memoir-paper) 88%, var(--memoir-line));
+  padding: clamp(46px, 10vw, 70px) var(--memoir-inline);
+}
+
+.programFrame {
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  gap: 20px;
+  border: 2px solid var(--memoir-photo-text);
+  border-radius: 180px;
+  outline: 2px solid var(--memoir-blue);
+  outline-offset: 6px;
+  background: var(--memoir-blue);
+  padding: clamp(54px, 13vw, 82px) clamp(26px, 8vw, 52px);
+  color: var(--memoir-photo-text);
+  text-align: center;
+}
+
+.programNote {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.programFrame > h2 {
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(43px, 11vw, 66px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+.programFrame ol {
+  display: grid;
+  width: 100%;
+  gap: 0;
+}
+
+.programFrame li {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  padding: 16px 0;
+}
+
+.programFrame li + li {
+  border-top: 1px solid color-mix(in srgb, var(--memoir-photo-text) 20%, transparent);
+}
+
+.programFrame time {
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(25px, 6.5vw, 34px);
+  line-height: 1;
+}
+
+.programFrame h3 {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.programFrame li p {
+  margin-top: 5px;
+  color: color-mix(in srgb, var(--memoir-photo-text) 80%, transparent);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.programFrame:has(li:only-child) {
+  border-radius: 110px;
+  padding-block: 44px;
+}
+
+.programFrame:has(li:only-child) li {
+  padding-block: 8px;
+}
+
+.programFooter {
+  max-width: 28ch;
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(20px, 5vw, 28px);
+  line-height: 1.25;
+  text-align: center;
+  transform: rotate(-1.5deg);
+}
+
+.dress {
+  position: relative;
+  display: grid;
+  padding: clamp(54px, 12vw, 82px) var(--memoir-inline);
+}
+
+.dress::before,
+.dress::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 14px;
+  background: var(--memoir-blue);
+  opacity: 0.72;
+}
+
+.dress::before {
+  top: 52px;
+  right: 16px;
+  width: 44%;
+  height: 116px;
+  transform: rotate(5deg);
+}
+
+.dress::after {
+  bottom: 58px;
+  left: 18px;
+  width: 36%;
+  height: 92px;
+  opacity: 0.55;
+  transform: rotate(-5deg);
+}
+
+.dressScript {
+  position: relative;
+  z-index: 3;
+  justify-self: center;
+  margin-bottom: -18px !important;
+  border-radius: 999px;
+  background: var(--memoir-paper);
+  padding: 7px clamp(20px, 6vw, 28px) 9px;
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(39px, 10vw, 58px);
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.dressBlock.dressBlock {
+  --dress-accent: var(--memoir-blue);
+  --dress-ink: var(--memoir-ink);
+  --dress-muted: var(--memoir-muted);
+  --dress-line: var(--memoir-line);
+  --dress-surface: var(--memoir-paper);
+  --dress-veil: var(--memoir-paper);
+  position: relative;
+  z-index: 1;
+  border: 1px solid var(--memoir-line);
+  border-radius: 16px;
+  background: var(--memoir-paper);
+  padding: clamp(42px, 9vw, 64px) clamp(18px, 5vw, 38px) 36px;
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--memoir-ink) 10%, transparent);
+}
+
+.dressBlock :global(.invite-section-eyebrow),
+.dressBlock :global(h2),
+.dressBlock :global([class*="swatchLabel"]) {
+  display: none;
+}
+
+.dressBlock :global(p) {
+  max-width: 36ch;
+  margin-inline: auto !important;
+  color: color-mix(in srgb, var(--memoir-ink) 70%, var(--memoir-paper)) !important;
+  font-size: 13px !important;
+  line-height: 1.58 !important;
+}
+
+.dressBlock :global([class*="swatches"]) {
+  margin-top: 16px !important;
+  gap: 8px !important;
+}
+
+.dressBlock :global([class*="swatch_"]) {
+  width: clamp(44px, 10vw, 52px) !important;
+  height: clamp(44px, 10vw, 52px) !important;
+  border: 3px solid var(--memoir-paper) !important;
+  box-shadow: 0 0 0 1px var(--memoir-line) !important;
+}
+
+.details {
+  display: grid;
+  gap: 28px;
+  border-top: 1px solid var(--memoir-line);
+  padding: clamp(50px, 11vw, 76px) var(--memoir-inline);
+}
+
+.detailsStack {
+  display: grid;
+  gap: 14px;
+}
+
+.infoBlock.infoBlock,
+.chatBlock.chatBlock {
+  --info-accent: var(--memoir-photo-text);
+  --info-ink: var(--memoir-photo-text);
+  --info-muted: color-mix(in srgb, var(--memoir-photo-text) 75%, transparent);
+  --info-line: color-mix(in srgb, var(--memoir-photo-text) 24%, transparent);
+  --info-surface: var(--memoir-blue);
+  --info-veil: var(--memoir-blue);
+  --chat-accent: var(--memoir-photo-text);
+  --chat-ink: var(--memoir-photo-text);
+  --chat-muted: color-mix(in srgb, var(--memoir-photo-text) 75%, transparent);
+  --chat-line: color-mix(in srgb, var(--memoir-photo-text) 24%, transparent);
+  --chat-surface: var(--memoir-blue);
+  --chat-veil: var(--memoir-blue);
+  width: 100%;
+  border: 0;
+  border-radius: 16px;
+  background: var(--memoir-blue);
+  padding: 28px 24px;
+  color: var(--memoir-photo-text);
+  box-shadow: none;
+}
+
+.infoBlock :global(.invite-section-eyebrow),
+.chatBlock :global(.invite-section-eyebrow) {
+  color: color-mix(in srgb, var(--memoir-photo-text) 62%, transparent) !important;
+}
+
+.infoBlock :global(h2),
+.chatBlock :global(h2) {
+  color: var(--memoir-photo-text) !important;
+  font-family: var(--font-invite-serif), Georgia, serif !important;
+  font-size: clamp(22px, 5vw, 28px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.08 !important;
+}
+
+.infoBlock :global(p),
+.chatBlock :global(p) {
+  color: color-mix(in srgb, var(--memoir-photo-text) 78%, transparent) !important;
+  font-size: 13px !important;
+  line-height: 1.58 !important;
+}
+
+.infoBlock.infoBlock {
+  --info-accent: var(--memoir-blue);
+  --info-ink: var(--memoir-ink);
+  --info-muted: var(--memoir-muted);
+  --info-line: var(--memoir-line);
+  --info-surface: var(--memoir-paper);
+  --info-veil: var(--memoir-paper);
+  border: 1px solid var(--memoir-line);
+  background: var(--memoir-paper);
+  color: var(--memoir-ink);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--memoir-ink) 8%, transparent);
+}
+
+.infoBlock :global(.invite-section-eyebrow) {
+  color: var(--memoir-muted) !important;
+}
+
+.infoBlock :global(h2) {
+  color: var(--memoir-ink) !important;
+}
+
+.infoBlock :global(p) {
+  color: color-mix(in srgb, var(--memoir-ink) 70%, var(--memoir-paper)) !important;
+}
+
+.chatBlock :global(a) {
+  min-height: 46px !important;
+  justify-content: center !important;
+  border: 1px solid color-mix(in srgb, var(--memoir-photo-text) 34%, transparent) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  padding: 11px 18px !important;
+  color: var(--memoir-photo-text) !important;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.rsvp {
+  display: grid;
+  justify-items: center;
+  gap: 15px;
+  background: color-mix(in srgb, var(--memoir-paper) 88%, var(--memoir-line));
+  padding: clamp(50px, 11vw, 78px) var(--memoir-inline);
+  text-align: center;
+}
+
+.rsvpScript {
+  color: var(--memoir-blue);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(30px, 7.5vw, 46px);
+  line-height: 1;
+  transform: rotate(-2deg);
+}
+
+.rsvp > h2 {
+  max-width: 20ch;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(24px, 6vw, 34px);
+  font-weight: 500;
+  line-height: 1.08;
+}
+
+.rsvp > p:not(.rsvpScript) {
+  max-width: 42ch;
+  color: var(--memoir-muted);
+  font-size: 13px;
+  line-height: 1.58;
+}
+
+.rsvp > time {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--memoir-blue) 18%, var(--memoir-line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--memoir-blue) 6%, var(--memoir-paper));
+  padding: 6px 11px;
+  color: var(--memoir-blue);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--memoir-blue);
+  --rsvp-accent-soft: color-mix(in srgb, var(--memoir-blue) 10%, transparent);
+  --rsvp-button-text: var(--memoir-photo-text);
+  --rsvp-control-radius: 10px;
+  --rsvp-focus-surface: var(--memoir-paper);
+  --rsvp-ink: var(--memoir-ink);
+  --rsvp-line: var(--memoir-line);
+  --rsvp-muted: var(--memoir-muted);
+  --rsvp-radius: 14px;
+  --rsvp-section: var(--memoir-paper);
+  --rsvp-shadow: none;
+  --rsvp-surface: var(--memoir-paper);
+  width: 100%;
+  margin-top: 16px;
+}
+
+.rsvpForm :global([class*="section_"]) {
+  text-align: left;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--memoir-ink) 7%, transparent);
+}
+
+.rsvpForm :global([class*="submit_"]) {
+  border-radius: 999px;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--memoir-blue) 20%, transparent);
+}
+
+.rsvpForm :global([class*="consent"]) {
+  min-height: 44px;
+  align-items: center;
+}
+
+.rsvpForm :global([class*="consent"] a) {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.closing {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  background: var(--memoir-blue);
+  padding: clamp(48px, 11vw, 76px) var(--memoir-inline) 34px;
+  color: var(--memoir-photo-text);
+  text-align: center;
+}
+
+.closingCopy {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.closingCopy > p {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.closingCopy h2 {
+  display: grid;
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(38px, 10vw, 60px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 0.82;
+}
+
+.closingCopy h2 span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.closingCopy h2 i {
+  margin-block: 0.12em;
+  font-size: 0.75em;
+  font-weight: 400;
+}
+
+.closingPhoto {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  width: 100%;
+  overflow: hidden;
+  border: 7px solid var(--memoir-paper);
+  border-radius: 48% 48% 16px 16px / 28% 28% 16px 16px;
+}
+
+.closingPhoto figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--memoir-blue) 72%, transparent);
+  padding: 9px 14px;
+  color: var(--memoir-photo-text);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  backdrop-filter: blur(8px);
+}
+
+.closingPhoto figcaption time {
+  font-family: var(--font-geist-mono), "Courier New", monospace;
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 0.05em;
+}
+
+.backToTop {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid color-mix(in srgb, var(--memoir-photo-text) 30%, transparent);
+  border-radius: 999px;
+  padding: 10px 16px;
+  color: color-mix(in srgb, var(--memoir-photo-text) 70%, transparent);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+:global(.published-site--memoir .invite-music) {
+  border-color: color-mix(in srgb, var(--invite-accent) 24%, transparent);
+  background: color-mix(in srgb, var(--invite-surface) 92%, transparent);
+  color: var(--invite-ink);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--invite-ink) 12%, transparent);
+  backdrop-filter: blur(14px);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.venueCopy a:focus-visible,
+.backToTop:focus-visible,
+.chatBlock :global(a:focus-visible),
+.rsvpForm :global(button:focus-visible),
+:global(.published-site--memoir .invite-music__toggle:focus-visible) {
+  outline: 2px solid var(--memoir-blue);
+  outline-offset: 3px;
+}
+
+.chatBlock :global(a:focus-visible),
+:global(.published-site--memoir .invite-music__toggle:focus-visible) {
+  outline-color: var(--invite-photo-text);
+}
+
+@media (hover: hover) {
+  .venueCopy a:hover,
+  .backToTop:hover,
+  .chatBlock :global(a:hover),
+  :global(.published-site--memoir .invite-music:hover) {
+    transform: translateY(-2px);
+  }
+
+  :global(.published-site--memoir .invite-music:hover) {
+    border-color: color-mix(in srgb, var(--invite-accent) 48%, transparent);
+    box-shadow: 0 14px 32px color-mix(in srgb, var(--invite-ink) 18%, transparent);
+  }
+
+  .venueCopy a:hover {
+    border-color: var(--memoir-blue);
+    background: var(--memoir-blue);
+    color: var(--memoir-photo-text);
+  }
+
+  .chatBlock :global(a:hover),
+  .backToTop:hover {
+    border-color: var(--memoir-photo-text) !important;
+    background: var(--memoir-photo-text) !important;
+    color: var(--memoir-blue) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  :global(.published-site--memoir .invite-music) {
+    right: 14px;
+    bottom: 14px;
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    padding: 4px;
+    border-color: color-mix(in srgb, var(--invite-surface) 44%, transparent);
+    background: color-mix(in srgb, var(--invite-accent) 94%, transparent);
+    color: var(--invite-photo-text);
+    box-shadow: 0 10px 26px color-mix(in srgb, var(--invite-ink) 22%, transparent);
+  }
+
+  :global(.published-site--memoir .invite-music__toggle) {
+    width: 38px;
+    height: 38px;
+  }
+
+  :global(.published-site--memoir .invite-music__copy) {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .shell {
+    --memoir-inline: 20px;
+    padding: 8px;
+  }
+
+  .paper {
+    border-radius: 16px;
+  }
+
+  .heroTitle {
+    font-size: 42px;
+  }
+
+  .heroNames {
+    font-size: 16px;
+  }
+
+  .childhoodCard {
+    width: 92%;
+    padding: 10px 10px 15px;
+  }
+
+  .childhoodCard figcaption {
+    gap: 8px;
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 720px) {
+  .shell {
+    padding: 26px;
+  }
+
+  .paper {
+    border-radius: 26px;
+  }
+
+  .programFrame {
+    padding-inline: 70px;
+  }
+
+  .dress::before {
+    right: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroTitle,
+  .childhoodCard,
+  .programFooter,
+  .dressScript,
+  .rsvpScript {
+    transform: none;
+  }
+
+  .venueCopy a,
+  .backToTop,
+  .chatBlock :global(a),
+  :global(.published-site--memoir .invite-music) {
+    transition: none;
+    transform: none !important;
+  }
+}

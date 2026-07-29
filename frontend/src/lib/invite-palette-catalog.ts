@@ -9,6 +9,19 @@ export type InvitePalettePreset = InvitePalette & {
 
 export const invitePalettePresets: InvitePalettePreset[] = [
   {
+    id: "memoir-indigo",
+    label: "Индиго и бумага",
+    mood: "Глубокий индиго, тёплая бумага и чернила фотоархива",
+    background: "#171821",
+    surface: "#f4f2ec",
+    ink: "#18181c",
+    photoText: "#fffdf7",
+    muted: "#706d70",
+    accent: "#202057",
+    line: "#d2cdc5",
+    veil: "rgba(244, 242, 236, 0.9)",
+  },
+  {
     id: "chapter-cocoa",
     label: "Какао и терракота",
     mood: "Тёмное какао, тёплая бумага и обожжённая терракота",

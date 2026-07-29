@@ -10,7 +10,14 @@ const templatesDir = path.join(__dirname, "../public/images/templates");
 const baseUrl = (process.env.TEMPLATE_CAPTURE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 const require = createRequire(import.meta.url);
 const { inviteTemplateCatalog } = require("@invite/shared");
-const templates = inviteTemplateCatalog.filter((template) => template.editorReady);
+const templateId = process.env.TEMPLATE_CAPTURE_TEMPLATE;
+const templates = inviteTemplateCatalog.filter(
+  (template) => template.editorReady && (!templateId || template.id === templateId),
+);
+
+if (templateId && templates.length === 0) {
+  throw new Error(`Unknown editor-ready template: ${templateId}`);
+}
 
 const waitMsByTemplate = {
   "alpine-rings": 4500,

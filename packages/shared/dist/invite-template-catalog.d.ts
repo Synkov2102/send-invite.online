@@ -15,7 +15,7 @@ import type { InviteState } from "./invite-state";
 import type { CoverType, InviteTemplate } from "./schemas/invite-template.schema";
 export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
-export type TemplateKind = "alpine" | "aqua" | "chapter" | "chrome" | "clarity" | "crimson" | "editorial" | "electric" | "minimal" | "silk";
+export type TemplateKind = "alpine" | "aqua" | "chapter" | "chrome" | "clarity" | "crimson" | "editorial" | "electric" | "memoir" | "minimal" | "silk";
 export type InviteTemplateDefinition = InviteTemplate & {
     /** Какой React-движок рисует шаблон. */
     kind: TemplateKind;
@@ -30,6 +30,7 @@ export declare function getTemplateDefinition(id: string | null | undefined): In
 export declare function getTemplateKind(templateId: string): TemplateKind;
 export declare function getInviteTemplateName(templateId: string): string;
 export declare function isEditorReadyTemplate(templateId: string): boolean;
+/** Каталог пополняется в конце — разворачиваем, чтобы на странице шаблонов новые были первыми. */
 export declare function getEditorReadyTemplates(): {
     id: string;
     description: string;
@@ -85,6 +86,6 @@ export declare function getEditorPreset(templateId: string): Partial<{
     venueImageUrl: string;
     mapUrl?: string | undefined;
 }> | undefined;
-export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "chapter" | "chrome" | "clarity" | "crimson" | "editorial" | "electric" | "minimal" | "silk";
+export declare function isWideTemplateKind(kind: TemplateKind): kind is "aqua" | "chapter" | "chrome" | "clarity" | "crimson" | "editorial" | "electric" | "memoir" | "minimal" | "silk";
 export declare const defaultInviteTemplates: InviteTemplate[];
 export declare function getInviteTemplate(id: string | null | undefined): InviteTemplate;

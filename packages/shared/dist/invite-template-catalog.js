@@ -249,6 +249,34 @@ const chapterEditorPreset = {
     rsvpDate: "2026-04-23",
     paletteId: "chapter-cocoa",
 };
+const memoirEditorPreset = {
+    bride: "Тая",
+    groom: "Миша",
+    date: "2027-07-23",
+    time: "13:00",
+    city: "Москва",
+    venue: "Дом культуры «Рассвет»",
+    address: "Столярный пер., 3, корп. 15",
+    mapUrl: "https://yandex.ru/maps/?text=%D0%94%D0%9A%20%D0%A0%D0%B0%D1%81%D1%81%D0%B2%D0%B5%D1%82%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
+    lead: "Мы выросли, нашли друг друга и теперь начинаем новую главу. Приглашаем вас разделить с нами день, который навсегда останется в семейном фотоальбоме.",
+    dressCode: "Выбирайте элегантные образы в глубоких синих, молочных, графитовых и приглушённых природных оттенках.",
+    dressCodeColors: ["#202057", "#596377", "#e5ddca", "#f7f4ed", "#17171c"],
+    schedule: [
+        { time: "13:00", title: "Сбор гостей", description: "Игристое, объятия и первые кадры" },
+        { time: "14:00", title: "Церемония", description: "Главный момент нашей истории" },
+        { time: "15:00", title: "Праздничный ужин", description: "Тёплые слова и любимые люди рядом" },
+        { time: "18:00", title: "Танцы", description: "Музыка громче, формальности — в сторону" },
+        { time: "22:30", title: "Финальный кадр", description: "Обнимаемся до следующей встречи" },
+    ],
+    showGroupChat: true,
+    groupChatUrl: "https://t.me/+memoir-guests",
+    groupChatText: "В общем чате будут тайминг дня, детали дороги и фотографии после праздника.",
+    showAdditionalInfo: true,
+    additionalInfo: "Будем рады вкладу в наше свадебное путешествие вместо цветов. И пожалуйста, захватите плёночную камеру, если она у вас есть.",
+    rsvpText: "Пожалуйста, подтвердите присутствие. Ваш ответ поможет нам сохранить для вас место за общим столом.",
+    rsvpDate: "2027-06-23",
+    paletteId: "memoir-indigo",
+};
 const alpineEditorPreset = {
     showGroupChat: true,
     groupChatUrl: "https://t.me/+invite-guests",
@@ -503,6 +531,36 @@ exports.inviteTemplateCatalog = [
         },
     },
     {
+        id: "midnight-memoir",
+        name: "Фотоархив",
+        description: "История от детского снимка до свадьбы: тёплая бумага, глубокий индиго, рукописные акценты и живая чёрно-белая хроника.",
+        coverType: "arch",
+        kind: "memoir",
+        editorReady: true,
+        editorPreset: memoirEditorPreset,
+        defaultPaletteId: "memoir-indigo",
+        recommendedPaletteIds: [
+            "memoir-indigo",
+            "paper-midnight",
+            "editorial-midnight",
+            "ivory-noir",
+            "crimson-midnight-ruby",
+            "chapter-indigo",
+            "chrome-midnight",
+            "crimson-black-tie",
+            "nocturne",
+            "graphite",
+        ],
+        tags: ["фотоархив", "рукописный"],
+        screenshot: "/images/templates/midnight-memoir-mobile.webp",
+        preview: {
+            background: "#171821",
+            surface: "#f4f2ec",
+            ink: "#18181c",
+            accent: "#202057",
+        },
+    },
+    {
         id: "chapter-ticket",
         name: "Глава",
         description: "Ретро-билет на тёплой бумаге: крупная узкая типографика, курсивные акценты, терракотовые плашки и вырубка по краям.",
@@ -562,10 +620,12 @@ function getInviteTemplateName(templateId) {
 function isEditorReadyTemplate(templateId) {
     return getTemplateDefinition(templateId).editorReady;
 }
+/** Каталог пополняется в конце — разворачиваем, чтобы на странице шаблонов новые были первыми. */
 function getEditorReadyTemplates() {
     return exports.inviteTemplateCatalog
         .filter((template) => template.editorReady)
-        .map(toPublicTemplate);
+        .map(toPublicTemplate)
+        .reverse();
 }
 function getEditorPreset(templateId) {
     return getTemplateDefinition(templateId).editorPreset;
