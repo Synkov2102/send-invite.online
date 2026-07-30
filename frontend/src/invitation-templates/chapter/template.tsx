@@ -14,6 +14,7 @@ import {
   InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
+  useScrollReveal,
 } from "@/invitation-templates/components";
 import styles from "./template.module.css";
 
@@ -81,7 +82,7 @@ function formatToplineDate(value: string) {
 
 function Notch() {
   return (
-    <div className={styles.notch} aria-hidden>
+    <div className={styles.notch} aria-hidden data-reveal>
       <span className={styles.notchLine} />
     </div>
   );
@@ -108,7 +109,7 @@ function TicketStrip({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>)
   const item = `${formatNumericDate(invite.date)} · ${invite.city} · Свадьба`;
 
   return (
-    <div aria-hidden className={styles.strip}>
+    <div aria-hidden className={styles.strip} data-reveal>
       {/* Два одинаковых набора — чтобы бегущая строка зациклилась без стыка. */}
       <span>
         {Array.from({ length: 12 }, (_, index) => (
@@ -174,7 +175,7 @@ function HeroSection({
 
 function GreetingSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>) {
   return (
-    <section className={styles.greeting}>
+    <section className={styles.greeting} data-reveal>
       <h2 className={styles.sectionTitle}>
         <span>Дорогие</span>
         <em>наши</em>
@@ -190,7 +191,7 @@ function WhenSection({
   invite,
 }: Readonly<Pick<ChapterTemplateProps, "calendarDays" | "invite">>) {
   return (
-    <section className={styles.when}>
+    <section className={styles.when} data-reveal>
       <SectionLabel index="01">Когда</SectionLabel>
       <time className={styles.datePill} dateTime={invite.date}>
         <i>({formatDate(invite.date, { day: "numeric" })})</i>
@@ -220,7 +221,7 @@ function WhereSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.where}>
+    <section className={styles.where} data-reveal>
       <SectionLabel index="02">Где</SectionLabel>
       <h2 className={styles.venue}>{invite.venue}</h2>
       <address className={styles.address}>
@@ -253,7 +254,7 @@ function WhereSection({
 
 function ProgramSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>) {
   return (
-    <section className={styles.program}>
+    <section className={styles.program} data-reveal>
       <SectionLabel index="03">Программа</SectionLabel>
       <h2 className={styles.sectionTitle}>
         <span>План</span>
@@ -277,7 +278,7 @@ function ProgramSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite"
 
 function DressCodeSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>) {
   return (
-    <section className={styles.dress}>
+    <section className={styles.dress} data-reveal>
       <SectionLabel index="04">Дресс-код</SectionLabel>
       <InvitationDressCodeBlock
         className={styles.dressBlock}
@@ -302,7 +303,7 @@ function DetailsSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite"
   }
 
   return (
-    <section className={styles.details}>
+    <section className={styles.details} data-reveal>
       <SectionLabel index="05">На заметку</SectionLabel>
       <InvitationAdditionalInfoBlock
         className={styles.infoBlock}
@@ -330,7 +331,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={styles.rsvp} id="rsvp">
+    <section className={styles.rsvp} data-reveal id="rsvp">
       <SectionLabel index={hasDetailsContent(invite) ? "06" : "05"}>Ваш ответ</SectionLabel>
       <h2 className={styles.sectionTitle}>
         <span>Будете</span>
@@ -357,7 +358,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<Pick<ChapterTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing}>
+    <section className={styles.closing} data-reveal>
       <figure className={styles.closingPhoto}>
         <Image
           alt={`${invite.groom} и ${invite.bride}`}
@@ -391,6 +392,8 @@ export default function ChapterTemplate({
   siteId,
   venueImage,
 }: ChapterTemplateProps) {
+  const shellRef = useScrollReveal(invite);
+
   return (
     <>
       <InvitationMusicPlayer
@@ -398,7 +401,7 @@ export default function ChapterTemplate({
         title={invite.musicTitle}
         url={invite.musicUrl}
       />
-      <article className={styles.shell} style={createChapterStyle(inviteVars)}>
+      <article className={styles.shell} ref={shellRef} style={createChapterStyle(inviteVars)}>
         <div className={styles.paper}>
           <ToplineSection invite={invite} />
           <HeroSection coverImage={coverImage} invite={invite} />

@@ -1,5 +1,6 @@
 .shell {
   --memoir-inline: clamp(22px, 6vw, 42px);
+  --memoir-ease: cubic-bezier(0.22, 0.75, 0.28, 1);
   width: min(100%, 620px);
   margin: 0 auto;
   background: var(--memoir-bg);
@@ -80,6 +81,7 @@
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  animation: memoirRise 700ms var(--memoir-ease) both 60ms;
 }
 
 .heroTitle {
@@ -90,7 +92,9 @@
   font-weight: 400;
   letter-spacing: -0.055em;
   line-height: 0.92;
-  transform: rotate(-2deg);
+  --memoir-tilt: -2deg;
+  transform: rotate(var(--memoir-tilt));
+  animation: memoirScriptIn 900ms var(--memoir-ease) both 180ms;
 }
 
 .heroNames {
@@ -103,6 +107,7 @@
   font-family: var(--font-invite-serif), Georgia, serif;
   font-size: clamp(17px, 4vw, 23px);
   font-style: italic;
+  animation: memoirRise 720ms var(--memoir-ease) both 420ms;
 }
 
 .heroNames i {
@@ -113,6 +118,7 @@
 }
 
 .childhoodCard {
+  --memoir-tilt: -1.6deg;
   position: relative;
   width: min(88%, 430px);
   margin-top: clamp(28px, 6vw, 44px) !important;
@@ -121,7 +127,8 @@
   box-shadow:
     0 22px 46px color-mix(in srgb, var(--memoir-ink) 14%, transparent),
     0 2px 0 color-mix(in srgb, var(--memoir-ink) 7%, transparent);
-  transform: rotate(-1.6deg);
+  transform: rotate(var(--memoir-tilt));
+  animation: memoirPhotoDrop 950ms var(--memoir-ease) both 520ms;
 }
 
 .childhoodPhoto {
@@ -129,6 +136,10 @@
   aspect-ratio: 4 / 5;
   overflow: hidden;
   background: color-mix(in srgb, var(--memoir-line) 60%, var(--memoir-paper));
+}
+
+.childhoodPhoto .photo {
+  animation: memoirPhotoSettle 1500ms var(--memoir-ease) both 640ms;
 }
 
 .tape {
@@ -141,6 +152,7 @@
   background: color-mix(in srgb, var(--memoir-paper) 65%, #d7d0b9);
   opacity: 0.8;
   transform: translateX(-50%) rotate(2deg);
+  animation: memoirTapeIn 620ms var(--memoir-ease) both 900ms;
 }
 
 .childhoodCard figcaption {
@@ -154,6 +166,7 @@
   font-style: italic;
   line-height: 1.35;
   text-align: left;
+  animation: memoirRise 620ms var(--memoir-ease) both 1000ms;
 }
 
 .childhoodCard figcaption time {
@@ -170,10 +183,20 @@
   margin-top: 24px;
   color: var(--memoir-blue);
   font-size: 18px;
+  animation: memoirRise 640ms var(--memoir-ease) both 1140ms;
+}
+
+.heroDoodle span {
+  animation: memoirHeart 3.2s ease-in-out 1900ms infinite;
 }
 
 .heroDoodle span:nth-child(2) {
   font-size: 11px;
+  animation: memoirTwinkle 3.2s ease-in-out 2200ms infinite;
+}
+
+.heroDoodle span:nth-child(3) {
+  animation-delay: 2400ms;
 }
 
 .greeting {
@@ -260,7 +283,7 @@
 .month {
   color: var(--memoir-ink);
   font-family: var(--font-invite-serif), Georgia, serif;
-  font-size: 13px;
+  font-size: clamp(13px, 3.4vw, 17px);
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
@@ -277,7 +300,7 @@
   justify-items: center;
   align-content: center;
   gap: 7px;
-  min-height: 62px;
+  min-height: clamp(62px, 15vw, 74px);
   border: 1px solid transparent;
   border-radius: 999px;
   padding: 8px 1px;
@@ -285,7 +308,7 @@
 }
 
 .calendar small {
-  font-size: 10px;
+  font-size: clamp(11px, 2.7vw, 13px);
   font-weight: 650;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -293,7 +316,7 @@
 
 .calendar strong {
   font-family: var(--font-invite-serif), Georgia, serif;
-  font-size: 17px;
+  font-size: clamp(18px, 4.6vw, 24px);
   font-weight: 500;
 }
 
@@ -490,13 +513,14 @@
 }
 
 .programFooter {
+  --memoir-tilt: -1.5deg;
   max-width: 28ch;
   color: var(--memoir-blue);
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(20px, 5vw, 28px);
   line-height: 1.25;
   text-align: center;
-  transform: rotate(-1.5deg);
+  transform: rotate(var(--memoir-tilt));
 }
 
 .dress {
@@ -516,23 +540,26 @@
 }
 
 .dress::before {
+  --memoir-tilt: 5deg;
   top: 52px;
   right: 16px;
   width: 44%;
   height: 116px;
-  transform: rotate(5deg);
+  transform: rotate(var(--memoir-tilt));
 }
 
 .dress::after {
+  --memoir-tilt: -5deg;
   bottom: 58px;
   left: 18px;
   width: 36%;
   height: 92px;
   opacity: 0.55;
-  transform: rotate(-5deg);
+  transform: rotate(var(--memoir-tilt));
 }
 
 .dressScript {
+  --memoir-tilt: -2deg;
   position: relative;
   z-index: 3;
   justify-self: center;
@@ -544,7 +571,7 @@
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(39px, 10vw, 58px);
   text-align: center;
-  transform: rotate(-2deg);
+  transform: rotate(var(--memoir-tilt));
 }
 
 .dressBlock.dressBlock {
@@ -696,11 +723,12 @@
 }
 
 .rsvpScript {
+  --memoir-tilt: -2deg;
   color: var(--memoir-blue);
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(30px, 7.5vw, 46px);
   line-height: 1;
-  transform: rotate(-2deg);
+  transform: rotate(var(--memoir-tilt));
 }
 
 .rsvp > h2 {
@@ -897,6 +925,428 @@
   outline-color: var(--invite-photo-text);
 }
 
+/* Появление секций по прокрутке: скрытое состояние включает только JS (`useScrollReveal`). */
+.shell[data-animate="on"] [data-reveal] {
+  opacity: 0;
+}
+
+.shell[data-animate="on"] [data-reveal][data-revealed] {
+  animation: memoirFadeIn 560ms ease both;
+}
+
+[data-revealed] .sectionHeading p {
+  animation: memoirRise 560ms var(--memoir-ease) both 100ms;
+}
+
+[data-revealed] .sectionHeading h2 {
+  animation: memoirScriptIn 820ms var(--memoir-ease) both 200ms;
+}
+
+[data-revealed] .sectionHeading > span {
+  animation: memoirRuleIn 520ms var(--memoir-ease) both 420ms;
+}
+
+.greeting[data-revealed] > p {
+  animation: memoirRise 620ms var(--memoir-ease) both 120ms;
+}
+
+.greeting[data-revealed] .greetingRule {
+  animation: memoirRuleIn 520ms var(--memoir-ease) both 260ms;
+}
+
+.greeting[data-revealed] .greetingCopy p {
+  animation: memoirRise 700ms var(--memoir-ease) both 340ms;
+}
+
+.greeting[data-revealed] .greetingCopy time {
+  animation: memoirScriptIn 840ms var(--memoir-ease) both 480ms;
+}
+
+.when[data-revealed] .month {
+  animation: memoirRise 600ms var(--memoir-ease) both 380ms;
+}
+
+.when[data-revealed] .calendar > div {
+  animation: memoirRise 520ms var(--memoir-ease) both 460ms;
+}
+
+.when[data-revealed] .calendar > div:nth-child(2) {
+  animation-delay: 510ms;
+}
+
+.when[data-revealed] .calendar > div:nth-child(3) {
+  animation-delay: 560ms;
+}
+
+.when[data-revealed] .calendar > div:nth-child(4) {
+  animation-delay: 610ms;
+}
+
+.when[data-revealed] .calendar > div:nth-child(5) {
+  animation-delay: 660ms;
+}
+
+.when[data-revealed] .calendar > div:nth-child(6) {
+  animation-delay: 710ms;
+}
+
+.when[data-revealed] .calendar > div:nth-child(7) {
+  animation-delay: 760ms;
+}
+
+/* Выбранный день появляется последним и подмигивает — правило идёт после nth-child. */
+.when[data-revealed] .calendar > div.calendarSelected {
+  animation: memoirDaySelected 1500ms var(--memoir-ease) both 820ms;
+}
+
+.when[data-revealed] .startTime {
+  animation: memoirRise 620ms var(--memoir-ease) both 880ms;
+}
+
+.where[data-revealed] .venueCopy h3 {
+  animation: memoirRise 640ms var(--memoir-ease) both 380ms;
+}
+
+.where[data-revealed] .venueCopy address {
+  animation: memoirRise 640ms var(--memoir-ease) both 460ms;
+}
+
+.where[data-revealed] .venueCopy a {
+  animation: memoirRise 640ms var(--memoir-ease) both 540ms;
+}
+
+.where[data-revealed] .venuePhoto {
+  animation: memoirArchIn 900ms var(--memoir-ease) both 420ms;
+}
+
+.where[data-revealed] .venuePhoto .photoMono {
+  animation: memoirPhotoSettle 1700ms var(--memoir-ease) both 420ms;
+}
+
+.where[data-revealed] .venuePhoto figcaption {
+  animation: memoirRise 560ms var(--memoir-ease) both 1180ms;
+}
+
+.program[data-revealed] .programFrame {
+  animation: memoirFrameIn 820ms var(--memoir-ease) both 80ms;
+}
+
+.program[data-revealed] .programNote {
+  animation: memoirRise 520ms var(--memoir-ease) both 320ms;
+}
+
+.program[data-revealed] .programFrame > h2 {
+  animation: memoirScriptIn 780ms var(--memoir-ease) both 400ms;
+}
+
+.program[data-revealed] .programFrame li {
+  animation: memoirRise 600ms var(--memoir-ease) both 560ms;
+}
+
+.program[data-revealed] .programFrame li:nth-child(2) {
+  animation-delay: 650ms;
+}
+
+.program[data-revealed] .programFrame li:nth-child(3) {
+  animation-delay: 740ms;
+}
+
+.program[data-revealed] .programFrame li:nth-child(4) {
+  animation-delay: 830ms;
+}
+
+.program[data-revealed] .programFrame li:nth-child(5) {
+  animation-delay: 920ms;
+}
+
+.program[data-revealed] .programFrame li:nth-child(n + 6) {
+  animation-delay: 1010ms;
+}
+
+.program[data-revealed] .programFooter {
+  animation: memoirScriptIn 840ms var(--memoir-ease) both 720ms;
+}
+
+.dress[data-revealed]::before {
+  animation: memoirTagIn 760ms var(--memoir-ease) both 120ms;
+}
+
+.dress[data-revealed]::after {
+  animation: memoirTagIn 760ms var(--memoir-ease) both 220ms;
+}
+
+.dress[data-revealed] .dressScript {
+  animation: memoirScriptIn 820ms var(--memoir-ease) both 180ms;
+}
+
+.dress[data-revealed] .dressBlock {
+  animation: memoirRise 720ms var(--memoir-ease) both 280ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]) {
+  animation: memoirPop 520ms var(--memoir-ease) both 600ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(2)) {
+  animation-delay: 680ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(3)) {
+  animation-delay: 760ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(4)) {
+  animation-delay: 840ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(n + 5)) {
+  animation-delay: 920ms;
+}
+
+.details[data-revealed] .infoBlock {
+  animation: memoirRise 680ms var(--memoir-ease) both 340ms;
+}
+
+.details[data-revealed] .chatBlock {
+  animation: memoirRise 680ms var(--memoir-ease) both 440ms;
+}
+
+.rsvp[data-revealed] .rsvpScript {
+  animation: memoirScriptIn 820ms var(--memoir-ease) both 120ms;
+}
+
+.rsvp[data-revealed] > h2 {
+  animation: memoirRise 640ms var(--memoir-ease) both 300ms;
+}
+
+.rsvp[data-revealed] > p:not(.rsvpScript) {
+  animation: memoirRise 640ms var(--memoir-ease) both 380ms;
+}
+
+.rsvp[data-revealed] > time {
+  animation: memoirRise 600ms var(--memoir-ease) both 460ms;
+}
+
+.rsvp[data-revealed] .rsvpForm {
+  animation: memoirRise 700ms var(--memoir-ease) both 540ms;
+}
+
+.closing[data-revealed] .closingCopy > p {
+  animation: memoirRise 560ms var(--memoir-ease) both 120ms;
+}
+
+.closing[data-revealed] .closingCopy h2 {
+  animation: memoirScriptIn 880ms var(--memoir-ease) both 220ms;
+}
+
+.closing[data-revealed] .closingPhoto {
+  animation: memoirArchIn 1000ms var(--memoir-ease) both 340ms;
+}
+
+.closing[data-revealed] .closingPhoto .photoMono {
+  animation: memoirPhotoSettle 1800ms var(--memoir-ease) both 340ms;
+}
+
+.closing[data-revealed] .closingPhoto figcaption {
+  animation: memoirRise 560ms var(--memoir-ease) both 1180ms;
+}
+
+.closing[data-revealed] .backToTop {
+  animation: memoirRise 600ms var(--memoir-ease) both 1280ms;
+}
+
+@keyframes memoirFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes memoirRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes memoirScriptIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) rotate(calc(var(--memoir-tilt, 0deg) - 7deg)) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--memoir-tilt, 0deg)) scale(1);
+  }
+}
+
+@keyframes memoirRuleIn {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes memoirPop {
+  from {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Снимок «ложится» на страницу: сверху, с лёгким доворотом к своему наклону. */
+@keyframes memoirPhotoDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-22px) rotate(calc(var(--memoir-tilt) + 5deg)) scale(1.05);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--memoir-tilt)) scale(1);
+  }
+}
+
+@keyframes memoirTapeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) rotate(2deg) scaleX(0.2);
+  }
+
+  to {
+    opacity: 0.8;
+    transform: translateX(-50%) rotate(2deg) scaleX(1);
+  }
+}
+
+@keyframes memoirPhotoSettle {
+  from {
+    transform: scale(1.09);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Арка проявляется снизу вверх, как отпечаток в проявителе. */
+@keyframes memoirArchIn {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes memoirFrameIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes memoirTagIn {
+  from {
+    transform: rotate(0deg) scale(0.6);
+  }
+
+  to {
+    transform: rotate(var(--memoir-tilt)) scale(1);
+  }
+}
+
+@keyframes memoirDaySelected {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+  }
+
+  34% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  52% {
+    transform: scale(1.11);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  84% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes memoirHeart {
+  0%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+
+  16% {
+    transform: scale(1.18);
+  }
+
+  32% {
+    transform: scale(1);
+  }
+
+  48% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes memoirTwinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(0.82);
+  }
+}
+
 @media (hover: hover) {
   .venueCopy a:hover,
   .backToTop:hover,
@@ -1002,6 +1452,19 @@
   .dressScript,
   .rsvpScript {
     transform: none;
+  }
+
+  /* Появление по прокрутке уже отключено в `useScrollReveal`, остаётся вступление обложки. */
+  .invitationLabel,
+  .heroTitle,
+  .heroNames,
+  .childhoodCard,
+  .childhoodPhoto .photo,
+  .tape,
+  .childhoodCard figcaption,
+  .heroDoodle,
+  .heroDoodle span {
+    animation: none !important;
   }
 
   .venueCopy a,

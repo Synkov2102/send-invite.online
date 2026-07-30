@@ -7,3 +7,4 @@ export {
 } from "./music-player";
 export { InvitationRsvpForm } from "./rsvp-form";
 export { InvitationSectionEyebrow } from "./section-eyebrow";
+export { useScrollReveal } from "./use-scroll-reveal";

@@ -7,6 +7,7 @@
   --chapter-accent: #b8503a;
   --chapter-line: #ddcdb6;
   --chapter-inline: clamp(20px, 6vw, 44px);
+  --chapter-ease: cubic-bezier(0.2, 0.75, 0.28, 1);
   --chapter-gap: clamp(30px, 7vw, 52px);
   --chapter-notch: 26px;
   width: min(100%, 680px);
@@ -221,6 +222,16 @@
   .strip > span {
     animation: none;
   }
+
+  /* Появление по прокрутке уже отключено в `useScrollReveal`, остаётся вступление обложки. */
+  .topline,
+  .hero .heroTitle > *,
+  .hero .heroNote,
+  .hero .heroPhoto .photo,
+  .namesBadge,
+  .seal {
+    animation: none !important;
+  }
 }
 
 .hero {
@@ -303,6 +314,7 @@
 
 /* Штемпель гашения: садится на нижний край обложки по диагонали к плашке с именами. */
 .seal {
+  --chapter-tilt: -9deg;
   position: absolute;
   bottom: clamp(14px, 4vw, 22px);
   left: var(--chapter-inline);
@@ -317,7 +329,7 @@
   border-radius: 50%;
   background: color-mix(in srgb, var(--chapter-ink) 55%, transparent);
   color: var(--chapter-photo-text);
-  transform: rotate(-9deg);
+  transform: rotate(var(--chapter-tilt));
 }
 
 .seal::before {
@@ -843,6 +855,370 @@
   font-family: var(--font-geist-mono), "Courier New", monospace;
   font-size: 11px;
   letter-spacing: 0.1em;
+}
+
+/* ——— Вступление обложки: печать билета сверху вниз, штемпель в конце ——— */
+
+.topline {
+  animation: chapterFade 700ms ease both 60ms;
+}
+
+.hero .heroTitle > * {
+  animation: chapterRise 700ms var(--chapter-ease) both 160ms;
+}
+
+.hero .heroTitle > *:nth-child(2) {
+  animation-delay: 260ms;
+}
+
+.hero .heroTitle > *:nth-child(3) {
+  animation-delay: 360ms;
+}
+
+.hero .heroNote {
+  animation: chapterRise 700ms var(--chapter-ease) both 470ms;
+}
+
+.hero .heroPhoto .photo {
+  animation: chapterPrint 950ms var(--chapter-ease) both 560ms;
+}
+
+.namesBadge {
+  animation: chapterBadgeIn 620ms var(--chapter-ease) both 1020ms;
+}
+
+.seal {
+  animation: chapterStamp 620ms cubic-bezier(0.18, 0.9, 0.24, 1.08) both 1160ms;
+}
+
+/* ——— Появление секций по прокрутке: скрытое состояние включает только JS (`useScrollReveal`) ——— */
+
+.shell[data-animate="on"] [data-reveal] {
+  opacity: 0;
+}
+
+.shell[data-animate="on"] [data-reveal][data-revealed] {
+  animation: chapterFade 560ms ease both;
+}
+
+.notch[data-revealed] .notchLine {
+  animation: chapterLineIn 720ms var(--chapter-ease) both 60ms;
+}
+
+[data-revealed] .eyebrowRule {
+  animation: chapterLineIn 640ms var(--chapter-ease) both 180ms;
+}
+
+[data-revealed] .eyebrowIndex {
+  animation: chapterPop 520ms var(--chapter-ease) both 240ms;
+}
+
+[data-revealed] .sectionTitle > * {
+  animation: chapterRise 640ms var(--chapter-ease) both 240ms;
+}
+
+[data-revealed] .sectionTitle > *:nth-child(2) {
+  animation-delay: 320ms;
+}
+
+[data-revealed] .sectionTitle > *:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.greeting[data-revealed] .lead {
+  animation: chapterRise 700ms var(--chapter-ease) both 480ms;
+}
+
+.when[data-revealed] .datePill {
+  animation: chapterStampIn 760ms var(--chapter-ease) both 320ms;
+}
+
+.when[data-revealed] .timeNote {
+  animation: chapterRise 600ms var(--chapter-ease) both 440ms;
+}
+
+.when[data-revealed] .calendar li {
+  animation: chapterRise 520ms var(--chapter-ease) both 520ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(2) {
+  animation-delay: 570ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(3) {
+  animation-delay: 620ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(4) {
+  animation-delay: 670ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(5) {
+  animation-delay: 720ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(6) {
+  animation-delay: 770ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(7) {
+  animation-delay: 820ms;
+}
+
+/* Выбранный день появляется последним и дважды подмигивает — правило идёт после nth-child. */
+.when[data-revealed] .calendar li.calendarSelected {
+  animation: chapterDaySelected 1500ms var(--chapter-ease) both 880ms;
+}
+
+.where[data-revealed] .venue {
+  animation: chapterRise 640ms var(--chapter-ease) both 300ms;
+}
+
+.where[data-revealed] .address {
+  animation: chapterRise 640ms var(--chapter-ease) both 380ms;
+}
+
+.where[data-revealed] .venuePhoto .photo {
+  animation: chapterPrint 900ms var(--chapter-ease) both 460ms;
+}
+
+.where[data-revealed] .venuePhoto figcaption {
+  animation: chapterRise 560ms var(--chapter-ease) both 1060ms;
+}
+
+.where[data-revealed] .mapLink {
+  animation: chapterRise 600ms var(--chapter-ease) both 700ms;
+}
+
+.program[data-revealed] .timeline::before {
+  animation: chapterAxisIn 900ms var(--chapter-ease) both 460ms;
+}
+
+.program[data-revealed] .timeline li {
+  animation: chapterRise 600ms var(--chapter-ease) both 540ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(2) {
+  animation-delay: 630ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(3) {
+  animation-delay: 720ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(4) {
+  animation-delay: 810ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(5) {
+  animation-delay: 900ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(n + 6) {
+  animation-delay: 990ms;
+}
+
+.dress[data-revealed] .dressBlock :global(h2) {
+  animation: chapterRise 640ms var(--chapter-ease) both 300ms;
+}
+
+.dress[data-revealed] .dressBlock :global(p) {
+  animation: chapterRise 640ms var(--chapter-ease) both 400ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]) {
+  animation: chapterPop 520ms var(--chapter-ease) both 520ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(2)) {
+  animation-delay: 600ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(3)) {
+  animation-delay: 680ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(4)) {
+  animation-delay: 760ms;
+}
+
+.dress[data-revealed] .dressBlock :global([class*="swatchItem"]:nth-child(n + 5)) {
+  animation-delay: 840ms;
+}
+
+.details[data-revealed] .infoBlock {
+  animation: chapterRise 680ms var(--chapter-ease) both 300ms;
+}
+
+.details[data-revealed] .chatBlock {
+  animation: chapterRise 680ms var(--chapter-ease) both 400ms;
+}
+
+.rsvp[data-revealed] .rsvpText {
+  animation: chapterRise 640ms var(--chapter-ease) both 460ms;
+}
+
+.rsvp[data-revealed] .rsvpDeadline {
+  animation: chapterRise 600ms var(--chapter-ease) both 540ms;
+}
+
+.rsvp[data-revealed] .rsvpForm {
+  animation: chapterRise 700ms var(--chapter-ease) both 620ms;
+}
+
+.closing[data-revealed] .closingPhoto .photoMono {
+  animation: chapterPrint 950ms var(--chapter-ease) both 140ms;
+}
+
+.closing[data-revealed] .closingCopy > * {
+  animation: chapterRise 620ms var(--chapter-ease) both 420ms;
+}
+
+.closing[data-revealed] .closingCopy > *:nth-child(2) {
+  animation-delay: 500ms;
+}
+
+.closing[data-revealed] .closingCopy > *:nth-child(3) {
+  animation-delay: 580ms;
+}
+
+.closing[data-revealed] .closingCopy > *:nth-child(4) {
+  animation-delay: 660ms;
+}
+
+@keyframes chapterFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chapterRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chapterPop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes chapterLineIn {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Кадр «печатается» слева направо, как лента билета. */
+@keyframes chapterPrint {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes chapterBadgeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.72);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* Штемпель гашения бьёт по обложке сверху. */
+@keyframes chapterStamp {
+  from {
+    opacity: 0;
+    transform: rotate(calc(var(--chapter-tilt) - 15deg)) scale(1.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(var(--chapter-tilt)) scale(1);
+  }
+}
+
+@keyframes chapterStampIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chapterAxisIn {
+  from {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+
+  to {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes chapterDaySelected {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+  }
+
+  34% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  52% {
+    transform: scale(1.1);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  84% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (min-width: 720px) {

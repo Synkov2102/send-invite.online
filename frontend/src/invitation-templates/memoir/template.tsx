@@ -13,6 +13,7 @@ import {
   InvitationGroupChatBlock,
   InvitationMusicPlayer,
   InvitationRsvpForm,
+  useScrollReveal,
 } from "@/invitation-templates/components";
 import styles from "./template.module.css";
 
@@ -122,7 +123,7 @@ function HeroSection({
 
 function GreetingSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">>) {
   return (
-    <section className={styles.greeting}>
+    <section className={styles.greeting} data-reveal>
       <p>Дорогие гости!</p>
       <div className={styles.greetingRule} aria-hidden />
       <div className={styles.greetingCopy}>
@@ -138,7 +139,7 @@ function WhenSection({
   invite,
 }: Readonly<Pick<MemoirTemplateProps, "calendarDays" | "invite">>) {
   return (
-    <section className={styles.when}>
+    <section className={styles.when} data-reveal>
       <SectionHeading note="сохраните дату">Когда</SectionHeading>
       <p className={styles.month}>
         {capitalize(formatDate(invite.date, { month: "long" }))}{" "}
@@ -172,7 +173,7 @@ function WhereSection({
   const address = invite.address.trim();
 
   return (
-    <section className={styles.where}>
+    <section className={styles.where} data-reveal>
       <SectionHeading note="точка встречи">Место</SectionHeading>
       <div className={styles.venueCopy}>
         <h3>{invite.venue}</h3>
@@ -212,7 +213,7 @@ function WhereSection({
 
 function ProgramSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">>) {
   return (
-    <section className={styles.program}>
+    <section className={styles.program} data-reveal>
       <div className={styles.programFrame}>
         <p className={styles.programNote}>наш день</p>
         <h2>Тайминг</h2>
@@ -235,7 +236,7 @@ function ProgramSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">
 
 function DressCodeSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">>) {
   return (
-    <section className={styles.dress}>
+    <section className={styles.dress} data-reveal>
       <p className={styles.dressScript} aria-hidden>
         Дресс-код
       </p>
@@ -262,7 +263,7 @@ function DetailsSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">
   }
 
   return (
-    <section className={styles.details}>
+    <section className={styles.details} data-reveal>
       <SectionHeading note="на заметку">Детали</SectionHeading>
       <div className={styles.detailsStack}>
         <InvitationAdditionalInfoBlock
@@ -289,7 +290,7 @@ function RsvpSection({ invite, siteId }: Readonly<Pick<MemoirTemplateProps, "inv
   }
 
   return (
-    <section className={styles.rsvp} id="rsvp">
+    <section className={styles.rsvp} data-reveal id="rsvp">
       <p className={styles.rsvpScript}>Будем очень ждать вас</p>
       <h2>Подтвердите присутствие</h2>
       <p>{invite.rsvpText}</p>
@@ -310,7 +311,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<Pick<MemoirTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing}>
+    <section className={styles.closing} data-reveal>
       <div className={styles.closingCopy}>
         <p>а теперь — навсегда</p>
         <h2>
@@ -350,6 +351,8 @@ export default function MemoirTemplate({
   siteId,
   venueImage,
 }: MemoirTemplateProps) {
+  const shellRef = useScrollReveal(invite);
+
   return (
     <>
       <InvitationMusicPlayer
@@ -357,7 +360,12 @@ export default function MemoirTemplate({
         title={invite.musicTitle}
         url={invite.musicUrl}
       />
-      <article className={styles.shell} id="memoir-top" style={createMemoirStyle(inviteVars)}>
+      <article
+        className={styles.shell}
+        id="memoir-top"
+        ref={shellRef}
+        style={createMemoirStyle(inviteVars)}
+      >
         <div className={styles.paper}>
           <HeroSection coverImage={coverImage} invite={invite} />
           <GreetingSection invite={invite} />
