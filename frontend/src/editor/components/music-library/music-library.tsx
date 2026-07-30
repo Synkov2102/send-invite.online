@@ -31,6 +31,7 @@ export function MusicLibrary({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [query, setQuery] = useState("");
   const [playingId, setPlayingId] = useState<string | null>(null);
+  const playRequestRef = useRef(0);
   const selectedTrack = getEditorMusicTrackByUrl(musicUrl);
   const normalizedQuery = query.trim().toLowerCase();
   const tracks = editorMusicTracks.filter((track) =>
@@ -67,6 +68,7 @@ export function MusicLibrary({
       return;
     }
 
+    playRequestRef.current += 1;
     audio.pause();
     audio.currentTime = 0;
     setPlayingId(null);
@@ -83,6 +85,7 @@ export function MusicLibrary({
   function stopPreview() {
     const audio = audioRef.current;
     if (!audio) return;
+    playRequestRef.current += 1;
     audio.pause();
     audio.currentTime = 0;
     setPlayingId(null);
@@ -101,6 +104,7 @@ export function MusicLibrary({
       return;
     }
 
+    const requestId = ++playRequestRef.current;
     onSelect(track);
     audio.src = track.audioUrl;
     setPlayingId(track.id);
@@ -108,7 +112,11 @@ export function MusicLibrary({
     try {
       await audio.play();
     } catch {
-      setPlayingId(null);
+      // Ignore a stale rejection (e.g. AbortError from a pause() that
+      // interrupted this play() call) if a newer click already moved on.
+      if (playRequestRef.current === requestId) {
+        setPlayingId(null);
+      }
     }
   }
 

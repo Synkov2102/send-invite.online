@@ -5,11 +5,8 @@ import SiteHeader from "@/components/site-header";
 import StickyTemplatesCta from "@/components/sticky-templates-cta";
 import TemplateCard from "@/components/template-card";
 import TrackedLink from "@/components/tracked-link";
-import ValuePropsCarousel from "@/components/value-props-carousel";
-import WaterBackground from "@/invitation-templates/aqua/water-background";
-import { brand } from "@/lib/brand";
-import { defaultInviteTemplates } from "@/lib/invite-templates";
 import { formatInviteSitePrice } from "@/lib/commerce";
+import { getEditorReadyTemplates } from "@/lib/invite-templates";
 import {
   buildOrganizationJsonLd,
   buildWebApplicationJsonLd,
@@ -19,13 +16,10 @@ import {
 import type { Metadata } from "next";
 import {
   ArrowRight,
-  CalendarDays,
   Check,
-  Heart,
-  LayoutTemplate,
-  Send,
-  Sparkles,
-  Wand2,
+  ClipboardList,
+  Clock3,
+  Eye,
   type LucideIcon,
 } from "lucide-react";
 import Image from "next/image";
@@ -39,64 +33,55 @@ export const metadata: Metadata = createPageMetadata({
     "Создайте сайт-приглашение на свадьбу за 10 минут: выберите шаблон, добавьте детали и соберите ответы гостей через RSVP. Разовая оплата.",
 });
 
-const HERO_CHECKS = [
-  "Сборка примерно за 10 минут",
-  "Удобно на телефоне и компьютере",
-  "RSVP и ответы в одном месте",
+const HERO_STATS = [
+  { value: "11", label: "готовых шаблонов" },
+  { value: "10 мин", label: "до готовой ссылки" },
+  { value: "1", label: "ссылка для гостей" },
 ] as const;
 
-const LANDING_BACKGROUND = {
-  deep: "#fffaf7",
-  foam: "#ff5f7f",
-  shallow: "#efd7de",
-} as const;
-
-type FeatureItem = {
+type Benefit = {
   icon: LucideIcon;
   title: string;
   text: string;
 };
 
-const steps: FeatureItem[] = [
+const benefits: Benefit[] = [
   {
-    icon: LayoutTemplate,
-    title: "Выберите шаблон",
-    text: "Найдите оформление под настроение свадьбы — от минимализма и editorial до живых фото и анимации.",
+    icon: Clock3,
+    title: "Готово за 10 минут",
+    text: "Выберите шаблон и добавьте детали свадьбы.",
   },
   {
-    icon: Wand2,
-    title: "Заполните детали",
-    text: "Добавьте дату, адрес, программу, фотографии и пожелания. Палитру и тексты можно менять в любой момент.",
+    icon: Eye,
+    title: "Результат виден сразу",
+    text: "Меняйте текст и цвета прямо в редакторе.",
   },
   {
-    icon: Send,
-    title: "Опубликуйте и отправьте",
-    text: "После оплаты получите персональную ссылку — одну, аккуратную, готовую для мессенджера.",
+    icon: ClipboardList,
+    title: "RSVP без переписок",
+    text: "Ответы гостей собираются в личном кабинете.",
   },
 ];
 
-const faqItems = [
+type Step = {
+  title: string;
+  text: string;
+};
+
+const steps: Step[] = [
   {
-    question: "Что входит в сайт-приглашение на свадьбу?",
-    answer:
-      "В приглашении можно разместить дату и программу дня, адрес с картой, фотографии, дресс-код, пожелания и форму RSVP. Ответы гостей собираются в личном кабинете.",
+    title: "Выберите шаблон",
+    text: "11 готовых вариантов оформления.",
   },
   {
-    question: "Нужно ли уметь делать сайты?",
-    answer:
-      "Нет. Вы выбираете готовый шаблон и заполняете понятные поля, а изменения сразу видны в превью. Код, отдельный хостинг и помощь дизайнера не нужны.",
+    title: "Добавьте детали",
+    text: "Дата, место, программа и фотографии.",
   },
   {
-    question: "Как отправить готовое приглашение гостям?",
-    answer:
-      "После публикации вы получите персональную ссылку. Её можно отправить в мессенджере, по почте или в SMS — приглашение адаптируется к телефону, планшету и компьютеру.",
+    title: "Отправьте ссылку",
+    text: "Сайт готов для гостей сразу после публикации.",
   },
-  {
-    question: "Сколько действует ссылка на приглашение?",
-    answer:
-      "Опубликованный сайт доступен до даты торжества и ещё 10 дней после неё, чтобы гости успели открыть приглашение и подтвердить присутствие.",
-  },
-] as const;
+];
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return (
@@ -107,12 +92,12 @@ function Eyebrow({ children }: { children: ReactNode }) {
   );
 }
 
-function formatSectionIndex(index: number) {
+function formatIndex(index: number) {
   return String(index + 1).padStart(2, "0");
 }
 
 export default function HomePage() {
-  const featured = defaultInviteTemplates.slice(0, 3);
+  const templates = getEditorReadyTemplates();
 
   return (
     <ProductPageShell className={styles.page}>
@@ -123,227 +108,144 @@ export default function HomePage() {
           buildWebApplicationJsonLd(),
         ]}
       />
-      <WaterBackground className={styles.liquidBackground} {...LANDING_BACKGROUND} />
       <SiteHeader active="home" />
 
       <main>
         <section className={styles.hero} id="hero">
-          <div className={styles.heroCopy}>
-            <Eyebrow>Свадебные сайты-приглашения</Eyebrow>
-            <h1>
-              Сайт-приглашение на свадьбу,
-              <span>которое хочется открыть.</span>
-            </h1>
-            <p className={styles.heroLead}>
-              Соберите сайт с программой, адресом, дресс-кодом и формой RSVP.
-              Редактор показывает результат сразу — без дизайнера, кода и бесконечных
-              правок в переписке.
-            </p>
-            <div className={styles.heroPrice}>
-              <span>Создание и публикация одного сайта-приглашения</span>
-              <strong>{formatInviteSitePrice()}</strong>
-              <small>разовая оплата · электронная услуга</small>
+          <div className={styles.heroStage}>
+            <div className={styles.heroContent}>
+              <Eyebrow>Для вашей свадьбы</Eyebrow>
+              <h1>
+                <span>Индивидуальный</span>
+                <span>
+                  сайт <em>за 10 минут</em>
+                </span>
+              </h1>
+              <p className={styles.heroLead}>
+                Все детали свадьбы и RSVP — в одном редакторе.
+              </p>
+
+              <div className={styles.heroRow}>
+                <div className={styles.heroPrice}>
+                  <span>Один сайт</span>
+                  <strong>{formatInviteSitePrice()}</strong>
+                  <small>разовая оплата</small>
+                </div>
+                <TrackedLink
+                  className={styles.primaryButton}
+                  goal="hero_primary_click"
+                  href="#templates"
+                >
+                  Выбрать шаблон <ArrowRight aria-hidden size={17} />
+                </TrackedLink>
+              </div>
+
+              <p className={styles.heroTrust}>
+                <Check aria-hidden size={14} />
+                Создайте бесплатно. Оплата — при публикации.
+              </p>
+
+              <div className={styles.heroStats}>
+                {HERO_STATS.map((stat) => (
+                  <div key={stat.label}>
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className={styles.heroActions}>
-              <TrackedLink
-                className={styles.primaryButton}
-                goal="hero_primary_click"
-                href="/templates"
-              >
-                Выбрать шаблон <ArrowRight aria-hidden size={17} />
-              </TrackedLink>
+
+            <div className={styles.heroVisual}>
+              <Image
+                alt="Невеста и жених на свадебной площадке"
+                fill
+                loading="eager"
+                sizes="(max-width: 899px) calc(100vw - 50px), 540px"
+                src="/images/homepage-hero-editorial-v2.webp"
+                unoptimized
+              />
+              <div aria-hidden className={styles.heroTemplateTitle}>
+                <span>wedding</span>
+                <strong>26—06</strong>
+              </div>
+              <div className={styles.heroVisualBadge}>
+                <Check aria-hidden size={14} />
+                Живой сайт
+              </div>
+              <div className={styles.heroVisualCaption}>
+                <span>Так увидят гости</span>
+                <strong>Красиво на любом экране</strong>
+              </div>
             </div>
-            <p className={styles.heroTrust}>
-              Результат видно в редакторе бесплатно — платите только за публикацию.
-            </p>
-            <ul className={styles.heroChecks} aria-label="Ключевые преимущества">
-              {HERO_CHECKS.map((item) => (
-                <li key={item}>
-                  <Check aria-hidden size={14} />
-                  {item}
+          </div>
+        </section>
+
+        <section aria-label="Преимущества сервиса" className={styles.benefits}>
+          <div className={styles.sectionIntro}>
+            <Eyebrow>Возможности</Eyebrow>
+            <h2>Всё главное уже внутри</h2>
+          </div>
+          <div className={styles.benefitsGrid}>
+            {benefits.map((item, index) => (
+              <article className={styles.benefitCard} key={item.title}>
+                <span className={styles.benefitIndex}>{formatIndex(index)}</span>
+                <item.icon aria-hidden className={styles.benefitIcon} size={22} />
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section aria-label="Как это работает" className={styles.workflow}>
+          <div className={styles.workflowVisual}>
+            <Image
+              alt=""
+              fill
+              sizes="(max-width: 899px) calc(100vw - 34px), 520px"
+              src="/images/homepage-wedding-couple.webp"
+            />
+            <div className={styles.workflowVisualCopy}>
+              <span>Без дизайнера и ожидания</span>
+              <strong>Соберите приглашение сами.</strong>
+            </div>
+          </div>
+          <div className={styles.workflowContent}>
+            <div className={styles.sectionIntro}>
+              <Eyebrow>Как это работает</Eyebrow>
+              <h2>Три шага — и готово</h2>
+            </div>
+            <ol className={styles.stepsRow}>
+              {steps.map((step, index) => (
+                <li key={step.title}>
+                  <span>{formatIndex(index)}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
                 </li>
               ))}
-            </ul>
-          </div>
-
-          <div className={styles.heroVisual}>
-            <div className={styles.previewWindow}>
-              <div className={styles.previewBar}>
-                <span />
-                <span />
-                <span />
-                <p>
-                  {brand.domain}/{brand.exampleInviteSlug}
-                </p>
-              </div>
-              <div className={styles.previewPhoto}>
-                <Image
-                  alt="Свадебное приглашение Анны и Максима"
-                  fill
-                  priority
-                  sizes="(max-width: 899px) 92vw, 48vw"
-                  src="/images/homepage-wedding-couple.webp"
-                />
-                <div className={styles.previewShade} />
-                <div className={styles.previewCopy}>
-                  <small>мы женимся</small>
-                  <strong>
-                    Анна <i>&</i> Максим
-                  </strong>
-                  <time dateTime="2026-09-14">14 · 09 · 2026</time>
-                </div>
-              </div>
-            </div>
-            <div className={styles.dateBadge}>
-              <CalendarDays aria-hidden size={17} />
-              <span>14 сентября</span>
-              <strong>Сохраните дату</strong>
-            </div>
-            <div className={styles.rsvpBadge}>
-              <span className={styles.rsvpIcon}>
-                <Check aria-hidden size={14} />
-              </span>
-              <div>
-                <strong>Гость ответил</strong>
-                <span>Приду с радостью</span>
-              </div>
-            </div>
+            </ol>
           </div>
         </section>
 
-        <section className={styles.valueProps} aria-label="Преимущества сервиса">
-          <div className={styles.valuePropsPanel}>
-            <div className={styles.valuePropsIntro}>
-              <Eyebrow>Почему {brand.name}</Eyebrow>
-              <h2>Всё нужное — без лишних хлопот</h2>
-              <p>
-                Вы сами собираете приглашение за вечер, видите каждую деталь до
-                публикации, собираете ответы гостей в одном месте и отправляете одну
-                ссылку. Без подрядчиков, долгих согласований и сюрпризов в финале.
-              </p>
-            </div>
-            <ValuePropsCarousel
-              cardClassName={styles.valuePropsCard}
-              gridClassName={styles.valuePropsGrid}
-              iconClassName={styles.valuePropsIcon}
-              numberClassName={styles.valuePropsNumber}
-            />
+        <section className={styles.templates} id="templates">
+          <div className={styles.sectionIntro}>
+            <Eyebrow>Шаблоны</Eyebrow>
+            <h2>Выберите свой дизайн</h2>
+            <p>Посмотрите демо и начните редактировать.</p>
           </div>
-        </section>
-
-        <section className={styles.templates}>
-          <div className={styles.sectionHeading}>
-            <div>
-              <Eyebrow>Шаблоны</Eyebrow>
-              <h2>
-                Выберите настроение —
-                <br />
-                остальное подстроите сами.
-              </h2>
-            </div>
-            <TrackedLink goal="templates_section_cta_click" href="/templates">
-              Смотреть все шаблоны <ArrowRight aria-hidden size={16} />
-            </TrackedLink>
-          </div>
-          <div className={styles.templateGrid}>
-            {featured.map((template, index) => (
+          <div className={`templates-page__grid ${styles.templateGrid}`}>
+            {templates.map((template, index) => (
               <TemplateCard
-                className={styles.templateCard}
+                eagerImage={index === 0}
                 index={index}
                 key={template.id}
+                paletteCarousel
                 template={template}
                 titleAs="h3"
                 trackingGoal="homepage_template_card_click"
               />
             ))}
           </div>
-        </section>
-
-        <section className={styles.workflow}>
-          <div className={styles.workflowIntro}>
-            <Eyebrow>Как это работает</Eyebrow>
-            <h2>Три шага до готовой ссылки</h2>
-            <p>
-              Редактор не перегружает деталями: понятные этапы, живое превью и
-              возможность вернуться к любому полю. Вы готовите свадьбу — а не
-              разбираетесь в настройках сайта.
-            </p>
-            <TrackedLink goal="workflow_cta_click" href="/templates">
-              Начать с шаблона <ArrowRight aria-hidden size={16} />
-            </TrackedLink>
-          </div>
-          <div className={styles.steps}>
-            {steps.map((step, index) => (
-              <article key={step.title}>
-                <span>{formatSectionIndex(index)}</span>
-                <div>
-                  <step.icon aria-hidden size={20} />
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className={styles.story}>
-          <div className={styles.storyPhoto}>
-            <Image
-              alt="Молодожёны в день свадьбы"
-              fill
-              sizes="(max-width: 899px) 92vw, 42vw"
-              src="/images/homepage-wedding-story.webp"
-            />
-          </div>
-          <div className={styles.storyCopy}>
-            <Heart aria-hidden size={22} />
-            <Eyebrow>Что получат гости</Eyebrow>
-            <h2>Не просто дата — целое настроение дня</h2>
-            <p>
-              Гости сразу понимают, чего ждать: где собраться, во что одеться,
-              как ответить. А вы собираете RSVP без бесконечных сообщений
-              «а во сколько?» и «где это?».
-            </p>
-            <ul>
-              <li>
-                <Check aria-hidden size={15} /> Программа дня и адрес с картой
-              </li>
-              <li>
-                <Check aria-hidden size={15} /> Дресс-код, пожелания и детали
-              </li>
-              <li>
-                <Check aria-hidden size={15} /> Форма RSVP с ответами в личном кабинете
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        <section className={styles.faq}>
-          <div className={styles.faqIntro}>
-            <Eyebrow>Частые вопросы</Eyebrow>
-            <h2>Что важно знать перед созданием приглашения</h2>
-            <p>
-              Коротко о наполнении, публикации и сроке работы свадебного
-              сайта-приглашения.
-            </p>
-          </div>
-          <div className={styles.faqList}>
-            {faqItems.map((item) => (
-              <details key={item.question}>
-                <summary>{item.question}</summary>
-                <p>{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </section>
-
-        <section className={styles.cta}>
-          <Sparkles aria-hidden size={22} />
-          <p>Начните сегодня — первый шаблон уже ждёт</p>
-          <h2>Соберите приглашение, которым захочется поделиться</h2>
-          <TrackedLink goal="final_cta_click" href="/templates">
-            Выбрать шаблон <ArrowRight aria-hidden size={17} />
-          </TrackedLink>
         </section>
       </main>
 
