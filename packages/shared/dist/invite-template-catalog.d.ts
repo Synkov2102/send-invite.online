@@ -80,8 +80,10 @@ export declare function getEditorPreset(templateId: string): Partial<{
         title: string;
     }[];
     showAdditionalInfo: boolean;
+    showDressCode: boolean;
     showGroupChat: boolean;
     showRsvp: boolean;
+    showSchedule: boolean;
     venue: string;
     venueImageUrl: string;
     mapUrl?: string | undefined;

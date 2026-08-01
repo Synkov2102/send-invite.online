@@ -1,5 +1,6 @@
 "use client";
 
+import { buildListPricing } from "@invite/shared";
 import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
 import { previewPromoCode } from "@/lib/api/payments";
 import {
@@ -7,7 +8,7 @@ import {
   startInviteSiteCheckout,
   submitRobokassaForm,
 } from "@/lib/api/sites";
-import { getListPromoPricing } from "@/lib/commerce";
+import { getListPromoPricing, type InviteSitePricing } from "@/lib/commerce";
 import {
   getTemplateKind,
 } from "@/lib/invite-templates";
@@ -67,6 +68,7 @@ export function useInvitationBuilder({
   initialIsPaid = false,
   initialPalette,
   initialPaletteId,
+  initialPricing,
   initialStep = 0,
   isAuthenticated,
   siteId,
@@ -112,7 +114,11 @@ export function useInvitationBuilder({
   const [promoError, setPromoError] = useState<string | null>(null);
   const [isApplyingPromo, setIsApplyingPromo] = useState(false);
   const requiresPayment = !siteId || !initialIsPaid;
-  const checkoutPricing = appliedPromo ?? getListPromoPricing();
+  const sitePricing: InviteSitePricing = initialPricing ?? {
+    currentPriceRub: Number(getListPromoPricing().amount),
+    originalPriceRub: null,
+  };
+  const checkoutPricing = appliedPromo ?? buildListPricing(sitePricing.currentPriceRub);
 
   const palettes = useMemo(() => getTemplatePalettes(template.id), [template.id]);
   const templatePalette = palettes.find((item) => item.id === invite.paletteId);
@@ -511,7 +517,7 @@ export function useInvitationBuilder({
       return;
     }
 
-    const draft = readEditorDraft(template.id);
+    const draft = readEditorDraft();
 
     if (!draft) {
       return;
@@ -711,15 +717,12 @@ export function useInvitationBuilder({
     const snapshot = currentEditorSnapshot;
     const savingTimeout = window.setTimeout(() => setSaveStatus("saving"), 0);
     const timeout = window.setTimeout(() => {
-      const didSave = saveEditorDraft(
-        {
-          customPalette,
-          hasLocalMusic,
-          invite: effectiveInvite,
-          version: 2,
-        },
-        template.id,
-      );
+      const didSave = saveEditorDraft({
+        customPalette,
+        hasLocalMusic,
+        invite: effectiveInvite,
+        version: 2,
+      });
       if (didSave) {
         setLastSafeEditorSnapshot(snapshot);
       }
@@ -730,7 +733,7 @@ export function useInvitationBuilder({
       window.clearTimeout(savingTimeout);
       window.clearTimeout(timeout);
     };
-  }, [customPalette, currentEditorSnapshot, effectiveInvite, hasLocalMusic, siteId, template.id]);
+  }, [customPalette, currentEditorSnapshot, effectiveInvite, hasLocalMusic, siteId]);
 
   useEffect(() => {
     shouldWarnBeforeLeaveRef.current = shouldWarnBeforeLeave;
@@ -933,6 +936,7 @@ export function useInvitationBuilder({
     setPreviewDevice,
     setPromoCodeInput,
     siteId,
+    sitePricing,
     stepErrors,
     template,
     templateKind,

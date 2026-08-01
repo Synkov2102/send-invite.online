@@ -49,8 +49,10 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
             title: string;
         }>, "many">;
         showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showDressCode: z.ZodDefault<z.ZodBoolean>;
         showGroupChat: z.ZodDefault<z.ZodBoolean>;
         showRsvp: z.ZodBoolean;
+        showSchedule: z.ZodDefault<z.ZodBoolean>;
         time: z.ZodString;
         venue: z.ZodString;
         venueImageUrl: z.ZodString;
@@ -87,8 +89,10 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -129,7 +133,9 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -203,8 +209,10 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -261,7 +269,9 @@ export declare const createInviteSitePayloadShapeSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     };
     palette: {
         accent: string;
@@ -330,7 +340,9 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
             title: string;
         }>, "many">;
         showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showDressCode: z.ZodDefault<z.ZodBoolean>;
         showGroupChat: z.ZodDefault<z.ZodBoolean>;
+        showSchedule: z.ZodDefault<z.ZodBoolean>;
         time: z.ZodString;
         venue: z.ZodString;
         venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
@@ -367,8 +379,10 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -409,7 +423,9 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -483,8 +499,10 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -541,7 +559,9 @@ export declare const createInviteSitePayloadSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     };
     palette: {
         accent: string;
@@ -608,8 +628,10 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
             title: string;
         }>, "many">;
         showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showDressCode: z.ZodDefault<z.ZodBoolean>;
         showGroupChat: z.ZodDefault<z.ZodBoolean>;
         showRsvp: z.ZodBoolean;
+        showSchedule: z.ZodDefault<z.ZodBoolean>;
         time: z.ZodString;
         venue: z.ZodString;
         venueImageUrl: z.ZodString;
@@ -646,8 +668,10 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -688,7 +712,9 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -767,8 +793,10 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -828,7 +856,9 @@ export declare const publishedInviteSiteShapeSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     };
     palette: {
         accent: string;
@@ -899,7 +929,9 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
             title: string;
         }>, "many">;
         showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
+        showDressCode: z.ZodDefault<z.ZodBoolean>;
         showGroupChat: z.ZodDefault<z.ZodBoolean>;
+        showSchedule: z.ZodDefault<z.ZodBoolean>;
         time: z.ZodString;
         venue: z.ZodString;
         venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
@@ -936,8 +968,10 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -978,7 +1012,9 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     }>;
     palette: z.ZodObject<{
         accent: z.ZodString;
@@ -1057,8 +1093,10 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;
@@ -1118,7 +1156,9 @@ export declare const publishedInviteSiteSchema: z.ZodObject<{
         groupChatUrl?: string | undefined;
         mapUrl?: string | undefined;
         showAdditionalInfo?: boolean | undefined;
+        showDressCode?: boolean | undefined;
         showGroupChat?: boolean | undefined;
+        showSchedule?: boolean | undefined;
     };
     palette: {
         accent: string;

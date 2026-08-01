@@ -26,6 +26,11 @@ export class PaymentsController {
     private readonly paymentsService: PaymentsService,
   ) {}
 
+  @Get("pricing")
+  getPricing() {
+    return this.paymentsService.getPricing();
+  }
+
   @Throttle({ default: { limit: 20, ttl: 60_000 } })
   @Post("promo/preview")
   async previewPromo(

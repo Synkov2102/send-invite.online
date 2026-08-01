@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatInviteSitePrice } from "@/lib/commerce";
+import { formatRubPrice, getSaleDiscountPercent, type InviteSitePricing } from "@/lib/commerce";
 import { getTemplatePalettes } from "@/lib/template-palettes";
 import { trackGoal } from "@/lib/analytics";
 import type { InviteTemplate } from "@/lib/invite-templates";
@@ -20,6 +20,7 @@ type TemplateCardProps = {
   imageSizes?: string;
   index: number;
   paletteCarousel?: boolean;
+  pricing: InviteSitePricing;
   siteId?: string;
   template: InviteTemplate;
   titleAs?: "h2" | "h3";
@@ -36,6 +37,7 @@ export default function TemplateCard({
   imageSizes = "300px",
   index,
   paletteCarousel = false,
+  pricing,
   siteId,
   template,
   titleAs: Title = "h2",
@@ -43,6 +45,7 @@ export default function TemplateCard({
 }: TemplateCardProps) {
   const palettes = getTemplatePalettes(template);
   const rootClassName = `template-card${className ? ` ${className}` : ""}`;
+  const discountPercent = getSaleDiscountPercent(pricing);
 
   const meta = (
     <div className="template-card__meta">
@@ -50,8 +53,17 @@ export default function TemplateCard({
         <small>{template.tags.join(" · ")}</small>
         <Title>{template.name}</Title>
         <span className="template-card__price">
-          <strong>{formatInviteSitePrice()}</strong>
-          <span>за сайт</span>
+          {discountPercent !== null ? (
+            <s className="template-card__price-old">
+              {formatRubPrice(pricing.originalPriceRub as number)}
+            </s>
+          ) : null}
+          <strong>{formatRubPrice(pricing.currentPriceRub)}</strong>
+          {discountPercent !== null ? (
+            <b className="template-card__price-badge">−{discountPercent}%</b>
+          ) : (
+            <span>за сайт</span>
+          )}
         </span>
       </div>
       <span className="template-card__arrow">

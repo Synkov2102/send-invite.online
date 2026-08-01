@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/legal-page";
 import { brand } from "@/lib/brand";
-import { formatInviteSitePrice, formatSellerLegalName, seller } from "@/lib/commerce";
+import { getInviteSitePricing } from "@/lib/backend-api";
+import { formatRubPrice, formatSellerLegalName, seller } from "@/lib/commerce";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -10,7 +11,9 @@ export const metadata: Metadata = createPageMetadata({
   path: "/offer",
 });
 
-export default function OfferPage() {
+export default async function OfferPage() {
+  const pricing = await getInviteSitePricing();
+
   return (
     <LegalPage
       eyebrow="Редакция от 2 июля 2026 года"
@@ -35,7 +38,7 @@ export default function OfferPage() {
           Исполнитель предоставляет доступ к редактору {brand.name}, обрабатывает
           введённые Заказчиком материалы и публикует один персональный
           сайт-приглашение по уникальной ссылке. Стоимость услуги —{" "}
-          {formatInviteSitePrice()}, разовый платёж.
+          {formatRubPrice(pricing.currentPriceRub)}, разовый платёж.
         </p>
         <p>
           Состав функций, шаблон, срок доступности и ограничения показываются до оплаты.

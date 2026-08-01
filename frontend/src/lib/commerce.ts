@@ -1,5 +1,6 @@
 export {
   formatInviteSitePrice,
+  formatRubPrice,
   formatRubPriceLabel,
   getListPromoPricing,
   INVITE_SITE_PRICE,
@@ -16,4 +17,18 @@ export const seller = {
 
 export function formatSellerLegalName() {
   return `Самозанятый ${seller.fullName}`;
+}
+
+export type InviteSitePricing = {
+  currentPriceRub: number;
+  originalPriceRub: number | null;
+};
+
+/** Percent off vs. the struck-through price, or null when there is no active sale. */
+export function getSaleDiscountPercent(pricing: InviteSitePricing): number | null {
+  if (pricing.originalPriceRub === null || pricing.originalPriceRub <= pricing.currentPriceRub) {
+    return null;
+  }
+
+  return Math.round((1 - pricing.currentPriceRub / pricing.originalPriceRub) * 100);
 }

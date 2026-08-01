@@ -84,13 +84,13 @@ export const inviteTemplateSections: InviteTemplateSectionMeta[] = [
     id: "program",
     title: "Программа",
     description: "Таймлайн дня: время, название и описание этапов.",
-    optional: false,
+    optional: true,
   },
   {
     id: "dress-code",
     title: "Дресс-код",
     description: "Текст рекомендаций и палитра цветов для образов гостей.",
-    optional: false,
+    optional: true,
   },
   {
     id: "group-chat",
@@ -185,13 +185,30 @@ export const inviteContentFields: InviteTemplateFieldMeta[] = [
     required: true,
   },
   {
+    key: "showSchedule",
+    section: "program",
+    kind: "boolean",
+    label: "Показывать программу дня",
+    usage: "Если `false`, секцию программы не рендерить.",
+    required: true,
+  },
+  {
     key: "schedule",
     section: "program",
     kind: "schedule",
     label: "Программа дня",
     usage: "Массив `{ time, title, description }`. Минимум 1, максимум 10 пунктов.",
     required: true,
-    constraints: "1–10 элементов. `description` может не отображаться в компактных шаблонах.",
+    constraints:
+      "1–10 элементов. `description` может не отображаться в компактных шаблонах. Имеет смысл только при `showSchedule === true`.",
+  },
+  {
+    key: "showDressCode",
+    section: "dress-code",
+    kind: "boolean",
+    label: "Показывать дресс-код",
+    usage: "Если `false`, секцию дресс-кода не рендерить.",
+    required: true,
   },
   {
     key: "dressCode",
@@ -200,6 +217,7 @@ export const inviteContentFields: InviteTemplateFieldMeta[] = [
     label: "Текст дресс-кода",
     usage: "Передать в `<InvitationDressCodeBlock text={...} />`.",
     required: true,
+    constraints: "Имеет смысл только при `showDressCode === true`.",
   },
   {
     key: "dressCodeColors",
@@ -208,7 +226,7 @@ export const inviteContentFields: InviteTemplateFieldMeta[] = [
     label: "Цвета дресс-кода",
     usage: "Массив `#RRGGBB`. Передать в `<InvitationDressCodeBlock colors={...} />`.",
     required: true,
-    constraints: "1–8 цветов.",
+    constraints: "1–8 цветов. Имеет смысл только при `showDressCode === true`.",
   },
   {
     key: "showGroupChat",
@@ -413,6 +431,7 @@ export const inviteSharedComponentsContract = {
     component: "InvitationDressCodeBlock",
     props: ["text", "colors", "variant?"],
     variants: ["alpine", "aqua", "vanilla"] as InviteSharedComponentVariant[],
+    renderWhen: "invite.showDressCode === true",
   },
   groupChat: {
     importPath: "@/invitation-templates/components",
@@ -498,8 +517,10 @@ export type InviteState = {
   groupChatUrl: string;
   schedule: InviteScheduleItem[];
   showAdditionalInfo: boolean;
+  showDressCode: boolean;
   showGroupChat: boolean;
   showRsvp: boolean;
+  showSchedule: boolean;
   rsvpDate: string;
   rsvpText: string;
   rsvpQuestions: InviteRsvpQuestion[];
@@ -604,7 +625,7 @@ ${renderCssVarsTable()}
 
 ## Общие компоненты (обязательно переиспользовать)
 
-1. **Дресс-код** — \`InvitationDressCodeBlock\` с props \`text\`, \`colors\`, \`variant\`.
+1. **Дресс-код** — \`InvitationDressCodeBlock\` с props \`text\`, \`colors\`, \`variant\`. Рендерить только если \`invite.showDressCode\`.
 2. **Общий чат** — \`InvitationGroupChatBlock\` с props \`show\`, \`url\`, \`text\`, \`variant\`. Рендерить только если \`invite.showGroupChat\`.
 3. **Доп. информация** — \`InvitationAdditionalInfoBlock\` с props \`show\`, \`text\`, \`variant\`. Рендерить только если \`invite.showAdditionalInfo\`.
 4. **RSVP** — шаблон сам рисует заголовок, текст и дедлайн, затем \`InvitationRsvpForm\` с props \`rsvpDate\`, \`questions\`, \`variant\`. Рендерить только если \`invite.showRsvp\`.
@@ -695,8 +716,8 @@ frontend/src/invitation-templates/<slug>/
 - [ ] Greeting: \`invite.lead\`
 - [ ] When: дата, время, календарь (\`calendarDays\`)
 - [ ] Where: venue, address, city, \`venueImage\`
-- [ ] Program: \`invite.schedule\` (time + title; description — по желанию)
-- [ ] Dress code: shared block
+- [ ] Program: \`invite.schedule\` (time + title; description — по желанию), только если \`showSchedule\`
+- [ ] Dress code: shared block, только если \`showDressCode\`
 - [ ] Group chat: shared block, только если \`showGroupChat\`
 - [ ] Additional info: shared block, только если \`showAdditionalInfo\`
 - [ ] RSVP: shared block, только если \`showRsvp\`

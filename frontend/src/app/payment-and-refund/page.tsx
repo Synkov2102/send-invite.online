@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/legal-page";
-import { formatInviteSitePrice, seller } from "@/lib/commerce";
+import { getInviteSitePricing } from "@/lib/backend-api";
+import { formatRubPrice, seller } from "@/lib/commerce";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -9,7 +10,9 @@ export const metadata: Metadata = createPageMetadata({
   path: "/payment-and-refund",
 });
 
-export default function PaymentAndRefundPage() {
+export default async function PaymentAndRefundPage() {
+  const pricing = await getInviteSitePricing();
+
   return (
     <LegalPage
       eyebrow="Условия покупки"
@@ -20,8 +23,8 @@ export default function PaymentAndRefundPage() {
         <h2>Стоимость услуги</h2>
         <p>
           Создание и публикация одного сайта-приглашения стоит{" "}
-          <strong>{formatInviteSitePrice()}</strong>. Это разовый платёж. Перед оплатой
-          итоговая сумма ещё раз показывается в редакторе и на странице Robokassa.
+          <strong>{formatRubPrice(pricing.currentPriceRub)}</strong>. Это разовый платёж.
+          Перед оплатой итоговая сумма ещё раз показывается в редакторе и на странице Robokassa.
         </p>
       </section>
       <section>

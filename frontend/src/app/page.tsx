@@ -5,7 +5,8 @@ import SiteHeader from "@/components/site-header";
 import StickyTemplatesCta from "@/components/sticky-templates-cta";
 import TemplateCard from "@/components/template-card";
 import TrackedLink from "@/components/tracked-link";
-import { formatInviteSitePrice } from "@/lib/commerce";
+import { getInviteSitePricing } from "@/lib/backend-api";
+import { formatRubPrice, getSaleDiscountPercent } from "@/lib/commerce";
 import { getEditorReadyTemplates } from "@/lib/invite-templates";
 import {
   buildOrganizationJsonLd,
@@ -96,8 +97,10 @@ function formatIndex(index: number) {
   return String(index + 1).padStart(2, "0");
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const templates = getEditorReadyTemplates();
+  const pricing = await getInviteSitePricing();
+  const discountPercent = getSaleDiscountPercent(pricing);
 
   return (
     <ProductPageShell className={styles.page}>
@@ -128,8 +131,18 @@ export default function HomePage() {
               <div className={styles.heroRow}>
                 <div className={styles.heroPrice}>
                   <span>Один сайт</span>
-                  <strong>{formatInviteSitePrice()}</strong>
-                  <small>разовая оплата</small>
+                  <div className={styles.heroPriceValue}>
+                    {discountPercent !== null ? (
+                      <s className={styles.heroPriceOld}>
+                        {formatRubPrice(pricing.originalPriceRub as number)}
+                      </s>
+                    ) : null}
+                    <strong>{formatRubPrice(pricing.currentPriceRub)}</strong>
+                    {discountPercent !== null ? (
+                      <b className={styles.heroPriceBadge}>−{discountPercent}%</b>
+                    ) : null}
+                  </div>
+                  <small>{discountPercent !== null ? "Ограниченная скидка" : "разовая оплата"}</small>
                 </div>
                 <TrackedLink
                   className={styles.primaryButton}
@@ -240,6 +253,7 @@ export default function HomePage() {
                 index={index}
                 key={template.id}
                 paletteCarousel
+                pricing={pricing}
                 template={template}
                 titleAs="h3"
                 trackingGoal="homepage_template_card_click"

@@ -173,6 +173,10 @@ function StorySection({
 }
 
 function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <motion.section
       className={styles.program}
@@ -261,6 +265,10 @@ function VenueSection({
 }
 
 function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <motion.section
       className={styles.dress}

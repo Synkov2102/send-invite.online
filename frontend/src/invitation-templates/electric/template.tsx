@@ -169,6 +169,10 @@ function PlaceSection({ invite, venueImage }: Readonly<Pick<ElectricTemplateProp
 }
 
 function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <motion.section className={styles.programSection} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.sectionHeading} variants={copyFromRight}>
@@ -192,6 +196,10 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
 }
 
 function DressSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <motion.section className={styles.dressSection} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.span className={styles.sectionNumber} variants={copyFromLeft}>05</motion.span>

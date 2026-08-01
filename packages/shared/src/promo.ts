@@ -76,12 +76,17 @@ export function applyPromoDiscount(
   };
 }
 
-export function getListPromoPricing(): PromoPricing {
+/** Pricing with no promo code applied, for an arbitrary (possibly discounted) list price. */
+export function buildListPricing(listPriceRub: number): PromoPricing {
   return {
-    amount: formatRubAmount(INVITE_SITE_PRICE_RUB),
+    amount: formatRubAmount(listPriceRub),
     discountAmount: formatRubAmount(0),
-    originalAmount: formatRubAmount(INVITE_SITE_PRICE_RUB),
+    originalAmount: formatRubAmount(listPriceRub),
   };
+}
+
+export function getListPromoPricing(): PromoPricing {
+  return buildListPricing(INVITE_SITE_PRICE_RUB);
 }
 
 export function formatRubPriceLabel(amount: string): string {

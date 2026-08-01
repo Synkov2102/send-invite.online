@@ -12,5 +12,7 @@ export declare function isValidPromoCodeFormat(code: string): boolean;
 export declare function formatRubAmount(amountRub: number): string;
 export declare function parseRubAmount(amount: string): number;
 export declare function applyPromoDiscount(listPriceRub: number, type: PromoDiscountType, value: number): PromoPricing;
+/** Pricing with no promo code applied, for an arbitrary (possibly discounted) list price. */
+export declare function buildListPricing(listPriceRub: number): PromoPricing;
 export declare function getListPromoPricing(): PromoPricing;
 export declare function formatRubPriceLabel(amount: string): string;

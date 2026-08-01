@@ -152,6 +152,10 @@ function DateSection({
 }
 
 function ScheduleSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <section className={styles.scheduleSection}>
       <header className={styles.sectionHeader}>
@@ -186,12 +190,14 @@ function DressCodeSection({
 }: Readonly<{ invite: InviteState; portraitImage: string }>) {
   return (
     <section className={styles.dressSection}>
-      <InvitationDressCodeBlock
-        className={styles.dressBlock}
-        colors={invite.dressCodeColors}
-        text={invite.dressCode}
-        variant="aqua"
-      />
+      {invite.showDressCode ? (
+        <InvitationDressCodeBlock
+          className={styles.dressBlock}
+          colors={invite.dressCodeColors}
+          text={invite.dressCode}
+          variant="aqua"
+        />
+      ) : null}
       <div className={styles.dressPhoto}>
         <Image
           alt="Свадебный портрет пары"

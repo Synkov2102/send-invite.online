@@ -3,8 +3,9 @@ import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
 import ProductPageShell from "@/components/product-page-shell";
 import TemplateCard from "@/components/template-card";
+import { getInviteSitePricing } from "@/lib/backend-api";
 import { getEditorReadyTemplates } from "@/lib/invite-templates";
-import { formatInviteSitePrice } from "@/lib/commerce";
+import { formatRubPrice, getSaleDiscountPercent } from "@/lib/commerce";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -22,6 +23,8 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
   const query = await searchParams;
   const siteId = Array.isArray(query.site) ? query.site[0] : query.site;
   const templates = getEditorReadyTemplates();
+  const pricing = await getInviteSitePricing();
+  const discountPercent = getSaleDiscountPercent(pricing);
 
   return (
     <ProductPageShell className="marketing-page">
@@ -47,8 +50,13 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
           </p>
           <div className="templates-page__price">
             <span>Создание и публикация одного сайта</span>
-            <strong>{formatInviteSitePrice()}</strong>
-            <small>разовая оплата</small>
+            <strong>
+              {discountPercent !== null ? (
+                <s>{formatRubPrice(pricing.originalPriceRub as number)}</s>
+              ) : null}
+              {formatRubPrice(pricing.currentPriceRub)}
+            </strong>
+            <small>{discountPercent !== null ? `Скидка −${discountPercent}%` : "разовая оплата"}</small>
           </div>
         </section>
 
@@ -59,6 +67,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
               index={index}
               key={template.id}
               paletteCarousel
+              pricing={pricing}
               siteId={siteId}
               template={template}
             />

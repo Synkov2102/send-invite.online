@@ -24,6 +24,8 @@ export const defaultEditorInvite: InviteState = {
     { time: "18:00", title: "Ужин", description: "Праздничный ужин и поздравления" },
     { time: "20:30", title: "Торт и танцы", description: "Время праздновать и танцевать" },
   ],
+  showSchedule: true,
+  showDressCode: true,
   showGroupChat: true,
   groupChatUrl: "https://t.me/+invite-guests",
   groupChatText:

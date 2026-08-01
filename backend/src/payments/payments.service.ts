@@ -108,6 +108,10 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
+  getPricing() {
+    return this.promoService.getPublicPricing();
+  }
+
   async previewPromo(body: unknown, user: AuthUser, ip: string | null) {
     const parsed = parsePromoPreviewBody(body);
 

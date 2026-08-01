@@ -253,6 +253,10 @@ function WhereSection({
 }
 
 function ProgramSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <section className={styles.program} data-reveal>
       <SectionLabel index="03">Программа</SectionLabel>
@@ -277,6 +281,10 @@ function ProgramSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite"
 }
 
 function DressCodeSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <section className={styles.dress} data-reveal>
       <SectionLabel index="04">Дресс-код</SectionLabel>

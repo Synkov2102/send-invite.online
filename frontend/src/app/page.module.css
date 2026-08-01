@@ -158,6 +158,28 @@
   letter-spacing: -0.045em;
   white-space: nowrap;
 }
+.heroPriceValue {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.heroPriceOld {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.95rem;
+  text-decoration: line-through;
+  white-space: nowrap;
+}
+.heroPriceBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ff4f72;
+  color: #fff;
+  font-size: 0.64rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
 .heroPrice small {
   display: block;
   margin-top: 2px;
@@ -656,13 +678,10 @@
 
   .heroPrice {
     width: 100%;
-    justify-content: space-between;
-    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
     padding: 13px 15px;
-  }
-
-  .heroPrice span {
-    max-width: 14ch;
   }
 
   .primaryButton {

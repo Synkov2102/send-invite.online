@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { editorStepIds } from "@/editor/constants";
 import InvitationBuilder from "@/editor/invitation-builder";
 import loadingStyles from "@/editor/components/editor-loading/editor-loading.module.css";
-import { getManagedInviteSite } from "@/lib/backend-api";
+import { getInviteSitePricing, getManagedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
 import { getInviteTemplate } from "@/lib/invite-templates";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
@@ -64,6 +64,8 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
     }
   }
 
+  const pricing = await getInviteSitePricing();
+
   const requestedTemplate = getInviteTemplate(templateId);
   const template =
     templateId && requestedTemplate.id === templateId
@@ -90,6 +92,7 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
           initialIsPaid={managedSite?.isPaid}
           initialPalette={managedSite?.palette}
           initialPaletteId={paletteId}
+          initialPricing={pricing}
           initialStep={initialStep}
           isAuthenticated={Boolean(user)}
           siteId={managedSite?.id}
