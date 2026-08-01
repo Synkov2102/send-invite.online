@@ -169,6 +169,17 @@
   text-decoration: line-through;
   white-space: nowrap;
 }
+.heroPriceBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ff4f72;
+  color: #fff;
+  font-size: 0.64rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
 .heroPrice small {
   display: block;
   margin-top: 2px;

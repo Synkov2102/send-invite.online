@@ -26,6 +26,31 @@
   white-space: nowrap;
 }
 
+.priceValue {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.saleOriginalPrice {
+  color: #786d74;
+  font-size: 0.85rem;
+  text-decoration: line-through;
+  white-space: nowrap;
+}
+
+.saleBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #ff4f72;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
 .root > p {
   margin: 0;
   color: #786d74;

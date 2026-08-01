@@ -6,7 +6,7 @@ import StickyTemplatesCta from "@/components/sticky-templates-cta";
 import TemplateCard from "@/components/template-card";
 import TrackedLink from "@/components/tracked-link";
 import { getInviteSitePricing } from "@/lib/backend-api";
-import { formatRubPrice } from "@/lib/commerce";
+import { formatRubPrice, getSaleDiscountPercent } from "@/lib/commerce";
 import { getEditorReadyTemplates } from "@/lib/invite-templates";
 import {
   buildOrganizationJsonLd,
@@ -100,8 +100,7 @@ function formatIndex(index: number) {
 export default async function HomePage() {
   const templates = getEditorReadyTemplates();
   const pricing = await getInviteSitePricing();
-  const hasSale =
-    pricing.originalPriceRub !== null && pricing.originalPriceRub > pricing.currentPriceRub;
+  const discountPercent = getSaleDiscountPercent(pricing);
 
   return (
     <ProductPageShell className={styles.page}>
@@ -133,14 +132,17 @@ export default async function HomePage() {
                 <div className={styles.heroPrice}>
                   <span>Один сайт</span>
                   <div className={styles.heroPriceValue}>
-                    {hasSale ? (
+                    {discountPercent !== null ? (
                       <s className={styles.heroPriceOld}>
                         {formatRubPrice(pricing.originalPriceRub as number)}
                       </s>
                     ) : null}
                     <strong>{formatRubPrice(pricing.currentPriceRub)}</strong>
+                    {discountPercent !== null ? (
+                      <b className={styles.heroPriceBadge}>−{discountPercent}%</b>
+                    ) : null}
                   </div>
-                  <small>разовая оплата</small>
+                  <small>{discountPercent !== null ? "Ограниченная скидка" : "разовая оплата"}</small>
                 </div>
                 <TrackedLink
                   className={styles.primaryButton}
@@ -251,6 +253,7 @@ export default async function HomePage() {
                 index={index}
                 key={template.id}
                 paletteCarousel
+                pricing={pricing}
                 template={template}
                 titleAs="h3"
                 trackingGoal="homepage_template_card_click"

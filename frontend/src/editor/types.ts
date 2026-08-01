@@ -1,3 +1,4 @@
+import type { InviteSitePricing } from "@/lib/commerce";
 import type { InviteTemplate } from "@/lib/invite-templates";
 import type { InviteState } from "@/lib/invite-state";
 import type { InvitePalette } from "@/lib/invite-theme";
@@ -11,6 +12,7 @@ export type InvitationBuilderProps = {
   initialIsPaid?: boolean;
   initialPalette?: InvitePalette;
   initialPaletteId?: string;
+  initialPricing?: InviteSitePricing;
   initialStep?: number;
   isAuthenticated: boolean;
   siteId?: string;

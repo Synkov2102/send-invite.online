@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { formatRubPriceLabel } from "@/lib/commerce";
+import { formatRubPrice, formatRubPriceLabel, getSaleDiscountPercent } from "@/lib/commerce";
 import { useEditor } from "../../editor-context";
 import styles from "./payment-summary.module.css";
 
@@ -18,6 +18,7 @@ export function PaymentSummary() {
     requiresPayment,
     setAcceptedPurchaseTerms,
     setPromoCodeInput,
+    sitePricing,
   } = useEditor();
 
   if (!requiresPayment) {
@@ -29,12 +30,22 @@ export function PaymentSummary() {
   const promoApplied =
     Boolean(appliedPromo) &&
     appliedPromo?.promoCode === promoCodeInput.trim().toUpperCase();
+  const saleDiscountPercent = getSaleDiscountPercent(sitePricing);
+  const showSaleBadge = saleDiscountPercent !== null && !hasDiscount;
 
   return (
     <section className={styles.root} aria-label="Оплата публикации">
       <div className={styles.row}>
         <span>Создание и публикация одного сайта</span>
-        <strong>{formatRubPriceLabel(checkoutPricing.amount)}</strong>
+        <span className={styles.priceValue}>
+          {showSaleBadge ? (
+            <s className={styles.saleOriginalPrice}>
+              {formatRubPrice(sitePricing.originalPriceRub as number)}
+            </s>
+          ) : null}
+          <strong>{formatRubPriceLabel(checkoutPricing.amount)}</strong>
+          {showSaleBadge ? <b className={styles.saleBadge}>−{saleDiscountPercent}%</b> : null}
+        </span>
       </div>
       {hasDiscount ? (
         <div className={styles.discountRow}>

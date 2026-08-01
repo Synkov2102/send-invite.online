@@ -1,15 +1,12 @@
 import "server-only";
 
 import { INVITE_SITE_PRICE_RUB } from "@invite/shared";
+import type { InviteSitePricing } from "@/lib/commerce";
 import { isPublishedInviteSite, type PublishedInviteSite } from "@/lib/invite-site-types";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export { getServerApiBaseUrl };
-
-export type InviteSitePricing = {
-  currentPriceRub: number;
-  originalPriceRub: number | null;
-};
+export type { InviteSitePricing };
 
 const fallbackPricing: InviteSitePricing = {
   currentPriceRub: INVITE_SITE_PRICE_RUB,
