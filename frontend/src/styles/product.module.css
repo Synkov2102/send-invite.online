@@ -2212,7 +2212,7 @@
 .scope:global(.template-card__price),
 .scope :global(.template-card__price) {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 7px;
   margin-top: 10px;
 }
