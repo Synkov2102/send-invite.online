@@ -2,7 +2,6 @@ import { isInviteState, type InviteState } from "@/lib/invite-state";
 import type { InvitePalette } from "@/lib/invite-theme";
 
 export const editorDraftStorageKey = "invite.editor.draft.v1";
-const editorDraftStoragePrefix = "invite.editor.draft.v2";
 const editorMediaDatabaseName = "invite.editor.media.v1";
 const editorMediaStoreName = "media";
 const editorMusicStorageKey = "current-music";
@@ -126,18 +125,13 @@ function isInvitePalette(value: unknown): value is InvitePalette {
   );
 }
 
-function getEditorDraftStorageKey(templateId?: string) {
-  return templateId ? `${editorDraftStoragePrefix}.${templateId}` : editorDraftStorageKey;
-}
-
-export function readEditorDraft(templateId?: string): EditorDraft | null {
+export function readEditorDraft(): EditorDraft | null {
   if (typeof window === "undefined") {
     return null;
   }
 
   try {
-    const storageKey = getEditorDraftStorageKey(templateId);
-    const storedDraft = window.localStorage.getItem(storageKey);
+    const storedDraft = window.localStorage.getItem(editorDraftStorageKey);
 
     if (!storedDraft) {
       return null;
@@ -167,7 +161,7 @@ export function readEditorDraft(templateId?: string): EditorDraft | null {
   return null;
 }
 
-export function saveEditorDraft(draft: EditorDraft, templateId?: string) {
+export function saveEditorDraft(draft: EditorDraft) {
   if (typeof window === "undefined") {
     return false;
   }
@@ -183,7 +177,7 @@ export function saveEditorDraft(draft: EditorDraft, templateId?: string) {
     }
 
     window.localStorage.setItem(
-      getEditorDraftStorageKey(templateId),
+      editorDraftStorageKey,
       JSON.stringify({
         ...draft,
         invite: shouldStoreLocalMusic ? { ...draft.invite, musicUrl: "" } : draft.invite,

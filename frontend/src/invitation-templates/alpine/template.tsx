@@ -178,52 +178,54 @@ export default function AlpineTemplate({
         </motion.div>
       </motion.section>
 
-      <motion.section
-        className="invite-details"
-        initial="hidden"
-        variants={sectionReveal}
-        viewport={revealViewport}
-        whileInView="visible"
-      >
-        <motion.div className="invite-plan__head" variants={copyReveal}>
-          <InvitationSectionEyebrow>Расписание</InvitationSectionEyebrow>
-          <h2 className="invite-heading invite-plan__title">План дня</h2>
-          <div className="invite-plan__meta">
-            <span className="invite-plan__chip">
-              <CalendarDays aria-hidden="true" size={16} />
-              {formatDate(invite.date)}
-            </span>
-            <span className="invite-plan__chip">
-              <Clock3 aria-hidden="true" size={16} />
-              Начало в {invite.time}
-            </span>
-          </div>
-        </motion.div>
-        <motion.ol
-          className="invite-program invite-timeline"
+      {invite.showSchedule ? (
+        <motion.section
+          className="invite-details"
           initial="hidden"
-          variants={staggerContainer}
+          variants={sectionReveal}
           viewport={revealViewport}
           whileInView="visible"
         >
-          {invite.schedule.map((item, index) => (
-            <motion.li
-              className="invite-timeline__item"
-              key={`${item.time}-${index}`}
-              variants={staggerItem}
-            >
-              <span className="invite-timeline__time">{item.time}</span>
-              <span aria-hidden="true" className="invite-timeline__rail">
-                <span className="invite-timeline__dot" />
+          <motion.div className="invite-plan__head" variants={copyReveal}>
+            <InvitationSectionEyebrow>Расписание</InvitationSectionEyebrow>
+            <h2 className="invite-heading invite-plan__title">План дня</h2>
+            <div className="invite-plan__meta">
+              <span className="invite-plan__chip">
+                <CalendarDays aria-hidden="true" size={16} />
+                {formatDate(invite.date)}
               </span>
-              <div className="invite-timeline__body">
-                <strong>{item.title}</strong>
-                {item.description ? <p>{item.description}</p> : null}
-              </div>
-            </motion.li>
-          ))}
-        </motion.ol>
-      </motion.section>
+              <span className="invite-plan__chip">
+                <Clock3 aria-hidden="true" size={16} />
+                Начало в {invite.time}
+              </span>
+            </div>
+          </motion.div>
+          <motion.ol
+            className="invite-program invite-timeline"
+            initial="hidden"
+            variants={staggerContainer}
+            viewport={revealViewport}
+            whileInView="visible"
+          >
+            {invite.schedule.map((item, index) => (
+              <motion.li
+                className="invite-timeline__item"
+                key={`${item.time}-${index}`}
+                variants={staggerItem}
+              >
+                <span className="invite-timeline__time">{item.time}</span>
+                <span aria-hidden="true" className="invite-timeline__rail">
+                  <span className="invite-timeline__dot" />
+                </span>
+                <div className="invite-timeline__body">
+                  <strong>{item.title}</strong>
+                  {item.description ? <p>{item.description}</p> : null}
+                </div>
+              </motion.li>
+            ))}
+          </motion.ol>
+        </motion.section>
+      ) : null}
 
       <motion.section
         className="invite-photo-band"
@@ -258,19 +260,21 @@ export default function AlpineTemplate({
         </motion.div>
       </motion.section>
 
-      <motion.section
-        className="invite-dress-code"
-        initial="hidden"
-        variants={sectionReveal}
-        viewport={revealViewport}
-        whileInView="visible"
-      >
-        <InvitationDressCodeBlock
-          colors={invite.dressCodeColors}
-          text={invite.dressCode}
-          variant="alpine"
-        />
-      </motion.section>
+      {invite.showDressCode ? (
+        <motion.section
+          className="invite-dress-code"
+          initial="hidden"
+          variants={sectionReveal}
+          viewport={revealViewport}
+          whileInView="visible"
+        >
+          <InvitationDressCodeBlock
+            colors={invite.dressCodeColors}
+            text={invite.dressCode}
+            variant="alpine"
+          />
+        </motion.section>
+      ) : null}
 
       {invite.showGroupChat ? (
         <motion.section

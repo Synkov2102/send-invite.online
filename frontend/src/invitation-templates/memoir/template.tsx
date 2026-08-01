@@ -212,6 +212,10 @@ function WhereSection({
 }
 
 function ProgramSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <section className={styles.program} data-reveal>
       <div className={styles.programFrame}>
@@ -235,6 +239,10 @@ function ProgramSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">
 }
 
 function DressCodeSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <section className={styles.dress} data-reveal>
       <p className={styles.dressScript} aria-hidden>

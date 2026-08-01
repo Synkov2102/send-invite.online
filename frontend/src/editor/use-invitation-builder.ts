@@ -511,7 +511,7 @@ export function useInvitationBuilder({
       return;
     }
 
-    const draft = readEditorDraft(template.id);
+    const draft = readEditorDraft();
 
     if (!draft) {
       return;
@@ -711,15 +711,12 @@ export function useInvitationBuilder({
     const snapshot = currentEditorSnapshot;
     const savingTimeout = window.setTimeout(() => setSaveStatus("saving"), 0);
     const timeout = window.setTimeout(() => {
-      const didSave = saveEditorDraft(
-        {
-          customPalette,
-          hasLocalMusic,
-          invite: effectiveInvite,
-          version: 2,
-        },
-        template.id,
-      );
+      const didSave = saveEditorDraft({
+        customPalette,
+        hasLocalMusic,
+        invite: effectiveInvite,
+        version: 2,
+      });
       if (didSave) {
         setLastSafeEditorSnapshot(snapshot);
       }
@@ -730,7 +727,7 @@ export function useInvitationBuilder({
       window.clearTimeout(savingTimeout);
       window.clearTimeout(timeout);
     };
-  }, [customPalette, currentEditorSnapshot, effectiveInvite, hasLocalMusic, siteId, template.id]);
+  }, [customPalette, currentEditorSnapshot, effectiveInvite, hasLocalMusic, siteId]);
 
   useEffect(() => {
     shouldWarnBeforeLeaveRef.current = shouldWarnBeforeLeave;

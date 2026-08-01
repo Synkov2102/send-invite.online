@@ -5,7 +5,8 @@ import SiteHeader from "@/components/site-header";
 import StickyTemplatesCta from "@/components/sticky-templates-cta";
 import TemplateCard from "@/components/template-card";
 import TrackedLink from "@/components/tracked-link";
-import { formatInviteSitePrice } from "@/lib/commerce";
+import { getInviteSitePricing } from "@/lib/backend-api";
+import { formatRubPrice } from "@/lib/commerce";
 import { getEditorReadyTemplates } from "@/lib/invite-templates";
 import {
   buildOrganizationJsonLd,
@@ -96,8 +97,11 @@ function formatIndex(index: number) {
   return String(index + 1).padStart(2, "0");
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const templates = getEditorReadyTemplates();
+  const pricing = await getInviteSitePricing();
+  const hasSale =
+    pricing.originalPriceRub !== null && pricing.originalPriceRub > pricing.currentPriceRub;
 
   return (
     <ProductPageShell className={styles.page}>
@@ -128,7 +132,14 @@ export default function HomePage() {
               <div className={styles.heroRow}>
                 <div className={styles.heroPrice}>
                   <span>Один сайт</span>
-                  <strong>{formatInviteSitePrice()}</strong>
+                  <div className={styles.heroPriceValue}>
+                    {hasSale ? (
+                      <s className={styles.heroPriceOld}>
+                        {formatRubPrice(pricing.originalPriceRub as number)}
+                      </s>
+                    ) : null}
+                    <strong>{formatRubPrice(pricing.currentPriceRub)}</strong>
+                  </div>
                   <small>разовая оплата</small>
                 </div>
                 <TrackedLink

@@ -16,7 +16,7 @@ export function getEditorStepErrors(invite: InviteState) {
       : null,
   ].filter((error): error is string => Boolean(error));
   const scheduleErrors = [
-    invite.schedule.some((item) => !item.time || !item.title.trim())
+    invite.showSchedule && invite.schedule.some((item) => !item.time || !item.title.trim())
       ? "Заполните время и название каждого события"
       : null,
     invite.showGroupChat && !invite.groupChatUrl.trim()

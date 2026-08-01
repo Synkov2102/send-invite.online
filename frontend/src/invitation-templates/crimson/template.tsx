@@ -176,6 +176,10 @@ function LocationSection({
 }
 
 function DressCodeSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite">>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <section className={styles.dressCode}>
       <p className={styles.sectionNumber}>03</p>
@@ -194,6 +198,10 @@ function DressCodeSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invit
 }
 
 function ProgramSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite">>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <section className={styles.program}>
       <header>

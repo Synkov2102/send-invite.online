@@ -8,6 +8,7 @@ import { PromoCodeEventStore } from "./promo-code-event.store";
 import { PromoCodeStore } from "./promo-code.store";
 import { PromoService } from "./promo.service";
 import { PromoUserUsageStore } from "./promo-user-usage.store";
+import { SitePricingStore } from "./site-pricing.store";
 
 @Module({
   controllers: [PaymentsController],
@@ -19,6 +20,7 @@ import { PromoUserUsageStore } from "./promo-user-usage.store";
     PromoCodeStore,
     PromoService,
     PromoUserUsageStore,
+    SitePricingStore,
   ],
 })
 export class PaymentsModule {}

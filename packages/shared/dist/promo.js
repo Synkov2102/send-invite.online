@@ -6,6 +6,7 @@ exports.isValidPromoCodeFormat = isValidPromoCodeFormat;
 exports.formatRubAmount = formatRubAmount;
 exports.parseRubAmount = parseRubAmount;
 exports.applyPromoDiscount = applyPromoDiscount;
+exports.buildListPricing = buildListPricing;
 exports.getListPromoPricing = getListPromoPricing;
 exports.formatRubPriceLabel = formatRubPriceLabel;
 const commerce_1 = require("./commerce");
@@ -59,12 +60,16 @@ function applyPromoDiscount(listPriceRub, type, value) {
         originalAmount: formatRubAmount(listKopeks / 100),
     };
 }
-function getListPromoPricing() {
+/** Pricing with no promo code applied, for an arbitrary (possibly discounted) list price. */
+function buildListPricing(listPriceRub) {
     return {
-        amount: formatRubAmount(commerce_1.INVITE_SITE_PRICE_RUB),
+        amount: formatRubAmount(listPriceRub),
         discountAmount: formatRubAmount(0),
-        originalAmount: formatRubAmount(commerce_1.INVITE_SITE_PRICE_RUB),
+        originalAmount: formatRubAmount(listPriceRub),
     };
+}
+function getListPromoPricing() {
+    return buildListPricing(commerce_1.INVITE_SITE_PRICE_RUB);
 }
 function formatRubPriceLabel(amount) {
     const value = parseRubAmount(amount);

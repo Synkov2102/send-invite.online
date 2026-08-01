@@ -254,41 +254,45 @@ export default function AquaTemplate({
             ) : null}
           </GlassSection>
 
-          <GlassSection className={styles.programSection}>
-            <span className={styles.sectionNumber}>04</span>
-            <h2 className={styles.heading}>Программа</h2>
-            <motion.ul
-              className={styles.timeline}
-              initial="hidden"
-              variants={staggerContainer}
-              viewport={revealViewport}
-              whileInView="visible"
-            >
-              {invite.schedule.map((item, index) => (
-                <motion.li
-                  className={styles.timelineItem}
-                  key={`${item.time}-${index}`}
-                  variants={staggerItem}
-                >
-                  <time>{item.time}</time>
-                  <span aria-hidden className={styles.timelineDot} />
-                  <div>
-                    <strong>{item.title}</strong>
-                    {item.description ? <p>{item.description}</p> : null}
-                  </div>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </GlassSection>
+          {invite.showSchedule ? (
+            <GlassSection className={styles.programSection}>
+              <span className={styles.sectionNumber}>04</span>
+              <h2 className={styles.heading}>Программа</h2>
+              <motion.ul
+                className={styles.timeline}
+                initial="hidden"
+                variants={staggerContainer}
+                viewport={revealViewport}
+                whileInView="visible"
+              >
+                {invite.schedule.map((item, index) => (
+                  <motion.li
+                    className={styles.timelineItem}
+                    key={`${item.time}-${index}`}
+                    variants={staggerItem}
+                  >
+                    <time>{item.time}</time>
+                    <span aria-hidden className={styles.timelineDot} />
+                    <div>
+                      <strong>{item.title}</strong>
+                      {item.description ? <p>{item.description}</p> : null}
+                    </div>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </GlassSection>
+          ) : null}
 
-          <GlassSection className={styles.dressSection}>
-            <span className={styles.sectionNumber}>05</span>
-            <InvitationDressCodeBlock
-              colors={invite.dressCodeColors}
-              text={invite.dressCode}
-              variant="aqua"
-            />
-          </GlassSection>
+          {invite.showDressCode ? (
+            <GlassSection className={styles.dressSection}>
+              <span className={styles.sectionNumber}>05</span>
+              <InvitationDressCodeBlock
+                colors={invite.dressCodeColors}
+                text={invite.dressCode}
+                variant="aqua"
+              />
+            </GlassSection>
+          ) : null}
 
           {invite.showGroupChat ? (
             <GlassSection className={styles.groupChatSection}>

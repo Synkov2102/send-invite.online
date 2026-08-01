@@ -32,8 +32,10 @@ export declare const isInviteState: (value: unknown) => value is {
         title: string;
     }[];
     showAdditionalInfo: boolean;
+    showDressCode: boolean;
     showGroupChat: boolean;
     showRsvp: boolean;
+    showSchedule: boolean;
     venue: string;
     venueImageUrl: string;
     mapUrl?: string | undefined;
@@ -86,8 +88,10 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
             title: string;
         }[];
         showAdditionalInfo: boolean;
+        showDressCode: boolean;
         showGroupChat: boolean;
         showRsvp: boolean;
+        showSchedule: boolean;
         venue: string;
         venueImageUrl: string;
         mapUrl?: string | undefined;

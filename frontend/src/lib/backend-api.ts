@@ -1,9 +1,49 @@
 import "server-only";
 
+import { INVITE_SITE_PRICE_RUB } from "@invite/shared";
 import { isPublishedInviteSite, type PublishedInviteSite } from "@/lib/invite-site-types";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export { getServerApiBaseUrl };
+
+export type InviteSitePricing = {
+  currentPriceRub: number;
+  originalPriceRub: number | null;
+};
+
+const fallbackPricing: InviteSitePricing = {
+  currentPriceRub: INVITE_SITE_PRICE_RUB,
+  originalPriceRub: null,
+};
+
+function isInviteSitePricing(value: unknown): value is InviteSitePricing {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as InviteSitePricing).currentPriceRub === "number" &&
+    ((value as InviteSitePricing).originalPriceRub === null ||
+      typeof (value as InviteSitePricing).originalPriceRub === "number")
+  );
+}
+
+/** Revalidated periodically so a price change via the CLI script shows up without a redeploy. */
+export async function getInviteSitePricing(): Promise<InviteSitePricing> {
+  try {
+    const response = await fetch(`${getServerApiBaseUrl()}/api/payments/pricing`, {
+      next: { revalidate: 60 },
+    });
+
+    if (!response.ok) {
+      return fallbackPricing;
+    }
+
+    const pricing: unknown = await response.json();
+
+    return isInviteSitePricing(pricing) ? pricing : fallbackPricing;
+  } catch {
+    return fallbackPricing;
+  }
+}
 
 export async function getPublishedInviteSite(id: string): Promise<PublishedInviteSite | null> {
   try {

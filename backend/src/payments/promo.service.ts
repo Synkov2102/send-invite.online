@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import {
   INVITE_SITE_PRICE_RUB,
   applyPromoDiscount,
-  getListPromoPricing,
+  buildListPricing,
   isValidPromoCodeFormat,
   normalizePromoCode,
   type PromoPricing,
@@ -15,6 +15,7 @@ import {
 import { PromoCodeEventStore } from "./promo-code-event.store";
 import { PromoCodeStore, type PromoCode } from "./promo-code.store";
 import { PromoUserUsageStore } from "./promo-user-usage.store";
+import { SitePricingStore, type SitePricing } from "./site-pricing.store";
 
 export type PromoValidationFailure = {
   ok: false;
@@ -45,10 +46,26 @@ export class PromoService {
     private readonly events: PromoCodeEventStore,
     private readonly orders: PaymentOrderStore,
     private readonly userUsage: PromoUserUsageStore,
+    private readonly sitePricing: SitePricingStore,
   ) {}
 
   getPublicErrorMessage() {
     return PUBLIC_PROMO_ERROR;
+  }
+
+  /** Current effective list price, falling back to the built-in price when no sale is configured. */
+  private async getSitePricing(): Promise<SitePricing> {
+    const pricing = await this.sitePricing.get();
+
+    return {
+      currentPriceRub: pricing?.currentPriceRub ?? INVITE_SITE_PRICE_RUB,
+      originalPriceRub: pricing?.originalPriceRub ?? null,
+    };
+  }
+
+  /** Public pricing for display (e.g. the homepage hero price). */
+  async getPublicPricing(): Promise<SitePricing> {
+    return this.getSitePricing();
   }
 
   async validateForUser(
@@ -111,9 +128,11 @@ export class PromoService {
       }
     }
 
+    const { currentPriceRub } = await this.getSitePricing();
+
     return {
       ok: true,
-      pricing: applyPromoDiscount(INVITE_SITE_PRICE_RUB, promo.type, promo.value),
+      pricing: applyPromoDiscount(currentPriceRub, promo.type, promo.value),
       promo,
     };
   }
@@ -164,7 +183,8 @@ export class PromoService {
     | { ok: false; error: string }
   > {
     if (!rawCode) {
-      return { ok: true, pricing: getListPromoPricing(), promo: null };
+      const { currentPriceRub } = await this.getSitePricing();
+      return { ok: true, pricing: buildListPricing(currentPriceRub), promo: null };
     }
 
     const codeNormalized = normalizePromoCode(rawCode);

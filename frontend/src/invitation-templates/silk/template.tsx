@@ -229,6 +229,10 @@ function GalleryStrip({
 }
 
 function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <section className={cx(styles.section, styles.programSection)}>
       <h2>Тайминг</h2>
@@ -246,6 +250,10 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
 }
 
 function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <section className={cx(styles.section, styles.dressSection)}>
       <InvitationDressCodeBlock

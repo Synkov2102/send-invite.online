@@ -5,6 +5,7 @@ import { PromoCodeEventStore } from "./promo-code-event.store";
 import { PromoCodeStore, type PromoCode } from "./promo-code.store";
 import { PromoService } from "./promo.service";
 import { PromoUserUsageStore } from "./promo-user-usage.store";
+import { SitePricingStore } from "./site-pricing.store";
 
 function makeOrder(overrides: Partial<PaymentOrder> = {}): PaymentOrder {
   return {
@@ -66,6 +67,7 @@ describe("PromoService", () => {
     getOrderById: jest.Mock;
   };
   let events: { write: jest.Mock };
+  let sitePricing: { get: jest.Mock };
 
   beforeEach(async () => {
     promoCodes = {
@@ -85,6 +87,7 @@ describe("PromoService", () => {
       getOrderById: jest.fn(),
     };
     events = { write: jest.fn().mockResolvedValue(undefined) };
+    sitePricing = { get: jest.fn().mockResolvedValue(null) };
 
     const moduleRef = await Test.createTestingModule({
       providers: [
@@ -93,6 +96,7 @@ describe("PromoService", () => {
         { provide: PromoCodeEventStore, useValue: events },
         { provide: PaymentOrderStore, useValue: orders },
         { provide: PromoUserUsageStore, useValue: userUsage },
+        { provide: SitePricingStore, useValue: sitePricing },
       ],
     }).compile();
 
@@ -126,6 +130,71 @@ describe("PromoService", () => {
       expect(events.write).toHaveBeenCalledWith(
         expect.objectContaining({ action: "preview_fail", reason: "exhausted" }),
       );
+    });
+
+    it("applies the discount on top of an active sale price, not the built-in price", async () => {
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 2000, originalPriceRub: 4000 });
+      promoCodes.getByCode.mockResolvedValue(makePromo());
+
+      const result = await service.preview("save50", "user-1", null);
+
+      expect(result).toEqual({
+        ok: true,
+        promoCode: "SAVE50",
+        pricing: applyPromoDiscount(2000, "percent", 50),
+      });
+    });
+  });
+
+  describe("resolveForCheckout", () => {
+    it("uses the built-in price when no sale is configured and no code is given", async () => {
+      const result = await service.resolveForCheckout(undefined, "user-1", {
+        ip: null,
+        siteId: "site-1",
+      });
+
+      expect(result).toEqual({
+        ok: true,
+        promo: null,
+        pricing: {
+          amount: INVITE_SITE_PRICE_RUB.toFixed(2),
+          discountAmount: "0.00",
+          originalAmount: INVITE_SITE_PRICE_RUB.toFixed(2),
+        },
+      });
+    });
+
+    it("charges the configured sale price when no code is given", async () => {
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 2990, originalPriceRub: 4000 });
+
+      const result = await service.resolveForCheckout(undefined, "user-1", {
+        ip: null,
+        siteId: "site-1",
+      });
+
+      expect(result).toEqual({
+        ok: true,
+        promo: null,
+        pricing: { amount: "2990.00", discountAmount: "0.00", originalAmount: "2990.00" },
+      });
+    });
+  });
+
+  describe("getPublicPricing", () => {
+    it("falls back to the built-in price when no sale is configured", async () => {
+      await expect(service.getPublicPricing()).resolves.toEqual({
+        currentPriceRub: INVITE_SITE_PRICE_RUB,
+        originalPriceRub: null,
+      });
+    });
+
+    it("returns the configured sale price", async () => {
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 2990, originalPriceRub: 4000 });
+
+      await expect(service.getPublicPricing()).resolves.toEqual({
+        currentPriceRub: 2990,
+        originalPriceRub: 4000,
+      });
     });
   });
 

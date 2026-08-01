@@ -1,5 +1,6 @@
 export {
   formatInviteSitePrice,
+  formatRubPrice,
   formatRubPriceLabel,
   getListPromoPricing,
   INVITE_SITE_PRICE,

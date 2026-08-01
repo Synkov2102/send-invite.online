@@ -212,6 +212,10 @@ function VenueSection({
 }
 
 function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showSchedule) {
+    return null;
+  }
+
   return (
     <section className={styles.program}>
       <header className={styles.sectionHeader}>
@@ -237,6 +241,10 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
 }
 
 function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
+  if (!invite.showDressCode) {
+    return null;
+  }
+
   return (
     <section className={styles.dressSection}>
       <span className={styles.sectionIndex}>05</span>
