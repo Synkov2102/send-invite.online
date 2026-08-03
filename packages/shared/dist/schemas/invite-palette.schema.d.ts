@@ -12,11 +12,11 @@ export declare const inviteSitePaletteShapeSchema: z.ZodObject<{
     surface: z.ZodString;
     veil: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    label: string;
+    id: string;
     accent: string;
     background: string;
-    id: string;
     ink: string;
-    label: string;
     line: string;
     mood: string;
     muted: string;
@@ -24,11 +24,11 @@ export declare const inviteSitePaletteShapeSchema: z.ZodObject<{
     surface: string;
     veil: string;
 }, {
+    label: string;
+    id: string;
     accent: string;
     background: string;
-    id: string;
     ink: string;
-    label: string;
     line: string;
     mood: string;
     muted: string;
@@ -49,11 +49,11 @@ export declare const inviteSitePaletteSchema: z.ZodObject<{
     surface: z.ZodString;
     veil: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    label: string;
+    id: string;
     accent: string;
     background: string;
-    id: string;
     ink: string;
-    label: string;
     line: string;
     mood: string;
     muted: string;
@@ -61,11 +61,11 @@ export declare const inviteSitePaletteSchema: z.ZodObject<{
     surface: string;
     veil: string;
 }, {
+    label: string;
+    id: string;
     accent: string;
     background: string;
-    id: string;
     ink: string;
-    label: string;
     line: string;
     mood: string;
     muted: string;

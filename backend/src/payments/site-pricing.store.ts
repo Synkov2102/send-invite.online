@@ -1,10 +1,8 @@
 import { Injectable } from "@nestjs/common";
+import type { SitePricing } from "@invite/shared";
 import { MongoDbService } from "../database/mongodb.service";
 
-export type SitePricing = {
-  currentPriceRub: number;
-  originalPriceRub: number | null;
-};
+export type { SitePricing };
 
 type SitePricingDocument = SitePricing & { _id: string; updatedAt: string };
 

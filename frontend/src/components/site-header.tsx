@@ -8,7 +8,7 @@ import SupportModal from "./support-modal";
 import TrackedLink from "./tracked-link";
 
 type SiteHeaderProps = {
-  active?: "home" | "templates";
+  active?: "blog" | "home" | "templates";
   initialUser?: HeaderUser | null;
 };
 
@@ -35,6 +35,13 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
         >
           Шаблоны
         </TrackedLink>
+        <Link
+          aria-current={active === "blog" ? "page" : undefined}
+          className={active === "blog" ? "is-active" : undefined}
+          href="/blog"
+        >
+          Блог
+        </Link>
         <SupportModal>Поддержка</SupportModal>
       </nav>
 

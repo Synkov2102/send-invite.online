@@ -18,51 +18,11 @@
  */
 
 import { randomUUID } from "node:crypto";
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-import { createRequire } from "node:module";
+import { loadBackendEnv, readArg, requireFromBackend } from "./lib/cli.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, "../..");
-const require = createRequire(
-  pathToFileURL(path.join(repoRoot, "backend/package.json")),
-);
-const { MongoClient } = require("mongodb");
+const { MongoClient } = requireFromBackend("mongodb");
 
-function loadEnvFile(filePath) {
-  try {
-    const text = readFileSync(filePath, "utf8");
-    for (const line of text.split(/\r?\n/)) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      const eq = trimmed.indexOf("=");
-      if (eq <= 0) continue;
-      const key = trimmed.slice(0, eq).trim();
-      let value = trimmed.slice(eq + 1).trim();
-      if (
-        (value.startsWith('"') && value.endsWith('"')) ||
-        (value.startsWith("'") && value.endsWith("'"))
-      ) {
-        value = value.slice(1, -1);
-      }
-      if (process.env[key] === undefined) {
-        process.env[key] = value;
-      }
-    }
-  } catch {
-    // optional
-  }
-}
-
-loadEnvFile(path.join(repoRoot, ".env.backend.local"));
-loadEnvFile(path.join(repoRoot, ".env.backend.production"));
-
-function readArg(name) {
-  const prefix = `--${name}=`;
-  const hit = process.argv.slice(2).find((arg) => arg.startsWith(prefix));
-  return hit ? hit.slice(prefix.length) : undefined;
-}
+loadBackendEnv();
 
 function parseOptionalInt(raw) {
   if (raw === undefined) return null;

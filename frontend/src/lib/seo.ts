@@ -28,6 +28,7 @@ export const privateRobots: NonNullable<Metadata["robots"]> = {
 export const publicSitemapRoutes = [
   { path: "/", changeFrequency: "weekly" as const, priority: 1 },
   { path: "/templates", changeFrequency: "weekly" as const, priority: 0.9 },
+  { path: "/blog", changeFrequency: "weekly" as const, priority: 0.7 },
   { path: "/contacts", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/offer", changeFrequency: "monthly" as const, priority: 0.4 },
   { path: "/payment-and-refund", changeFrequency: "monthly" as const, priority: 0.4 },
@@ -238,6 +239,77 @@ export function buildWebApplicationJsonLd() {
     provider: {
       "@id": absoluteUrl("/#organization"),
     },
+  };
+}
+
+export function buildBlogJsonLd(articles: Array<{ slug: string; title: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": absoluteUrl("/blog#blog"),
+    name: `Блог · ${brand.name}`,
+    url: absoluteUrl("/blog"),
+    inLanguage: "ru-RU",
+    publisher: {
+      "@id": absoluteUrl("/#organization"),
+    },
+    blogPost: articles.map((article) => ({
+      "@type": "BlogPosting",
+      headline: article.title,
+      url: absoluteUrl(`/blog/${article.slug}`),
+    })),
+  };
+}
+
+export function buildArticleJsonLd(article: {
+  cover: { alt: string; src: string } | null;
+  description: string;
+  publishedAt: string;
+  slug: string;
+  title: string;
+  updatedAt: string;
+}) {
+  const url = absoluteUrl(`/blog/${article.slug}`);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: article.title,
+    description: article.description,
+    url,
+    inLanguage: "ru-RU",
+    datePublished: article.publishedAt,
+    dateModified: article.updatedAt,
+    image: [resolveSeoImageUrl(article.cover?.src ?? brand.ogImage)],
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    author: {
+      "@id": absoluteUrl("/#organization"),
+    },
+    publisher: {
+      "@id": absoluteUrl("/#organization"),
+    },
+    isPartOf: {
+      "@id": absoluteUrl("/blog#blog"),
+    },
+  };
+}
+
+export function buildFaqJsonLd(items: Array<{ answer: string; question: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
 

@@ -7,6 +7,7 @@ export {
   INVITE_SITE_PRICE_RUB,
   INVITE_SITE_SERVICE_NAME,
 } from "@invite/shared";
+import type { SitePricing } from "@invite/shared";
 
 export const seller = {
   city: "Санкт-Петербург",
@@ -19,10 +20,7 @@ export function formatSellerLegalName() {
   return `Самозанятый ${seller.fullName}`;
 }
 
-export type InviteSitePricing = {
-  currentPriceRub: number;
-  originalPriceRub: number | null;
-};
+export type InviteSitePricing = SitePricing;
 
 /** Percent off vs. the struck-through price, or null when there is no active sale. */
 export function getSaleDiscountPercent(pricing: InviteSitePricing): number | null {

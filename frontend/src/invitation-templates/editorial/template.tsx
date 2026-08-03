@@ -3,7 +3,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { MapPin } from "lucide-react";
-import { parseDate } from "@/lib/invite-date";
+import { formatInviteDate, parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
@@ -53,9 +53,6 @@ function createEditorialStyle(inviteVars: InviteVars): EditorialStyle {
   };
 }
 
-function formatDate(value: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
-}
 
 function formatNumericDate(value: string) {
   const date = parseDate(value);
@@ -106,7 +103,7 @@ function HeroSection({
           {invite.groom.charAt(0)}·{invite.bride.charAt(0)}
         </span>
         <p className={styles.heroPhotoNote}>
-          {invite.city} · {formatDate(invite.date, { year: "numeric" })}
+          {invite.city} · {formatInviteDate(invite.date, { year: "numeric" })}
         </p>
         <figcaption>
           <span>{invite.groom}</span>
@@ -144,14 +141,14 @@ function DateSection({
         <span className={styles.sectionIndex}>02</span>
         <div>
           <p className={styles.kicker}>Когда</p>
-          <h2>{capitalize(formatDate(invite.date, { month: "long" }))}</h2>
+          <h2>{capitalize(formatInviteDate(invite.date, { month: "long" }))}</h2>
         </div>
       </header>
       <div className={styles.dateBody}>
         <div className={styles.dateLockup}>
-          <time dateTime={invite.date}>{formatDate(invite.date, { day: "2-digit" })}</time>
+          <time dateTime={invite.date}>{formatInviteDate(invite.date, { day: "2-digit" })}</time>
           <div className={styles.dateMeta}>
-            <span>{formatDate(invite.date, { weekday: "long" })}</span>
+            <span>{formatInviteDate(invite.date, { weekday: "long" })}</span>
             <strong>{invite.time}</strong>
           </div>
         </div>

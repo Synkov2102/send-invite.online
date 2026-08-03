@@ -3,7 +3,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { MapPin } from "lucide-react";
-import { parseDate } from "@/lib/invite-date";
+import { formatInviteDate, parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
@@ -55,9 +55,6 @@ function createChapterStyle(inviteVars: InviteVars): ChapterStyle {
   };
 }
 
-function formatDate(value: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
-}
 
 function formatNumericDate(value: string) {
   const date = parseDate(value);
@@ -68,13 +65,13 @@ function formatNumericDate(value: string) {
 
 /** «23 мая» → «мая»: родительный падеж месяца для плашки с датой. */
 function formatMonthGenitive(value: string) {
-  const parts = formatDate(value, { day: "numeric", month: "long" }).split(" ");
+  const parts = formatInviteDate(value, { day: "numeric", month: "long" }).split(" ");
 
   return parts[parts.length - 1];
 }
 
 function formatToplineDate(value: string) {
-  return formatDate(value, { day: "numeric", month: "long", year: "numeric" }).replace(
+  return formatInviteDate(value, { day: "numeric", month: "long", year: "numeric" }).replace(
     " г.",
     "",
   );
@@ -166,7 +163,7 @@ function HeroSection({
           <em>
             {invite.groom.charAt(0)} <i>&amp;</i> {invite.bride.charAt(0)}
           </em>
-          <small>{formatDate(invite.date, { year: "numeric" })}</small>
+          <small>{formatInviteDate(invite.date, { year: "numeric" })}</small>
         </span>
       </figure>
     </section>
@@ -194,9 +191,9 @@ function WhenSection({
     <section className={styles.when} data-reveal>
       <SectionLabel index="01">Когда</SectionLabel>
       <time className={styles.datePill} dateTime={invite.date}>
-        <i>({formatDate(invite.date, { day: "numeric" })})</i>
+        <i>({formatInviteDate(invite.date, { day: "numeric" })})</i>
         <span>{formatMonthGenitive(invite.date)}</span>
-        <i>({formatDate(invite.date, { year: "numeric" })})</i>
+        <i>({formatInviteDate(invite.date, { year: "numeric" })})</i>
       </time>
       <p className={styles.timeNote}>Сбор гостей в {invite.time}</p>
       <ul className={styles.calendar} aria-label="Неделя торжества">

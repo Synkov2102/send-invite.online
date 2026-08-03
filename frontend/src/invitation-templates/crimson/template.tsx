@@ -3,7 +3,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { MapPin, MessagesSquare } from "lucide-react";
-import { parseDate } from "@/lib/invite-date";
+import { formatInviteDate, parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
@@ -48,9 +48,6 @@ function createCrimsonStyle(inviteVars: InviteVars): CrimsonStyle {
   };
 }
 
-function formatDate(value: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
-}
 
 function formatNumericDate(value: string) {
   const date = parseDate(value);
@@ -208,7 +205,7 @@ function ProgramSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite"
         <p className={styles.sectionNumber}>04</p>
         <h2>Тайминг</h2>
         <time dateTime={invite.date}>
-          {formatDate(invite.date, { day: "numeric", month: "long" })}
+          {formatInviteDate(invite.date, { day: "numeric", month: "long" })}
         </time>
       </header>
       <ol>

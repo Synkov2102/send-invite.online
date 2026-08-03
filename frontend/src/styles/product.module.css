@@ -35,7 +35,7 @@
 
 .scope:global(.site-header__brand) svg,
 .scope :global(.site-header__brand) svg {
-  color: #6d765f;
+  color: var(--product-accent);
 }
 
 .scope:global(.site-header__nav),
@@ -46,7 +46,7 @@
 
 .scope:global(.site-header__nav) a,
 .scope :global(.site-header__nav) a {
-  color: #5f6558;
+  color: var(--product-muted);
   font-size: 0.95rem;
   text-decoration: none;
   transition: color 160ms ease;
@@ -62,7 +62,7 @@
 .scope:global(.marketing-eyebrow),
 .scope :global(.marketing-eyebrow) {
   margin: 0;
-  color: #6d765f;
+  color: var(--product-muted);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -101,7 +101,7 @@
 
 .scope:global(.marketing-hero__copy) h1 span,
 .scope :global(.marketing-hero__copy) h1 span {
-  color: #6d765f;
+  color: var(--product-accent);
 }
 
 .scope:global(.marketing-hero__lead),
@@ -145,16 +145,17 @@
 .scope :global(.marketing-button--primary),
 .scope:global(.site-header__cta),
 .scope :global(.site-header__cta) {
-  border: 1px solid #3f4f42;
-  background: #4a5748;
-  color: #f8f7f0;
+  border: 1px solid var(--product-ink);
+  background: var(--product-ink);
+  color: #fff;
 }
 
 .scope:global(.marketing-button--primary):hover,
 .scope :global(.marketing-button--primary):hover,
 .scope:global(.site-header__cta):hover,
 .scope :global(.site-header__cta):hover {
-  background: #3f4f42;
+  background: var(--product-accent);
+  border-color: var(--product-accent);
 }
 
 .scope:global(.marketing-button--ghost),
@@ -180,104 +181,6 @@
 .scope :global(.marketing-hero__visual) {
   display: grid;
   justify-items: center;
-}
-
-.scope:global(.marketing-phone),
-.scope :global(.marketing-phone) {
-  width: min(100%, 320px);
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 18px;
-  overflow: hidden;
-  background: #f7fbf8;
-  box-shadow: 0 34px 90px rgba(38, 56, 58, 0.22);
-}
-
-.scope:global(.marketing-phone__cover),
-.scope :global(.marketing-phone__cover) {
-  position: relative;
-  height: 360px;
-  background: linear-gradient(180deg, #5f7f82, #26383a);
-}
-
-.scope:global(.marketing-phone__rings),
-.scope :global(.marketing-phone__rings) {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-}
-
-.scope:global(.marketing-phone__rings) span,
-.scope :global(.marketing-phone__rings) span {
-  position: absolute;
-  width: 118px;
-  height: 118px;
-  border: 3px solid rgba(215, 168, 58, 0.88);
-  border-radius: 50%;
-  transform: rotate(18deg);
-}
-
-.scope:global(.marketing-phone__rings) span:last-child,
-.scope :global(.marketing-phone__rings) span:last-child {
-  width: 102px;
-  height: 102px;
-  border-color: rgba(216, 219, 224, 0.82);
-  transform: rotate(-24deg) translate(34px, 12px);
-}
-
-.scope:global(.marketing-phone__title),
-.scope :global(.marketing-phone__title) {
-  position: absolute;
-  inset: auto 18px 28px;
-  text-align: center;
-  color: #fff;
-}
-
-.scope:global(.marketing-phone__title) small,
-.scope :global(.marketing-phone__title) small {
-  display: block;
-  font-size: 0.95rem;
-  opacity: 0.92;
-}
-
-.scope:global(.marketing-phone__title) strong,
-.scope :global(.marketing-phone__title) strong {
-  display: grid;
-  gap: 2px;
-  margin-top: 12px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 0.96;
-}
-
-.scope:global(.marketing-phone__title) em,
-.scope :global(.marketing-phone__title) em {
-  color: rgba(255, 255, 255, 0.72);
-  font-style: italic;
-}
-
-.scope:global(.marketing-phone__panel),
-.scope :global(.marketing-phone__panel) {
-  padding: 28px 24px 34px;
-  text-align: center;
-  color: #687b7d;
-}
-
-.scope:global(.marketing-phone__panel) svg,
-.scope :global(.marketing-phone__panel) svg {
-  margin: 0 auto 12px;
-  color: #46767a;
-}
-
-.scope:global(.marketing-phone__calendar),
-.scope :global(.marketing-phone__calendar) {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-top: 18px;
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
 }
 
 .scope:global(.marketing-section),
@@ -310,62 +213,6 @@
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 400;
   line-height: 1.05;
-}
-
-.scope:global(.marketing-link),
-.scope :global(.marketing-link) {
-  width: fit-content;
-  color: #46767a;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.scope:global(.marketing-steps),
-.scope :global(.marketing-steps) {
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.scope:global(.marketing-steps) article,
-.scope :global(.marketing-steps) article {
-  padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.scope:global(.marketing-steps__icon),
-.scope :global(.marketing-steps__icon) {
-  display: inline-grid;
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  border-radius: 12px;
-  background: #eef2e8;
-  color: #46767a;
-}
-
-.scope:global(.marketing-steps__index),
-.scope :global(.marketing-steps__index) {
-  display: block;
-  margin-top: 18px;
-  color: #9aa193;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-}
-
-.scope:global(.marketing-steps) h3,
-.scope :global(.marketing-steps) h3 {
-  margin: 8px 0 0;
-  font-size: 1.2rem;
-}
-
-.scope:global(.marketing-steps) p,
-.scope :global(.marketing-steps) p {
-  margin: 10px 0 0;
-  color: #5f6558;
-  line-height: 1.6;
 }
 
 .scope:global(.marketing-featured),
@@ -443,7 +290,7 @@
 .scope:global(.templates-page__hero) p:last-child,
 .scope :global(.templates-page__hero) p:last-child {
   margin: 16px 0 0;
-  color: #5f6558;
+  color: var(--product-muted);
   line-height: 1.7;
 }
 
@@ -961,15 +808,16 @@
 .scope :global(.site-header__cta) {
   min-height: 42px;
   padding: 9px 17px;
-  border-color: #2d322a;
-  background: #2d322a;
+  border-color: var(--product-ink);
+  background: var(--product-ink);
 }
 
 .scope:global(.site-header__cta):hover,
 .scope :global(.site-header__cta):hover,
 .scope:global(.marketing-button--primary):hover,
 .scope :global(.marketing-button--primary):hover {
-  background: #151813;
+  background: var(--product-accent);
+  border-color: var(--product-accent);
   transform: translateY(-1px);
 }
 
@@ -1054,7 +902,7 @@
   place-items: center;
   border-radius: 50%;
   background: #e6eadf;
-  color: #3f4f42;
+  color: var(--product-ink);
   font-size: 0.82rem;
   font-weight: 750;
 }
@@ -1293,8 +1141,8 @@
 
 .scope:global(.marketing-button--primary),
 .scope :global(.marketing-button--primary) {
-  border-color: #2d322a;
-  background: #2d322a;
+  border-color: var(--product-ink);
+  background: var(--product-ink);
 }
 
 .scope:global(.marketing-button--ghost),
@@ -1364,9 +1212,7 @@
 }
 
 .scope:global(.marketing-hero__photo)::after,
-.scope :global(.marketing-hero__photo)::after,
-.scope:global(.marketing-story__photo)::after,
-.scope :global(.marketing-story__photo)::after {
+.scope :global(.marketing-hero__photo)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1374,9 +1220,7 @@
 }
 
 .scope:global(.marketing-hero__photo) img,
-.scope :global(.marketing-hero__photo) img,
-.scope:global(.marketing-story__photo) img,
-.scope :global(.marketing-story__photo) img {
+.scope :global(.marketing-hero__photo) img {
   object-fit: cover;
 }
 
@@ -1462,52 +1306,6 @@
   font-weight: 400;
 }
 
-.scope:global(.marketing-promise),
-.scope :global(.marketing-promise) {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 40px;
-  align-items: center;
-  padding: 32px max(24px, calc((100vw - 1240px) / 2));
-  background: #2d322a;
-  color: #f6f2e9;
-}
-
-.scope:global(.marketing-promise) > p,
-.scope :global(.marketing-promise) > p {
-  max-width: 26ch;
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.45rem, 2.5vw, 2.2rem);
-  line-height: 1.1;
-}
-
-.scope:global(.marketing-promise) > div,
-.scope :global(.marketing-promise) > div {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.scope:global(.marketing-promise) span,
-.scope :global(.marketing-promise) span {
-  color: rgba(246, 242, 233, 0.56);
-  font-size: 0.7rem;
-  line-height: 1.45;
-}
-
-.scope:global(.marketing-promise) strong,
-.scope :global(.marketing-promise) strong {
-  display: block;
-  margin-bottom: 5px;
-  color: #f6f2e9;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.25rem;
-  font-weight: 400;
-}
-
 .scope:global(.marketing-section),
 .scope :global(.marketing-section) {
   position: relative;
@@ -1531,8 +1329,6 @@
 .scope :global(.marketing-section__head) h2,
 .scope:global(.marketing-process) h2,
 .scope :global(.marketing-process) h2,
-.scope:global(.marketing-story) h2,
-.scope :global(.marketing-story) h2,
 .scope:global(.marketing-cta) h2,
 .scope :global(.marketing-cta) h2,
 .scope:global(.templates-page__hero) h1,
@@ -1543,17 +1339,6 @@
   font-weight: 400;
   letter-spacing: -0.045em;
   line-height: 0.96;
-}
-
-.scope:global(.marketing-link),
-.scope :global(.marketing-link) {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(104, 117, 95, 0.45);
-  color: var(--studio-sage);
-  font-size: 0.78rem;
 }
 
 .scope:global(.marketing-featured),
@@ -1691,142 +1476,6 @@
   color: var(--studio-muted);
   font-size: 0.9rem;
   line-height: 1.75;
-}
-
-.scope:global(.marketing-steps),
-.scope :global(.marketing-steps) {
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-.scope:global(.marketing-steps) article,
-.scope :global(.marketing-steps) article {
-  display: grid;
-  grid-template-columns: 38px 48px 1fr;
-  gap: 18px;
-  align-items: start;
-  padding: 28px 0;
-  border: 0;
-  border-top: 1px solid var(--studio-line);
-  border-radius: 0;
-  background: transparent;
-}
-
-.scope:global(.marketing-steps) article:last-child,
-.scope :global(.marketing-steps) article:last-child {
-  border-bottom: 1px solid var(--studio-line);
-}
-
-.scope:global(.marketing-steps__index),
-.scope :global(.marketing-steps__index) {
-  margin: 13px 0 0;
-  color: #a3a398;
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.62rem;
-}
-
-.scope:global(.marketing-steps__icon),
-.scope :global(.marketing-steps__icon) {
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--studio-line);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.45);
-  color: var(--studio-sage);
-}
-
-.scope:global(.marketing-steps) h3,
-.scope :global(.marketing-steps) h3 {
-  margin: 3px 0 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-weight: 400;
-}
-
-.scope:global(.marketing-steps) p,
-.scope :global(.marketing-steps) p {
-  max-width: 49ch;
-  margin-top: 8px;
-  color: var(--studio-muted);
-  font-size: 0.82rem;
-  line-height: 1.65;
-}
-
-.scope:global(.marketing-story),
-.scope :global(.marketing-story) {
-  display: grid;
-  grid-template-columns: 0.94fr 1.06fr;
-  width: min(1380px, calc(100% - 28px));
-  min-height: 650px;
-  margin: 30px auto 110px;
-  overflow: hidden;
-  border-radius: 26px;
-  background: #30362e;
-  color: #f6f2e9;
-}
-
-.scope:global(.marketing-story__photo),
-.scope :global(.marketing-story__photo) {
-  position: relative;
-  min-height: 650px;
-}
-
-.scope:global(.marketing-story__copy),
-.scope :global(.marketing-story__copy) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(44px, 8vw, 110px);
-}
-
-.scope:global(.marketing-story__copy) > svg,
-.scope :global(.marketing-story__copy) > svg {
-  margin-bottom: 28px;
-  color: #c5b890;
-}
-
-.scope:global(.marketing-story__copy) :global(.marketing-eyebrow),
-.scope :global(.marketing-story__copy) :global(.marketing-eyebrow) {
-  color: rgba(246, 242, 233, 0.56);
-}
-
-.scope:global(.marketing-story) h2,
-.scope :global(.marketing-story) h2 {
-  max-width: 10ch;
-  margin-top: 17px;
-  font-size: clamp(2.8rem, 5vw, 5rem);
-}
-
-.scope:global(.marketing-story__copy) > p:not(:global(.marketing-eyebrow)),
-.scope :global(.marketing-story__copy) > p:not(:global(.marketing-eyebrow)) {
-  max-width: 48ch;
-  margin-top: 25px;
-  color: rgba(246, 242, 233, 0.62);
-  font-size: 0.86rem;
-  line-height: 1.75;
-}
-
-.scope:global(.marketing-story) ul,
-.scope :global(.marketing-story) ul {
-  display: grid;
-  gap: 10px;
-  margin: 28px 0 0;
-  padding: 0;
-  color: rgba(246, 242, 233, 0.82);
-  font-size: 0.77rem;
-  list-style: none;
-}
-
-.scope:global(.marketing-story) li,
-.scope :global(.marketing-story) li {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.scope:global(.marketing-story) li svg,
-.scope :global(.marketing-story) li svg {
-  color: #c5b890;
 }
 
 .scope:global(.marketing-cta),
