@@ -103,6 +103,52 @@ describe("ArticleStore", () => {
     );
   });
 
+  it("rewrites stored s3 references into public image paths", async () => {
+    const article = makeArticle({
+      cover: { alt: "Обложка", src: "s3://invite-media/blog-images/cover-1.webp" },
+      sections: [
+        {
+          blocks: [
+            {
+              alt: "Схема",
+              kind: "image",
+              src: "s3://invite-media/blog-images/inline-1.webp",
+            },
+          ],
+          heading: "Раздел",
+          id: "razdel",
+        },
+      ],
+    });
+    const collection = createMongoCollectionMock({
+      findOne: jest.fn().mockResolvedValue(article),
+    });
+    const store = await createStore(collection);
+
+    const found = await store.findPublished(article.slug);
+
+    expect(found?.cover?.src).toBe("/api/blog-images/cover-1.webp");
+    expect(found?.sections[0].blocks[0]).toMatchObject({
+      src: "/api/blog-images/inline-1.webp",
+    });
+  });
+
+  it("never returns the stored markdown source", async () => {
+    const collection = createMongoCollectionMock({
+      findOne: jest.fn().mockResolvedValue({ ...makeArticle(), source: "---\nslug: x\n---" }),
+    });
+    const store = await createStore(collection);
+
+    const found = await store.findPublished("kak-sdelat-sajt-priglashenie");
+
+    expect(found).not.toBeNull();
+    expect(found).not.toHaveProperty("source");
+    expect(collection.findOne).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ projection: { _id: 0, source: 0 } }),
+    );
+  });
+
   it("rejects a stored document that no longer matches the schema", async () => {
     const collection = createMongoCollectionMock({
       findOne: jest.fn().mockResolvedValue({ ...makeArticle(), sections: [] }),

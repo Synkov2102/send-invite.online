@@ -53,6 +53,7 @@ export declare const ARTICLE_FIELD_LIMITS: {
     readonly sectionsMax: 40;
     readonly seoTitle: 200;
     readonly slug: 96;
+    readonly source: 120000;
     readonly spanText: 2000;
     readonly spansPerBlock: 40;
     readonly tagsMax: 8;

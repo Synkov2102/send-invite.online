@@ -5,26 +5,32 @@
 
 ## Решение в одном абзаце
 
-Исходник статьи — markdown-файл в `content/articles/`, лежит в git. CLI-скрипт парсит его,
-валидирует Zod-схемой из `@invite/shared` и кладёт **разобранный на блоки** документ в MongoDB
-(коллекция `articles`). Бэкенд отдаёт статьи публичным read-only API, фронтенд рендерит их
-серверными компонентами с ISR. Админки нет: публикация — та же схема, что у цен
-(`backend/scripts/set-price.mjs`) и промокодов.
+**Единственное хранилище — MongoDB.** В репозитории статей нет. Markdown — только удобный способ
+набрать текст, файл может лежать где угодно на диске. CLI-скрипт заливает картинки в S3, парсит
+markdown, валидирует Zod-схемой из `@invite/shared` и кладёт в коллекцию `articles` **и разобранные
+блоки, и сам исходник**, чтобы статью можно было выгрузить обратно и отредактировать без файла.
+Бэкенд отдаёт статьи публичным read-only API, фронтенд рендерит их серверными компонентами с ISR.
+Админки нет: публикация — та же схема, что у цен (`backend/scripts/set-price.mjs`) и промокодов.
 
 ```
-content/articles/*.md            → node backend/scripts/publish-article.mjs
-        (git, исходник)               ↓ Zod-валидация + разбор в блоки
-                                  MongoDB: articles
-                                      ↓ GET /api/articles, /api/articles/:slug
-                                  Next.js RSC + ISR → /blog, /blog/[slug]
+любой .md на диске        → node backend/scripts/publish-article.mjs --file=…
+   (не в репозитории)          ↓ картинки → S3 (blog-images/), в тексте — s3://-ссылки
+                               ↓ Zod-валидация + разбор в блоки
+                           MongoDB: articles  (блоки + source)
+                               ↓ GET /api/articles, /api/articles/:slug
+                               ↓ s3:// → /api/blog-images/<id>
+                           Next.js RSC + ISR → /blog, /blog/[slug]
+
+                           ← node … --dump=<slug>   выгрузка исходника обратно
 ```
 
 ### Почему так
 
 | Решение                            | Причина                                                                                                                                                             |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Mongo как рантайм-хранилище        | Правка текста/даты статьи не требует пересборки и деплоя фронта — достаточно прогнать скрипт, ISR подхватит за 5 минут.                                             |
-| Markdown в git как исходник        | История правок, ревью, дифф. Mongo — производный снапшот, его можно пересобрать из файлов в любой момент.                                                           |
+| Mongo — единственный источник      | Правка текста/даты не требует пересборки и деплоя — достаточно прогнать скрипт, ISR подхватит за 5 минут. В git не попадает ни одна статья.                         |
+| `source` хранится рядом с блоками  | Иначе документ нельзя отредактировать: блоки обратно в markdown не собрать. С ним `--dump` → правка → `--file` работает без исходного файла.                        |
+| Картинки в S3, в Mongo — `s3://`   | Ровно как медиа приглашений. Картинки не едут в git и не требуют деплоя фронта.                                                                                     |
 | Тело статьи — типизированные блоки | Нет `dangerouslySetInnerHTML`, нет markdown-парсера в рантайме и новых зависимостей. Всё, что попало в БД, уже прошло Zod. Спаны ссылок дают контроль перелинковки. |
 | API только на чтение               | Не нужны роли/админ-авторизация, которых в проекте нет. Запись — только с VPS через скрипт с доступом к `MONGODB_URI`.                                              |
 
@@ -40,7 +46,7 @@ Article {
   seoTitle?: string             // <title>, если должен отличаться от H1
   description: string           // meta description
   excerpt: string               // карточка в листинге
-  cover?: { src, alt }          // /images/blog/*.webp, он же og:image
+  cover?: { src, alt }          // s3://…/blog-images/<id>, он же og:image
   tags: string[]                // тематический кластер
   readingMinutes: number        // считается при публикации
   intro: Block[]                // абзацы до первого ##
@@ -50,6 +56,7 @@ Article {
   status: "draft" | "published"
   publishedAt: string           // ISO, datePublished
   updatedAt: string             // ISO, dateModified и lastModified в sitemap
+  source: string | null         // markdown, из которого статья собрана; наружу не отдаётся
 }
 
 Block =
@@ -65,9 +72,20 @@ Span = { text: string; bold?: boolean; href?: string }
 Индексы коллекции `articles`: `{ slug: 1 }` unique, `{ status: 1, publishedAt: -1 }`,
 `{ status: 1, tags: 1 }`.
 
+### Картинки
+
+Хранятся в S3 под префиксом `blog-images/`, в Mongo — только `s3://bucket/blog-images/<uuid>.<ext>`,
+как у медиа приглашений. Публичный id совпадает с ключом без префикса, поэтому отдача не требует
+поиска в базе: `GET /api/blog-images/<uuid>.<ext>` (`BlogImagesController`, по образцу
+`CatalogMusicController`). Подмену `s3://` на публичный путь делает `article-media.ts` —
+до фронтенда `s3://` не доходит. В `next.config.ts` путь разрешён через `images.localPatterns`.
+
+Форматы: webp, jpg, png, gif.
+
 ## Формат исходника
 
-`content/articles/<slug>.md`:
+Любой `.md` на диске, вне репозитория. Имя файла роли не играет — важен только `slug`
+во фронтматтере. Пути к картинкам разрешаются относительно самого файла:
 
 ```markdown
 ---
@@ -76,7 +94,7 @@ title: Как сделать сайт-приглашение на свадьбу
 description: Пошаговый разбор: что написать, какие блоки нужны, как собрать за вечер.
 excerpt: Что должно быть на свадебном сайте-приглашении и в каком порядке.
 tags: приглашения, подготовка
-cover: /images/blog/kak-sdelat.webp
+cover: ./kak-sdelat.webp
 coverAlt: Экран свадебного сайта-приглашения
 related: rsvp-na-svadbe
 publishedAt: 2026-08-01
@@ -94,7 +112,7 @@ status: published
 
 > Цитата.
 
-![Подпись к картинке](/images/blog/example.webp)
+![Экран редактора](./example.webp "Подпись к картинке")
 
 :::cta Выбрать шаблон|/templates
 Соберите сайт-приглашение и опубликуйте по ссылке.
@@ -179,19 +197,28 @@ ISR: `revalidate = 300` на фетчах. Правка статьи через 
 ## Публикация
 
 ```bash
-node backend/scripts/publish-article.mjs --file=content/articles/kak-sdelat-sajt-priglashenie.md
-node backend/scripts/publish-article.mjs --all
+node backend/scripts/publish-article.mjs --file=~/articles/kak-sdelat-sajt-priglashenie.md
+node backend/scripts/publish-article.mjs --file=~/articles/my.md --dry-run
 node backend/scripts/publish-article.mjs --list
+node backend/scripts/publish-article.mjs --dump=<slug> > my.md
 node backend/scripts/publish-article.mjs --unpublish=<slug>
 ```
 
 Скрипт читает env из `.env.backend.local` / `.env.backend.production` (как `set-price.mjs`),
-валидирует документ и делает upsert. Ошибка валидации — ненулевой exit code, БД не трогается.
-Картинки статей кладутся в `frontend/public/images/blog/` и едут обычным деплоем.
+заливает картинки, валидирует документ и делает upsert. Ошибка валидации — ненулевой exit code,
+БД не трогается.
+
+Порядок внутри `--file`: сначала читаются и проверяются **все** картинки (формат, наличие файла),
+потом заливка в S3, потом парсинг и запись в Mongo. Битая ссылка на картинку останавливает
+публикацию до первой заливки, чтобы в бакете не оставался мусор от наполовину выполненной команды.
+
+`--dry-run` не трогает ни S3, ни базу: вместо заливки подставляются ссылки вида
+`s3://dry-run/blog-images/<uuid>.png`, чтобы схема проверялась на той же форме данных.
 
 ## Что осознанно не делаем сейчас
 
 - Админку и роли — публикация редкая, скрипт дешевле.
+- Удаление осиротевших картинок из S3 — при перезаливке обложки старый объект остаётся в бакете.
 - Страницы тегов, пагинацию, RSS — до накопления объёма.
 - Полноценный markdown (таблицы, вложенные списки, HTML) — расширяем подмножество по мере нужды.
 - Комментарии, лайки, поиск по блогу.

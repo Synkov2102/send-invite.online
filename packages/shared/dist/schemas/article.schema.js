@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isArticleSitemapEntry = exports.isArticleSummary = exports.isArticle = exports.articleSitemapEntrySchema = exports.articleSummarySchema = exports.articleSchema = exports.articleStatusSchema = exports.articleCoverSchema = exports.articleFaqItemSchema = exports.articleSectionSchema = exports.articleBlockSchema = exports.articleSpanSchema = exports.articleSlugSchema = void 0;
+exports.isArticleSitemapEntry = exports.isArticleSummary = exports.isArticle = exports.articleSitemapEntrySchema = exports.articleSummarySchema = exports.articleDocumentSchema = exports.articleSchema = exports.articleStatusSchema = exports.articleCoverSchema = exports.articleFaqItemSchema = exports.articleSectionSchema = exports.articleBlockSchema = exports.articleSpanSchema = exports.articleSlugSchema = exports.blogImagePathPattern = void 0;
 const zod_1 = require("zod");
 const field_limits_1 = require("../field-limits");
 const zod_helpers_1 = require("./zod-helpers");
@@ -22,7 +22,17 @@ const articleHrefSchema = zod_1.z
         return false;
     }
 }, { message: "Invalid link protocol." });
-const localImageSchema = zod_1.z.string().min(1).max(limits.imageSrc).startsWith("/images/");
+/** Public path the backend serves a stored blog image at, derived 1:1 from the S3 key. */
+exports.blogImagePathPattern = /^\/api\/blog-images\/[a-z0-9-]+\.[a-z0-9]+$/;
+/**
+ * Two forms of the same picture: MongoDB keeps the `s3://bucket/blog-images/…` reference,
+ * the API rewrites it to `/api/blog-images/…` before the frontend ever sees it.
+ */
+const articleImageSrcSchema = zod_1.z
+    .string()
+    .min(1)
+    .max(limits.imageSrc)
+    .refine((value) => value.startsWith("s3://") || exports.blogImagePathPattern.test(value), { message: "Image must be an s3:// reference or an /api/blog-images/ path." });
 exports.articleSlugSchema = zod_1.z
     .string()
     .min(3)
@@ -52,7 +62,7 @@ exports.articleBlockSchema = zod_1.z.discriminatedUnion("kind", [
         alt: zod_1.z.string().min(1).max(limits.imageAlt),
         caption: zod_1.z.string().max(limits.imageCaption).optional(),
         kind: zod_1.z.literal("image"),
-        src: localImageSchema,
+        src: articleImageSrcSchema,
     }),
     zod_1.z.object({
         href: articleHrefSchema,
@@ -72,7 +82,7 @@ exports.articleFaqItemSchema = zod_1.z.object({
 });
 exports.articleCoverSchema = zod_1.z.object({
     alt: zod_1.z.string().min(1).max(limits.imageAlt),
-    src: localImageSchema,
+    src: articleImageSrcSchema,
 });
 exports.articleStatusSchema = zod_1.z.enum(["draft", "published"]);
 const isoDateSchema = zod_1.z.string().refine((value) => !Number.isNaN(Date.parse(value)), {
@@ -94,6 +104,14 @@ exports.articleSchema = zod_1.z.object({
     tags: zod_1.z.array(zod_1.z.string().min(1).max(limits.tag)).max(limits.tagsMax),
     title: zod_1.z.string().min(1).max(limits.title),
     updatedAt: isoDateSchema,
+});
+/**
+ * What MongoDB actually stores. `source` is the markdown the article was published from —
+ * it lives in the database, not in git, so an article can be pulled back out and re-edited.
+ * The API never returns it.
+ */
+exports.articleDocumentSchema = exports.articleSchema.extend({
+    source: zod_1.z.string().max(limits.source).nullable(),
 });
 /** Listing payload — no body, so `/blog` stays light. */
 exports.articleSummarySchema = exports.articleSchema.pick({

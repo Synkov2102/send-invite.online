@@ -7,6 +7,6 @@ export * from "./invite-state";
 export * from "./invite-template-catalog";
 export * from "./invite-templates";
 export * from "./template-kind";
-export { articleSchema, articleSitemapEntrySchema, articleSummarySchema, isArticle, isArticleSitemapEntry, isArticleSummary, type Article, type ArticleBlock, type ArticleCover, type ArticleFaqItem, type ArticleSection, type ArticleSitemapEntry, type ArticleSpan, type ArticleStatus, type ArticleSummary, } from "./schemas/article.schema";
+export { articleDocumentSchema, articleSchema, articleSitemapEntrySchema, articleSummarySchema, blogImagePathPattern, isArticle, isArticleSitemapEntry, isArticleSummary, type Article, type ArticleBlock, type ArticleDocument, type ArticleCover, type ArticleFaqItem, type ArticleSection, type ArticleSitemapEntry, type ArticleSpan, type ArticleStatus, type ArticleSummary, } from "./schemas/article.schema";
 export { isSitePricing, sitePricingSchema, type SitePricing, } from "./schemas/pricing.schema";
 export { checkoutBodySchema, parseCheckoutBody, parsePromoPreviewBody, promoCodeInputSchema, promoPreviewBodySchema, type CheckoutBody, type PromoPreviewBody, } from "./schemas/checkout.schema";

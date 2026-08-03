@@ -68,7 +68,7 @@ describe("parseArticleDocument", () => {
         "",
         "> Цитата.",
         "",
-        '![Экран приглашения](/images/blog/example.webp "Подпись")',
+        '![Экран приглашения](s3://invite-media/blog-images/2f0a.webp "Подпись")',
         "",
         ":::cta Выбрать шаблон|/templates",
         "Соберите сайт за вечер.",
@@ -90,7 +90,7 @@ describe("parseArticleDocument", () => {
         alt: "Экран приглашения",
         caption: "Подпись",
         kind: "image",
-        src: "/images/blog/example.webp",
+        src: "s3://invite-media/blog-images/2f0a.webp",
       },
       {
         href: "/templates",

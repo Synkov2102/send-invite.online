@@ -8,14 +8,17 @@ export * from "./invite-template-catalog";
 export * from "./invite-templates";
 export * from "./template-kind";
 export {
+  articleDocumentSchema,
   articleSchema,
   articleSitemapEntrySchema,
   articleSummarySchema,
+  blogImagePathPattern,
   isArticle,
   isArticleSitemapEntry,
   isArticleSummary,
   type Article,
   type ArticleBlock,
+  type ArticleDocument,
   type ArticleCover,
   type ArticleFaqItem,
   type ArticleSection,

@@ -1,4 +1,6 @@
 import { z } from "zod";
+/** Public path the backend serves a stored blog image at, derived 1:1 from the S3 key. */
+export declare const blogImagePathPattern: RegExp;
 export declare const articleSlugSchema: z.ZodString;
 export declare const articleSpanSchema: z.ZodObject<{
     bold: z.ZodOptional<z.ZodBoolean>;
@@ -107,7 +109,7 @@ export declare const articleBlockSchema: z.ZodDiscriminatedUnion<"kind", [z.ZodO
     alt: z.ZodString;
     caption: z.ZodOptional<z.ZodString>;
     kind: z.ZodLiteral<"image">;
-    src: z.ZodString;
+    src: z.ZodEffects<z.ZodString, string, string>;
 }, "strip", z.ZodTypeAny, {
     kind: "image";
     alt: string;
@@ -249,7 +251,7 @@ export declare const articleSectionSchema: z.ZodObject<{
         alt: z.ZodString;
         caption: z.ZodOptional<z.ZodString>;
         kind: z.ZodLiteral<"image">;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         kind: "image";
         alt: string;
@@ -391,7 +393,7 @@ export declare const articleFaqItemSchema: z.ZodObject<{
 }>;
 export declare const articleCoverSchema: z.ZodObject<{
     alt: z.ZodString;
-    src: z.ZodString;
+    src: z.ZodEffects<z.ZodString, string, string>;
 }, "strip", z.ZodTypeAny, {
     alt: string;
     src: string;
@@ -403,7 +405,7 @@ export declare const articleStatusSchema: z.ZodEnum<["draft", "published"]>;
 export declare const articleSchema: z.ZodObject<{
     cover: z.ZodNullable<z.ZodObject<{
         alt: z.ZodString;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         alt: string;
         src: string;
@@ -517,7 +519,7 @@ export declare const articleSchema: z.ZodObject<{
         alt: z.ZodString;
         caption: z.ZodOptional<z.ZodString>;
         kind: z.ZodLiteral<"image">;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         kind: "image";
         alt: string;
@@ -662,7 +664,7 @@ export declare const articleSchema: z.ZodObject<{
             alt: z.ZodString;
             caption: z.ZodOptional<z.ZodString>;
             kind: z.ZodLiteral<"image">;
-            src: z.ZodString;
+            src: z.ZodEffects<z.ZodString, string, string>;
         }, "strip", z.ZodTypeAny, {
             kind: "image";
             alt: string;
@@ -995,11 +997,15 @@ export declare const articleSchema: z.ZodObject<{
     title: string;
     updatedAt: string;
 }>;
-/** Listing payload — no body, so `/blog` stays light. */
-export declare const articleSummarySchema: z.ZodObject<Pick<{
+/**
+ * What MongoDB actually stores. `source` is the markdown the article was published from —
+ * it lives in the database, not in git, so an article can be pulled back out and re-edited.
+ * The API never returns it.
+ */
+export declare const articleDocumentSchema: z.ZodObject<{
     cover: z.ZodNullable<z.ZodObject<{
         alt: z.ZodString;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         alt: string;
         src: string;
@@ -1113,7 +1119,7 @@ export declare const articleSummarySchema: z.ZodObject<Pick<{
         alt: z.ZodString;
         caption: z.ZodOptional<z.ZodString>;
         kind: z.ZodLiteral<"image">;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         kind: "image";
         alt: string;
@@ -1258,7 +1264,607 @@ export declare const articleSummarySchema: z.ZodObject<Pick<{
             alt: z.ZodString;
             caption: z.ZodOptional<z.ZodString>;
             kind: z.ZodLiteral<"image">;
-            src: z.ZodString;
+            src: z.ZodEffects<z.ZodString, string, string>;
+        }, "strip", z.ZodTypeAny, {
+            kind: "image";
+            alt: string;
+            src: string;
+            caption?: string | undefined;
+        }, {
+            kind: "image";
+            alt: string;
+            src: string;
+            caption?: string | undefined;
+        }>, z.ZodObject<{
+            href: z.ZodEffects<z.ZodString, string, string>;
+            kind: z.ZodLiteral<"cta">;
+            label: z.ZodString;
+            spans: z.ZodArray<z.ZodObject<{
+                bold: z.ZodOptional<z.ZodBoolean>;
+                href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+                text: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            href: string;
+            kind: "cta";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+            label: string;
+        }, {
+            href: string;
+            kind: "cta";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+            label: string;
+        }>]>, "many">;
+        heading: z.ZodString;
+        id: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        blocks: ({
+            kind: "paragraph";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "list";
+            items: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[][];
+            ordered: boolean;
+        } | {
+            kind: "quote";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "image";
+            alt: string;
+            src: string;
+            caption?: string | undefined;
+        } | {
+            href: string;
+            kind: "cta";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+            label: string;
+        })[];
+        heading: string;
+        id: string;
+    }, {
+        blocks: ({
+            kind: "paragraph";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "list";
+            items: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[][];
+            ordered: boolean;
+        } | {
+            kind: "quote";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "image";
+            alt: string;
+            src: string;
+            caption?: string | undefined;
+        } | {
+            href: string;
+            kind: "cta";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+            label: string;
+        })[];
+        heading: string;
+        id: string;
+    }>, "many">;
+    seoTitle: z.ZodNullable<z.ZodString>;
+    slug: z.ZodString;
+    status: z.ZodEnum<["draft", "published"]>;
+    tags: z.ZodArray<z.ZodString, "many">;
+    title: z.ZodString;
+    updatedAt: z.ZodEffects<z.ZodString, string, string>;
+} & {
+    source: z.ZodNullable<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    status: "draft" | "published";
+    cover: {
+        alt: string;
+        src: string;
+    } | null;
+    description: string;
+    excerpt: string;
+    faq: {
+        answer: string;
+        question: string;
+    }[];
+    intro: ({
+        kind: "paragraph";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    } | {
+        kind: "list";
+        items: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[][];
+        ordered: boolean;
+    } | {
+        kind: "quote";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    } | {
+        kind: "image";
+        alt: string;
+        src: string;
+        caption?: string | undefined;
+    } | {
+        href: string;
+        kind: "cta";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+        label: string;
+    })[];
+    publishedAt: string;
+    readingMinutes: number;
+    related: string[];
+    sections: {
+        blocks: ({
+            kind: "paragraph";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "list";
+            items: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[][];
+            ordered: boolean;
+        } | {
+            kind: "quote";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "image";
+            alt: string;
+            src: string;
+            caption?: string | undefined;
+        } | {
+            href: string;
+            kind: "cta";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+            label: string;
+        })[];
+        heading: string;
+        id: string;
+    }[];
+    seoTitle: string | null;
+    slug: string;
+    tags: string[];
+    title: string;
+    updatedAt: string;
+    source: string | null;
+}, {
+    status: "draft" | "published";
+    cover: {
+        alt: string;
+        src: string;
+    } | null;
+    description: string;
+    excerpt: string;
+    faq: {
+        answer: string;
+        question: string;
+    }[];
+    intro: ({
+        kind: "paragraph";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    } | {
+        kind: "list";
+        items: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[][];
+        ordered: boolean;
+    } | {
+        kind: "quote";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    } | {
+        kind: "image";
+        alt: string;
+        src: string;
+        caption?: string | undefined;
+    } | {
+        href: string;
+        kind: "cta";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+        label: string;
+    })[];
+    publishedAt: string;
+    readingMinutes: number;
+    related: string[];
+    sections: {
+        blocks: ({
+            kind: "paragraph";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "list";
+            items: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[][];
+            ordered: boolean;
+        } | {
+            kind: "quote";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        } | {
+            kind: "image";
+            alt: string;
+            src: string;
+            caption?: string | undefined;
+        } | {
+            href: string;
+            kind: "cta";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+            label: string;
+        })[];
+        heading: string;
+        id: string;
+    }[];
+    seoTitle: string | null;
+    slug: string;
+    tags: string[];
+    title: string;
+    updatedAt: string;
+    source: string | null;
+}>;
+/** Listing payload — no body, so `/blog` stays light. */
+export declare const articleSummarySchema: z.ZodObject<Pick<{
+    cover: z.ZodNullable<z.ZodObject<{
+        alt: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
+    }, "strip", z.ZodTypeAny, {
+        alt: string;
+        src: string;
+    }, {
+        alt: string;
+        src: string;
+    }>>;
+    description: z.ZodString;
+    excerpt: z.ZodString;
+    faq: z.ZodArray<z.ZodObject<{
+        answer: z.ZodString;
+        question: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        answer: string;
+        question: string;
+    }, {
+        answer: string;
+        question: string;
+    }>, "many">;
+    intro: z.ZodArray<z.ZodDiscriminatedUnion<"kind", [z.ZodObject<{
+        kind: z.ZodLiteral<"paragraph">;
+        spans: z.ZodArray<z.ZodObject<{
+            bold: z.ZodOptional<z.ZodBoolean>;
+            href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+            text: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        kind: "paragraph";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    }, {
+        kind: "paragraph";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    }>, z.ZodObject<{
+        items: z.ZodArray<z.ZodArray<z.ZodObject<{
+            bold: z.ZodOptional<z.ZodBoolean>;
+            href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+            text: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }>, "many">, "many">;
+        kind: z.ZodLiteral<"list">;
+        ordered: z.ZodBoolean;
+    }, "strip", z.ZodTypeAny, {
+        kind: "list";
+        items: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[][];
+        ordered: boolean;
+    }, {
+        kind: "list";
+        items: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[][];
+        ordered: boolean;
+    }>, z.ZodObject<{
+        kind: z.ZodLiteral<"quote">;
+        spans: z.ZodArray<z.ZodObject<{
+            bold: z.ZodOptional<z.ZodBoolean>;
+            href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+            text: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        kind: "quote";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    }, {
+        kind: "quote";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+    }>, z.ZodObject<{
+        alt: z.ZodString;
+        caption: z.ZodOptional<z.ZodString>;
+        kind: z.ZodLiteral<"image">;
+        src: z.ZodEffects<z.ZodString, string, string>;
+    }, "strip", z.ZodTypeAny, {
+        kind: "image";
+        alt: string;
+        src: string;
+        caption?: string | undefined;
+    }, {
+        kind: "image";
+        alt: string;
+        src: string;
+        caption?: string | undefined;
+    }>, z.ZodObject<{
+        href: z.ZodEffects<z.ZodString, string, string>;
+        kind: z.ZodLiteral<"cta">;
+        label: z.ZodString;
+        spans: z.ZodArray<z.ZodObject<{
+            bold: z.ZodOptional<z.ZodBoolean>;
+            href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+            text: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }, {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        href: string;
+        kind: "cta";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+        label: string;
+    }, {
+        href: string;
+        kind: "cta";
+        spans: {
+            text: string;
+            bold?: boolean | undefined;
+            href?: string | undefined;
+        }[];
+        label: string;
+    }>]>, "many">;
+    publishedAt: z.ZodEffects<z.ZodString, string, string>;
+    readingMinutes: z.ZodNumber;
+    related: z.ZodArray<z.ZodString, "many">;
+    sections: z.ZodArray<z.ZodObject<{
+        blocks: z.ZodArray<z.ZodDiscriminatedUnion<"kind", [z.ZodObject<{
+            kind: z.ZodLiteral<"paragraph">;
+            spans: z.ZodArray<z.ZodObject<{
+                bold: z.ZodOptional<z.ZodBoolean>;
+                href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+                text: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            kind: "paragraph";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        }, {
+            kind: "paragraph";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        }>, z.ZodObject<{
+            items: z.ZodArray<z.ZodArray<z.ZodObject<{
+                bold: z.ZodOptional<z.ZodBoolean>;
+                href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+                text: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }>, "many">, "many">;
+            kind: z.ZodLiteral<"list">;
+            ordered: z.ZodBoolean;
+        }, "strip", z.ZodTypeAny, {
+            kind: "list";
+            items: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[][];
+            ordered: boolean;
+        }, {
+            kind: "list";
+            items: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[][];
+            ordered: boolean;
+        }>, z.ZodObject<{
+            kind: z.ZodLiteral<"quote">;
+            spans: z.ZodArray<z.ZodObject<{
+                bold: z.ZodOptional<z.ZodBoolean>;
+                href: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+                text: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }, {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            kind: "quote";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        }, {
+            kind: "quote";
+            spans: {
+                text: string;
+                bold?: boolean | undefined;
+                href?: string | undefined;
+            }[];
+        }>, z.ZodObject<{
+            alt: z.ZodString;
+            caption: z.ZodOptional<z.ZodString>;
+            kind: z.ZodLiteral<"image">;
+            src: z.ZodEffects<z.ZodString, string, string>;
         }, "strip", z.ZodTypeAny, {
             kind: "image";
             alt: string;
@@ -1424,7 +2030,7 @@ export declare const articleSummarySchema: z.ZodObject<Pick<{
 export declare const articleSitemapEntrySchema: z.ZodObject<Pick<{
     cover: z.ZodNullable<z.ZodObject<{
         alt: z.ZodString;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         alt: string;
         src: string;
@@ -1538,7 +2144,7 @@ export declare const articleSitemapEntrySchema: z.ZodObject<Pick<{
         alt: z.ZodString;
         caption: z.ZodOptional<z.ZodString>;
         kind: z.ZodLiteral<"image">;
-        src: z.ZodString;
+        src: z.ZodEffects<z.ZodString, string, string>;
     }, "strip", z.ZodTypeAny, {
         kind: "image";
         alt: string;
@@ -1683,7 +2289,7 @@ export declare const articleSitemapEntrySchema: z.ZodObject<Pick<{
             alt: z.ZodString;
             caption: z.ZodOptional<z.ZodString>;
             kind: z.ZodLiteral<"image">;
-            src: z.ZodString;
+            src: z.ZodEffects<z.ZodString, string, string>;
         }, "strip", z.ZodTypeAny, {
             kind: "image";
             alt: string;
@@ -1835,6 +2441,7 @@ export type ArticleFaqItem = z.infer<typeof articleFaqItemSchema>;
 export type ArticleCover = z.infer<typeof articleCoverSchema>;
 export type ArticleStatus = z.infer<typeof articleStatusSchema>;
 export type Article = z.infer<typeof articleSchema>;
+export type ArticleDocument = z.infer<typeof articleDocumentSchema>;
 export type ArticleSummary = z.infer<typeof articleSummarySchema>;
 export type ArticleSitemapEntry = z.infer<typeof articleSitemapEntrySchema>;
 export declare const isArticle: (value: unknown) => value is {

@@ -208,7 +208,7 @@ npm run lint
 npm run test:backend
 docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 
-node backend/scripts/publish-article.mjs --all          # SEO-статьи из content/articles/ в Mongo
+node backend/scripts/publish-article.mjs --file=~/my.md  # SEO-статья в Mongo, картинки в S3
 ```
 
 ## Чего не делать

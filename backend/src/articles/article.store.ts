@@ -3,13 +3,15 @@ import type { Collection } from "mongodb";
 import { lazyOnce } from "../database/lazy-once";
 import { MongoDbService } from "../database/mongodb.service";
 import {
-  isArticle,
+  articleDocumentSchema,
+  type ArticleDocument as StoredArticle,
   type Article,
   type ArticleSitemapEntry,
   type ArticleSummary,
 } from "@invite/shared";
+import { getPublicArticleImageUrl, withPublicArticleImages } from "./article-media";
 
-type ArticleDocument = Article & { _id: string };
+type ArticleDocument = StoredArticle & { _id: string };
 
 const summaryProjection = {
   _id: 0,
@@ -26,7 +28,9 @@ const summaryProjection = {
 
 function toSummary(document: ArticleDocument): ArticleSummary {
   return {
-    cover: document.cover,
+    cover: document.cover
+      ? { ...document.cover, src: getPublicArticleImageUrl(document.cover.src) }
+      : null,
     description: document.description,
     excerpt: document.excerpt,
     publishedAt: document.publishedAt,
@@ -76,12 +80,19 @@ export class ArticleStore {
     await this.ensureIndexes();
 
     const collection = await this.getCollection();
+    // `source` is authoring data — it stays in MongoDB and never reaches the API.
     const document = await collection.findOne(
       { slug, status: "published" },
-      { projection: { _id: 0 } },
+      { projection: { _id: 0, source: 0 } },
     );
 
-    return document && isArticle(document) ? document : null;
+    if (!document) {
+      return null;
+    }
+
+    const parsed = articleDocumentSchema.omit({ source: true }).safeParse(document);
+
+    return parsed.success ? withPublicArticleImages(parsed.data) : null;
   }
 
   async listSitemapEntries(): Promise<ArticleSitemapEntry[]> {

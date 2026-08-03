@@ -56,6 +56,7 @@ exports.ARTICLE_FIELD_LIMITS = {
     sectionsMax: 40,
     seoTitle: 200,
     slug: 96,
+    source: 120_000,
     spanText: 2000,
     spansPerBlock: 40,
     tagsMax: 8,

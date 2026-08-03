@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         search: "",
       },
       {
+        // Blog images live in S3; the backend serves them under this first-party path.
+        pathname: "/api/blog-images/**",
+        search: "",
+      },
+      {
         pathname: "/images/templates/chapter-ticket/**",
         search: "?v=20260729-1",
       },
