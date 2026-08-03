@@ -31,16 +31,11 @@ async function fetchArticlesJson(path: string): Promise<unknown> {
   return response.json();
 }
 
-/** The listing and the sitemap are prerendered, so a backend outage must not fail the build. */
 export async function getArticles(): Promise<ArticleSummary[]> {
-  try {
-    const data = await fetchArticlesJson("");
-    const articles = (data as { articles?: unknown })?.articles;
+  const data = await fetchArticlesJson("");
+  const articles = (data as { articles?: unknown })?.articles;
 
-    return Array.isArray(articles) ? articles.filter(isArticleSummary) : [];
-  } catch {
-    return [];
-  }
+  return Array.isArray(articles) ? articles.filter(isArticleSummary) : [];
 }
 
 /**

@@ -26,7 +26,8 @@
 .DS_Store
 *.pem
 .invite-sites/
-/tmp/
+/tmp/*
+!/tmp/seo-article-text-svadebnogo-priglasheniya.md
 frontend/.cache/
 
 # debug

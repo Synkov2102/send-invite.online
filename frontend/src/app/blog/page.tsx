@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import ArticleCard from "@/components/article-card";
 import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
@@ -18,6 +19,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default async function BlogPage() {
+  await connection();
   const articles = await getArticles();
 
   return (
