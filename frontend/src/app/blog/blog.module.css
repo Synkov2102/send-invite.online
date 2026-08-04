@@ -3,25 +3,87 @@
   padding: 3.5rem 0 5rem;
 }
 
-.hero {
-  max-width: 62ch;
-  margin-bottom: 3rem;
+/* Eyebrow badge + h1 match .templates-page__hero (product.module.css) exactly, so the blog
+   reads as part of the same site as /templates rather than a bolted-on section. */
+.hero,
+.articleHeader {
+  max-width: 920px;
+  padding: 18px 0 56px;
 }
 
-.hero h1 {
-  margin: 0.6rem 0 0.9rem;
-  color: var(--product-ink);
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-}
-
-.hero p {
+.hero :global(.marketing-eyebrow),
+.articleHeader :global(.marketing-eyebrow) {
+  width: fit-content;
   margin: 0;
+  padding: 7px 11px;
+  border: 1px solid var(--product-line);
+  border-radius: 999px;
+  background: rgba(255, 253, 250, 0.76);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+}
+
+.hero h1,
+.articleHeader h1 {
+  max-width: 18ch;
+  margin: 20px 0 0;
+  color: var(--product-ink);
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: clamp(3.2rem, 5.2vw, 5.3rem);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.hero p,
+.articleHeader p {
+  max-width: 58ch;
+  margin: 18px 0 0;
   color: var(--product-muted);
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 0.92rem;
+  line-height: 1.72;
+}
+
+@media (max-width: 899px) {
+  .hero,
+  .articleHeader {
+    max-width: none;
+    padding: 12px 0 44px;
+  }
+
+  .hero h1,
+  .articleHeader h1 {
+    max-width: none;
+    margin-top: 18px;
+    line-height: 0.92;
+  }
+
+  .hero p,
+  .articleHeader p {
+    max-width: none;
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero,
+  .articleHeader {
+    padding: 8px 0 36px;
+  }
+
+  .hero h1,
+  .articleHeader h1 {
+    margin-top: 14px;
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+    line-height: 0.93;
+  }
+
+  .hero p,
+  .articleHeader p {
+    margin-top: 14px;
+    font-size: 0.9rem;
+  }
 }
 
 .grid {
@@ -61,27 +123,26 @@
   color: var(--product-accent-text);
 }
 
-.articleHeader h1 {
-  margin: 0.5rem 0 0.9rem;
-  color: var(--product-ink);
-  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+/* width comes from PageShellProvider (components/page-shell), width="wide" — wider than the
+   narrow reading column below, so the cover reads as a banner rather than an inline picture. */
+.bannerShell {
+  margin: 2rem auto 0;
 }
 
-.articleHeader p {
-  margin: 0;
-  color: var(--product-muted);
-  font-size: 1.05rem;
-  line-height: 1.65;
-}
-
-.cover {
+.banner {
+  display: block;
   width: 100%;
   height: auto;
-  margin: 2rem 0 0;
+  aspect-ratio: 21 / 8;
   border-radius: 24px;
+  object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .banner {
+    aspect-ratio: 16 / 9;
+    border-radius: 18px;
+  }
 }
 
 .related {

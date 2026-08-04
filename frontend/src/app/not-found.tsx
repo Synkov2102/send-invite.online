@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import CommerceFooter from "@/components/commerce-footer";
+import PageShellProvider from "@/components/page-shell";
 import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
@@ -16,7 +17,7 @@ export default function NotFoundPage() {
   return (
     <ProductPageShell className="marketing-page">
       <SiteHeader />
-      <main className="legal-shell">
+      <PageShellProvider as="main" className="legal-shell" width="narrow">
         <header className="legal-hero">
           <p className="marketing-eyebrow">404</p>
           <h1>Страница не найдена</h1>
@@ -30,7 +31,7 @@ export default function NotFoundPage() {
             К шаблонам
           </Link>
         </div>
-      </main>
+      </PageShellProvider>
       <CommerceFooter />
     </ProductPageShell>
   );

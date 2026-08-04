@@ -2524,9 +2524,20 @@
 .scope :global(.marketing-page),
 .scope:global(.dashboard-page),
 .scope :global(.dashboard-page) {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background: var(--product-paper);
   color: var(--product-ink);
+}
+
+/* Content grows to fill the viewport on short pages, keeping the footer pinned to the bottom
+   instead of floating mid-screen. */
+.scope:global(.marketing-page) > main,
+.scope :global(.marketing-page) > main,
+.scope:global(.dashboard-page) > main,
+.scope :global(.dashboard-page) > main {
+  flex: 1 0 auto;
 }
 
 .scope:global(.marketing-page)::before,

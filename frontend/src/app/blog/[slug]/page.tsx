@@ -57,6 +57,20 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <ProductPageShell className="marketing-page">
       <SiteHeader active="blog" />
 
+      {article.cover ? (
+        <PageShellProvider as="div" className={styles.bannerShell} width="wide">
+          <Image
+            alt={article.cover.alt}
+            className={styles.banner}
+            height={630}
+            priority
+            sizes="(max-width: 1280px) 100vw, 1240px"
+            src={article.cover.src}
+            width={1600}
+          />
+        </PageShellProvider>
+      ) : null}
+
       <PageShellProvider as="main" className={styles.article} width="narrow">
         <nav aria-label="Хлебные крошки" className={styles.breadcrumbs}>
           <Link href="/">Главная</Link>
@@ -74,18 +88,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <h1>{article.title}</h1>
             <p>{article.excerpt}</p>
           </header>
-
-          {article.cover ? (
-            <Image
-              alt={article.cover.alt}
-              className={styles.cover}
-              height={720}
-              priority
-              sizes="(max-width: 800px) 100vw, 760px"
-              src={article.cover.src}
-              width={1280}
-            />
-          ) : null}
 
           <ArticleBody article={article} />
 
