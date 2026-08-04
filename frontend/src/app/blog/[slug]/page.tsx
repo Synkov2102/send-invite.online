@@ -6,6 +6,7 @@ import ArticleBody from "@/components/article-body";
 import ArticleCard from "@/components/article-card";
 import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
+import PageShellProvider from "@/components/page-shell";
 import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
 import { formatArticleDate, getArticle, getArticles, getRelatedArticles } from "@/lib/articles";
@@ -56,7 +57,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <ProductPageShell className="marketing-page">
       <SiteHeader active="blog" />
 
-      <main className={styles.article}>
+      <PageShellProvider as="main" className={styles.article} width="narrow">
         <nav aria-label="Хлебные крошки" className={styles.breadcrumbs}>
           <Link href="/">Главная</Link>
           <span>/</span>
@@ -109,7 +110,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             </div>
           </section>
         ) : null}
-      </main>
+      </PageShellProvider>
 
       <CommerceFooter />
 

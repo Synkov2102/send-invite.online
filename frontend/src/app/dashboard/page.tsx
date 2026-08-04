@@ -11,6 +11,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import DashboardSiteCard from "@/components/dashboard-site-card";
 import CommerceFooter from "@/components/commerce-footer";
+import PageShellProvider from "@/components/page-shell";
 import SiteHeader from "@/components/site-header";
 import { getOwnedInviteSites, type OwnedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
@@ -64,7 +65,7 @@ export default async function DashboardPage() {
     <div className={`${dashboardStyles.scope} dashboard-page`}>
       <SiteHeader initialUser={user} />
 
-      <main className="dashboard-shell">
+      <PageShellProvider as="main" className="dashboard-shell" width="wide">
         <header className="dashboard-heading">
           <div>
             <p>Здравствуйте, {user.name}</p>
@@ -133,7 +134,7 @@ export default async function DashboardPage() {
             </div>
           </>
         )}
-      </main>
+      </PageShellProvider>
       <CommerceFooter />
     </div>
   );

@@ -1,6 +1,7 @@
 import { brand } from "@/lib/brand";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import PageShellProvider from "./page-shell";
 import BrandLockup from "./brand-lockup";
 import SiteHeaderMobileMenu from "./site-header-mobile-menu";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
@@ -14,7 +15,7 @@ type SiteHeaderProps = {
 
 export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
   return (
-    <header className="site-header">
+    <PageShellProvider as="header" className="site-header" width="wide">
       <Link className="site-header__brand" href="/">
         <BrandLockup homeLabelSuffix={brand.homeAriaLabel} showDomain />
       </Link>
@@ -57,6 +58,6 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
           <ArrowUpRight aria-hidden size={14} />
         </TrackedLink>
       </div>
-    </header>
+    </PageShellProvider>
   );
 }

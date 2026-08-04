@@ -1082,25 +1082,9 @@
 }
 
 @media (max-width: 899px) {
-  .scope:global(.site-header),
-  .scope :global(.site-header) {
-    width: min(100% - 34px, 720px);
-  }
-
   .scope:global(.site-header__brand) small,
   .scope :global(.site-header__brand) small {
     display: none;
-  }
-
-  .scope:global(.marketing-hero),
-  .scope :global(.marketing-hero),
-  .scope:global(.marketing-section),
-  .scope :global(.marketing-section),
-  .scope:global(.marketing-cta),
-  .scope :global(.marketing-cta),
-  .scope:global(.templates-page),
-  .scope :global(.templates-page) {
-    width: min(100% - 34px, 720px);
   }
 
   .scope:global(.marketing-hero),

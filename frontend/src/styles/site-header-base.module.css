@@ -9,14 +9,13 @@
 }
 
 .scope :global(.site-header) {
+  /* width/margin-inline come from PageShellProvider (components/page-shell). */
   position: relative;
   z-index: 20;
   display: flex;
-  width: min(1240px, calc(100% - 48px));
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  margin-inline: auto;
   padding: 22px 0;
   border-bottom: 1px solid var(--header-line);
 }
@@ -166,10 +165,6 @@
 }
 
 @media (max-width: 899px) {
-  .scope :global(.site-header) {
-    width: min(100% - 34px, 720px);
-  }
-
   .scope :global(.site-header__brand) small {
     display: none;
   }

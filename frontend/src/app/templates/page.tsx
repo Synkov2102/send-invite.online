@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
+import PageShellProvider from "@/components/page-shell";
 import ProductPageShell from "@/components/product-page-shell";
 import TemplateCard from "@/components/template-card";
 import { getInviteSitePricing } from "@/lib/backend-api";
@@ -30,7 +31,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
     <ProductPageShell className="marketing-page">
       <SiteHeader active="templates" />
 
-      <main className="templates-page">
+      <PageShellProvider as="main" className="templates-page" width="wide">
         <section className="templates-page__hero">
           <p className="marketing-eyebrow">
             {siteId ? "Смена оформления" : "Каталог"}
@@ -73,7 +74,7 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
             />
           ))}
         </section>
-      </main>
+      </PageShellProvider>
       <CommerceFooter />
     </ProductPageShell>
   );

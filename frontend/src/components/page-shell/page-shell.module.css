@@ -1,0 +1,26 @@
+/* Same two-tier cap + gutter scale everywhere: wide caps at --product-shell-wide (1240px),
+   narrow at --product-shell-narrow (920px). Both tokens live in product.module.css /
+   dashboard.module.css, whichever ancestor scope wraps the page. */
+
+.wide {
+  width: min(var(--product-shell-wide), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.narrow {
+  width: min(var(--product-shell-narrow), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+@media (max-width: 899px) {
+  .wide {
+    width: min(100% - 34px, 720px);
+  }
+}
+
+@media (max-width: 640px) {
+  .wide,
+  .narrow {
+    width: calc(100% - 32px);
+  }
+}

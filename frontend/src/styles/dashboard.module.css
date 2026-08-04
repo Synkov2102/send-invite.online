@@ -16,8 +16,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  width: min(1120px, calc(100% - 40px));
-  margin: 0 auto;
   padding: 22px 0 10px;
 }
 
@@ -67,18 +65,6 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.scope:global(.marketing-hero),
-.scope :global(.marketing-hero),
-.scope:global(.marketing-section),
-.scope :global(.marketing-section),
-.scope:global(.marketing-cta),
-.scope :global(.marketing-cta),
-.scope:global(.templates-page),
-.scope :global(.templates-page) {
-  width: min(1120px, calc(100% - 40px));
-  margin-inline: auto;
 }
 
 .scope:global(.marketing-hero),
@@ -704,7 +690,6 @@
 
 .scope:global(.dashboard-shell),
 .scope :global(.dashboard-shell) {
-  width: min(100% - 48px, 1280px);
   padding: 38px 0 80px;
 }
 
@@ -1110,7 +1095,6 @@
 @media (max-width: 640px) {
   .scope:global(.dashboard-shell),
   .scope :global(.dashboard-shell) {
-    width: min(100% - 24px, 1280px);
     padding-top: 24px;
   }
 
@@ -1222,7 +1206,6 @@
 .scope :global(.site-header) {
   position: relative;
   z-index: 10;
-  width: min(1240px, calc(100% - 48px));
   padding: 24px 0;
   border-bottom: 1px solid var(--studio-line);
 }
@@ -1564,17 +1547,6 @@
 .scope :global(.yandex-auth-button):hover {
   background: #e93213;
   transform: translateY(-1px);
-}
-
-.scope:global(.marketing-hero),
-.scope :global(.marketing-hero),
-.scope:global(.marketing-section),
-.scope :global(.marketing-section),
-.scope:global(.marketing-cta),
-.scope :global(.marketing-cta),
-.scope:global(.templates-page),
-.scope :global(.templates-page) {
-  width: min(1240px, calc(100% - 48px));
 }
 
 .scope:global(.marketing-hero),
@@ -2037,8 +2009,6 @@
 
 .scope:global(.dashboard-shell),
 .scope :global(.dashboard-shell) {
-  width: min(100% - 40px, 1240px);
-  margin-inline: auto;
   padding: 52px 0 88px;
 }
 
@@ -2317,7 +2287,6 @@
 @media (max-width: 720px) {
   .scope:global(.dashboard-shell),
   .scope :global(.dashboard-shell) {
-    width: min(100% - 28px, 1240px);
     padding-top: 36px;
   }
 
@@ -2352,7 +2321,6 @@
 
 .scope:global(.dashboard-shell),
 .scope :global(.dashboard-shell) {
-  width: min(100% - 48px, 1280px);
   padding: 38px 0 80px;
 }
 
@@ -2468,7 +2436,6 @@
 @media (max-width: 640px) {
   .scope:global(.dashboard-shell),
   .scope :global(.dashboard-shell) {
-    width: min(100% - 24px, 1280px);
     padding-top: 24px;
   }
 
@@ -2537,6 +2504,9 @@
     linear-gradient(rgba(40, 33, 38, 0.026) 1px, transparent 1px),
     linear-gradient(90deg, rgba(40, 33, 38, 0.026) 1px, transparent 1px);
   --product-shadow: 0 18px 52px rgba(57, 43, 52, 0.09);
+  /* Shared page-shell caps: wide for grids/cards, narrow for reading text. */
+  --product-shell-wide: 1240px;
+  --product-shell-narrow: 920px;
 }
 
 .scope:global(.marketing-page),
@@ -2643,10 +2613,9 @@
 
 .scope:global(.site-header),
 .scope :global(.site-header) {
+  /* width/margin-inline come from PageShellProvider (components/page-shell). */
   position: relative;
   z-index: 10;
-  width: min(1240px, calc(100% - 48px));
-  margin-inline: auto;
   padding: 22px 0;
   border-bottom: 1px solid var(--product-line);
 }
@@ -2717,8 +2686,7 @@
 
 .scope:global(.templates-page),
 .scope :global(.templates-page) {
-  width: min(1240px, calc(100% - 48px));
-  margin-inline: auto;
+  /* width/margin-inline come from PageShellProvider (components/page-shell). */
   padding: 72px 0 100px;
   box-sizing: border-box;
 }
@@ -2994,8 +2962,7 @@
 
 .scope:global(.legal-shell),
 .scope :global(.legal-shell) {
-  width: min(920px, calc(100% - 48px));
-  margin: 0 auto;
+  /* width/margin come from PageShellProvider (components/page-shell). */
   padding: 72px 0 30px;
 }
 .scope:global(.legal-hero),
@@ -3601,13 +3568,8 @@
 }
 
 @media (max-width: 899px) {
-  .scope:global(.site-header),
-  .scope :global(.site-header) {
-    width: min(100% - 34px, 720px);
-  }
   .scope:global(.templates-page),
   .scope :global(.templates-page) {
-    width: min(100% - 34px, 720px);
     padding: 44px 0 80px;
   }
   .scope:global(.templates-page__hero),
@@ -3642,10 +3604,6 @@
 }
 
 @media (max-width: 640px) {
-  .scope:global(.site-header),
-  .scope :global(.site-header) {
-    width: calc(100% - 32px);
-  }
   .scope:global(.brand-lockup__mark),
   .scope :global(.brand-lockup__mark) {
     width: 44px;
@@ -3665,7 +3623,6 @@
   }
   .scope:global(.templates-page),
   .scope :global(.templates-page) {
-    width: calc(100% - 32px);
     padding-top: 28px;
     padding-bottom: 64px;
   }
@@ -3734,7 +3691,6 @@
   }
   .scope:global(.legal-shell),
   .scope :global(.legal-shell) {
-    width: calc(100% - 32px);
     padding-top: 48px;
   }
   .scope:global(.legal-document) dl div,

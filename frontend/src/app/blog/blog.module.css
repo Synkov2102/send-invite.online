@@ -1,6 +1,5 @@
+/* width/margin come from PageShellProvider (components/page-shell), width="wide" — a card grid. */
 .page {
-  width: min(1120px, 100% - 3rem);
-  margin: 0 auto;
   padding: 3.5rem 0 5rem;
 }
 
@@ -39,9 +38,8 @@
   text-align: center;
 }
 
+/* width/margin come from PageShellProvider (components/page-shell), width="narrow" — reading text. */
 .article {
-  width: min(760px, 100% - 3rem);
-  margin: 0 auto;
   padding: 2.5rem 0 5rem;
 }
 
@@ -112,11 +110,4 @@
   background: var(--product-soft);
   color: var(--product-muted);
   font-size: 0.8rem;
-}
-
-@media (max-width: 640px) {
-  .page,
-  .article {
-    width: min(1120px, 100% - 2rem);
-  }
 }

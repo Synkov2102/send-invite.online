@@ -1,5 +1,6 @@
 import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
+import PageShellProvider from "@/components/page-shell";
 import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
 import StickyTemplatesCta from "@/components/sticky-templates-cta";
@@ -114,7 +115,7 @@ export default async function HomePage() {
       <SiteHeader active="home" />
 
       <main>
-        <section className={styles.hero} id="hero">
+        <PageShellProvider as="section" className={styles.hero} id="hero" width="wide">
           <div className={styles.heroStage}>
             <div className={styles.heroContent}>
               <Eyebrow>Для вашей свадьбы</Eyebrow>
@@ -191,9 +192,14 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
-        </section>
+        </PageShellProvider>
 
-        <section aria-label="Преимущества сервиса" className={styles.benefits}>
+        <PageShellProvider
+          aria-label="Преимущества сервиса"
+          as="section"
+          className={styles.benefits}
+          width="wide"
+        >
           <div className={styles.sectionIntro}>
             <Eyebrow>Возможности</Eyebrow>
             <h2>Всё главное уже внутри</h2>
@@ -208,9 +214,14 @@ export default async function HomePage() {
               </article>
             ))}
           </div>
-        </section>
+        </PageShellProvider>
 
-        <section aria-label="Как это работает" className={styles.workflow}>
+        <PageShellProvider
+          aria-label="Как это работает"
+          as="section"
+          className={styles.workflow}
+          width="wide"
+        >
           <div className={styles.workflowVisual}>
             <Image
               alt=""
@@ -238,9 +249,9 @@ export default async function HomePage() {
               ))}
             </ol>
           </div>
-        </section>
+        </PageShellProvider>
 
-        <section className={styles.templates} id="templates">
+        <PageShellProvider as="section" className={styles.templates} id="templates" width="wide">
           <div className={styles.sectionIntro}>
             <Eyebrow>Шаблоны</Eyebrow>
             <h2>Выберите свой дизайн</h2>
@@ -260,7 +271,7 @@ export default async function HomePage() {
               />
             ))}
           </div>
-        </section>
+        </PageShellProvider>
       </main>
 
       <StickyTemplatesCta />

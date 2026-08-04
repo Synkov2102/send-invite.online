@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import ArticleCard from "@/components/article-card";
 import CommerceFooter from "@/components/commerce-footer";
 import JsonLd from "@/components/json-ld";
+import PageShellProvider from "@/components/page-shell";
 import ProductPageShell from "@/components/product-page-shell";
 import SiteHeader from "@/components/site-header";
 import { getArticles } from "@/lib/articles";
@@ -26,7 +27,7 @@ export default async function BlogPage() {
     <ProductPageShell className="marketing-page">
       <SiteHeader active="blog" />
 
-      <main className={styles.page}>
+      <PageShellProvider as="main" className={styles.page} width="wide">
         <header className={styles.hero}>
           <p className="marketing-eyebrow">Блог</p>
           <h1>Свадебные приглашения: как собрать и что написать</h1>
@@ -42,7 +43,7 @@ export default async function BlogPage() {
         ) : (
           <p className={styles.empty}>Статьи скоро появятся.</p>
         )}
-      </main>
+      </PageShellProvider>
 
       <CommerceFooter />
 
