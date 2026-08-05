@@ -15,7 +15,8 @@ export default function CommerceFooter() {
           странице «Оплата и возврат».
         </p>
       </div>
-      <nav aria-label="Правовая информация">
+      <nav aria-label="Разделы и правовая информация">
+        <Link href="/blog">Блог</Link>
         <Link href="/offer">Публичная оферта</Link>
         <Link href="/payment-and-refund">Оплата и возврат</Link>
         <Link href="/privacy">Персональные данные</Link>

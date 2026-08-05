@@ -4,6 +4,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import type { NestModule } from "@nestjs/common";
 import { MiddlewareConsumer } from "@nestjs/common";
+import { ArticlesModule } from "./articles/articles.module";
 import { AuthModule } from "./auth/auth.module";
 import { DatabaseModule } from "./database/database.module";
 import { SitesModule } from "./sites/sites.module";
@@ -26,6 +27,7 @@ import { RequestLoggerMiddleware } from "./logging/request-logger.middleware";
       ],
     }),
     DatabaseModule,
+    ArticlesModule,
     AuthModule,
     PaymentsModule,
     SitesModule,

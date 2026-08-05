@@ -1082,25 +1082,9 @@
 }
 
 @media (max-width: 899px) {
-  .scope:global(.site-header),
-  .scope :global(.site-header) {
-    width: min(100% - 34px, 720px);
-  }
-
   .scope:global(.site-header__brand) small,
   .scope :global(.site-header__brand) small {
     display: none;
-  }
-
-  .scope:global(.marketing-hero),
-  .scope :global(.marketing-hero),
-  .scope:global(.marketing-section),
-  .scope :global(.marketing-section),
-  .scope:global(.marketing-cta),
-  .scope :global(.marketing-cta),
-  .scope:global(.templates-page),
-  .scope :global(.templates-page) {
-    width: min(100% - 34px, 720px);
   }
 
   .scope:global(.marketing-hero),
@@ -1135,33 +1119,14 @@
     margin-top: 15px;
   }
 
-  .scope:global(.marketing-promise),
-  .scope :global(.marketing-promise),
   .scope:global(.marketing-process),
-  .scope :global(.marketing-process),
-  .scope:global(.marketing-story),
-  .scope :global(.marketing-story) {
+  .scope :global(.marketing-process) {
     grid-template-columns: 1fr;
-  }
-
-  .scope:global(.marketing-promise),
-  .scope :global(.marketing-promise) {
-    padding: 34px max(20px, calc((100vw - 720px) / 2));
   }
 
   .scope:global(.marketing-process__intro),
   .scope :global(.marketing-process__intro) {
     position: static;
-  }
-
-  .scope:global(.marketing-story__photo),
-  .scope :global(.marketing-story__photo) {
-    min-height: 520px;
-  }
-
-  .scope:global(.marketing-story__copy),
-  .scope :global(.marketing-story__copy) {
-    padding: 50px 30px 60px;
   }
 
   .scope:global(.editor-layout),
@@ -1542,21 +1507,9 @@
     width: 65%;
   }
 
-  .scope:global(.marketing-promise) > div,
-  .scope :global(.marketing-promise) > div,
   .scope:global(.marketing-featured),
   .scope :global(.marketing-featured) {
     grid-template-columns: 1fr;
-  }
-
-  .scope:global(.marketing-promise),
-  .scope :global(.marketing-promise) {
-    gap: 28px;
-  }
-
-  .scope:global(.marketing-promise) > div,
-  .scope :global(.marketing-promise) > div {
-    gap: 15px;
   }
 
   .scope:global(.marketing-section),
@@ -1580,28 +1533,6 @@
   .scope :global(.marketing-featured__card):last-child {
     grid-column: auto;
     min-height: 380px;
-  }
-
-  .scope:global(.marketing-steps) article,
-  .scope :global(.marketing-steps) article {
-    grid-template-columns: 28px 40px 1fr;
-    gap: 12px;
-  }
-
-  .scope:global(.marketing-story),
-  .scope :global(.marketing-story) {
-    width: calc(100% - 16px);
-    margin-bottom: 80px;
-  }
-
-  .scope:global(.marketing-story__photo),
-  .scope :global(.marketing-story__photo) {
-    min-height: 430px;
-  }
-
-  .scope:global(.marketing-story) h2,
-  .scope :global(.marketing-story) h2 {
-    font-size: 3rem;
   }
 
   .scope:global(.editor-sidebar__intro),

@@ -44,6 +44,7 @@ export declare const inviteTemplateSchema: z.ZodEffects<z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: string;
     description: string;
+    tags: string[];
     coverType: "rings" | "arch" | "wave";
     defaultPaletteId: string;
     recommendedPaletteIds: string[];
@@ -55,10 +56,10 @@ export declare const inviteTemplateSchema: z.ZodEffects<z.ZodObject<{
         surface: string;
     };
     screenshot: string;
-    tags: string[];
 }, {
     id: string;
     description: string;
+    tags: string[];
     coverType: "rings" | "arch" | "wave";
     defaultPaletteId: string;
     recommendedPaletteIds: string[];
@@ -70,10 +71,10 @@ export declare const inviteTemplateSchema: z.ZodEffects<z.ZodObject<{
         surface: string;
     };
     screenshot: string;
-    tags: string[];
 }>, {
     id: string;
     description: string;
+    tags: string[];
     coverType: "rings" | "arch" | "wave";
     defaultPaletteId: string;
     recommendedPaletteIds: string[];
@@ -85,10 +86,10 @@ export declare const inviteTemplateSchema: z.ZodEffects<z.ZodObject<{
         surface: string;
     };
     screenshot: string;
-    tags: string[];
 }, {
     id: string;
     description: string;
+    tags: string[];
     coverType: "rings" | "arch" | "wave";
     defaultPaletteId: string;
     recommendedPaletteIds: string[];
@@ -100,13 +101,13 @@ export declare const inviteTemplateSchema: z.ZodEffects<z.ZodObject<{
         surface: string;
     };
     screenshot: string;
-    tags: string[];
 }>;
 export type CoverType = z.infer<typeof coverTypeSchema>;
 export type InviteTemplate = z.infer<typeof inviteTemplateSchema>;
 export declare const isInviteTemplate: (value: unknown) => value is {
     id: string;
     description: string;
+    tags: string[];
     coverType: "rings" | "arch" | "wave";
     defaultPaletteId: string;
     recommendedPaletteIds: string[];
@@ -118,5 +119,4 @@ export declare const isInviteTemplate: (value: unknown) => value is {
         surface: string;
     };
     screenshot: string;
-    tags: string[];
 };

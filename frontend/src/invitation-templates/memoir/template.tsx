@@ -3,7 +3,7 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowUp, MapPin } from "lucide-react";
-import { parseDate } from "@/lib/invite-date";
+import { formatInviteDate, parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
@@ -54,9 +54,6 @@ function createMemoirStyle(inviteVars: InviteVars): MemoirStyle {
   };
 }
 
-function formatDate(value: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
-}
 
 function formatNumericDate(value: string) {
   const date = parseDate(value);
@@ -108,7 +105,7 @@ function HeroSection({
         </div>
         <figcaption>
           <span>когда всё только начиналось</span>
-          <time dateTime={invite.date}>{formatDate(invite.date, { year: "numeric" })}</time>
+          <time dateTime={invite.date}>{formatInviteDate(invite.date, { year: "numeric" })}</time>
         </figcaption>
       </figure>
 
@@ -142,7 +139,7 @@ function WhenSection({
     <section className={styles.when} data-reveal>
       <SectionHeading note="сохраните дату">Когда</SectionHeading>
       <p className={styles.month}>
-        {capitalize(formatDate(invite.date, { month: "long" }))}{" "}
+        {capitalize(formatInviteDate(invite.date, { month: "long" }))}{" "}
         {parseDate(invite.date).getFullYear()}
       </p>
       <div className={styles.calendar} aria-label="Календарь недели">

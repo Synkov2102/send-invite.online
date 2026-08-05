@@ -1,7 +1,7 @@
 import { createInviteSitePayloadSchema, createInviteSitePayloadShapeSchema, publishedInviteSiteSchema, publishedInviteSiteShapeSchema } from "./invite-site.schema";
 export declare const isInviteState: (value: unknown) => value is {
-    time: string;
     date: string;
+    time: string;
     additionalInfo: string;
     address: string;
     bride: string;
@@ -28,8 +28,8 @@ export declare const isInviteState: (value: unknown) => value is {
     rsvpText: string;
     schedule: {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }[];
     showAdditionalInfo: boolean;
     showDressCode: boolean;
@@ -41,11 +41,11 @@ export declare const isInviteState: (value: unknown) => value is {
     mapUrl?: string | undefined;
 };
 export declare const isInviteSitePalette: (value: unknown) => value is {
+    label: string;
+    id: string;
     accent: string;
     background: string;
-    id: string;
     ink: string;
-    label: string;
     line: string;
     mood: string;
     muted: string;
@@ -55,9 +55,10 @@ export declare const isInviteSitePalette: (value: unknown) => value is {
 };
 export declare const isPublishedInviteSite: (value: unknown) => value is {
     id: string;
+    updatedAt: string;
     invite: {
-        time: string;
         date: string;
+        time: string;
         additionalInfo: string;
         address: string;
         bride: string;
@@ -84,8 +85,8 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
         rsvpText: string;
         schedule: {
             description: string;
-            time: string;
             title: string;
+            time: string;
         }[];
         showAdditionalInfo: boolean;
         showDressCode: boolean;
@@ -97,11 +98,11 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
         mapUrl?: string | undefined;
     };
     palette: {
+        label: string;
+        id: string;
         accent: string;
         background: string;
-        id: string;
         ink: string;
-        label: string;
         line: string;
         mood: string;
         muted: string;
@@ -111,7 +112,6 @@ export declare const isPublishedInviteSite: (value: unknown) => value is {
     };
     templateId: string;
     createdAt: string;
-    updatedAt: string;
 };
 /** Fill defaults for invites saved before newer optional fields existed. */
 export declare function normalizeInviteState(invite: import("./invite-state.schema").InviteState): import("./invite-state.schema").InviteState;

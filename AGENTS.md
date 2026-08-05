@@ -207,6 +207,8 @@ npm run build
 npm run lint
 npm run test:backend
 docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
+
+node backend/scripts/publish-article.mjs --file=~/my.md  # SEO-статья в Mongo, картинки в S3
 ```
 
 ## Чего не делать
@@ -221,6 +223,7 @@ docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 
 | Файл                                | Содержание                                          |
 | ----------------------------------- | --------------------------------------------------- |
+| `docs/seo-articles.md`              | блог `/blog`: модель статьи, парсер md, публикация  |
 | `README.md`                         | запуск, env                                         |
 | `DEPLOYMENT.md`                     | VPS, Robokassa, Docker prod                         |
 | `.cursor/rules/*.mdc`               | краткие правила для Cursor по областям              |

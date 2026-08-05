@@ -4,9 +4,7 @@
   background:
     radial-gradient(circle at 8% 8%, rgba(255, 79, 114, 0.11), transparent 22rem),
     radial-gradient(circle at 94% 28%, rgba(255, 186, 200, 0.16), transparent 26rem),
-    linear-gradient(rgba(40, 33, 38, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(40, 33, 38, 0.028) 1px, transparent 1px), var(--product-paper);
-  background-size: 42px 42px;
+    var(--product-paper);
   color: var(--product-ink);
 }
 
@@ -61,8 +59,7 @@
 /* Hero */
 
 .hero {
-  width: min(1280px, calc(100% - 48px));
-  margin: 0 auto;
+  /* width/margin come from PageShellProvider (components/page-shell), width="wide". */
   padding: 34px 0 76px;
 }
 
@@ -358,8 +355,7 @@
 /* Benefits */
 
 .benefits {
-  width: min(1240px, calc(100% - 48px));
-  margin: 0 auto;
+  /* width/margin come from PageShellProvider (components/page-shell), width="wide". */
   padding: 92px 0;
 }
 
@@ -427,8 +423,8 @@
 /* Workflow */
 
 .workflow {
+  /* width comes from PageShellProvider (components/page-shell), width="wide". */
   display: grid;
-  width: min(1240px, calc(100% - 48px));
   min-height: 600px;
   grid-template-columns: minmax(340px, 0.9fr) minmax(0, 1.1fr);
   gap: 12px;
@@ -547,8 +543,7 @@
 /* Templates */
 
 .templates {
-  width: min(1240px, calc(100% - 48px));
-  margin: 0 auto;
+  /* width/margin come from PageShellProvider (components/page-shell), width="wide". */
   padding: 100px 0 120px;
 }
 
@@ -569,7 +564,6 @@
 
 @media (max-width: 899px) {
   .hero {
-    width: min(100% - 34px, 720px);
     padding: 26px 0 60px;
   }
 
@@ -600,7 +594,6 @@
   }
 
   .benefits {
-    width: min(100% - 34px, 720px);
     padding: 72px 0;
   }
   .benefitsGrid {
@@ -608,7 +601,6 @@
   }
 
   .workflow {
-    width: min(100% - 34px, 720px);
     min-height: 0;
     grid-template-columns: 1fr;
     margin-bottom: 24px;
@@ -628,7 +620,6 @@
   }
 
   .templates {
-    width: min(100% - 34px, 720px);
     padding: 72px 0 88px;
   }
 }
@@ -641,7 +632,10 @@
     background-size: auto;
   }
 
-  .hero {
+  /* Doubled selector: a deliberately tighter gutter than the shared "wide" shell (24px vs
+     32px) for this full-bleed visual, forced to win over PageShellProvider on specificity
+     alone so it doesn't depend on stylesheet load order. */
+  .hero.hero {
     width: calc(100% - 24px);
     padding: 18px 0 46px;
   }
@@ -741,7 +735,6 @@
   }
 
   .benefits {
-    width: calc(100% - 32px);
     padding: 56px 0;
   }
   .benefitsGrid {
@@ -749,7 +742,8 @@
     gap: 14px;
   }
 
-  .workflow {
+  /* Doubled selector: see .hero.hero above — same deliberately tighter gutter, same reason. */
+  .workflow.workflow {
     width: calc(100% - 24px);
     border-radius: 24px;
     padding: 8px;
@@ -777,7 +771,6 @@
   }
 
   .templates {
-    width: calc(100% - 32px);
     padding: 56px 0 72px;
   }
 }

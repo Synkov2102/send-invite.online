@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import CommerceFooter from "./commerce-footer";
+import PageShellProvider from "./page-shell";
 import ProductPageShell from "./product-page-shell";
 import SiteHeader from "./site-header";
 
@@ -17,14 +18,14 @@ export default function LegalPage({
   return (
     <ProductPageShell className="marketing-page legal-page">
       <SiteHeader />
-      <main className="legal-shell">
+      <PageShellProvider as="main" className="legal-shell" width="narrow">
         <header className="legal-hero">
           <p className="marketing-eyebrow">{eyebrow}</p>
           <h1>{title}</h1>
           <p>{lead}</p>
         </header>
         <article className="legal-document">{children}</article>
-      </main>
+      </PageShellProvider>
       <CommerceFooter />
     </ProductPageShell>
   );

@@ -34,6 +34,7 @@ export declare function isEditorReadyTemplate(templateId: string): boolean;
 export declare function getEditorReadyTemplates(): {
     id: string;
     description: string;
+    tags: string[];
     coverType: "rings" | "arch" | "wave";
     defaultPaletteId: string;
     recommendedPaletteIds: string[];
@@ -45,11 +46,10 @@ export declare function getEditorReadyTemplates(): {
         surface: string;
     };
     screenshot: string;
-    tags: string[];
 }[];
 export declare function getEditorPreset(templateId: string): Partial<{
-    time: string;
     date: string;
+    time: string;
     additionalInfo: string;
     address: string;
     bride: string;
@@ -76,8 +76,8 @@ export declare function getEditorPreset(templateId: string): Partial<{
     rsvpText: string;
     schedule: {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }[];
     showAdditionalInfo: boolean;
     showDressCode: boolean;

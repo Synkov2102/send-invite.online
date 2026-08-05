@@ -1,6 +1,7 @@
 import { brand } from "@/lib/brand";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import PageShellProvider from "./page-shell";
 import BrandLockup from "./brand-lockup";
 import SiteHeaderMobileMenu from "./site-header-mobile-menu";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
@@ -8,13 +9,13 @@ import SupportModal from "./support-modal";
 import TrackedLink from "./tracked-link";
 
 type SiteHeaderProps = {
-  active?: "home" | "templates";
+  active?: "blog" | "home" | "templates";
   initialUser?: HeaderUser | null;
 };
 
 export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
   return (
-    <header className="site-header">
+    <PageShellProvider as="header" className="site-header" width="wide">
       <Link className="site-header__brand" href="/">
         <BrandLockup homeLabelSuffix={brand.homeAriaLabel} showDomain />
       </Link>
@@ -35,6 +36,13 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
         >
           Шаблоны
         </TrackedLink>
+        <Link
+          aria-current={active === "blog" ? "page" : undefined}
+          className={active === "blog" ? "is-active" : undefined}
+          href="/blog"
+        >
+          Блог
+        </Link>
         <SupportModal>Поддержка</SupportModal>
       </nav>
 
@@ -50,6 +58,6 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
           <ArrowUpRight aria-hidden size={14} />
         </TrackedLink>
       </div>
-    </header>
+    </PageShellProvider>
   );
 }

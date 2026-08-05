@@ -14,6 +14,11 @@ export function formatDate(value: string) {
   }).format(parseDate(value));
 }
 
+/** Templates render the same date in several shapes, so the options stay per call site. */
+export function formatInviteDate(value: string, options: Intl.DateTimeFormatOptions) {
+  return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
+}
+
 export function formatMonth(value: string) {
   return new Intl.DateTimeFormat("ru-RU", { month: "long" })
     .format(parseDate(value))

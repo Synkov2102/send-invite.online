@@ -1,3 +1,4 @@
+import { isInviteSitePalette } from "@invite/shared";
 import { isInviteState, type InviteState } from "@/lib/invite-state";
 import type { InvitePalette } from "@/lib/invite-theme";
 
@@ -11,6 +12,14 @@ export type EditorDraft = {
   hasLocalMusic: boolean;
   invite: InviteState;
   version: 2;
+};
+
+/** Raw localStorage envelope: version 1 drafts are still read and migrated to 2. */
+type StoredDraft = {
+  customPalette?: unknown;
+  hasLocalMusic?: unknown;
+  invite?: unknown;
+  version?: unknown;
 };
 
 function isLocalMusicSource(value: string) {
@@ -101,30 +110,6 @@ async function removeLocalMusic() {
   }
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function isInvitePalette(value: unknown): value is InvitePalette {
-  if (!isRecord(value)) {
-    return false;
-  }
-
-  return (
-    typeof value.accent === "string" &&
-    typeof value.background === "string" &&
-    typeof value.id === "string" &&
-    typeof value.ink === "string" &&
-    typeof value.label === "string" &&
-    typeof value.line === "string" &&
-    typeof value.mood === "string" &&
-    typeof value.muted === "string" &&
-    typeof value.photoText === "string" &&
-    typeof value.surface === "string" &&
-    typeof value.veil === "string"
-  );
-}
-
 export function readEditorDraft(): EditorDraft | null {
   if (typeof window === "undefined") {
     return null;
@@ -137,13 +122,13 @@ export function readEditorDraft(): EditorDraft | null {
       return null;
     }
 
-    const draft = JSON.parse(storedDraft) as unknown;
+    // Nothing from localStorage is trusted; optional chaining also covers a non-object value.
+    const draft = JSON.parse(storedDraft) as StoredDraft | null;
 
     if (
-      isRecord(draft) &&
-      (draft.version === 1 || draft.version === 2) &&
+      (draft?.version === 1 || draft?.version === 2) &&
       isInviteState(draft.invite) &&
-      isInvitePalette(draft.customPalette)
+      isInviteSitePalette(draft.customPalette)
     ) {
       return {
         customPalette: draft.customPalette,

@@ -5,12 +5,12 @@ export declare const inviteScheduleItemShapeSchema: z.ZodObject<{
     title: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     description: string;
-    time: string;
     title: string;
+    time: string;
 }, {
     description: string;
-    time: string;
     title: string;
+    time: string;
 }>;
 export declare const inviteRsvpQuestionShapeSchema: z.ZodObject<{
     options: z.ZodArray<z.ZodString, "many">;
@@ -66,12 +66,12 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
         title: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }, {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }>, "many">;
     showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
     showDressCode: z.ZodDefault<z.ZodBoolean>;
@@ -82,8 +82,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     venue: z.ZodString;
     venueImageUrl: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    time: string;
     date: string;
+    time: string;
     additionalInfo: string;
     address: string;
     bride: string;
@@ -110,8 +110,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     rsvpText: string;
     schedule: {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }[];
     showAdditionalInfo: boolean;
     showDressCode: boolean;
@@ -122,8 +122,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     venueImageUrl: string;
     mapUrl?: string | undefined;
 }, {
-    time: string;
     date: string;
+    time: string;
     address: string;
     bride: string;
     city: string;
@@ -147,8 +147,8 @@ export declare const inviteStateShapeSchema: z.ZodObject<{
     rsvpText: string;
     schedule: {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }[];
     showRsvp: boolean;
     venue: string;
@@ -168,12 +168,12 @@ export declare const inviteScheduleItemSchema: z.ZodObject<{
     title: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     description: string;
-    time: string;
     title: string;
+    time: string;
 }, {
     description: string;
-    time: string;
     title: string;
+    time: string;
 }>;
 export declare const inviteRsvpQuestionSchema: z.ZodObject<{
     options: z.ZodArray<z.ZodString, "many">;
@@ -231,12 +231,12 @@ export declare const inviteStateSchema: z.ZodObject<{
         title: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }, {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }>, "many">;
     showAdditionalInfo: z.ZodDefault<z.ZodBoolean>;
     showDressCode: z.ZodDefault<z.ZodBoolean>;
@@ -246,8 +246,8 @@ export declare const inviteStateSchema: z.ZodObject<{
     venue: z.ZodString;
     venueImageUrl: z.ZodEffects<z.ZodString, string, string>;
 }, "strip", z.ZodTypeAny, {
-    time: string;
     date: string;
+    time: string;
     additionalInfo: string;
     address: string;
     bride: string;
@@ -274,8 +274,8 @@ export declare const inviteStateSchema: z.ZodObject<{
     rsvpText: string;
     schedule: {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }[];
     showAdditionalInfo: boolean;
     showDressCode: boolean;
@@ -286,8 +286,8 @@ export declare const inviteStateSchema: z.ZodObject<{
     venueImageUrl: string;
     mapUrl?: string | undefined;
 }, {
-    time: string;
     date: string;
+    time: string;
     address: string;
     bride: string;
     city: string;
@@ -311,8 +311,8 @@ export declare const inviteStateSchema: z.ZodObject<{
     rsvpText: string;
     schedule: {
         description: string;
-        time: string;
         title: string;
+        time: string;
     }[];
     showRsvp: boolean;
     venue: string;

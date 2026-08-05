@@ -13,8 +13,11 @@ const s3RefPrefix = "s3://";
 export const inviteImageKeyPrefix = "invite-images/";
 const inviteMusicKeyPrefix = "invite-music/";
 const catalogMusicKeyPrefix = "catalog-music/";
+export const blogImageKeyPrefix = "blog-images/";
 
 const catalogTrackIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** The public id is the S3 key without its prefix, so no lookup is needed to serve it. */
+const blogImageIdPattern = /^[a-z0-9-]+\.[a-z0-9]+$/;
 
 const audioExtensions: Record<string, string> = {
   "audio/mpeg": "mp3",
@@ -211,6 +214,50 @@ export class S3StorageService implements OnModuleDestroy {
     );
 
     return createS3Ref(config.bucket, key);
+  }
+
+  async uploadBlogImageObject({
+    buffer,
+    contentType,
+  }: {
+    buffer: Buffer;
+    contentType: string;
+  }) {
+    const config = this.getS3Config();
+    const key = `${blogImageKeyPrefix}${randomUUID()}.${getImageExtension(contentType)}`;
+
+    await this.getS3Client(config).send(
+      new PutObjectCommand({
+        Body: buffer,
+        Bucket: config.bucket,
+        CacheControl: "public, max-age=31536000, immutable",
+        ContentType: contentType,
+        Key: key,
+      }),
+    );
+
+    return createS3Ref(config.bucket, key);
+  }
+
+  async getBlogImageObject(imageId: string) {
+    if (!blogImageIdPattern.test(imageId)) {
+      throw new Error("Invalid blog image id.");
+    }
+
+    const config = this.getS3Config();
+
+    const response = await this.getS3Client(config).send(
+      new GetObjectCommand({
+        Bucket: config.bucket,
+        Key: `${blogImageKeyPrefix}${imageId}`,
+      }),
+    );
+
+    return {
+      buffer: await readObjectBody(response.Body),
+      cacheControl: response.CacheControl ?? "public, max-age=31536000, immutable",
+      contentType: response.ContentType ?? "application/octet-stream",
+    };
   }
 
   // Только для миграции webp: удаляет исходник, чей ref уже заменён в Mongo.

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowUpRight, MapPin, MessageCircle } from "lucide-react";
 import { motion, MotionConfig } from "framer-motion";
 import type { CSSProperties } from "react";
-import { parseDate } from "@/lib/invite-date";
+import { formatInviteDate, parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
 import type { InviteState } from "@/lib/invite-state";
 import type { InviteVars } from "@/lib/invite-theme";
@@ -57,9 +57,6 @@ function createChromeStyle(inviteVars: InviteVars): ChromeStyle {
   };
 }
 
-function formatDate(value: string, options: Intl.DateTimeFormatOptions) {
-  return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
-}
 
 function formatNumericDate(value: string) {
   const date = parseDate(value);
@@ -192,7 +189,7 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
           <br />
           <i>дня</i>
         </h2>
-        <p>{formatDate(invite.date, { day: "numeric", month: "long", year: "numeric" })}</p>
+        <p>{formatInviteDate(invite.date, { day: "numeric", month: "long", year: "numeric" })}</p>
       </header>
       <motion.ol className={styles.schedule} variants={staggerContainer}>
         {invite.schedule.map((item, index) => (

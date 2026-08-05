@@ -1,40 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { authSessionCookieName } from "@/lib/auth";
-import { getForwardedForHeaders } from "@/lib/forwarded-for";
-import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
+import type { NextRequest } from "next/server";
+import { proxyAuthorizedPost } from "@/lib/proxy-authorized-post";
 
 export async function POST(request: NextRequest) {
-  const sessionToken = request.cookies.get(authSessionCookieName)?.value;
-
-  if (!sessionToken) {
-    return NextResponse.json(
-      { error: "Войдите в аккаунт, чтобы создать сайт." },
-      { status: 401 },
-    );
-  }
-
-  try {
-    const response = await fetch(`${getServerApiBaseUrl()}/api/sites`, {
-      body: await request.text(),
-      cache: "no-store",
-      headers: {
-        ...getForwardedForHeaders(request),
-        Authorization: `Bearer ${sessionToken}`,
-        "Content-Type": request.headers.get("content-type") ?? "application/json",
-      },
-      method: "POST",
-    });
-
-    return new Response(response.body, {
-      headers: {
-        "Content-Type": response.headers.get("content-type") ?? "application/json",
-      },
-      status: response.status,
-    });
-  } catch {
-    return NextResponse.json(
-      { error: "Сервис создания сайтов временно недоступен." },
-      { status: 502 },
-    );
-  }
+  return proxyAuthorizedPost(request, {
+    path: "/api/sites",
+    unauthorizedError: "Войдите в аккаунт, чтобы создать сайт.",
+    unavailableError: "Сервис создания сайтов временно недоступен.",
+  });
 }

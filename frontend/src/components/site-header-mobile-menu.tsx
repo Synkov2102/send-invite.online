@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowUpRight, House, LifeBuoy, Menu, PanelsTopLeft, X } from "lucide-react";
+import { ArrowUpRight, BookOpen, House, LifeBuoy, Menu, PanelsTopLeft, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
 import SupportModal from "./support-modal";
 
 type SiteHeaderMobileMenuProps = {
-  active?: "home" | "templates";
+  active?: "blog" | "home" | "templates";
   initialUser?: HeaderUser | null;
 };
 
@@ -46,6 +46,15 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
             >
               <PanelsTopLeft aria-hidden size={18} />
               <span><strong>Шаблоны</strong><small>Выбрать дизайн приглашения</small></span>
+            </Link>
+            <Link
+              aria-current={active === "blog" ? "page" : undefined}
+              className={active === "blog" ? "is-active" : undefined}
+              href="/blog"
+              onClick={() => setIsOpen(false)}
+            >
+              <BookOpen aria-hidden size={18} />
+              <span><strong>Блог</strong><small>Как собрать приглашение и RSVP</small></span>
             </Link>
             <SupportModal onClose={() => setIsOpen(false)}>
               <LifeBuoy aria-hidden size={18} />

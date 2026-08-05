@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.INVITE_FIELD_LIMITS = void 0;
+exports.ARTICLE_FIELD_LIMITS = exports.INVITE_FIELD_LIMITS = void 0;
 exports.INVITE_FIELD_LIMITS = {
     additionalInfo: 2000,
     address: 300,
@@ -35,4 +35,31 @@ exports.INVITE_FIELD_LIMITS = {
     textDate: 40,
     textTime: 20,
     venue: 200,
+};
+exports.ARTICLE_FIELD_LIMITS = {
+    blocksPerSection: 60,
+    ctaLabel: 80,
+    description: 320,
+    excerpt: 400,
+    faqAnswer: 1200,
+    faqMax: 20,
+    faqQuestion: 200,
+    heading: 200,
+    href: 2048,
+    imageAlt: 200,
+    imageCaption: 200,
+    imageSrc: 512,
+    introBlocks: 20,
+    listItemsMax: 30,
+    relatedMax: 6,
+    sectionId: 120,
+    sectionsMax: 40,
+    seoTitle: 200,
+    slug: 96,
+    source: 120_000,
+    spanText: 2000,
+    spansPerBlock: 40,
+    tagsMax: 8,
+    tag: 48,
+    title: 200,
 };
