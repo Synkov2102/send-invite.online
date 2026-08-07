@@ -295,3 +295,18 @@ export function getTemplateMusicPreset(templateId: string) {
     musicUrl: track.audioUrl,
   };
 }
+
+/**
+ * Демо-трек какого-либо шаблона. Признак нужен при восстановлении черновика: такой трек
+ * гость не выбирал сам — он приехал с шаблона, открытого в прошлый раз, и на новом шаблоне
+ * должен смениться на его собственный. Свою загрузку и выбор из библиотеки это не задевает.
+ */
+export function isTemplateDemoMusicUrl(audioUrl: string) {
+  if (!audioUrl) {
+    return false;
+  }
+
+  return Object.values(templateMusicTrackIds).some(
+    (trackId) => musicTrackById.get(trackId)?.audioUrl === audioUrl,
+  );
+}
