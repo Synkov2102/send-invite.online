@@ -98,6 +98,12 @@ export const crimsonImages = {
   venue: "/images/crimson-editorial-venue.webp",
 } as const;
 
+export const scribbleImages = {
+  cover: "/images/handwritten-note-cover.webp",
+  portrait: "/images/handwritten-note-portrait.webp",
+  venue: "/images/handwritten-note-venue.webp",
+} as const;
+
 const ringColors = {
   gold: "#d7a83a",
   silver: "#d8dbe0",

@@ -1,0 +1,1161 @@
+.shell {
+  --scribble-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --scribble-script: var(--font-invite-script), "Segoe Script", cursive;
+  width: min(100%, 640px);
+  margin-inline: auto;
+  overflow: hidden;
+  background: var(--scribble-bg);
+  color: var(--scribble-ink);
+  font-family: var(--font-invite-sans), Arial, sans-serif;
+  /* Имена, площадка, описания — произвольный ввод. Без принудительного переноса длинное
+     слово раздувает min-content, неявные грид-колонки секций растягиваются шире карточки,
+     и текст молча уезжает под overflow: hidden. */
+  overflow-wrap: anywhere;
+}
+
+/* На публичном сайте контейнер задаёт article ширину 100% !important —
+   тут перебиваем её потолком, чтобы карточка не растягивалась на очень широких экранах. */
+:global(.published-site):global(.published-site--scribble) .shell {
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.shell * {
+  box-sizing: border-box;
+}
+.shell section {
+  position: relative;
+}
+.shell svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.3;
+}
+
+.hero {
+  display: grid;
+  justify-items: center;
+  min-height: 940px;
+  padding: 58px 28px 84px;
+  background: var(--scribble-paper);
+  text-align: center;
+}
+
+.heroKicker {
+  color: var(--scribble-muted);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  z-index: 2;
+  max-width: 8ch;
+  margin-top: 18px;
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: clamp(54px, 14.5vw, 82px);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+  transform: rotate(-3deg);
+}
+
+.heroHearts {
+  position: absolute;
+  inset: 190px 24px auto;
+  height: 220px;
+  color: var(--scribble-accent);
+}
+.heroHearts svg {
+  position: absolute;
+  width: 42px;
+}
+.heroHearts svg:nth-child(1) {
+  left: 6%;
+  top: 36%;
+  transform: rotate(-15deg);
+}
+.heroHearts svg:nth-child(2) {
+  left: 24%;
+  top: 3%;
+  width: 32px;
+  transform: rotate(11deg);
+}
+.heroHearts svg:nth-child(3) {
+  right: 20%;
+  top: 4%;
+  width: 48px;
+  transform: rotate(12deg);
+}
+.heroHearts svg:nth-child(4) {
+  right: 3%;
+  top: 42%;
+  width: 30px;
+  transform: rotate(-10deg);
+}
+
+.cutout {
+  position: relative;
+  width: min(78%, 390px);
+  aspect-ratio: 4 / 5;
+  margin-top: 34px;
+  overflow: hidden;
+  border: 5px solid var(--scribble-accent);
+  border-radius: 45% 55% 46% 54% / 52% 42% 58% 48%;
+  box-shadow: 10px 12px 0 color-mix(in srgb, var(--scribble-accent) 14%, transparent);
+  transform: rotate(-1.5deg);
+}
+
+.cutout img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
+}
+/* Имена расходятся к краям, обнимая узкую часть овального фото, — по центру они легли бы на снимок. */
+.nameNotes {
+  z-index: 2;
+  display: flex;
+  width: min(94%, 470px);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: -40px;
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: clamp(25px, 7vw, 38px);
+  /* Свободный line-height: у рукописного шрифта выносные элементы вылезают за line-box,
+     и на плотной строке их срезала плашка «Мы женимся!». */
+  line-height: 1.35;
+  transform: rotate(-4deg);
+}
+.nameNotes span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.nameNotes svg {
+  width: 46px;
+  flex: 0 0 auto;
+}
+.heroBanner {
+  z-index: 3;
+  /* Зазор считается от неповёрнутой коробки имён, а поворот на -4deg опускает левый конец
+     ряда на 12–16px (тем сильнее, чем шире шелл) — отсюда запас, а не 12px. */
+  margin-top: 42px;
+  background: var(--scribble-accent);
+  padding: 10px 34px 9px;
+  color: var(--scribble-photo-text);
+  font-family: var(--scribble-script);
+  font-size: clamp(29px, 7.6vw, 41px);
+  line-height: 1;
+  transform: rotate(1.5deg);
+}
+.lead {
+  max-width: 38ch;
+  margin-top: 18px;
+  color: var(--scribble-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.heading {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.heading > p {
+  color: var(--scribble-muted);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.heading h2 {
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: clamp(40px, 10vw, 62px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  transform: rotate(-2deg);
+}
+.headingRule {
+  width: 155px;
+  color: var(--scribble-accent);
+  transform: rotate(-1.5deg);
+}
+
+.hero .heading {
+  margin-top: 44px;
+}
+
+.story {
+  min-height: 810px;
+  padding: 62px 30px;
+  background: var(--scribble-accent);
+  color: var(--scribble-photo-text);
+}
+
+/* Плавный бумажный край сверху каждой красной секции — стык встык выглядел печатным.
+   Маска растягивается на всю ширину (preserveAspectRatio="none"), поэтому волн всегда
+   полторы, а не частая гребёнка; высота полосы задаёт амплитуду. Секции различаем
+   высотой и зеркалом. Все они идут следом за бумажной секцией, кроме одного случая
+   (см. guard ниже). */
+.story::before,
+.location::before,
+.sharedPaper::before,
+.closing::before {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: 14px;
+  background: var(--scribble-paper);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H120 V6 q-20 10 -40 0 t-40 0 t-40 0 Z' fill='%23000'/%3E%3C/svg%3E")
+    0 0 / 100% 100% no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H120 V6 q-20 10 -40 0 t-40 0 t-40 0 Z' fill='%23000'/%3E%3C/svg%3E")
+    0 0 / 100% 100% no-repeat;
+}
+.location::before,
+.closing::before {
+  height: 12px;
+  transform: scaleX(-1);
+}
+/* Без секций «инфо» и RSVP финал идёт сразу за дресс-кодом — бумажная полоса на красном была бы мусором. */
+.sharedPaper + .closing::before {
+  display: none;
+}
+.story::after {
+  position: absolute;
+  right: -48px;
+  bottom: 185px;
+  width: 150px;
+  height: 210px;
+  border: 2px solid currentColor;
+  border-left-color: transparent;
+  border-radius: 50%;
+  content: "";
+  opacity: 0.38;
+  transform: rotate(-18deg);
+}
+.polaroid {
+  width: min(68%, 340px);
+  border-radius: 16px;
+  background: var(--scribble-paper);
+  padding: 12px 12px 50px;
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--scribble-ink) 18%, transparent);
+}
+.polaroid > div {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 11px;
+}
+.polaroid img {
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.polaroidLeft {
+  transform: rotate(-7deg);
+}
+.polaroidRight {
+  margin: 48px 0 0 auto;
+  transform: rotate(8deg);
+}
+/* В потоке между полароидами: абсолютное позиционирование клало белый текст на белую рамку фото. */
+.storyNames {
+  width: min(100%, 470px);
+  margin: 30px auto 0;
+  overflow-wrap: anywhere;
+  font-family: var(--scribble-script);
+  font-size: clamp(34px, 8.4vw, 50px);
+  line-height: 1.06;
+  text-align: center;
+  transform: rotate(-1.5deg);
+}
+.story > svg {
+  position: absolute;
+  width: 56px;
+}
+.storyHeartOne {
+  right: 9%;
+  top: 16%;
+  transform: rotate(10deg);
+}
+.storyHeartTwo {
+  left: 9%;
+  bottom: 10%;
+  transform: rotate(-14deg);
+}
+
+.when {
+  display: grid;
+  justify-items: center;
+  gap: 25px;
+  padding: 78px 22px 72px;
+  background: var(--scribble-paper);
+  text-align: center;
+}
+.when > p {
+  max-width: 39ch;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.looseHeart {
+  width: 48px;
+  color: var(--scribble-accent);
+  transform: rotate(12deg);
+}
+.monthRow {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: clamp(30px, 8vw, 48px);
+  line-height: 1.05;
+  text-transform: capitalize;
+}
+.calendar {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(7, 1fr);
+  border-block: 2px dashed color-mix(in srgb, var(--scribble-ink) 28%, transparent);
+}
+.calendar > div {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: 14px;
+  padding: 12px 2px 15px;
+  border-right: 1px dashed color-mix(in srgb, var(--scribble-ink) 16%, transparent);
+}
+.calendar > div:last-child {
+  border-right: 0;
+}
+.calendar span {
+  overflow: hidden;
+  font-size: clamp(8px, 2.3vw, 11px);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-overflow: clip;
+  text-transform: uppercase;
+}
+.calendar strong {
+  z-index: 1;
+  font-family: var(--scribble-script);
+  font-size: clamp(22px, 6vw, 34px);
+  font-weight: 400;
+}
+/* Разметка вешает этот класс на день свадьбы, но правила для него не было —
+   выделен он был только обведённым сердцем. */
+.selectedDay span,
+.selectedDay strong {
+  color: var(--scribble-accent);
+}
+.calendar svg {
+  position: absolute;
+  top: 37px;
+  left: 50%;
+  width: 54px;
+  color: var(--scribble-accent);
+  transform: translateX(-50%) rotate(-8deg);
+}
+.when > time {
+  color: var(--scribble-muted);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.location {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  padding: 70px 30px 76px;
+  background: var(--scribble-accent);
+  color: var(--scribble-photo-text);
+  text-align: center;
+}
+.location .heading h2,
+.location .heading > p {
+  color: var(--scribble-photo-text);
+}
+.location .headingRule {
+  color: var(--scribble-photo-text);
+}
+.location h3 {
+  margin-top: 18px;
+  font-family: var(--scribble-script);
+  font-size: 25px;
+  font-weight: 400;
+}
+.location address {
+  max-width: 38ch;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  font-style: normal;
+  line-height: 1.5;
+}
+.venuePhoto {
+  width: min(88%, 460px);
+  margin-top: 22px;
+  border-radius: 16px;
+  background: var(--scribble-paper);
+  padding: 12px 12px 45px;
+  box-shadow: 0 14px 26px color-mix(in srgb, var(--scribble-ink) 20%, transparent);
+  transform: rotate(4deg);
+}
+.venuePhoto > div {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 11px;
+}
+.venuePhoto img {
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.mapLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 26px;
+  border: 1px solid var(--scribble-paper);
+  background: var(--scribble-paper);
+  padding: 10px 26px;
+  color: var(--scribble-accent);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 5px 6px 0 color-mix(in srgb, #000 22%, transparent);
+  transform: rotate(-1.2deg);
+}
+
+.program {
+  /* --program-rail — центр жёлоба между временем и текстом, общий для пунктира и сердец.
+     --program-head — высота первой строки заголовка: по ней равняются время и сердце. */
+  --program-pad: 30px;
+  --program-time: 60px;
+  /* Жёлоб шире сердца-вехи (--program-mark), иначе она упирается во время и заголовок. */
+  --program-gap: 34px;
+  --program-rail: calc(var(--program-time) + var(--program-gap) / 2);
+  --program-row-gap: 30px;
+  --program-head: 21px;
+  --program-mark: 26px;
+  overflow: hidden;
+  padding: 72px var(--program-pad) 78px;
+  background: var(--scribble-paper);
+}
+/* Ширину держим по строке текста: на всю секцию список прижимался к левому краю,
+   оставляя справа пустоту под отцентрованным заголовком. */
+.program ol {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 420px);
+  gap: var(--program-row-gap);
+  margin: 46px auto 0;
+  padding: 0;
+  list-style: none;
+}
+/* Одна «рельса»: при чередовании сторон пунктир маршрута пересекал описания.
+   Высоту строки не фиксируем — min-height давал разный зазор у коротких и длинных описаний. */
+.program li {
+  position: relative;
+  display: grid;
+  /* minmax(0, …), иначе колонка не сжимается уже min-content и длинное слово без пробелов
+     выносит описание за карточку — под overflow:hidden шелла это видно как обрезанный текст. */
+  grid-template-columns: var(--program-time) minmax(0, 1fr);
+  gap: var(--program-gap);
+  align-items: start;
+  overflow-wrap: anywhere;
+}
+/* Строка времени той же высоты, что и первая строка заголовка, — иначе скрипт уезжает вниз.
+   Выключка вправо держит одинаковое расстояние до пунктира при любой длине времени. */
+.program li > time {
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: 26px;
+  line-height: var(--program-head);
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+.program h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: var(--program-head);
+}
+.program li p {
+  margin-top: 6px;
+  color: var(--scribble-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+/* Сердце-веха центрируется по первой строке заголовка, подложка разрывает пунктир. */
+.program li svg {
+  position: absolute;
+  top: calc((var(--program-head) - var(--program-mark)) / 2);
+  left: var(--program-rail);
+  width: 20px;
+  height: 18px;
+  padding: 4px 3px;
+  box-sizing: content-box;
+  background: var(--scribble-paper);
+  color: var(--scribble-accent);
+  transform: translateX(-50%);
+}
+/* Пунктир «маршрута» тянется от пункта к пункту, поэтому не свисает хвостом после последнего. */
+.program li::before {
+  position: absolute;
+  top: calc((var(--program-head) + var(--program-mark)) / 2);
+  bottom: calc(-1 * var(--program-row-gap));
+  left: var(--program-rail);
+  border-left: 2px dashed color-mix(in srgb, var(--scribble-accent) 40%, transparent);
+  content: "";
+  /* Верхняя точка — начало отрезка: пунктир тянется от вехи вниз, а не растёт из центра. */
+  transform: translateX(-50%);
+  transform-origin: top;
+}
+.program li:last-child::before {
+  display: none;
+}
+
+.sharedPaper,
+.details {
+  display: grid;
+  gap: 22px;
+  padding: 68px 30px;
+}
+.sharedPaper {
+  background: var(--scribble-accent);
+}
+.details {
+  background: var(--scribble-paper);
+}
+.marginNote {
+  color: var(--scribble-photo-text);
+  font-family: var(--scribble-script);
+  font-size: 30px;
+  text-align: center;
+  transform: rotate(-3deg);
+}
+.sharedBlock {
+  width: 100%;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.sharedPaper .sharedBlock {
+  --dress-accent: var(--scribble-accent);
+  --dress-ink: var(--scribble-ink);
+  --dress-muted: var(--scribble-muted);
+  --dress-line: var(--scribble-line);
+  --dress-surface: var(--scribble-paper);
+  background: var(--scribble-paper) !important;
+}
+.details .sharedBlock {
+  border: 1px solid var(--scribble-line) !important;
+  background: var(--scribble-paper) !important;
+}
+.details .sharedBlock:nth-of-type(2) {
+  transform: rotate(-0.6deg);
+}
+.details .sharedBlock:nth-of-type(3) {
+  transform: rotate(0.6deg);
+}
+/* Общие блоки поднимают заголовок в uppercase — рукописный шрифт в верхнем регистре
+   нечитаем и вылезает за рамку, поэтому возвращаем обычный регистр. */
+.sharedPaper .sharedBlock :global(h2),
+.details .sharedBlock :global(h2) {
+  color: var(--scribble-accent) !important;
+  font-family: var(--scribble-script) !important;
+  font-size: clamp(27px, 6.4vw, 36px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.12 !important;
+  text-transform: none !important;
+}
+.details .sharedBlock :global(p) {
+  line-height: 1.6 !important;
+}
+
+.rsvp {
+  display: grid;
+  justify-items: center;
+  gap: 15px;
+  padding: 72px 24px 80px;
+  background: var(--scribble-paper);
+  text-align: center;
+}
+.rsvpHeart {
+  width: 55px;
+  color: var(--scribble-accent);
+}
+.rsvp > p {
+  max-width: 40ch;
+  color: var(--scribble-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.rsvp > time {
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: 19px;
+}
+.rsvpForm {
+  --rsvp-accent: var(--scribble-accent);
+  --rsvp-accent-soft: color-mix(in srgb, var(--scribble-accent) 10%, transparent);
+  --rsvp-button-text: var(--scribble-photo-text);
+  --rsvp-control-radius: 0px;
+  --rsvp-ink: var(--scribble-ink);
+  --rsvp-line: var(--scribble-line);
+  --rsvp-muted: var(--scribble-muted);
+  --rsvp-radius: 0px;
+  --rsvp-section: var(--scribble-paper);
+  --rsvp-shadow: none;
+  --rsvp-surface: var(--scribble-paper);
+  width: 100%;
+  margin-top: 18px;
+  text-align: left;
+}
+.rsvpForm :global([class*="section_"]) {
+  border: 1px solid var(--scribble-line) !important;
+  box-shadow: 7px 7px 0 color-mix(in srgb, var(--scribble-accent) 7%, transparent) !important;
+}
+.rsvpForm :global([class*="submit_"]) {
+  box-shadow: 5px 6px 0 color-mix(in srgb, var(--scribble-ink) 12%, transparent) !important;
+}
+
+.closing {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  padding: 64px 30px 42px;
+  background: var(--scribble-accent);
+  color: var(--scribble-photo-text);
+  text-align: center;
+}
+.closingNote {
+  font-family: var(--scribble-script);
+  font-size: clamp(30px, 8vw, 48px);
+  line-height: 1.05;
+  transform: rotate(-3deg);
+}
+.closingPhoto {
+  width: min(72%, 360px);
+  border-radius: 16px;
+  background: var(--scribble-paper);
+  padding: 12px 12px 50px;
+  transform: rotate(-5deg);
+}
+.closingPhoto > div {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 11px;
+}
+.closingPhoto img {
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.closing h2 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-family: var(--scribble-script);
+  font-size: clamp(32px, 9vw, 52px);
+  font-weight: 400;
+}
+.closing time {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.closing > a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Скрапбук: полароиды приклеены матовой лентой. */
+.polaroid,
+.venuePhoto,
+.closingPhoto {
+  position: relative;
+}
+.polaroid::before,
+.venuePhoto::before,
+.closingPhoto::before {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 92px;
+  height: 24px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--scribble-paper) 55%, transparent);
+  content: "";
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+/* Бумажные секции: едва заметная неровность тона вместо ровной заливки. */
+.hero,
+.when,
+.program,
+.details,
+.rsvp {
+  background-image:
+    radial-gradient(
+      circle at 12% 12%,
+      color-mix(in srgb, var(--scribble-accent) 2.5%, transparent),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 88% 78%,
+      color-mix(in srgb, var(--scribble-accent) 2%, transparent),
+      transparent 26%
+    );
+}
+
+/* Красные секции: мягкая глубина к низу — плоская заливка выглядела картонно.
+   Оттенок берём от accent: palette.background в части палитр светлый. */
+.story,
+.location,
+.sharedPaper,
+.closing {
+  background-image: linear-gradient(
+    172deg,
+    var(--scribble-accent),
+    color-mix(in srgb, var(--scribble-accent) 84%, #000)
+  );
+}
+
+/* Плеер оставляем в базовом виде (invitation-base): перекрашивать его тут нечем —
+   он рендерится вне .shell, где переменные --scribble-* не определены. */
+.mapLink:focus-visible,
+.closing > a:focus-visible,
+.rsvpForm :global(button:focus-visible) {
+  outline: 2px solid var(--scribble-accent);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .mapLink:hover,
+  .closing > a:hover {
+    transform: translateY(-2px) rotate(-1deg);
+  }
+}
+@media (max-width: 380px) {
+  .hero {
+    padding-inline: 20px;
+  }
+  .heroHearts svg:nth-child(2),
+  .heroHearts svg:nth-child(3) {
+    top: 26%;
+  }
+  .location,
+  .details,
+  .sharedPaper {
+    padding-inline: 20px;
+  }
+  .program {
+    --program-pad: 20px;
+    --program-time: 52px;
+    --program-gap: 30px;
+    --program-row-gap: 26px;
+  }
+  .program li > time {
+    font-size: 23px;
+  }
+}
+/* ——— Анимации ———————————————————————————————————————————————————————————————
+   Кадры двигают только индивидуальные `translate` / `scale` / `rotate` и не трогают
+   `transform`: почти у каждого элемента шаблона в нём лежит постоянный наклон, и общий
+   transform в keyframes стёр бы его. Контуры сердец и завитков «рисуются» пером через
+   stroke-dashoffset — пути нормированы `pathLength="1"` в разметке.
+   Первый экран играет на загрузке (чистый CSS, работает и без JS), остальные секции —
+   по прокрутке через useScrollReveal: скрытое состояние включает только атрибут
+   data-animate, который скрипт не ставит при prefers-reduced-motion. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .heroKicker {
+    animation: scribbleRise 620ms var(--scribble-ease) both 80ms;
+  }
+  .hero h1 {
+    animation: noteIn 700ms var(--scribble-ease) both 160ms;
+  }
+  /* Сердечки сначала обводятся пером и только потом начинают биться. */
+  .heroHearts svg {
+    --scribble-beat: 520ms;
+    stroke-dasharray: 1;
+    animation:
+      scribbleDraw 760ms ease-out both var(--scribble-beat),
+      heartBeat 1800ms ease-in-out infinite calc(var(--scribble-beat) + 1000ms);
+  }
+  .heroHearts svg:nth-child(2) {
+    --scribble-beat: 640ms;
+  }
+  .heroHearts svg:nth-child(3) {
+    --scribble-beat: 580ms;
+  }
+  .heroHearts svg:nth-child(4) {
+    --scribble-beat: 700ms;
+  }
+  .cutout {
+    animation: photoIn 850ms var(--scribble-ease) both 380ms;
+  }
+  .nameNotes {
+    animation: scribbleRise 640ms var(--scribble-ease) both 760ms;
+  }
+  .heroBanner {
+    animation: scribbleStamp 620ms var(--scribble-ease) both 900ms;
+  }
+  .hero .heading h2 {
+    animation: scribbleRise 620ms var(--scribble-ease) both 1040ms;
+  }
+  .hero .headingRule {
+    stroke-dasharray: 1;
+    animation: scribbleDraw 720ms ease-out both 1180ms;
+  }
+  .lead {
+    animation: scribbleRise 640ms var(--scribble-ease) both 1260ms;
+  }
+}
+
+/* Скрытое состояние ставит только скрипт (`useScrollReveal`): без JS приглашение
+   остаётся полностью видимым. */
+.shell[data-animate="on"] [data-reveal] {
+  opacity: 0;
+}
+.shell[data-animate="on"] [data-reveal][data-revealed] {
+  animation: scribbleFade 560ms ease both;
+}
+
+/* Общая шапка секции: подпись — заголовок — завиток пером. */
+[data-revealed] .heading > p {
+  animation: scribbleRise 560ms var(--scribble-ease) both 120ms;
+}
+[data-revealed] .heading h2 {
+  animation: scribbleRise 620ms var(--scribble-ease) both 200ms;
+}
+[data-revealed] .headingRule {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 720ms ease-out both 340ms;
+}
+
+/* Полароиды падают на страницу с лишним наклоном и «доводятся» до своего угла,
+   лента приклеивается сверху уже после того, как снимок лёг. */
+.story[data-revealed] .polaroidLeft {
+  --scribble-drop: -7deg;
+  animation: scribblePaste 760ms var(--scribble-ease) both 120ms;
+}
+.story[data-revealed] .polaroidLeft::before {
+  animation: scribbleTape 420ms var(--scribble-ease) both 700ms;
+}
+.story[data-revealed] .storyHeartOne {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 700ms ease-out both 520ms;
+}
+.story[data-revealed] .storyNames {
+  animation: scribbleRise 640ms var(--scribble-ease) both 420ms;
+}
+.story[data-revealed] .polaroidRight {
+  --scribble-drop: 9deg;
+  animation: scribblePaste 760ms var(--scribble-ease) both 520ms;
+}
+.story[data-revealed] .polaroidRight::before {
+  animation: scribbleTape 420ms var(--scribble-ease) both 1100ms;
+}
+.story[data-revealed] .storyHeartTwo {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 700ms ease-out both 900ms;
+}
+/* У росчерка своя рамка кадров: общий scribbleFade вывел бы его на opacity 1
+   вместо статичных 0.38. */
+.story[data-revealed]::after {
+  animation: scribbleDoodle 900ms var(--scribble-ease) both 800ms;
+}
+
+.when[data-revealed] .looseHeart {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 720ms ease-out both 120ms;
+}
+.when[data-revealed] > p {
+  animation: scribbleRise 620ms var(--scribble-ease) both 240ms;
+}
+.when[data-revealed] .monthRow span {
+  animation: scribbleRise 600ms var(--scribble-ease) both 360ms;
+}
+.when[data-revealed] .monthRow span:nth-child(2) {
+  animation-delay: 440ms;
+}
+/* Дни листаются слева направо, выбранный обводится сердцем последним. */
+.when[data-revealed] .calendar > div {
+  animation: scribbleRise 500ms var(--scribble-ease) both 520ms;
+}
+.when[data-revealed] .calendar > div:nth-child(2) {
+  animation-delay: 570ms;
+}
+.when[data-revealed] .calendar > div:nth-child(3) {
+  animation-delay: 620ms;
+}
+.when[data-revealed] .calendar > div:nth-child(4) {
+  animation-delay: 670ms;
+}
+.when[data-revealed] .calendar > div:nth-child(5) {
+  animation-delay: 720ms;
+}
+.when[data-revealed] .calendar > div:nth-child(6) {
+  animation-delay: 770ms;
+}
+.when[data-revealed] .calendar > div:nth-child(7) {
+  animation-delay: 820ms;
+}
+.when[data-revealed] .calendar svg {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 760ms ease-out both 940ms;
+}
+.when[data-revealed] > time {
+  animation: scribbleRise 560ms var(--scribble-ease) both 1060ms;
+}
+
+.location[data-revealed] h3 {
+  animation: scribbleRise 600ms var(--scribble-ease) both 420ms;
+}
+.location[data-revealed] address {
+  animation: scribbleRise 600ms var(--scribble-ease) both 500ms;
+}
+.location[data-revealed] .venuePhoto {
+  --scribble-drop: 7deg;
+  animation: scribblePaste 800ms var(--scribble-ease) both 560ms;
+}
+.location[data-revealed] .venuePhoto::before {
+  animation: scribbleTape 420ms var(--scribble-ease) both 1180ms;
+}
+.location[data-revealed] .mapLink {
+  animation: scribbleStamp 560ms var(--scribble-ease) both 1000ms;
+}
+
+/* Пункт программы, его веха и отрезок пунктира идут одной волной: --scribble-row —
+   общая точка отсчёта для строки, потомки отсчитывают задержку от неё. */
+.program[data-revealed] li {
+  --scribble-row: 420ms;
+  animation: scribbleRise 560ms var(--scribble-ease) both var(--scribble-row);
+}
+.program[data-revealed] li:nth-child(2) {
+  --scribble-row: 520ms;
+}
+.program[data-revealed] li:nth-child(3) {
+  --scribble-row: 620ms;
+}
+.program[data-revealed] li:nth-child(4) {
+  --scribble-row: 720ms;
+}
+.program[data-revealed] li:nth-child(5) {
+  --scribble-row: 820ms;
+}
+.program[data-revealed] li:nth-child(n + 6) {
+  --scribble-row: 900ms;
+}
+.program[data-revealed] li svg {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 620ms ease-out both calc(var(--scribble-row) + 120ms);
+}
+.program[data-revealed] li::before {
+  animation: scribbleRail 640ms var(--scribble-ease) both calc(var(--scribble-row) + 200ms);
+}
+
+.sharedPaper[data-revealed] .marginNote {
+  animation: scribbleRise 620ms var(--scribble-ease) both 140ms;
+}
+.sharedPaper[data-revealed] .sharedBlock {
+  animation: scribbleRise 680ms var(--scribble-ease) both 280ms;
+}
+.sharedPaper[data-revealed] .sharedBlock :global([class*="swatchItem"]) {
+  animation: scribbleStamp 480ms var(--scribble-ease) both 520ms;
+}
+.sharedPaper[data-revealed] .sharedBlock :global([class*="swatchItem"]:nth-child(2)) {
+  animation-delay: 590ms;
+}
+.sharedPaper[data-revealed] .sharedBlock :global([class*="swatchItem"]:nth-child(3)) {
+  animation-delay: 660ms;
+}
+.sharedPaper[data-revealed] .sharedBlock :global([class*="swatchItem"]:nth-child(n + 4)) {
+  animation-delay: 730ms;
+}
+
+.details[data-revealed] .sharedBlock {
+  animation: scribbleRise 660ms var(--scribble-ease) both 420ms;
+}
+.details[data-revealed] .sharedBlock:nth-of-type(3) {
+  animation-delay: 520ms;
+}
+
+.rsvp[data-revealed] .rsvpHeart {
+  stroke-dasharray: 1;
+  animation: scribbleDraw 720ms ease-out both 120ms;
+}
+.rsvp[data-revealed] > p {
+  animation: scribbleRise 600ms var(--scribble-ease) both 480ms;
+}
+.rsvp[data-revealed] > time {
+  animation: scribbleRise 560ms var(--scribble-ease) both 560ms;
+}
+.rsvp[data-revealed] .rsvpForm {
+  animation: scribbleRise 680ms var(--scribble-ease) both 640ms;
+}
+
+.closing[data-revealed] .closingNote {
+  animation: scribbleRise 640ms var(--scribble-ease) both 140ms;
+}
+.closing[data-revealed] .closingPhoto {
+  --scribble-drop: -9deg;
+  animation: scribblePaste 800ms var(--scribble-ease) both 280ms;
+}
+.closing[data-revealed] .closingPhoto::before {
+  animation: scribbleTape 420ms var(--scribble-ease) both 900ms;
+}
+.closing[data-revealed] h2 {
+  animation: scribbleRise 620ms var(--scribble-ease) both 760ms;
+}
+.closing[data-revealed] > time {
+  animation: scribbleRise 560ms var(--scribble-ease) both 840ms;
+}
+.closing[data-revealed] > a {
+  animation: scribbleFade 560ms ease both 920ms;
+}
+
+@keyframes scribbleFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes scribbleRise {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+/* Снимок «приклеивают» в альбом: падает сверху с лишним наклоном и встаёт на место. */
+@keyframes scribblePaste {
+  from {
+    opacity: 0;
+    rotate: var(--scribble-drop, -6deg);
+    scale: 0.93;
+    translate: 0 26px;
+  }
+  to {
+    opacity: 1;
+    rotate: 0deg;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+/* Полоска ленты раскатывается от центра. */
+@keyframes scribbleTape {
+  from {
+    opacity: 0;
+    scale: 0 1;
+  }
+  to {
+    opacity: 1;
+    scale: 1 1;
+  }
+}
+/* Плашку прихлопывают как штамп — с небольшим перелётом. */
+@keyframes scribbleStamp {
+  from {
+    opacity: 0;
+    scale: 0.82;
+  }
+  62% {
+    opacity: 1;
+    scale: 1.04;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+/* Пунктир маршрута тянется сверху вниз к следующему пункту. */
+@keyframes scribbleRail {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+@keyframes scribbleDoodle {
+  from {
+    opacity: 0;
+    rotate: 12deg;
+    scale: 0.9;
+  }
+  to {
+    opacity: 0.38;
+    rotate: 0deg;
+    scale: 1;
+  }
+}
+/* Перо обводит контур: пути нормированы pathLength="1". */
+@keyframes scribbleDraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes noteIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-3deg);
+  }
+}
+@keyframes photoIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) rotate(4deg) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-1.5deg) scale(1);
+  }
+}
+@keyframes heartBeat {
+  0%,
+  70%,
+  100% {
+    scale: 1;
+  }
+  12% {
+    scale: 1.14;
+  }
+  24% {
+    scale: 1;
+  }
+}

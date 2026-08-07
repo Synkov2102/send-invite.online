@@ -36,7 +36,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const HERO_STATS = [
-  { value: "11", label: "готовых шаблонов" },
+  { value: "12", label: "готовых шаблонов" },
   { value: "10 мин", label: "до готовой ссылки" },
   { value: "1", label: "ссылка для гостей" },
 ] as const;

@@ -265,6 +265,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "lagoon-wave": "magical-wedding-daynigthmorning-376131",
   "minimal-paper": "wedding-romantic-leberch-262606",
   "midnight-memoir": "forever-starts-today-kaazoom-384989",
+  "handwritten-note": "wedding-valentines-paulyudin-182505",
   "silk-monogram": "invitation-wedding-leberch-375839",
 };
 
@@ -293,4 +294,19 @@ export function getTemplateMusicPreset(templateId: string) {
     musicTitle: track.title,
     musicUrl: track.audioUrl,
   };
+}
+
+/**
+ * Демо-трек какого-либо шаблона. Признак нужен при восстановлении черновика: такой трек
+ * гость не выбирал сам — он приехал с шаблона, открытого в прошлый раз, и на новом шаблоне
+ * должен смениться на его собственный. Свою загрузку и выбор из библиотеки это не задевает.
+ */
+export function isTemplateDemoMusicUrl(audioUrl: string) {
+  if (!audioUrl) {
+    return false;
+  }
+
+  return Object.values(templateMusicTrackIds).some(
+    (trackId) => musicTrackById.get(trackId)?.audioUrl === audioUrl,
+  );
 }

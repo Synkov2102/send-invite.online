@@ -63,5 +63,8 @@ export const sharedTemplateRenderers: Record<
     () => import("./minimal").then((module) => module.MinimalTemplate),
     { ssr: true },
   ),
+  scribble: dynamic(() => import("./scribble").then((module) => module.ScribbleTemplate), {
+    ssr: true,
+  }),
   silk: dynamic(() => import("./silk").then((module) => module.SilkTemplate), { ssr: true }),
 };

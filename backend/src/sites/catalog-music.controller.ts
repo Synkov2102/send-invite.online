@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Headers,
   NotFoundException,
   Param,
   Res,
@@ -14,12 +15,19 @@ export class CatalogMusicController {
   constructor(private readonly s3Storage: S3StorageService) {}
 
   @Get(":trackId")
-  async getTrack(@Param("trackId") trackId: string, @Res() response: Response) {
+  async getTrack(
+    @Param("trackId") trackId: string,
+    @Res() response: Response,
+    @Headers("range") range?: string,
+  ) {
+    let media;
+
     try {
-      const media = await this.s3Storage.getCatalogMusicObject(trackId);
-      sendServedMedia(response, { ...media, kind: "buffer" });
+      media = await this.s3Storage.getCatalogMusicStream(trackId, range);
     } catch {
       throw new NotFoundException("Track not found");
     }
+
+    sendServedMedia(response, { ...media, kind: "stream" });
   }
 }

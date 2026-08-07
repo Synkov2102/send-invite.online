@@ -1,3 +1,4 @@
+import type { Readable } from "stream";
 import { BadRequestException, NotFoundException } from "@nestjs/common";
 import sharp from "sharp";
 import { isS3ObjectRef, S3StorageService } from "../storage/s3-storage.service";
@@ -7,12 +8,22 @@ import { parseDataUrl } from "./media-utils";
 const IMMUTABLE_CACHE_CONTROL = "public, max-age=31536000, immutable";
 const WEBP_QUALITY = 82;
 
-export type ServedMedia = {
-  buffer: Buffer;
-  cacheControl: string;
-  contentType: string;
-  kind: "buffer";
-};
+export type ServedMedia =
+  | {
+      buffer: Buffer;
+      cacheControl: string;
+      contentType: string;
+      kind: "buffer";
+    }
+  | {
+      cacheControl: string;
+      contentLength?: number;
+      contentRange?: string;
+      contentType: string;
+      etag?: string;
+      kind: "stream";
+      stream: Readable;
+    };
 
 export class InviteMusicUploadError extends Error {
   constructor() {

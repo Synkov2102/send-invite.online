@@ -34,6 +34,7 @@ import {
   memoirImages,
   minimalImages,
   resolveTemplatePaletteId,
+  scribbleImages,
   silkImages,
   type InvitePalette,
 } from "@/lib/invite-theme";
@@ -48,6 +49,7 @@ import {
   saveEditorDraft,
   saveLocalMusic,
 } from "./editor-draft";
+import { getTemplateMusicPreset, isTemplateDemoMusicUrl } from "./music-tracks";
 import { getInitialInvite } from "./template-presets";
 import type { InvitationBuilderProps, SaveStatus } from "./types";
 import { getEditorStepErrors } from "./validation";
@@ -153,7 +155,9 @@ export function useInvitationBuilder({
                       ? chapterImages
                       : templateKind === "memoir"
                         ? memoirImages
-                        : inviteImages;
+                        : templateKind === "scribble"
+                          ? scribbleImages
+                          : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;
@@ -525,12 +529,24 @@ export function useInvitationBuilder({
 
     const timeout = window.setTimeout(() => {
       const normalizedDraftInvite = normalizeInviteState(draft.invite);
+      // Демо-музыка принадлежит шаблону, а не черновику: иначе трек первого открытого
+      // шаблона звучал бы на всех остальных. Свою загрузку и выбранный из библиотеки
+      // трек не трогаем — заменяем только чужое демо.
+      const inviteWithTemplateMusic =
+        !draft.hasLocalMusic && isTemplateDemoMusicUrl(normalizedDraftInvite.musicUrl)
+          ? {
+              ...normalizedDraftInvite,
+              ...getTemplateMusicPreset(template.id),
+              // Пресет включает музыку — но если гость её выключил, это его выбор.
+              musicEnabled: normalizedDraftInvite.musicEnabled,
+            }
+          : normalizedDraftInvite;
       const inviteFromDraft = initialPaletteId
         ? {
-            ...normalizedDraftInvite,
+            ...inviteWithTemplateMusic,
             paletteId: resolveTemplatePaletteId(template, initialPaletteId),
           }
-        : normalizedDraftInvite;
+        : inviteWithTemplateMusic;
       setInitialDraft(draft);
       setInvite(inviteFromDraft);
       setCustomPalette(draft.customPalette);
