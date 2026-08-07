@@ -629,7 +629,7 @@ ${renderCssVarsTable()}
 2. **Общий чат** — \`InvitationGroupChatBlock\` с props \`show\`, \`url\`, \`text\`, \`variant\`. Рендерить только если \`invite.showGroupChat\`.
 3. **Доп. информация** — \`InvitationAdditionalInfoBlock\` с props \`show\`, \`text\`, \`variant\`. Рендерить только если \`invite.showAdditionalInfo\`.
 4. **RSVP** — шаблон сам рисует заголовок, текст и дедлайн, затем \`InvitationRsvpForm\` с props \`rsvpDate\`, \`questions\`, \`variant\`. Рендерить только если \`invite.showRsvp\`.
-5. **Музыка** — \`InvitationMusicPlayer\` с props \`enabled\`, \`title\`, \`url\`.
+5. **Музыка** — \`InvitationMusicPlayer\` с props \`enabled\`, \`title\`, \`url\`. **Вид плеера единый во всех шаблонах и не настраивается.** Стили лежат в \`frontend/src/styles/invitation-base.module.css\` (\`.invite-music\`, \`.invite-music__toggle\`, \`.invite-music__copy\`) — тёмная плашка с белым текстом поверх любой палитры. Не пиши для него правил \`:global(.published-site--<kind> .invite-music…)\`.
 
 Импорт: \`@/invitation-templates/components\`.
 
@@ -728,6 +728,7 @@ frontend/src/invitation-templates/<slug>/
 ## Что нельзя делать
 
 - Не дублировать логику RSVP/дресс-кода/чата/доп. информации/плеера с нуля, если можно использовать shared components.
+- Не перекрашивать музыкальный плеер под палитру шаблона. Он рендерится **вне** \`.shell\`, поэтому переменные \`--<kind>-*\` там не определены, а частичный оверрайд (перекрасили фон плашки, но не иконку и подпись) даёт белое на белом. Вид плеера — общий для всех шаблонов, менять его можно только в \`invitation-base.module.css\` сразу для всех.
 - Не читать \`paletteId\` напрямую — только \`inviteVars\`.
 - Не предполагать фиксированную длину \`schedule\` или \`rsvpQuestions\`.
 - Не ломать доступность: alt у изображений, семантические \`section\`, читаемый контраст.

@@ -7,6 +7,10 @@
   background: var(--scribble-bg);
   color: var(--scribble-ink);
   font-family: var(--font-invite-sans), Arial, sans-serif;
+  /* Имена, площадка, описания — произвольный ввод. Без принудительного переноса длинное
+     слово раздувает min-content, неявные грид-колонки секций растягиваются шире карточки,
+     и текст молча уезжает под overflow: hidden. */
+  overflow-wrap: anywhere;
 }
 
 /* На публичном сайте контейнер задаёт article ширину 100% !important —
@@ -18,12 +22,6 @@
 
 .shell * {
   box-sizing: border-box;
-}
-/* Имена, площадка, описания — произвольный ввод. Без принудительного переноса длинное слово
-   раздувает min-content, неявные грид-колонки секций растягиваются шире карточки, и текст
-   молча уезжает под overflow:hidden шелла. */
-.shell {
-  overflow-wrap: anywhere;
 }
 .shell section {
   position: relative;
@@ -218,6 +216,8 @@
   background: var(--scribble-paper);
   content: "";
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H120 V6 q-20 10 -40 0 t-40 0 t-40 0 Z' fill='%23000'/%3E%3C/svg%3E")
+    0 0 / 100% 100% no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12' preserveAspectRatio='none'%3E%3Cpath d='M0 0 H120 V6 q-20 10 -40 0 t-40 0 t-40 0 Z' fill='%23000'/%3E%3C/svg%3E")
     0 0 / 100% 100% no-repeat;
 }
 .location::before,
@@ -742,15 +742,11 @@
   );
 }
 
-:global(.published-site--scribble .invite-music) {
-  border-color: color-mix(in srgb, var(--invite-accent) 24%, transparent);
-  background: color-mix(in srgb, var(--invite-surface) 92%, transparent);
-  color: var(--invite-ink);
-}
+/* Плеер оставляем в базовом виде (invitation-base): перекрашивать его тут нечем —
+   он рендерится вне .shell, где переменные --scribble-* не определены. */
 .mapLink:focus-visible,
 .closing > a:focus-visible,
-.rsvpForm :global(button:focus-visible),
-:global(.published-site--scribble .invite-music__toggle:focus-visible) {
+.rsvpForm :global(button:focus-visible) {
   outline: 2px solid var(--scribble-accent);
   outline-offset: 3px;
 }
