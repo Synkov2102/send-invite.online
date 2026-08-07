@@ -34,6 +34,7 @@ import {
   memoirImages,
   minimalImages,
   resolveTemplatePaletteId,
+  scribbleImages,
   silkImages,
   type InvitePalette,
 } from "@/lib/invite-theme";
@@ -153,7 +154,9 @@ export function useInvitationBuilder({
                       ? chapterImages
                       : templateKind === "memoir"
                         ? memoirImages
-                        : inviteImages;
+                        : templateKind === "scribble"
+                          ? scribbleImages
+                          : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

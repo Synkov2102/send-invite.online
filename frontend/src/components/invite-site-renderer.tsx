@@ -25,6 +25,7 @@ import {
   inviteImages,
   memoirImages,
   minimalImages,
+  scribbleImages,
   silkImages,
 } from "@/lib/invite-theme";
 import baseStyles from "@/styles/invitation-base.module.css";
@@ -75,7 +76,9 @@ export function InviteSiteRenderer({
                         ? chapterImages
                         : templateKind === "memoir"
                           ? memoirImages
-                          : inviteImages;
+                          : templateKind === "scribble"
+                            ? scribbleImages
+                            : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;

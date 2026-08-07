@@ -307,6 +307,9 @@
   display: grid;
   min-width: 0;
   gap: 3px;
+  /* Строки внутри — grid-элементы с min-width: auto, поэтому длинное слово без пробелов
+     раздувает их шире колонки, и в две колонки варианты наезжают друг на друга. */
+  overflow-wrap: anywhere;
 }
 
 .optionText strong {

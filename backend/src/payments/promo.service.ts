@@ -39,8 +39,15 @@ export type PromoValidationResult = PromoValidationFailure | PromoValidationSucc
 
 const PUBLIC_PROMO_ERROR = "Промокод недействителен или уже недоступен.";
 
+// Витринную цену фронт запрашивает на каждый рендер динамических страниц
+// (/templates, /editor) — без кэша это сотни одинаковых чтений Mongo.
+// Оплата берёт цену из getSitePricing напрямую, мимо кэша.
+const PUBLIC_PRICING_TTL_MS = 60_000;
+
 @Injectable()
 export class PromoService {
+  private publicPricingCache: { expiresAt: number; value: SitePricing } | null = null;
+
   constructor(
     private readonly promoCodes: PromoCodeStore,
     private readonly events: PromoCodeEventStore,
@@ -65,7 +72,17 @@ export class PromoService {
 
   /** Public pricing for display (e.g. the homepage hero price). */
   async getPublicPricing(): Promise<SitePricing> {
-    return this.getSitePricing();
+    const now = Date.now();
+
+    if (this.publicPricingCache && this.publicPricingCache.expiresAt > now) {
+      return this.publicPricingCache.value;
+    }
+
+    const pricing = await this.getSitePricing();
+
+    this.publicPricingCache = { expiresAt: now + PUBLIC_PRICING_TTL_MS, value: pricing };
+
+    return pricing;
   }
 
   async validateForUser(

@@ -196,6 +196,49 @@ describe("PromoService", () => {
         originalPriceRub: 4000,
       });
     });
+
+    it("serves repeat reads from cache", async () => {
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 2990, originalPriceRub: 4000 });
+
+      await service.getPublicPricing();
+      await service.getPublicPricing();
+
+      expect(sitePricing.get).toHaveBeenCalledTimes(1);
+    });
+
+    it("re-reads pricing once the cache expires", async () => {
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 2990, originalPriceRub: 4000 });
+      const nowSpy = jest.spyOn(Date, "now").mockReturnValue(1_000_000);
+
+      await service.getPublicPricing();
+      nowSpy.mockReturnValue(1_000_000 + 60_001);
+
+      await expect(service.getPublicPricing()).resolves.toEqual({
+        currentPriceRub: 2990,
+        originalPriceRub: 4000,
+      });
+      expect(sitePricing.get).toHaveBeenCalledTimes(2);
+
+      nowSpy.mockRestore();
+    });
+
+    it("never lets the display cache decide the checkout price", async () => {
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 2990, originalPriceRub: 4000 });
+      await service.getPublicPricing();
+
+      sitePricing.get.mockResolvedValue({ currentPriceRub: 1990, originalPriceRub: 4000 });
+
+      const result = await service.resolveForCheckout(undefined, "user-1", {
+        ip: null,
+        siteId: "site-1",
+      });
+
+      expect(result).toEqual({
+        ok: true,
+        promo: null,
+        pricing: { amount: "1990.00", discountAmount: "0.00", originalAmount: "1990.00" },
+      });
+    });
   });
 
   describe("reserveForNewOrder", () => {

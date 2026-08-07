@@ -3,6 +3,11 @@ import { randomUUID } from "crypto";
 import { Injectable } from "@nestjs/common";
 import { LogStore } from "../logs/log.store";
 
+// Медиа и витринную цену фронт дёргает постоянно; успешные ответы по ним
+// топят в логах реальные события. Ошибки на этих путях логируются как обычно.
+const quietPathPattern =
+  /^\/api\/(?:catalog-music\/|blog-images\/|payments\/pricing\b|sites\/[^/]+\/(?:images\/|music\b))/;
+
 @Injectable()
 export class RequestLoggerMiddleware {
   constructor(private readonly logStore: LogStore) {}
@@ -20,6 +25,10 @@ export class RequestLoggerMiddleware {
       const { method } = req;
       const path = req.originalUrl || req.url;
       const statusCode = res.statusCode;
+
+      if (statusCode < 400 && quietPathPattern.test(path)) {
+        return;
+      }
 
       // Console log is enough for most cases; Mongo gets only failures.
       console.log(

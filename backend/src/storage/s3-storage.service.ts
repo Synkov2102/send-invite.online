@@ -1,4 +1,5 @@
 import { randomUUID } from "crypto";
+import type { Readable } from "stream";
 import { Injectable, type OnModuleDestroy } from "@nestjs/common";
 import {
   DeleteObjectCommand,
@@ -16,6 +17,8 @@ const catalogMusicKeyPrefix = "catalog-music/";
 export const blogImageKeyPrefix = "blog-images/";
 
 const catalogTrackIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** Только простой одиночный диапазон: всё остальное отдаём целиком, без 416. */
+const singleByteRangePattern = /^bytes=\d*-\d*$/;
 /** The public id is the S3 key without its prefix, so no lookup is needed to serve it. */
 const blogImageIdPattern = /^[a-z0-9-]+\.[a-z0-9]+$/;
 
@@ -316,7 +319,9 @@ export class S3StorageService implements OnModuleDestroy {
     };
   }
 
-  async getCatalogMusicObject(trackId: string) {
+  // Треки каталога отдаются потоком: файл целиком в heap не поднимается,
+  // а Range позволяет плееру перематывать без повторной загрузки.
+  async getCatalogMusicStream(trackId: string, range?: string) {
     if (!catalogTrackIdPattern.test(trackId)) {
       throw new Error("Invalid catalog track id.");
     }
@@ -328,13 +333,17 @@ export class S3StorageService implements OnModuleDestroy {
       new GetObjectCommand({
         Bucket: config.bucket,
         Key: key,
+        Range: range && singleByteRangePattern.test(range) ? range : undefined,
       }),
     );
 
     return {
-      buffer: await readObjectBody(response.Body),
       cacheControl: response.CacheControl ?? "public, max-age=31536000, immutable",
+      contentLength: response.ContentLength,
+      contentRange: response.ContentRange,
       contentType: response.ContentType ?? "audio/mpeg",
+      etag: response.ETag,
+      stream: response.Body as Readable,
     };
   }
 }

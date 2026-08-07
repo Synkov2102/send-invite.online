@@ -265,6 +265,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "lagoon-wave": "magical-wedding-daynigthmorning-376131",
   "minimal-paper": "wedding-romantic-leberch-262606",
   "midnight-memoir": "forever-starts-today-kaazoom-384989",
+  "handwritten-note": "wedding-valentines-paulyudin-182505",
   "silk-monogram": "invitation-wedding-leberch-375839",
 };
 
