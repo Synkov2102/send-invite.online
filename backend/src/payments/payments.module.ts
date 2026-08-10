@@ -8,6 +8,7 @@ import { PromoCodeEventStore } from "./promo-code-event.store";
 import { PromoCodeStore } from "./promo-code.store";
 import { PromoService } from "./promo.service";
 import { PromoUserUsageStore } from "./promo-user-usage.store";
+import { RobokassaOpStateClient } from "./robokassa-op-state";
 import { SitePricingStore } from "./site-pricing.store";
 
 @Module({
@@ -20,6 +21,7 @@ import { SitePricingStore } from "./site-pricing.store";
     PromoCodeStore,
     PromoService,
     PromoUserUsageStore,
+    RobokassaOpStateClient,
     SitePricingStore,
   ],
 })

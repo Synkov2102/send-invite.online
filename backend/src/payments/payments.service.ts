@@ -16,18 +16,25 @@ import {
 } from "@invite/shared";
 import type { AuthUser } from "../auth/auth.types";
 import { SitesService } from "../sites/sites.service";
-import { PaymentOrderStore, type PaymentOrder } from "./payment-order.store";
+import {
+  PAYMENT_PENDING_TTL_MS,
+  PaymentOrderStore,
+  type PaymentOrder,
+} from "./payment-order.store";
 import { PromoService } from "./promo.service";
 import type { PromoCode } from "./promo-code.store";
+import {
+  ROBOKASSA_RESULT_CODE,
+  ROBOKASSA_STATE_CODE,
+  RobokassaOpStateClient,
+  type RobokassaOperationState,
+} from "./robokassa-op-state";
 import {
   readRobokassaField,
   readRobokassaShpOrder,
   type RobokassaPayload,
 } from "./robokassa-payload";
-import {
-  createRobokassaSignature,
-  isRobokassaSignatureValid,
-} from "./robokassa-signature";
+import { createRobokassaSignature, isRobokassaSignatureValid } from "./robokassa-signature";
 
 type SuccessConfirmBody = {
   invId?: unknown;
@@ -37,6 +44,14 @@ type SuccessConfirmBody = {
 };
 
 const STALE_PENDING_SWEEP_MS = 5 * 60 * 1000;
+const PENDING_RECONCILE_LIMIT = 100;
+/** Статус заказа опрашивается по чтению; дебаунс бережёт XML-интерфейс от поллинга фронта. */
+const PENDING_RECONCILE_DEBOUNCE_MS = 5_000;
+const RECONCILE_DEBOUNCE_ENTRIES_LIMIT = 5_000;
+
+function amountsMatch(left: number, right: number) {
+  return Number.isFinite(left) && Number.isFinite(right) && Math.abs(left - right) <= 0.000001;
+}
 
 function readString(payload: RobokassaPayload, ...keys: string[]): string {
   return readRobokassaField(payload, ...keys);
@@ -54,11 +69,7 @@ function getPaymentPasswords(testMode: boolean) {
       };
 }
 
-function samePromoSnapshot(
-  order: PaymentOrder,
-  pricing: PromoPricing,
-  promo: PromoCode | null,
-) {
+function samePromoSnapshot(order: PaymentOrder, pricing: PromoPricing, promo: PromoCode | null) {
   return (
     order.amount === pricing.amount &&
     order.originalAmount === pricing.originalAmount &&
@@ -71,18 +82,20 @@ function samePromoSnapshot(
 @Injectable()
 export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(PaymentsService.name);
+  private readonly reconcileCheckedAt = new Map<string, number>();
   private stalePendingTimer: ReturnType<typeof setInterval> | null = null;
 
   constructor(
     private readonly orders: PaymentOrderStore,
     private readonly sites: SitesService,
     private readonly promoService: PromoService,
+    private readonly opState: RobokassaOpStateClient,
   ) {}
 
   onModuleInit() {
-    void this.sweepStalePendingReservations();
+    void this.sweepPendingOrders();
     this.stalePendingTimer = setInterval(() => {
-      void this.sweepStalePendingReservations();
+      void this.sweepPendingOrders();
     }, STALE_PENDING_SWEEP_MS);
   }
 
@@ -94,6 +107,13 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   }
 
   private async sweepStalePendingReservations() {
+    // Слепая отмена по TTL убивает платежи, которые Robokassa ещё подтверждает
+    // (СБП зачисляется асинхронно). Когда доступен опрос состояния, судьбу
+    // заказа решает reconcilePendingOrder, а не возраст записи.
+    if (this.getReconcileConfig()) {
+      return;
+    }
+
     try {
       const released = await this.promoService.expireStalePendingReservations();
       if (released > 0) {
@@ -106,6 +126,176 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
         }`,
       );
     }
+  }
+
+  private async sweepPendingOrders() {
+    if (!this.getReconcileConfig()) {
+      await this.sweepStalePendingReservations();
+      return;
+    }
+
+    try {
+      const pending = await this.orders.listPendingOrders(PENDING_RECONCILE_LIMIT);
+
+      for (const order of pending) {
+        await this.reconcilePendingOrder(order);
+      }
+    } catch (error) {
+      this.logger.warn(
+        `Failed to reconcile pending orders: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+  }
+
+  /**
+   * Опрос состояния платежа у Robokassa. Result URL остаётся основным каналом,
+   * но для СБП он единственный: плательщик уходит в приложение банка и в браузер
+   * не возвращается, поэтому подтверждения через Success URL не будет вовсе.
+   */
+  private async reconcilePendingOrder(order: PaymentOrder) {
+    const config = this.getReconcileConfig();
+
+    if (!config || order.status !== "pending") {
+      return { order, state: null };
+    }
+
+    const state = await this.opState.fetchOperationState({
+      invId: order.invId,
+      merchantLogin: config.merchantLogin,
+      password2: config.password2,
+    });
+
+    if (!state) {
+      return { order, state };
+    }
+
+    if (
+      state.resultCode === ROBOKASSA_RESULT_CODE.ok &&
+      state.stateCode === ROBOKASSA_STATE_CODE.completed
+    ) {
+      // Сумму запросили мы сами по своей подписи, так что это проверка на
+      // рассинхрон, а не защита от подделки: отсутствие OutSum не повод
+      // держать оплаченный заказ в pending.
+      if (state.outSum !== null && !amountsMatch(Number(order.amount), Number(state.outSum))) {
+        this.logger.warn(
+          `OpStateExt amount mismatch for order ${order.id}: order=${order.amount}, robokassa=${state.outSum}`,
+        );
+        return { order, state };
+      }
+
+      const paid = await this.finalizePaidOrder(order, state.paymentMethod);
+
+      if (paid) {
+        this.reconcileCheckedAt.delete(order.id);
+        return { order: paid, state };
+      }
+
+      return { order, state };
+    }
+
+    if (this.isDeadOperation(state, order)) {
+      const cancelled = await this.orders.cancelOrderIfPending(order.id);
+
+      if (cancelled) {
+        await this.promoService.releaseReservations([cancelled]);
+        this.reconcileCheckedAt.delete(order.id);
+        this.logger.log(
+          `Order ${order.id} cancelled: Robokassa state=${state.stateCode ?? "none"}, result=${state.resultCode}`,
+        );
+        return { order: cancelled, state };
+      }
+    }
+
+    return { order, state };
+  }
+
+  private async reconcileLatestPendingForSite(siteId: string) {
+    if (!this.getReconcileConfig()) {
+      return null;
+    }
+
+    const pending = await this.orders.getLatestPendingOrderForSite(siteId);
+
+    return pending ? this.reconcilePendingOrder(pending) : null;
+  }
+
+  /** Деньги уже в пути либо получены — такой заказ отменять нельзя. */
+  private isPaymentInFlight(state: RobokassaOperationState | null) {
+    if (!state || state.resultCode !== ROBOKASSA_RESULT_CODE.ok) {
+      return false;
+    }
+
+    return (
+      state.stateCode === ROBOKASSA_STATE_CODE.hold ||
+      state.stateCode === ROBOKASSA_STATE_CODE.crediting ||
+      state.stateCode === ROBOKASSA_STATE_CODE.suspended ||
+      state.stateCode === ROBOKASSA_STATE_CODE.completed
+    );
+  }
+
+  /** Оплаты не будет: операцию отменили, деньги вернули либо до неё не дошли. */
+  private isDeadOperation(state: RobokassaOperationState, order: PaymentOrder) {
+    const expired = Date.parse(order.createdAt) + PAYMENT_PENDING_TTL_MS <= Date.now();
+
+    if (state.resultCode === ROBOKASSA_RESULT_CODE.ok) {
+      if (
+        state.stateCode === ROBOKASSA_STATE_CODE.cancelled ||
+        state.stateCode === ROBOKASSA_STATE_CODE.refunded
+      ) {
+        return true;
+      }
+
+      return state.stateCode === ROBOKASSA_STATE_CODE.initialized && expired;
+    }
+
+    // Операции нет: до платёжной страницы Robokassa так и не дошли.
+    return state.resultCode === ROBOKASSA_RESULT_CODE.operationNotFound && expired;
+  }
+
+  /**
+   * Опрос при чтении статуса — то, что делает поллинг фронта самовосстанавливающимся.
+   * Намеренно без await: наш ответ не должен зависеть от времени ответа Robokassa,
+   * а результат заберёт следующий опрос фронта через пару секунд.
+   */
+  private scheduleReconcileOnRead(order: PaymentOrder) {
+    if (order.status !== "pending" || !this.getReconcileConfig()) {
+      return;
+    }
+
+    const now = Date.now();
+
+    if (now - (this.reconcileCheckedAt.get(order.id) ?? 0) < PENDING_RECONCILE_DEBOUNCE_MS) {
+      return;
+    }
+
+    if (this.reconcileCheckedAt.size >= RECONCILE_DEBOUNCE_ENTRIES_LIMIT) {
+      this.reconcileCheckedAt.clear();
+    }
+
+    this.reconcileCheckedAt.set(order.id, now);
+
+    void this.reconcilePendingOrder(order).catch((error: unknown) => {
+      this.logger.warn(
+        `Failed to reconcile order ${order.id}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    });
+  }
+
+  private getReconcileConfig() {
+    const merchantLogin = process.env.ROBOKASSA_MERCHANT_LOGIN;
+
+    // OpStateExt не отдаёт информацию по тестовым платежам.
+    if (!merchantLogin || process.env.ROBOKASSA_TEST_MODE === "true") {
+      return null;
+    }
+
+    const { password2 } = getPaymentPasswords(false);
+
+    return password2 ? { merchantLogin, password2 } : null;
   }
 
   getPricing() {
@@ -142,8 +332,19 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       throw new BadRequestException({ error: parsed.error });
     }
 
-    const { promoCode: rawPromoCode, site: sitePayload, siteId: rawSiteId } = parsed.payload;
+    const {
+      email: providedEmail,
+      promoCode: rawPromoCode,
+      site: sitePayload,
+      siteId: rawSiteId,
+    } = parsed.payload;
     const siteId = rawSiteId ?? null;
+    // Yandex ID отдаёт аккаунты без почты — тогда её спрашивает форма оплаты.
+    const receiptEmail = user.email?.trim() || providedEmail || null;
+    // Платёж по прошлой попытке мог дойти, пока пользователь оформлял новую —
+    // для СБП это минуты. Сверяемся до updateDraftForCheckout: если заказ
+    // оплатился, тот откажет понятным «Этот сайт уже оплачен».
+    const previousPending = siteId ? await this.reconcileLatestPendingForSite(siteId) : null;
     const site = siteId
       ? await this.sites.updateDraftForCheckout(user.id, siteId, sitePayload)
       : await this.sites.createDraftForCheckout(sitePayload, user.id);
@@ -158,12 +359,29 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     }
 
     const { pricing, promo } = resolved;
+
+    // Без адреса Robokassa не сформирует чек, и операция зависает, не дойдя до
+    // Result URL. Бесплатной публикации по промокоду чек не нужен.
+    if (Number(pricing.amount) > 0 && !receiptEmail) {
+      throw new BadRequestException({
+        error: "Укажите email — на него придёт чек об оплате.",
+      });
+    }
+
     const existingPending = await this.orders.getLatestPendingOrderForSite(site.id);
     let order: PaymentOrder;
 
     if (existingPending && samePromoSnapshot(existingPending, pricing, promo)) {
       order = existingPending;
     } else {
+      // Отмена ниже сделала бы платёж непроводимым: completePayment откажет
+      // отменённому заказу, а деньги уже списаны.
+      if (this.isPaymentInFlight(previousPending?.state ?? null)) {
+        throw new BadRequestException({
+          error: "Предыдущий платёж ещё обрабатывается. Подождите пару минут и обновите страницу.",
+        });
+      }
+
       const cancelled = await this.orders.cancelPendingOrdersForSite(site.id);
       await this.promoService.releaseReservations(cancelled);
 
@@ -183,7 +401,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
         order = await this.orders.createOrder({
           amount: pricing.amount,
           discountAmount: pricing.discountAmount,
-          email: user.email,
+          email: receiptEmail,
           originalAmount: pricing.originalAmount,
           ownerId: user.id,
           promoCode: promo?.code ?? null,
@@ -236,7 +454,9 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
 
     return {
       action: "https://auth.robokassa.ru/Merchant/Index.aspx",
-      fields: this.createPaymentFields(order, user.email),
+      // Переиспользованный pending мог быть создан до того, как пользователь
+      // ввёл почту, — в форму всегда идёт актуальная.
+      fields: this.createPaymentFields(order, receiptEmail),
       free: false as const,
       order: {
         amount: order.amount,
@@ -257,6 +477,8 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       throw new NotFoundException({ error: "Заказ не найден." });
     }
 
+    this.scheduleReconcileOnRead(order);
+
     return this.toOwnedOrderStatusResponse(order);
   }
 
@@ -266,6 +488,8 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     if (!order) {
       throw new NotFoundException({ error: "Заказ не найден." });
     }
+
+    this.scheduleReconcileOnRead(order);
 
     return this.toPublicOrderStatusResponse(order);
   }
@@ -291,38 +515,14 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   }
 
   async processResult(payload: RobokassaPayload) {
-    const outSum = readString(payload, "OutSum", "outSum");
-    const invIdRaw = readString(payload, "InvId", "InvID", "invoiceID");
-    const signature = readString(payload, "SignatureValue", "signatureValue");
-    const orderId = readRobokassaShpOrder(payload);
-    const paymentMethod = readString(payload, "PaymentMethod") || null;
-    const invId = Number(invIdRaw);
-
-    if (!outSum || !Number.isSafeInteger(invId) || invId < 1 || !signature || !orderId) {
-      this.logger.warn(
-        `Invalid Result URL payload: outSum=${Boolean(outSum)}, invId=${invIdRaw}, signature=${Boolean(signature)}, orderId=${Boolean(orderId)}`,
-      );
-      throw new BadRequestException("Invalid payment notification.");
-    }
-
-    const config = this.getConfig();
-    const expectedSignature = createRobokassaSignature([
-      outSum,
-      invIdRaw,
-      config.password2,
-      `Shp_order=${orderId}`,
-    ]);
-
-    if (!isRobokassaSignatureValid(expectedSignature, signature)) {
-      this.logger.warn(`Invalid Result URL signature for order ${orderId}, invId ${invIdRaw}`);
-      throw new UnauthorizedException("Invalid payment signature.");
-    }
-
-    return this.completePayment({
-      invIdRaw,
-      orderId,
-      outSum,
-      paymentMethod,
+    return this.verifyAndComplete({
+      channel: "Result URL",
+      invIdRaw: readString(payload, "InvId", "InvID", "invoiceID"),
+      orderId: readRobokassaShpOrder(payload),
+      outSum: readString(payload, "OutSum", "outSum"),
+      password: this.getConfig().password2,
+      paymentMethod: readString(payload, "PaymentMethod") || null,
+      signature: readString(payload, "SignatureValue", "signatureValue"),
     });
   }
 
@@ -332,34 +532,66 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     }
 
     const payload = body as SuccessConfirmBody;
-    const outSum = typeof payload.outSum === "string" ? payload.outSum.trim() : "";
-    const invIdRaw = typeof payload.invId === "string" ? payload.invId.trim() : "";
-    const signature = typeof payload.signature === "string" ? payload.signature.trim() : "";
-    const orderId = typeof payload.orderId === "string" ? payload.orderId.trim() : "";
-    const invId = Number(invIdRaw);
+    const readField = (value: unknown) => (typeof value === "string" ? value.trim() : "");
 
-    if (!outSum || !Number.isSafeInteger(invId) || invId < 1 || !signature || !orderId) {
-      throw new BadRequestException("Invalid success confirmation.");
+    return this.verifyAndComplete({
+      channel: "Success URL",
+      invIdRaw: readField(payload.invId),
+      orderId: readField(payload.orderId),
+      outSum: readField(payload.outSum),
+      password: this.getConfig().password1,
+      paymentMethod: null,
+      signature: readField(payload.signature),
+    });
+  }
+
+  /**
+   * Общая проверка обоих каналов подтверждения: различаются они только
+   * источником полей и паролем (Result URL — Password2, Success URL — Password1).
+   */
+  private async verifyAndComplete(input: {
+    channel: "Result URL" | "Success URL";
+    invIdRaw: string;
+    orderId: string;
+    outSum: string;
+    password: string;
+    paymentMethod: string | null;
+    signature: string;
+  }) {
+    const invId = Number(input.invIdRaw);
+
+    if (
+      !input.outSum ||
+      !Number.isSafeInteger(invId) ||
+      invId < 1 ||
+      !input.signature ||
+      !input.orderId
+    ) {
+      this.logger.warn(
+        `Invalid ${input.channel} payload: outSum=${Boolean(input.outSum)}, invId=${input.invIdRaw}, signature=${Boolean(input.signature)}, orderId=${Boolean(input.orderId)}`,
+      );
+      throw new BadRequestException("Invalid payment notification.");
     }
 
-    const config = this.getConfig();
     const expectedSignature = createRobokassaSignature([
-      outSum,
-      invIdRaw,
-      config.password1,
-      `Shp_order=${orderId}`,
+      input.outSum,
+      input.invIdRaw,
+      input.password,
+      `Shp_order=${input.orderId}`,
     ]);
 
-    if (!isRobokassaSignatureValid(expectedSignature, signature)) {
-      this.logger.warn(`Invalid Success URL signature for order ${orderId}, invId ${invIdRaw}`);
+    if (!isRobokassaSignatureValid(expectedSignature, input.signature)) {
+      this.logger.warn(
+        `Invalid ${input.channel} signature for order ${input.orderId}, invId ${input.invIdRaw}`,
+      );
       throw new UnauthorizedException("Invalid payment signature.");
     }
 
     return this.completePayment({
-      invIdRaw,
-      orderId,
-      outSum,
-      paymentMethod: null,
+      invIdRaw: input.invIdRaw,
+      orderId: input.orderId,
+      outSum: input.outSum,
+      paymentMethod: input.paymentMethod,
     });
   }
 
@@ -368,31 +600,16 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       throw new BadRequestException({ error: "Заказ недоступен для оплаты." });
     }
 
-    if (order.status === "pending") {
-      const paid = await this.orders.markPaidIfPending(order.invId, "promo_free");
+    // Здесь промокод и есть оплата, поэтому неудачное подтверждение резерва —
+    // отказ, а не примечание в логе, как на платном пути.
+    const paidOrder = await this.finalizePaidOrder(order, "promo_free", {
+      requirePromoConfirmation: true,
+    });
 
-      if (!paid) {
-        const current = await this.orders.getOrderById(order.id);
-
-        if (current?.status !== "paid") {
-          throw new BadRequestException({ error: "Не удалось применить промокод." });
-        }
-      }
-    }
-
-    const paidOrder = await this.orders.getOrderById(order.id);
-
-    if (!paidOrder || paidOrder.status !== "paid") {
+    if (!paidOrder) {
       throw new BadRequestException({ error: "Не удалось применить промокод." });
     }
 
-    const confirmed = await this.promoService.confirmReservationForPaidOrder(paidOrder);
-
-    if (!confirmed.ok) {
-      throw new BadRequestException({ error: "Не удалось применить промокод." });
-    }
-
-    await this.sites.publishAfterPayment(order.siteId);
     this.logger.log(`Free promo checkout completed for order ${order.id}, site ${order.siteId}`);
   }
 
@@ -404,29 +621,72 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
   }) {
     const invId = Number(input.invIdRaw);
     const order = await this.orders.getOrderByInvoice(invId);
-    const paidAmount = Number(input.outSum);
-    const orderAmount = order ? Number(order.amount) : Number.NaN;
-    const amountMatches =
-      Number.isFinite(paidAmount) &&
-      Number.isFinite(orderAmount) &&
-      Math.abs(orderAmount - paidAmount) <= 0.000001;
 
-    if (!order || order.id !== input.orderId || !amountMatches) {
+    if (
+      !order ||
+      order.id !== input.orderId ||
+      !amountsMatch(Number(order.amount), Number(input.outSum))
+    ) {
+      this.logger.warn(`Payment mismatch for order ${input.orderId}, invId ${input.invIdRaw}`);
+      throw new BadRequestException("Payment does not match the order.");
+    }
+
+    const payable = order.status === "cancelled" ? await this.reviveCancelledOrder(order) : order;
+
+    if (!payable) {
+      throw new BadRequestException("Payment does not match the order.");
+    }
+
+    const paidOrder = await this.finalizePaidOrder(payable, input.paymentMethod);
+
+    if (!paidOrder) {
+      throw new BadRequestException("Payment does not match the order.");
+    }
+
+    return `OK${input.invIdRaw}`;
+  }
+
+  /**
+   * Деньги пришли по заказу, который успели отменить (повторный checkout,
+   * пока платёж шёл). Отказать нельзя — списание уже произошло. Оживляем,
+   * если по сайту нет другого оплаченного заказа: иначе это двойная оплата
+   * и разбираться с ней надо возвратом, а не публикацией.
+   */
+  private async reviveCancelledOrder(order: PaymentOrder) {
+    const alreadyPaid = await this.orders.getPaidOrderForSite(order.siteId);
+
+    if (alreadyPaid) {
       this.logger.warn(
-        `Payment mismatch for order ${input.orderId}, invId ${input.invIdRaw}`,
+        `Payment for cancelled order ${order.id}: site ${order.siteId} is already paid by order ${alreadyPaid.id}`,
       );
-      throw new BadRequestException("Payment does not match the order.");
+      return null;
     }
 
-    if (order.status === "cancelled") {
-      this.logger.warn(`Payment for cancelled order ${order.id}, invId ${input.invIdRaw}`);
-      throw new BadRequestException("Payment does not match the order.");
+    const revived = await this.orders.restoreCancelledToPending(order.id);
+
+    if (!revived) {
+      this.logger.warn(`Failed to revive cancelled order ${order.id}`);
+      return null;
     }
 
+    // Отмена освободила промо-слот; без возврата confirmReservationForPaidOrder
+    // спишет промокод, не заняв слот обратно.
+    await this.promoService.reclaimReservationForOrder(revived);
+    this.logger.log(`Cancelled order ${order.id} revived: payment arrived after cancellation`);
+
+    return revived;
+  }
+
+  /** Общий финал всех трёх путей: Result URL, опроса состояния и бесплатного промо. */
+  private async finalizePaidOrder(
+    order: PaymentOrder,
+    paymentMethod: string | null,
+    options: { requirePromoConfirmation?: boolean } = {},
+  ) {
     let paidOrder =
       order.status === "paid"
         ? order
-        : await this.orders.markPaidIfPending(invId, input.paymentMethod);
+        : await this.orders.markPaidIfPending(order.invId, paymentMethod);
 
     if (!paidOrder) {
       // Re-read: another worker may have paid, or order was cancelled mid-flight.
@@ -437,21 +697,24 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
       this.logger.warn(
         `Payment completion refused for order ${order.id}: status=${paidOrder?.status ?? "missing"}`,
       );
-      throw new BadRequestException("Payment does not match the order.");
+      return null;
     }
 
-    await this.promoService.confirmReservationForPaidOrder(paidOrder);
+    const confirmed = await this.promoService.confirmReservationForPaidOrder(paidOrder);
+
+    if (!confirmed.ok && options.requirePromoConfirmation) {
+      return null;
+    }
+
     await this.sites.publishAfterPayment(paidOrder.siteId);
     this.logger.log(`Payment completed for order ${paidOrder.id}, site ${paidOrder.siteId}`);
-    return `OK${input.invIdRaw}`;
+
+    return paidOrder;
   }
 
   private createPaymentFields(order: PaymentOrder, email: string | null) {
     const config = this.getConfig();
-    const origin = (process.env.FRONTEND_ORIGIN ?? "http://localhost:3000").replace(
-      /\/$/,
-      "",
-    );
+    const origin = (process.env.FRONTEND_ORIGIN ?? "http://localhost:3000").replace(/\/$/, "");
     const receiptSum = Number(order.amount);
     const receipt = encodeURIComponent(
       JSON.stringify({

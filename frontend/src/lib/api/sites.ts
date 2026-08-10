@@ -32,9 +32,11 @@ export async function startInviteSiteCheckout(
   payload: CreateInviteSitePayload,
   siteId?: string,
   promoCode?: string,
+  email?: string,
 ) {
   const response = await fetch("/api/payments/checkout", {
     body: JSON.stringify({
+      email: email || undefined,
       promoCode: promoCode || undefined,
       site: payload,
       siteId,

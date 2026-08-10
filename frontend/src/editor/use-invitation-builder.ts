@@ -1,6 +1,6 @@
 "use client";
 
-import { buildListPricing } from "@invite/shared";
+import { buildListPricing, receiptEmailSchema } from "@invite/shared";
 import type { CreateInviteSitePayload } from "@/lib/invite-site-types";
 import { previewPromoCode } from "@/lib/api/payments";
 import {
@@ -65,6 +65,7 @@ export type AppliedPromo = {
 };
 
 export function useInvitationBuilder({
+  accountEmail,
   initialInvite,
   initialIsFullscreenPreview = false,
   initialIsPaid = false,
@@ -115,12 +116,20 @@ export function useInvitationBuilder({
   const [appliedPromo, setAppliedPromo] = useState<AppliedPromo | null>(null);
   const [promoError, setPromoError] = useState<string | null>(null);
   const [isApplyingPromo, setIsApplyingPromo] = useState(false);
+  const [receiptEmail, setReceiptEmail] = useState("");
   const requiresPayment = !siteId || !initialIsPaid;
   const sitePricing: InviteSitePricing = initialPricing ?? {
     currentPriceRub: Number(getListPromoPricing().amount),
     originalPriceRub: null,
   };
   const checkoutPricing = appliedPromo ?? buildListPricing(sitePricing.currentPriceRub);
+  // Robokassa не сформирует чек без адреса, а по бесплатному промокоду чека нет.
+  // До входа почта аккаунта неизвестна — там пользователя всё равно ждёт логин.
+  const requiresReceiptEmail =
+    isAuthenticated &&
+    requiresPayment &&
+    !accountEmail?.trim() &&
+    Number(checkoutPricing.amount) > 0;
 
   const palettes = useMemo(() => getTemplatePalettes(template.id), [template.id]);
   const templatePalette = palettes.find((item) => item.id === invite.paletteId);
@@ -658,6 +667,11 @@ export function useInvitationBuilder({
       return;
     }
 
+    if (requiresReceiptEmail && !receiptEmailSchema.safeParse(receiptEmail).success) {
+      setPublishError("Укажите email — на него придёт чек об оплате.");
+      return;
+    }
+
     setIsPublishing(true);
     setPublishError(null);
 
@@ -673,6 +687,7 @@ export function useInvitationBuilder({
           payload,
           siteId,
           appliedPromo?.promoCode,
+          requiresReceiptEmail ? receiptEmail.trim() : undefined,
         );
 
         if (status === 401) {
@@ -942,7 +957,9 @@ export function useInvitationBuilder({
     promoError,
     publishError,
     publishSite,
+    receiptEmail,
     requiresPayment,
+    requiresReceiptEmail,
     resolvedPaletteId,
     ringColor,
     saveStatus,
@@ -951,6 +968,7 @@ export function useInvitationBuilder({
     setPaletteMode,
     setPreviewDevice,
     setPromoCodeInput,
+    setReceiptEmail,
     siteId,
     sitePricing,
     stepErrors,

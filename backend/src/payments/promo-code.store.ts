@@ -100,15 +100,30 @@ export class PromoCodeStore {
         id,
         isActive: true,
         $expr: {
-          $or: [
-            { $eq: ["$maxUses", null] },
-            { $lt: ["$usedCount", "$maxUses"] },
-          ],
+          $or: [{ $eq: ["$maxUses", null] }, { $lt: ["$usedCount", "$maxUses"] }],
         },
       },
       {
         $inc: { usedCount: 1 },
         $set: { updatedAt: now },
+      },
+      { returnDocument: "after" },
+    );
+  }
+
+  /**
+   * Возвращает слот заказу, который отменили, а деньги всё-таки пришли.
+   * Лимит здесь не проверяется: платёж уже принят, отказать нечему.
+   */
+  async reclaimReservation(id: string) {
+    await this.ensureIndexes();
+    const promoCodes = await this.getCollection();
+
+    return promoCodes.findOneAndUpdate(
+      { id },
+      {
+        $inc: { usedCount: 1 },
+        $set: { updatedAt: new Date().toISOString() },
       },
       { returnDocument: "after" },
     );

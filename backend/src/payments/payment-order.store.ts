@@ -39,6 +39,7 @@ type CounterDocument = {
 @Injectable()
 export class PaymentOrderStore {
   private readonly ensureIndexes = lazyOnce(() => this.ensureOrderIndexes());
+  private readonly ensureInvoiceCounter = lazyOnce(() => this.syncInvoiceCounter());
 
   constructor(private readonly mongoDb: MongoDbService) {}
 
@@ -62,7 +63,27 @@ export class PaymentOrderStore {
     await orders.createIndex({ status: 1, createdAt: 1 });
   }
 
+  /**
+   * Robokassa отвергает повторный InvId, а счётчик живёт в отдельной коллекции:
+   * после восстановления Mongo из бэкапа он может откатиться на уже выданные
+   * номера. Один раз за процесс подтягиваем его до максимума в заказах.
+   */
+  private async syncInvoiceCounter() {
+    const orders = await this.getOrdersCollection();
+    const latest = await orders.findOne({}, { sort: { invId: -1 } });
+    const highest = latest?.invId ?? 0;
+    const counters = await this.getCountersCollection();
+
+    await counters.updateOne(
+      { _id: "robokassa_invoice" },
+      [{ $set: { sequence: { $max: [{ $ifNull: ["$sequence", 0] }, highest] } } }],
+      { upsert: true },
+    );
+  }
+
   private async nextInvoiceId() {
+    await this.ensureInvoiceCounter();
+
     const counters = await this.getCountersCollection();
     const counter = await counters.findOneAndUpdate(
       { _id: "robokassa_invoice" },
@@ -120,17 +141,13 @@ export class PaymentOrderStore {
 
   async getOrderByInvoice(invId: number) {
     await this.ensureIndexes();
-    const order = await this.getOrdersCollection().then((orders) =>
-      orders.findOne({ invId }),
-    );
+    const order = await this.getOrdersCollection().then((orders) => orders.findOne({ invId }));
     return order ? this.normalizeOrder(order) : null;
   }
 
   async getOrderById(id: string) {
     await this.ensureIndexes();
-    const order = await this.getOrdersCollection().then((orders) =>
-      orders.findOne({ id }),
-    );
+    const order = await this.getOrdersCollection().then((orders) => orders.findOne({ id }));
     return order ? this.normalizeOrder(order) : null;
   }
 
@@ -145,10 +162,7 @@ export class PaymentOrderStore {
   async getLatestPendingOrderForSite(siteId: string) {
     await this.ensureIndexes();
     const orders = await this.getOrdersCollection();
-    const order = await orders.findOne(
-      { siteId, status: "pending" },
-      { sort: { createdAt: -1 } },
-    );
+    const order = await orders.findOne({ siteId, status: "pending" }, { sort: { createdAt: -1 } });
     return order ? this.normalizeOrder(order) : null;
   }
 
@@ -182,6 +196,63 @@ export class PaymentOrderStore {
     }
 
     return cancelled;
+  }
+
+  /** Заказы, ожидающие подтверждения от Robokassa, для фоновой сверки. */
+  async listPendingOrders(limit: number) {
+    await this.ensureIndexes();
+    const orders = await this.getOrdersCollection();
+    const documents = await orders
+      .find({ status: "pending" })
+      .sort({ createdAt: 1 })
+      .limit(limit)
+      .toArray();
+
+    return documents.map((document) => this.normalizeOrder(document));
+  }
+
+  async getPaidOrderForSite(siteId: string) {
+    await this.ensureIndexes();
+    const orders = await this.getOrdersCollection();
+    const order = await orders.findOne({ siteId, status: "paid" });
+
+    return order ? this.normalizeOrder(order) : null;
+  }
+
+  /** Отменённый заказ, по которому всё-таки пришли деньги, возвращается в оборот. */
+  async restoreCancelledToPending(id: string) {
+    await this.ensureIndexes();
+    const orders = await this.getOrdersCollection();
+    const updated = await orders.findOneAndUpdate(
+      { id, status: "cancelled" },
+      {
+        $set: {
+          status: "pending",
+          updatedAt: new Date().toISOString(),
+        },
+      },
+      { returnDocument: "after" },
+    );
+
+    return updated ? this.normalizeOrder(updated) : null;
+  }
+
+  async cancelOrderIfPending(id: string) {
+    await this.ensureIndexes();
+    const orders = await this.getOrdersCollection();
+    const now = new Date().toISOString();
+    const updated = await orders.findOneAndUpdate(
+      { id, status: "pending" },
+      {
+        $set: {
+          status: "cancelled",
+          updatedAt: now,
+        },
+      },
+      { returnDocument: "after" },
+    );
+
+    return updated ? this.normalizeOrder(updated) : null;
   }
 
   /** Atomically cancels stale pending orders older than TTL. */

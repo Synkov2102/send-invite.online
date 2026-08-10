@@ -15,9 +15,12 @@ export function PaymentSummary() {
     isApplyingPromo,
     promoCodeInput,
     promoError,
+    receiptEmail,
     requiresPayment,
+    requiresReceiptEmail,
     setAcceptedPurchaseTerms,
     setPromoCodeInput,
+    setReceiptEmail,
     sitePricing,
   } = useEditor();
 
@@ -112,6 +115,28 @@ export function PaymentSummary() {
           </p>
         ) : null}
       </div>
+
+      {requiresReceiptEmail ? (
+        <div className={styles.receipt}>
+          <label className={styles.receiptLabel} htmlFor="editor-receipt-email">
+            Email для чека
+          </label>
+          <input
+            autoComplete="email"
+            className={styles.receiptInput}
+            id="editor-receipt-email"
+            inputMode="email"
+            onChange={(event) => setReceiptEmail(event.target.value)}
+            placeholder="you@example.com"
+            spellCheck={false}
+            type="email"
+            value={receiptEmail}
+          />
+          <p className={styles.receiptHint}>
+            В вашем аккаунте нет почты, а без неё Robokassa не пришлёт чек об оплате.
+          </p>
+        </div>
+      ) : null}
 
       <label className={styles.label}>
         <input
