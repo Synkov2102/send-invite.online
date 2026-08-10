@@ -7,11 +7,21 @@ export const promoCodeInputSchema = z
   .min(2, "Введите промокод.")
   .max(PROMO_CODE_MAX_LENGTH, "Слишком длинный промокод.");
 
+export const RECEIPT_EMAIL_MAX_LENGTH = 254;
+
+/** Почта для фискального чека: нужна, когда в аккаунте её нет. */
+export const receiptEmailSchema = z
+  .string()
+  .trim()
+  .max(RECEIPT_EMAIL_MAX_LENGTH, "Слишком длинный адрес.")
+  .email("Проверьте адрес — похоже, в нём опечатка.");
+
 export const promoPreviewBodySchema = z.object({
   promoCode: promoCodeInputSchema,
 });
 
 export const checkoutBodySchema = z.object({
+  email: receiptEmailSchema.optional(),
   promoCode: promoCodeInputSchema.optional(),
   site: z.unknown().optional(),
   siteId: z.string().trim().min(1).optional(),
@@ -39,12 +49,11 @@ export function parseCheckoutBody(value: unknown) {
   }
 
   const record = value as Record<string, unknown>;
-  const promoRaw = record.promoCode;
-  const promoCode =
-    typeof promoRaw === "string" && promoRaw.trim() ? promoRaw.trim() : undefined;
-  const siteIdRaw = record.siteId;
-  const siteId =
-    typeof siteIdRaw === "string" && siteIdRaw.trim() ? siteIdRaw.trim() : undefined;
+  const readOptional = (raw: unknown) =>
+    typeof raw === "string" && raw.trim() ? raw.trim() : undefined;
+  const promoCode = readOptional(record.promoCode);
+  const email = readOptional(record.email);
+  const siteId = readOptional(record.siteId);
 
   if (promoCode !== undefined) {
     const promoResult = promoCodeInputSchema.safeParse(promoCode);
@@ -55,21 +64,24 @@ export function parseCheckoutBody(value: unknown) {
         ok: false as const,
       };
     }
+  }
 
-    return {
-      ok: true as const,
-      payload: {
-        promoCode: promoResult.data,
-        site: record.site,
-        siteId,
-      },
-    };
+  if (email !== undefined) {
+    const emailResult = receiptEmailSchema.safeParse(email);
+
+    if (!emailResult.success) {
+      return {
+        error: emailResult.error.issues[0]?.message ?? "Некорректный email.",
+        ok: false as const,
+      };
+    }
   }
 
   return {
     ok: true as const,
     payload: {
-      promoCode: undefined as string | undefined,
+      email,
+      promoCode,
       site: record.site,
       siteId,
     },

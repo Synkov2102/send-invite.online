@@ -110,4 +110,18 @@ SuccessURL и FailURL передаются сайтом для каждого з
 4. После оплаты Success URL может подтвердить платёж сразу (параметры `OutSum`, `InvId`, `SignatureValue` в адресной строке). Result URL остаётся основным серверным каналом.
 5. На VPS смотрите логи backend: `docker compose -f docker-compose.prod.yml logs -f backend` — ищите `Payment completed` или `Invalid Result URL signature`.
 
+Помимо этих двух каналов backend сам опрашивает состояние операции через
+[OpStateExt](https://docs.robokassa.ru/ru/xml-interfaces): при чтении статуса заказа и раз в 5 минут для всех
+pending-заказов. Это страховка на случай, когда Result URL не дошёл, и основной путь для **СБП** —
+плательщик уходит в приложение банка и на Success URL не возвращается.
+
+Важные следствия:
+
+- OpStateExt не отдаёт данные по тестовым платежам, поэтому при `ROBOKASSA_TEST_MODE=true` опрос выключен
+  и работает прежняя отмена pending-заказов по TTL в 60 минут;
+- в боевом режиме заказ отменяется только когда Robokassa сообщила состояние 10 (отменена) либо 60 (возврат),
+  или подтвердила, что операция не оплачена и заказ старше TTL. Пока Robokassa недоступна, заказ остаётся
+  pending — слепая отмена по возрасту отвергла бы платёж, который ещё зачисляется;
+- нужен исходящий HTTPS с VPS до `auth.robokassa.ru`.
+
 Для локального Docker используйте `FRONTEND_ORIGIN=http://localhost:8080` и ResultURL `http://localhost:8080/api/payments/robokassa/result` (нужен туннель вроде ngrok, если Robokassa должна достучаться снаружи).

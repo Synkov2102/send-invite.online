@@ -13,8 +13,7 @@ async function proxyResult(request: Request) {
         request.method === "POST"
           ? {
               "Content-Type":
-                request.headers.get("content-type") ??
-                "application/x-www-form-urlencoded",
+                request.headers.get("content-type") ?? "application/x-www-form-urlencoded",
             }
           : undefined,
       method: request.method,
@@ -26,7 +25,13 @@ async function proxyResult(request: Request) {
       },
       status: response.status,
     });
-  } catch {
+  } catch (error) {
+    // Молчаливый 502 здесь означает потерянный платёж: в логах backend не
+    // останется ничего, а Robokassa увидит только код ответа.
+    console.error("Robokassa result proxy failed", {
+      error: error instanceof Error ? error.message : String(error),
+      search: incoming.search,
+    });
     return new Response("Payment callback unavailable", { status: 502 });
   }
 }

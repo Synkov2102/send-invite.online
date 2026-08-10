@@ -33,11 +33,13 @@ export {
   type SitePricing,
 } from "./schemas/pricing.schema";
 export {
+  RECEIPT_EMAIL_MAX_LENGTH,
   checkoutBodySchema,
   parseCheckoutBody,
   parsePromoPreviewBody,
   promoCodeInputSchema,
   promoPreviewBodySchema,
+  receiptEmailSchema,
   type CheckoutBody,
   type PromoPreviewBody,
 } from "./schemas/checkout.schema";

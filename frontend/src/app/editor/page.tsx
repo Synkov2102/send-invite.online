@@ -87,6 +87,7 @@ export default async function EditorPage({ searchParams }: EditorPageProps) {
         }
       >
         <InvitationBuilder
+          accountEmail={user?.email ?? null}
           initialInvite={managedSite?.invite}
           initialIsFullscreenPreview={preview === "1"}
           initialIsPaid={managedSite?.isPaid}

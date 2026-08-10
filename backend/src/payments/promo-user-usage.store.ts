@@ -35,11 +35,7 @@ export class PromoUserUsageStore {
    * Atomically reserves one per-user slot.
    * Returns null when the user already holds maxUsesPerUser slots.
    */
-  async reserveIfAvailable(
-    promoCodeId: string,
-    userId: string,
-    maxUsesPerUser: number,
-  ) {
+  async reserveIfAvailable(promoCodeId: string, userId: string, maxUsesPerUser: number) {
     await this.ensureIndexes();
     const usage = await this.getCollection();
     const now = new Date().toISOString();
@@ -95,6 +91,24 @@ export class PromoUserUsageStore {
     const usage = await this.getCollection();
     const document = await usage.findOne({ _id: usageKey(promoCodeId, userId) });
     return document?.count ?? 0;
+  }
+
+  /** Парная к release: слот возвращается заказу, который отменили, а он оплатился. */
+  async reclaim(promoCodeId: string, userId: string) {
+    await this.ensureIndexes();
+    const usage = await this.getCollection();
+    const now = new Date().toISOString();
+    const id = usageKey(promoCodeId, userId);
+
+    return usage.findOneAndUpdate(
+      { _id: id },
+      {
+        $inc: { count: 1 },
+        $set: { promoCodeId, updatedAt: now, userId },
+        $setOnInsert: { createdAt: now },
+      },
+      { returnDocument: "after", upsert: true },
+    );
   }
 
   async release(promoCodeId: string, userId: string) {

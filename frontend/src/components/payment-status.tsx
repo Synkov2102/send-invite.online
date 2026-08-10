@@ -11,7 +11,7 @@ type OrderState = {
   paidAt: string | null;
   siteId: string;
   siteUrl: string | null;
-  status: "pending" | "paid";
+  status: "pending" | "paid" | "cancelled";
 };
 
 type PaymentStatusProps = {
@@ -26,10 +26,10 @@ const SLOW_POLL_INTERVAL_MS = 10_000;
 const MAX_ERROR_RETRIES = 5;
 
 async function fetchOrderStatus(orderId: string) {
-  const response = await fetch(
-    `/api/payments/orders/${encodeURIComponent(orderId)}/status`,
-    { cache: "no-store", credentials: "same-origin" },
-  );
+  const response = await fetch(`/api/payments/orders/${encodeURIComponent(orderId)}/status`, {
+    cache: "no-store",
+    credentials: "same-origin",
+  });
   const result = (await response.json()) as OrderState & { error?: string };
 
   if (!response.ok) {
@@ -70,7 +70,8 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
         errorRetries = 0;
         attempts += 1;
 
-        if (result.status === "paid") {
+        // Оплачен и отменён — оба состояния конечные, опрашивать больше нечего.
+        if (result.status === "paid" || result.status === "cancelled") {
           return;
         }
 
@@ -101,9 +102,7 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
         }
 
         setError(
-          statusError instanceof Error
-            ? statusError.message
-            : "Не удалось проверить платеж.",
+          statusError instanceof Error ? statusError.message : "Не удалось проверить платеж.",
         );
       }
     }
@@ -140,7 +139,10 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
         <h1>Сайт опубликован</h1>
         <p>Платёж получен, а приглашение уже доступно гостям по публичной ссылке.</p>
         <div className="payment-actions">
-          <Link className="marketing-button marketing-button--primary" href={order.siteUrl ?? "/dashboard"}>
+          <Link
+            className="marketing-button marketing-button--primary"
+            href={order.siteUrl ?? "/dashboard"}
+          >
             Открыть приглашение
           </Link>
           <Link className="marketing-button marketing-button--ghost" href="/dashboard">
@@ -151,7 +153,7 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
     );
   }
 
-  if (failed) {
+  if (failed || order?.status === "cancelled") {
     return (
       <section className="payment-panel is-failed">
         <XCircle aria-hidden size={34} />
@@ -192,7 +194,11 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
       </p>
       <div className="payment-actions">
         {(error || timedOut) && (
-          <button className="marketing-button marketing-button--primary" onClick={retry} type="button">
+          <button
+            className="marketing-button marketing-button--primary"
+            onClick={retry}
+            type="button"
+          >
             Проверить снова
           </button>
         )}

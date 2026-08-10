@@ -9,6 +9,7 @@ export type PromoCodeEventAction =
   | "checkout_apply"
   | "checkout_reject"
   | "reservation_release"
+  | "reservation_reclaim"
   | "redeem"
   | "redeem_fail";
 

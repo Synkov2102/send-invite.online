@@ -7,6 +7,8 @@ export type { InviteState };
 export type { InviteVars } from "@/lib/invite-theme";
 
 export type InvitationBuilderProps = {
+  /** Почта аккаунта; у Yandex ID её может не быть — тогда её спрашивает форма оплаты. */
+  accountEmail?: string | null;
   initialInvite?: InviteState;
   initialIsFullscreenPreview?: boolean;
   initialIsPaid?: boolean;

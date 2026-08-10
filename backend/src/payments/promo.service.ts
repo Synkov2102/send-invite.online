@@ -121,8 +121,7 @@ export class PromoService {
       ? await this.orders.getLatestPendingOrderForSite(options.excludeSiteId)
       : null;
     const holdsOwnPendingSlot =
-      pendingForSite?.promoCodeId === promo.id &&
-      pendingForSite.ownerId === userId;
+      pendingForSite?.promoCodeId === promo.id && pendingForSite.ownerId === userId;
 
     if (promo.maxUses !== null) {
       const effectiveUsed = holdsOwnPendingSlot
@@ -136,9 +135,7 @@ export class PromoService {
 
     if (promo.maxUsesPerUser !== null) {
       const userCount = await this.userUsage.getCount(promo.id, userId);
-      const effectiveCount = holdsOwnPendingSlot
-        ? Math.max(0, userCount - 1)
-        : userCount;
+      const effectiveCount = holdsOwnPendingSlot ? Math.max(0, userCount - 1) : userCount;
 
       if (effectiveCount >= promo.maxUsesPerUser) {
         return { ok: false, reason: "per_user_limit" };
@@ -196,8 +193,7 @@ export class PromoService {
     userId: string,
     context: { ip: string | null; siteId: string },
   ): Promise<
-    | { ok: true; pricing: PromoPricing; promo: PromoCode | null }
-    | { ok: false; error: string }
+    { ok: true; pricing: PromoPricing; promo: PromoCode | null } | { ok: false; error: string }
   > {
     if (!rawCode) {
       const { currentPriceRub } = await this.getSitePricing();
@@ -325,6 +321,32 @@ export class PromoService {
         userId: order.ownerId,
       });
     }
+  }
+
+  /**
+   * Возвращает слот заказу, который отменили, а деньги всё-таки пришли:
+   * иначе confirmReservationForPaidOrder спишет промокод, не заняв слот обратно.
+   */
+  async reclaimReservationForOrder(order: PaymentOrder) {
+    if (!order.promoCodeId || order.promoRedeemedAt) {
+      return;
+    }
+
+    await this.promoCodes.reclaimReservation(order.promoCodeId);
+    await this.userUsage.reclaim(order.promoCodeId, order.ownerId);
+
+    void this.events.write({
+      action: "reservation_reclaim",
+      amount: order.amount,
+      codeNormalized: order.promoCode ?? "",
+      discountAmount: order.discountAmount,
+      orderId: order.id,
+      originalAmount: order.originalAmount,
+      promoCodeId: order.promoCodeId,
+      reason: "cancelled_order_paid",
+      siteId: order.siteId,
+      userId: order.ownerId,
+    });
   }
 
   async expireStalePendingReservations() {
