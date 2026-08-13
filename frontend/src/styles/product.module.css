@@ -9,7 +9,6 @@
     linear-gradient(180deg, #f4f1e8 0%, #e8ece4 48%, #dfe6df 100%);
   color: #2f342f;
 }
-
 .scope:global(.site-header),
 .scope :global(.site-header) {
   display: flex;
@@ -18,7 +17,6 @@
   gap: 20px;
   padding: 22px 0 10px;
 }
-
 .scope:global(.site-header__brand),
 .scope :global(.site-header__brand) {
   display: inline-flex;
@@ -30,18 +28,15 @@
   color: inherit;
   text-decoration: none;
 }
-
 .scope:global(.site-header__brand) svg,
 .scope :global(.site-header__brand) svg {
   color: var(--product-accent);
 }
-
 .scope:global(.site-header__nav),
 .scope :global(.site-header__nav) {
   display: flex;
   gap: 22px;
 }
-
 .scope:global(.site-header__nav) a,
 .scope :global(.site-header__nav) a {
   color: var(--product-muted);
@@ -49,14 +44,12 @@
   text-decoration: none;
   transition: color 160ms ease;
 }
-
 .scope:global(.site-header__nav) a:hover,
 .scope :global(.site-header__nav) a:hover,
 .scope:global(.site-header__nav) a:global(.is-active),
 .scope :global(.site-header__nav) a:global(.is-active) {
   color: #232820;
 }
-
 .scope:global(.marketing-eyebrow),
 .scope :global(.marketing-eyebrow) {
   margin: 0;
@@ -66,7 +59,6 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-
 .scope:global(.marketing-hero),
 .scope :global(.marketing-hero) {
   display: grid;
@@ -74,7 +66,6 @@
   align-items: center;
   padding: 48px 0 72px;
 }
-
 .scope:global(.marketing-hero__copy) h1,
 .scope :global(.marketing-hero__copy) h1 {
   margin: 18px 0 0;
@@ -84,12 +75,10 @@
   font-weight: 400;
   line-height: 0.98;
 }
-
 .scope:global(.marketing-hero__copy) h1 span,
 .scope :global(.marketing-hero__copy) h1 span {
   color: var(--product-accent);
 }
-
 .scope:global(.marketing-hero__lead),
 .scope :global(.marketing-hero__lead) {
   max-width: 52ch;
@@ -98,7 +87,6 @@
   font-size: 1.08rem;
   line-height: 1.7;
 }
-
 .scope:global(.marketing-hero__actions),
 .scope :global(.marketing-hero__actions) {
   display: flex;
@@ -106,7 +94,6 @@
   gap: 14px;
   margin-top: 30px;
 }
-
 .scope:global(.marketing-button),
 .scope :global(.marketing-button),
 .scope:global(.site-header__cta),
@@ -126,7 +113,6 @@
     border-color 160ms ease,
     transform 160ms ease;
 }
-
 .scope:global(.marketing-button--primary),
 .scope :global(.marketing-button--primary),
 .scope:global(.site-header__cta),
@@ -135,7 +121,6 @@
   background: var(--product-ink);
   color: #fff;
 }
-
 .scope:global(.marketing-button--primary):hover,
 .scope :global(.marketing-button--primary):hover,
 .scope:global(.site-header__cta):hover,
@@ -143,51 +128,43 @@
   background: var(--product-accent);
   border-color: var(--product-accent);
 }
-
 .scope:global(.marketing-button--ghost),
 .scope :global(.marketing-button--ghost) {
   border: 1px solid rgba(52, 58, 54, 0.18);
   background: rgba(255, 255, 255, 0.42);
   color: #343a36;
 }
-
 .scope:global(.marketing-button--ghost):hover,
 .scope :global(.marketing-button--ghost):hover {
   background: rgba(255, 255, 255, 0.72);
 }
-
 .scope:global(.site-header__cta),
 .scope :global(.site-header__cta) {
   min-height: 38px;
   padding: 8px 18px;
   font-size: 0.88rem;
 }
-
 .scope:global(.marketing-hero__visual),
 .scope :global(.marketing-hero__visual) {
   display: grid;
   justify-items: center;
 }
-
 .scope:global(.marketing-section),
 .scope :global(.marketing-section) {
   padding: 18px 0 64px;
 }
-
 .scope:global(.marketing-section--muted),
 .scope :global(.marketing-section--muted) {
   padding: 54px 0 72px;
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.34);
 }
-
 .scope:global(.marketing-section__head),
 .scope :global(.marketing-section__head) {
   display: grid;
   gap: 12px;
   margin-bottom: 28px;
 }
-
 .scope:global(.marketing-section__head) h2,
 .scope :global(.marketing-section__head) h2,
 .scope:global(.templates-page__hero) h1,
@@ -200,14 +177,12 @@
   font-weight: 400;
   line-height: 1.05;
 }
-
 .scope:global(.marketing-featured),
 .scope :global(.marketing-featured) {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
-
 .scope:global(.marketing-featured__card),
 .scope :global(.marketing-featured__card) {
   display: grid;
@@ -224,24 +199,20 @@
     transform 180ms ease,
     box-shadow 180ms ease;
 }
-
 .scope:global(.marketing-featured__card):hover,
 .scope :global(.marketing-featured__card):hover {
   transform: translateY(-3px);
   box-shadow: 0 24px 60px rgba(47, 52, 47, 0.12);
 }
-
 .scope:global(.marketing-featured__card) span,
 .scope :global(.marketing-featured__card) span {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.5rem;
 }
-
 .scope:global(.marketing-featured__card) small,
 .scope :global(.marketing-featured__card) small {
   color: color-mix(in srgb, var(--card-ink) 68%, transparent);
 }
-
 .scope:global(.marketing-cta),
 .scope :global(.marketing-cta) {
   display: flex;
@@ -256,30 +227,25 @@
   background: rgba(38, 56, 58, 0.92);
   color: #f4f8f7;
 }
-
 .scope:global(.marketing-cta) :global(.marketing-eyebrow),
 .scope :global(.marketing-cta) :global(.marketing-eyebrow) {
   color: rgba(244, 248, 247, 0.72);
 }
-
 .scope:global(.templates-page),
 .scope :global(.templates-page) {
   padding-bottom: 72px;
 }
-
 .scope:global(.templates-page__hero),
 .scope :global(.templates-page__hero) {
   max-width: 62ch;
   padding: 36px 0 28px;
 }
-
 .scope:global(.templates-page__hero) p:last-child,
 .scope :global(.templates-page__hero) p:last-child {
   margin: 16px 0 0;
   color: var(--product-muted);
   line-height: 1.7;
 }
-
 /* template gallery */
 .scope:global(.templates-page__grid),
 .scope :global(.templates-page__grid) {
@@ -287,7 +253,6 @@
   gap: 26px;
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
 }
-
 .scope:global(.template-card),
 .scope :global(.template-card) {
   display: grid;
@@ -305,14 +270,12 @@
     box-shadow 220ms ease,
     border-color 220ms ease;
 }
-
 .scope:global(.template-card):hover,
 .scope :global(.template-card):hover {
   transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--card-accent) 35%, transparent);
   box-shadow: 0 30px 80px rgba(47, 52, 47, 0.16);
 }
-
 .scope:global(.template-card__preview),
 .scope :global(.template-card__preview) {
   position: relative;
@@ -320,7 +283,6 @@
   overflow: hidden;
   background: var(--card-bg);
 }
-
 /* Themed cover preview */
 .scope:global(.template-preview),
 .scope :global(.template-preview) {
@@ -330,24 +292,20 @@
   overflow: hidden;
   transition: transform 320ms ease;
 }
-
 .scope:global(.template-preview__image),
 .scope :global(.template-preview__image) {
   object-fit: cover;
   object-position: center top;
 }
-
 .scope:global(.template-card):hover :global(.template-preview),
 .scope :global(.template-card):hover :global(.template-preview) {
   transform: scale(1.03);
 }
-
 .scope:global(.template-preview__art),
 .scope :global(.template-preview__art) {
   position: absolute;
   inset: 0;
 }
-
 .scope:global(.template-preview__overlay),
 .scope :global(.template-preview__overlay) {
   position: absolute;
@@ -361,7 +319,6 @@
   padding: 18px;
   text-align: center;
 }
-
 .scope:global(.template-preview__eyebrow),
 .scope :global(.template-preview__eyebrow) {
   font-size: 0.6rem;
@@ -369,14 +326,12 @@
   letter-spacing: 0.32em;
   text-transform: uppercase;
 }
-
 .scope:global(.template-preview__names),
 .scope :global(.template-preview__names) {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.7rem;
   line-height: 1.05;
 }
-
 .scope:global(.template-preview__rule),
 .scope :global(.template-preview__rule) {
   width: 34px;
@@ -384,7 +339,6 @@
   opacity: 0.5;
   background: currentColor;
 }
-
 .scope:global(.template-preview__date),
 .scope :global(.template-preview__date) {
   font-size: 0.72rem;
@@ -392,7 +346,6 @@
   text-transform: uppercase;
   opacity: 0.82;
 }
-
 /* Rings cover */
 .scope:global(.template-preview--rings) :global(.template-preview__art),
 .scope :global(.template-preview--rings) :global(.template-preview__art) {
@@ -402,12 +355,10 @@
     var(--card-bg) 100%
   );
 }
-
 .scope:global(.template-preview--rings) :global(.template-preview__overlay),
 .scope :global(.template-preview--rings) :global(.template-preview__overlay) {
   color: var(--card-ink);
 }
-
 .scope:global(.template-preview__rings),
 .scope :global(.template-preview__rings) {
   position: absolute;
@@ -416,7 +367,6 @@
   display: flex;
   transform: translate(-50%, -50%);
 }
-
 .scope:global(.template-preview__ring),
 .scope :global(.template-preview__ring) {
   width: 76px;
@@ -425,26 +375,22 @@
   border: 3px solid color-mix(in srgb, var(--card-accent) 70%, transparent);
   box-shadow: inset 0 6px 14px rgba(255, 255, 255, 0.4);
 }
-
 .scope:global(.template-preview__ring):last-child,
 .scope :global(.template-preview__ring):last-child {
   margin-left: -34px;
   border-color: color-mix(in srgb, var(--card-ink) 38%, transparent);
 }
-
 /* Arch cover */
 .scope:global(.template-preview--arch) :global(.template-preview__art),
 .scope :global(.template-preview--arch) :global(.template-preview__art) {
   background: var(--card-surface);
 }
-
 .scope:global(.template-preview--arch) :global(.template-preview__overlay),
 .scope :global(.template-preview--arch) :global(.template-preview__overlay) {
   color: var(--card-ink);
   justify-content: flex-end;
   padding-bottom: 22px;
 }
-
 .scope:global(.template-preview__arch),
 .scope :global(.template-preview__arch) {
   position: absolute;
@@ -462,7 +408,6 @@
   box-shadow: 0 18px 40px rgba(47, 52, 47, 0.18);
   overflow: hidden;
 }
-
 .scope:global(.template-preview__arch-sun),
 .scope :global(.template-preview__arch-sun) {
   position: absolute;
@@ -476,7 +421,6 @@
   opacity: 0.85;
   filter: blur(0.5px);
 }
-
 /* Wave cover */
 .scope:global(.template-preview--wave) :global(.template-preview__art),
 .scope :global(.template-preview--wave) :global(.template-preview__art) {
@@ -487,19 +431,16 @@
     color-mix(in srgb, var(--card-accent) 45%, var(--card-bg)) 100%
   );
 }
-
 .scope:global(.template-preview--wave) :global(.template-preview__overlay),
 .scope :global(.template-preview--wave) :global(.template-preview__overlay) {
   color: var(--card-surface);
 }
-
 .scope:global(.template-preview__waves),
 .scope :global(.template-preview__waves) {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
-
 .scope:global(.template-preview__wave),
 .scope :global(.template-preview__wave) {
   position: absolute;
@@ -515,13 +456,11 @@
   );
   animation: templateWave 9s ease-in-out infinite;
 }
-
 .scope:global(.template-preview__wave):nth-child(1),
 .scope :global(.template-preview__wave):nth-child(1) {
   bottom: -28%;
   opacity: 0.55;
 }
-
 .scope:global(.template-preview__wave):nth-child(2),
 .scope :global(.template-preview__wave):nth-child(2) {
   bottom: -38%;
@@ -530,7 +469,6 @@
   animation-duration: 12s;
   animation-direction: reverse;
 }
-
 .scope:global(.template-preview__wave):nth-child(3),
 .scope :global(.template-preview__wave):nth-child(3) {
   bottom: -10%;
@@ -538,7 +476,6 @@
   opacity: 0.3;
   animation-duration: 7s;
 }
-
 .scope:global(.template-preview__shimmer),
 .scope :global(.template-preview__shimmer) {
   position: absolute;
@@ -550,7 +487,6 @@
   );
   opacity: 0.4;
 }
-
 @keyframes templateWave {
   0%,
   100% {
@@ -560,14 +496,12 @@
     transform: translateX(4%) translateY(-6px) rotate(1deg);
   }
 }
-
 @media (prefers-reduced-motion: reduce) {
   .scope:global(.template-preview__wave),
   .scope :global(.template-preview__wave) {
     animation: none;
   }
 }
-
 .scope:global(.template-card__body),
 .scope :global(.template-card__body) {
   display: flex;
@@ -575,7 +509,6 @@
   gap: 0;
   padding: 18px 20px 20px;
 }
-
 .scope:global(.template-card__body) h2,
 .scope :global(.template-card__body) h2 {
   margin: 10px 0 0;
@@ -583,14 +516,12 @@
   font-size: 1.55rem;
   font-weight: 400;
 }
-
 .scope:global(.template-card__tags),
 .scope :global(.template-card__tags) {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-
 .scope:global(.template-card__tags) span,
 .scope :global(.template-card__tags) span {
   padding: 4px 10px;
@@ -600,7 +531,6 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
-
 .scope:global(.template-card__palette),
 .scope :global(.template-card__palette) {
   display: flex;
@@ -610,7 +540,6 @@
   padding-top: 14px;
   border-top: 1px solid rgba(47, 52, 47, 0.08);
 }
-
 .scope:global(.template-card__palette-label),
 .scope :global(.template-card__palette-label) {
   color: #8a8f84;
@@ -619,12 +548,10 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-
 .scope:global(.template-card__swatches),
 .scope :global(.template-card__swatches) {
   display: inline-flex;
 }
-
 .scope:global(.template-card__swatch),
 .scope :global(.template-card__swatch) {
   width: 22px;
@@ -633,12 +560,10 @@
   border: 2px solid #fff;
   box-shadow: 0 1px 3px rgba(47, 52, 47, 0.2);
 }
-
 .scope:global(.template-card__swatch):not(:first-child),
 .scope :global(.template-card__swatch):not(:first-child) {
   margin-left: -7px;
 }
-
 .scope:global(.template-card__action),
 .scope :global(.template-card__action) {
   display: inline-flex;
@@ -649,17 +574,14 @@
   font-size: 0.92rem;
   font-weight: 600;
 }
-
 .scope:global(.template-card__action) svg:last-child,
 .scope :global(.template-card__action) svg:last-child {
   transition: transform 200ms ease;
 }
-
 .scope:global(.template-card):hover :global(.template-card__action) svg:last-child,
 .scope :global(.template-card):hover :global(.template-card__action) svg:last-child {
   transform: translate(2px, -2px);
 }
-
 @media (min-width: 900px) {
   .scope:global(.marketing-hero),
   .scope :global(.marketing-hero) {
@@ -667,7 +589,6 @@
     padding-top: 72px;
   }
 }
-
 /* Refined wedding studio */
 
 .scope:global(.marketing-page),
@@ -685,7 +606,6 @@
     var(--studio-cream);
   color: var(--studio-ink);
 }
-
 .scope:global(.marketing-page)::before,
 .scope :global(.marketing-page)::before {
   content: "";
@@ -695,7 +615,6 @@
   opacity: 0.24;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
 }
-
 .scope:global(.site-header),
 .scope :global(.site-header) {
   position: relative;
@@ -703,7 +622,6 @@
   padding: 24px 0;
   border-bottom: 1px solid var(--studio-line);
 }
-
 .scope:global(.site-header__brand),
 .scope :global(.site-header__brand) {
   gap: 9px;
@@ -711,7 +629,6 @@
   font-size: 1.35rem;
   font-weight: 400;
 }
-
 .scope:global(.site-header__brand) small,
 .scope :global(.site-header__brand) small {
   margin-left: 3px;
@@ -722,7 +639,6 @@
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
-
 .scope:global(.site-header__mark),
 .scope :global(.site-header__mark) {
   display: grid;
@@ -733,12 +649,10 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.46);
 }
-
 .scope:global(.site-header__mark) svg,
 .scope :global(.site-header__mark) svg {
   color: var(--studio-sage);
 }
-
 .scope:global(.site-header__nav),
 .scope :global(.site-header__nav) {
   gap: 7px;
@@ -748,7 +662,6 @@
   background: rgba(255, 255, 255, 0.36);
   backdrop-filter: blur(12px);
 }
-
 .scope:global(.site-header__nav) a,
 .scope :global(.site-header__nav) a {
   padding: 7px 15px;
@@ -756,14 +669,12 @@
   color: var(--studio-muted);
   font-size: 0.82rem;
 }
-
 .scope:global(.site-header__nav) a:global(.is-active),
 .scope :global(.site-header__nav) a:global(.is-active) {
   background: rgba(255, 255, 255, 0.82);
   color: var(--studio-ink);
   box-shadow: 0 4px 14px rgba(45, 47, 40, 0.07);
 }
-
 .scope:global(.site-header__cta),
 .scope :global(.site-header__cta),
 .scope:global(.marketing-button),
@@ -775,7 +686,6 @@
   font-size: 0.82rem;
   font-weight: 650;
 }
-
 .scope:global(.site-header__cta),
 .scope :global(.site-header__cta) {
   min-height: 42px;
@@ -783,7 +693,6 @@
   border-color: var(--product-ink);
   background: var(--product-ink);
 }
-
 .scope:global(.site-header__cta):hover,
 .scope :global(.site-header__cta):hover,
 .scope:global(.marketing-button--primary):hover,
@@ -792,14 +701,12 @@
   border-color: var(--product-accent);
   transform: translateY(-1px);
 }
-
 .scope:global(.site-header__actions),
 .scope :global(.site-header__actions) {
   display: inline-flex;
   align-items: center;
   gap: 10px;
 }
-
 .scope:global(.site-header__login),
 .scope :global(.site-header__login),
 .scope:global(.site-header__user),
@@ -816,20 +723,17 @@
   text-decoration: none;
   backdrop-filter: blur(12px);
 }
-
 .scope:global(.site-header__login),
 .scope :global(.site-header__login) {
   gap: 8px;
   padding: 9px 15px;
 }
-
 .scope:global(.site-header__user),
 .scope :global(.site-header__user) {
   gap: 8px;
   max-width: 420px;
   padding: 4px 5px 4px 4px;
 }
-
 .scope:global(.site-header__dashboard),
 .scope :global(.site-header__dashboard) {
   display: inline-flex;
@@ -843,7 +747,6 @@
   font-weight: 700;
   white-space: nowrap;
 }
-
 .scope:global(.site-header__profile),
 .scope :global(.site-header__profile) {
   display: inline-flex;
@@ -852,7 +755,6 @@
   gap: 8px;
   color: inherit;
 }
-
 .scope:global(.site-header__user) img,
 .scope :global(.site-header__user) img,
 .scope:global(.site-header__profile) > span,
@@ -868,12 +770,10 @@
   font-size: 0.82rem;
   font-weight: 750;
 }
-
 .scope:global(.site-header__user) img,
 .scope :global(.site-header__user) img {
   object-fit: cover;
 }
-
 .scope:global(.site-header__user) strong,
 .scope :global(.site-header__user) strong {
   min-width: 0;
@@ -884,12 +784,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .scope:global(.site-header__user) form,
 .scope :global(.site-header__user) form {
   display: contents;
 }
-
 .scope:global(.site-header__user) button,
 .scope :global(.site-header__user) button {
   display: grid;
@@ -903,19 +801,16 @@
   color: #697262;
   cursor: pointer;
 }
-
 .scope:global(.site-header__user) button:hover,
 .scope :global(.site-header__user) button:hover,
 .scope:global(.site-header__login):hover,
 .scope :global(.site-header__login):hover {
   background: rgba(255, 255, 255, 0.76);
 }
-
 .scope:global(.auth-page),
 .scope :global(.auth-page) {
   position: relative;
 }
-
 .scope:global(.auth-shell),
 .scope :global(.auth-shell) {
   display: grid;
@@ -925,7 +820,6 @@
   padding: 78px 24px 110px;
   place-items: start stretch;
 }
-
 .scope:global(.auth-panel),
 .scope :global(.auth-panel) {
   display: grid;
@@ -937,7 +831,6 @@
   box-shadow: 0 28px 80px rgba(40, 45, 37, 0.12);
   backdrop-filter: blur(18px);
 }
-
 .scope:global(.auth-panel) h1,
 .scope :global(.auth-panel) h1 {
   margin: 0;
@@ -948,7 +841,6 @@
   font-weight: 400;
   line-height: 0.95;
 }
-
 .scope:global(.auth-panel) p,
 .scope :global(.auth-panel) p {
   margin: 0;
@@ -957,7 +849,6 @@
   font-size: 1rem;
   line-height: 1.65;
 }
-
 .scope:global(.auth-error),
 .scope :global(.auth-error) {
   border: 1px solid rgba(132, 54, 43, 0.18);
@@ -966,7 +857,6 @@
   padding: 12px 14px;
   color: #84362b !important;
 }
-
 .scope:global(.auth-mode-switch),
 .scope :global(.auth-mode-switch) {
   display: inline-flex;
@@ -977,7 +867,6 @@
   background: rgba(255, 255, 255, 0.4);
   padding: 4px;
 }
-
 .scope:global(.auth-mode-switch) a,
 .scope :global(.auth-mode-switch) a {
   border-radius: 999px;
@@ -987,14 +876,12 @@
   font-weight: 700;
   text-decoration: none;
 }
-
 .scope:global(.auth-mode-switch) a:global(.is-active),
 .scope :global(.auth-mode-switch) a:global(.is-active) {
   background: #fff;
   color: var(--studio-ink);
   box-shadow: 0 8px 20px rgba(45, 47, 40, 0.08);
 }
-
 .scope:global(.auth-actions),
 .scope :global(.auth-actions) {
   display: flex;
@@ -1002,12 +889,10 @@
   gap: 12px;
   align-items: center;
 }
-
 .scope:global(.auth-actions) form,
 .scope :global(.auth-actions) form {
   display: contents;
 }
-
 .scope:global(.yandex-auth-button),
 .scope :global(.yandex-auth-button) {
   display: inline-flex;
@@ -1026,13 +911,11 @@
     background-color 160ms ease,
     transform 160ms ease;
 }
-
 .scope:global(.yandex-auth-button):hover,
 .scope :global(.yandex-auth-button):hover {
   background: #e93213;
   transform: translateY(-1px);
 }
-
 .scope:global(.marketing-hero),
 .scope :global(.marketing-hero) {
   position: relative;
@@ -1041,7 +924,6 @@
   min-height: 760px;
   padding: 66px 0 88px;
 }
-
 .scope:global(.marketing-eyebrow),
 .scope :global(.marketing-eyebrow) {
   color: var(--studio-sage);
@@ -1049,13 +931,11 @@
   font-weight: 700;
   letter-spacing: 0.2em;
 }
-
 .scope:global(.marketing-hero__copy),
 .scope :global(.marketing-hero__copy) {
   position: relative;
   z-index: 2;
 }
-
 .scope:global(.marketing-hero__copy) h1,
 .scope :global(.marketing-hero__copy) h1 {
   max-width: 10.5ch;
@@ -1065,7 +945,6 @@
   letter-spacing: -0.055em;
   line-height: 0.89;
 }
-
 .scope:global(.marketing-hero__copy) h1 span,
 .scope :global(.marketing-hero__copy) h1 span {
   display: block;
@@ -1074,7 +953,6 @@
   font-style: italic;
   font-weight: 400;
 }
-
 .scope:global(.marketing-hero__lead),
 .scope :global(.marketing-hero__lead) {
   max-width: 53ch;
@@ -1083,32 +961,27 @@
   font-size: 1rem;
   line-height: 1.8;
 }
-
 .scope:global(.marketing-hero__actions),
 .scope :global(.marketing-hero__actions) {
   gap: 10px;
   margin-top: 34px;
 }
-
 .scope:global(.marketing-button--primary),
 .scope :global(.marketing-button--primary) {
   border-color: var(--product-ink);
   background: var(--product-ink);
 }
-
 .scope:global(.marketing-button--ghost),
 .scope :global(.marketing-button--ghost) {
   border-color: var(--studio-line);
   background: rgba(255, 255, 255, 0.42);
 }
-
 .scope:global(.marketing-button--ghost):hover,
 .scope :global(.marketing-button--ghost):hover {
   border-color: rgba(49, 51, 42, 0.28);
   background: rgba(255, 255, 255, 0.75);
   transform: translateY(-1px);
 }
-
 .scope:global(.marketing-assurances),
 .scope :global(.marketing-assurances) {
   display: flex;
@@ -1120,26 +993,22 @@
   font-size: 0.75rem;
   list-style: none;
 }
-
 .scope:global(.marketing-assurances) li,
 .scope :global(.marketing-assurances) li {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
-
 .scope:global(.marketing-assurances) svg,
 .scope :global(.marketing-assurances) svg {
   color: var(--studio-sage);
 }
-
 .scope:global(.marketing-hero__visual),
 .scope :global(.marketing-hero__visual) {
   position: relative;
   min-height: 610px;
   justify-items: stretch;
 }
-
 .scope:global(.marketing-hero__halo),
 .scope :global(.marketing-hero__halo) {
   position: absolute;
@@ -1148,7 +1017,6 @@
   border-radius: 50% 50% 24px 24px;
   transform: rotate(5deg);
 }
-
 .scope:global(.marketing-hero__photo),
 .scope :global(.marketing-hero__photo) {
   position: absolute;
@@ -1161,7 +1029,6 @@
   box-shadow: 0 36px 100px rgba(44, 49, 42, 0.2);
   transform: rotate(1.5deg);
 }
-
 .scope:global(.marketing-hero__photo)::after,
 .scope :global(.marketing-hero__photo)::after {
   content: "";
@@ -1169,12 +1036,10 @@
   inset: 0;
   background: linear-gradient(180deg, transparent 55%, rgba(28, 34, 28, 0.24));
 }
-
 .scope:global(.marketing-hero__photo) img,
 .scope :global(.marketing-hero__photo) img {
   object-fit: cover;
 }
-
 .scope:global(.marketing-date-card),
 .scope :global(.marketing-date-card),
 .scope:global(.marketing-invite-card),
@@ -1186,7 +1051,6 @@
   box-shadow: 0 20px 50px rgba(38, 42, 35, 0.15);
   backdrop-filter: blur(18px);
 }
-
 .scope:global(.marketing-date-card),
 .scope :global(.marketing-date-card) {
   top: 13%;
@@ -1197,7 +1061,6 @@
   border-radius: 13px;
   text-align: center;
 }
-
 .scope:global(.marketing-date-card) span,
 .scope :global(.marketing-date-card) span,
 .scope:global(.marketing-date-card) small,
@@ -1208,7 +1071,6 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
 .scope:global(.marketing-date-card) strong,
 .scope :global(.marketing-date-card) strong {
   margin: 3px 0;
@@ -1217,7 +1079,6 @@
   font-weight: 400;
   line-height: 1;
 }
-
 .scope:global(.marketing-invite-card),
 .scope :global(.marketing-invite-card) {
   left: 0;
@@ -1228,12 +1089,10 @@
   padding: 21px 23px;
   border-radius: 17px;
 }
-
 .scope:global(.marketing-invite-card) svg,
 .scope :global(.marketing-invite-card) svg {
   color: var(--studio-sage);
 }
-
 .scope:global(.marketing-invite-card) p,
 .scope :global(.marketing-invite-card) p,
 .scope:global(.marketing-invite-card) span,
@@ -1243,31 +1102,26 @@
   font-size: 0.65rem;
   line-height: 1.45;
 }
-
 .scope:global(.marketing-invite-card) strong,
 .scope :global(.marketing-invite-card) strong {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.35rem;
   font-weight: 400;
 }
-
 .scope:global(.marketing-invite-card) i,
 .scope :global(.marketing-invite-card) i {
   color: var(--studio-sage);
   font-weight: 400;
 }
-
 .scope:global(.marketing-section),
 .scope :global(.marketing-section) {
   position: relative;
   padding: 112px 0;
 }
-
 .scope:global(.marketing-section__head),
 .scope :global(.marketing-section__head) {
   margin-bottom: 42px;
 }
-
 .scope:global(.marketing-section__head--split),
 .scope :global(.marketing-section__head--split) {
   display: flex;
@@ -1275,7 +1129,6 @@
   justify-content: space-between;
   gap: 30px;
 }
-
 .scope:global(.marketing-section__head) h2,
 .scope :global(.marketing-section__head) h2,
 .scope:global(.marketing-process) h2,
@@ -1291,13 +1144,11 @@
   letter-spacing: -0.045em;
   line-height: 0.96;
 }
-
 .scope:global(.marketing-featured),
 .scope :global(.marketing-featured) {
   grid-template-columns: 1.18fr 0.91fr 0.91fr;
   gap: 14px;
 }
-
 .scope:global(.marketing-featured__card),
 .scope :global(.marketing-featured__card) {
   position: relative;
@@ -1312,12 +1163,10 @@
     linear-gradient(160deg, var(--card-surface), var(--card-bg));
   box-shadow: 0 16px 50px rgba(49, 51, 42, 0.08);
 }
-
 .scope:global(.marketing-featured__card):first-child,
 .scope :global(.marketing-featured__card):first-child {
   min-height: 490px;
 }
-
 .scope:global(.marketing-featured__card)::after,
 .scope :global(.marketing-featured__card)::after {
   content: "";
@@ -1327,7 +1176,6 @@
   border: 1px solid color-mix(in srgb, var(--card-accent) 35%, transparent);
   border-radius: 50% 50% 0 0;
 }
-
 .scope:global(.marketing-featured__number),
 .scope :global(.marketing-featured__number) {
   position: relative;
@@ -1336,7 +1184,6 @@
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.65rem !important;
 }
-
 .scope:global(.marketing-featured__art),
 .scope :global(.marketing-featured__art) {
   position: absolute;
@@ -1345,7 +1192,6 @@
   place-items: center;
   color: var(--card-accent);
 }
-
 .scope:global(.marketing-featured__art) span,
 .scope :global(.marketing-featured__art) span {
   position: absolute;
@@ -1355,20 +1201,17 @@
   border-radius: 50%;
   transform: translateX(-32px) rotate(-15deg);
 }
-
 .scope:global(.marketing-featured__art) span:nth-child(2),
 .scope :global(.marketing-featured__art) span:nth-child(2) {
   width: 105px;
   height: 105px;
   transform: translateX(35px) rotate(17deg);
 }
-
 .scope:global(.marketing-featured__card) > div:last-child,
 .scope :global(.marketing-featured__card) > div:last-child {
   position: relative;
   z-index: 2;
 }
-
 .scope:global(.marketing-featured__card) small,
 .scope :global(.marketing-featured__card) small {
   display: block;
@@ -1377,7 +1220,6 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
 .scope:global(.marketing-featured__card) h3,
 .scope :global(.marketing-featured__card) h3 {
   margin: 0;
@@ -1386,7 +1228,6 @@
   font-weight: 400;
   letter-spacing: -0.035em;
 }
-
 .scope:global(.marketing-featured__action),
 .scope :global(.marketing-featured__action) {
   display: inline-flex;
@@ -1398,7 +1239,6 @@
   font-size: 0.7rem !important;
   font-weight: 650;
 }
-
 .scope:global(.marketing-process),
 .scope :global(.marketing-process) {
   display: grid;
@@ -1406,20 +1246,17 @@
   gap: clamp(50px, 10vw, 145px);
   padding-top: 54px;
 }
-
 .scope:global(.marketing-process__intro),
 .scope :global(.marketing-process__intro) {
   align-self: start;
   position: sticky;
   top: 40px;
 }
-
 .scope:global(.marketing-process) h2 span,
 .scope :global(.marketing-process) h2 span {
   color: var(--studio-sage);
   font-style: italic;
 }
-
 .scope:global(.marketing-process__intro) > p:last-child,
 .scope :global(.marketing-process__intro) > p:last-child {
   max-width: 42ch;
@@ -1428,7 +1265,6 @@
   font-size: 0.9rem;
   line-height: 1.75;
 }
-
 .scope:global(.marketing-cta),
 .scope :global(.marketing-cta) {
   position: relative;
@@ -1441,7 +1277,6 @@
     radial-gradient(circle at 85% -30%, rgba(255, 255, 255, 0.7), transparent 34%), #dce2d7;
   color: var(--studio-ink);
 }
-
 .scope:global(.marketing-cta)::before,
 .scope :global(.marketing-cta)::before {
   content: "";
@@ -1453,17 +1288,14 @@
   border: 1px solid rgba(104, 117, 95, 0.2);
   border-radius: 50%;
 }
-
 .scope:global(.marketing-cta) :global(.marketing-eyebrow),
 .scope :global(.marketing-cta) :global(.marketing-eyebrow) {
   color: var(--studio-sage);
 }
-
 .scope:global(.marketing-cta) h2,
 .scope :global(.marketing-cta) h2 {
   margin-bottom: 0;
 }
-
 .scope:global(.marketing-button--light),
 .scope :global(.marketing-button--light) {
   position: relative;
@@ -1472,13 +1304,11 @@
   background: rgba(255, 255, 255, 0.72);
   color: var(--studio-ink);
 }
-
 .scope:global(.marketing-button--light):hover,
 .scope :global(.marketing-button--light):hover {
   background: #ffffff;
   transform: translateY(-1px);
 }
-
 .scope {
   --product-ink: #282126;
   --product-muted: #6a6167;
@@ -1496,7 +1326,6 @@
   --product-shell-wide: 1240px;
   --product-shell-narrow: 920px;
 }
-
 .scope:global(.marketing-page),
 .scope :global(.marketing-page),
 .scope:global(.dashboard-page),
@@ -1507,7 +1336,6 @@
   --studio-sage: var(--product-accent);
   --studio-cream: var(--product-paper);
 }
-
 .scope:global(.marketing-page),
 .scope :global(.marketing-page),
 .scope:global(.dashboard-page),
@@ -1518,7 +1346,6 @@
   background: var(--product-paper);
   color: var(--product-ink);
 }
-
 /* Content grows to fill the viewport on short pages, keeping the footer pinned to the bottom
    instead of floating mid-screen — without this, a page shorter than the viewport (e.g. /blog
    with few articles) leaves empty space below the footer. */
@@ -1528,14 +1355,12 @@
 .scope :global(.dashboard-page) > main {
   flex: 1 0 auto;
 }
-
 .scope:global(.marketing-page)::before,
 .scope :global(.marketing-page)::before,
 .scope:global(.marketing-page)::after,
 .scope :global(.marketing-page)::after {
   display: none;
 }
-
 .scope:global(.brand-lockup),
 .scope :global(.brand-lockup) {
   display: inline-flex;
@@ -1610,7 +1435,6 @@
   font-weight: 650;
   letter-spacing: 0.075em;
 }
-
 .scope:global(.site-header),
 .scope :global(.site-header) {
   /* width/margin-inline come from PageShellProvider (components/page-shell). */
@@ -1678,12 +1502,10 @@
 .scope :global(.yandex-auth-button) {
   border-radius: 999px;
 }
-
 .scope:global(.marketing-eyebrow),
 .scope :global(.marketing-eyebrow) {
   color: var(--product-accent);
 }
-
 .scope:global(.templates-page),
 .scope :global(.templates-page) {
   /* width/margin-inline come from PageShellProvider (components/page-shell). */
@@ -1734,7 +1556,6 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
-
 .scope:global(.template-card),
 .scope :global(.template-card) {
   display: block;
@@ -1876,7 +1697,6 @@
   background: var(--product-ink);
   color: #fff;
 }
-
 .scope:global(.templates-page__price),
 .scope :global(.templates-page__price) {
   display: grid;
@@ -1928,19 +1748,16 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-
 .scope:global(.editor-shell),
 .scope :global(.editor-shell) {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
-
 .scope:global(.editor-shell) :global(.commerce-footer),
 .scope :global(.editor-shell) :global(.commerce-footer) {
   margin-top: auto;
 }
-
 .scope:global(.commerce-footer),
 .scope :global(.commerce-footer) {
   display: grid;
@@ -1988,7 +1805,6 @@
   color: var(--product-muted);
   font-size: 0.68rem;
 }
-
 .scope:global(.legal-shell),
 .scope :global(.legal-shell) {
   /* width/margin come from PageShellProvider (components/page-shell). */
@@ -2082,7 +1898,6 @@
   margin: 0;
   font-weight: 650;
 }
-
 .scope:global(.payment-shell),
 .scope :global(.payment-shell) {
   display: grid;
@@ -2121,7 +1936,6 @@
   gap: 10px;
   margin-top: 30px;
 }
-
 .scope:global(.auth-shell),
 .scope :global(.auth-shell) {
   width: min(100%, 640px);
@@ -2187,7 +2001,6 @@
   background: #fff2f5;
   color: #9f2f49 !important;
 }
-
 .scope:global(.dashboard-heading) h1,
 .scope :global(.dashboard-heading) h1,
 .scope:global(.dashboard-list-heading) h2,
@@ -2198,9 +2011,7 @@
   letter-spacing: -0.05em;
 }
 .scope:global(.dashboard-heading) p,
-.scope :global(.dashboard-heading) p,
-.scope:global(.dashboard-site__header) p,
-.scope :global(.dashboard-site__header) p {
+.scope :global(.dashboard-heading) p {
   color: var(--product-accent);
 }
 .scope:global(.dashboard-heading) > div > span,
@@ -2225,9 +2036,7 @@
   background: var(--product-accent);
 }
 .scope:global(.dashboard-stats),
-.scope :global(.dashboard-stats),
-.scope:global(.dashboard-site),
-.scope :global(.dashboard-site) {
+.scope :global(.dashboard-stats) {
   border-color: var(--product-line);
   border-radius: 22px;
   background: var(--product-paper);
@@ -2238,9 +2047,7 @@
   border-color: var(--product-line);
 }
 .scope:global(.dashboard-stats) svg,
-.scope :global(.dashboard-stats) svg,
-.scope:global(.dashboard-site__icon),
-.scope :global(.dashboard-site__icon) {
+.scope :global(.dashboard-stats) svg {
   color: var(--product-accent);
 }
 .scope:global(.dashboard-stats) span,
@@ -2249,39 +2056,10 @@
 .scope :global(.dashboard-stats) small {
   color: var(--product-muted);
 }
-.scope:global(.dashboard-site__icon),
-.scope :global(.dashboard-site__icon) {
-  background: var(--product-accent-soft);
-}
-.scope:global(.dashboard-site__header) h2,
-.scope :global(.dashboard-site__header) h2,
-.scope:global(.dashboard-site__facts) strong,
-.scope :global(.dashboard-site__facts) strong,
 .scope:global(.dashboard-stats) strong,
 .scope :global(.dashboard-stats) strong {
   color: var(--product-ink);
 }
-.scope:global(.dashboard-site__actions) a,
-.scope :global(.dashboard-site__actions) a,
-.scope:global(.dashboard-site__actions) button,
-.scope :global(.dashboard-site__actions) button {
-  border-color: var(--product-line);
-  border-radius: 999px;
-  background: #fff;
-  color: #554c52;
-}
-.scope:global(.dashboard-site__actions) a[href^="/downloads/"],
-.scope :global(.dashboard-site__actions) a[href^="/downloads/"] {
-  border-color: var(--product-ink);
-  background: var(--product-ink);
-  color: #fff;
-}
-.scope:global(.dashboard-table) thead th,
-.scope :global(.dashboard-table) thead th {
-  background: var(--product-soft);
-  color: #675b63;
-}
-
 .scope:global(.editor-shell),
 .scope :global(.editor-shell) {
   background: var(--product-paper);
@@ -2570,17 +2348,14 @@
 .scope :global(.editor-map-field) > a {
   color: #5c5158 !important;
 }
-
 @media (max-width: 640px) {
   .scope:global(.editor-shell) :global(.editor-sidebar__topbar) {
     padding: 10px 16px;
   }
-
   .scope:global(.editor-shell) :global(.editor-back),
   .scope:global(.editor-shell) :global(.editor-preview-jump) {
     min-height: 44px;
   }
-
   .scope:global(.editor-shell) :global(.editor-save-status) {
     width: 28px;
     min-width: 28px;
@@ -2588,23 +2363,19 @@
     overflow: hidden;
     font-size: 0;
   }
-
   .scope:global(.editor-shell) :global(.editor-save-status) svg {
     display: block;
     flex: 0 0 auto;
   }
-
   .scope:global(.editor-shell) :global(.editor-sidebar__intro) {
     padding: 18px 16px 16px;
   }
-
   .scope:global(.editor-shell) :global(.editor-steps) {
     overflow: visible;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
     padding: 10px 16px 12px;
   }
-
   .scope:global(.editor-shell) :global(.editor-step) {
     min-width: 0;
     min-height: 68px;
@@ -2614,53 +2385,43 @@
     background: transparent;
     padding: 7px 4px;
   }
-
   .scope:global(.editor-shell) :global(.editor-form) {
     gap: 20px;
     padding: 20px 16px 88px;
   }
-
   .scope:global(.editor-shell) :global(.editor-step-panel):global(.is-active) {
     position: relative;
     z-index: 5;
     gap: 20px;
   }
-
   .scope:global(.editor-shell) :global(.editor-field-group) {
     border-radius: 16px;
     padding: 16px;
   }
-
   .scope:global(.editor-shell) :global(.editor-field-group__body) {
     padding-top: 12px;
   }
-
   .scope:global(.editor-shell) :global(.editor-field-group__body) > * + * {
     margin-top: 14px;
   }
-
   .scope:global(.editor-shell) :global(.editor-step-actions) {
     gap: 8px;
     margin: 4px -16px -88px;
     padding: 12px 16px max(12px, env(safe-area-inset-bottom));
   }
-
   .scope:global(.editor-shell) :global(.editor-step):global(.is-active) {
     border-color: rgba(255, 79, 114, 0.22);
     background: var(--product-accent-soft);
     box-shadow: inset 0 -3px var(--product-accent);
   }
-
   .scope:global(.editor-shell) :global(.editor-step__icon) {
     width: 28px;
     height: 28px;
   }
-
   .scope:global(.editor-shell) :global(.editor-step) > span:nth-child(2) {
     width: 100%;
     min-width: 0;
   }
-
   .scope:global(.editor-shell) :global(.editor-step) strong {
     display: block;
     overflow: hidden;
@@ -2669,7 +2430,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
   .scope:global(.editor-shell) :global(.editor-step) small {
     display: none;
   }
@@ -2703,7 +2463,6 @@
 .scope :global(.editor-loading__mark) span:last-child {
   border-color: var(--product-accent);
 }
-
 @media (max-width: 899px) {
   .scope:global(.templates-page),
   .scope :global(.templates-page) {
@@ -2739,7 +2498,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-
 @media (max-width: 640px) {
   .scope:global(.brand-lockup__mark),
   .scope :global(.brand-lockup__mark) {

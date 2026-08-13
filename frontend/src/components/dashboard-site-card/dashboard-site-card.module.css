@@ -1,0 +1,267 @@
+/* Карточка сайта в личном кабинете. Три зоны: кто/статус, RSVP, действия. */
+
+.card {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--product-line, #e7e0e4);
+  border-radius: 10px;
+  background: var(--product-paper, #fffdfa);
+  box-shadow: 0 8px 25px rgba(35, 30, 34, 0.04);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+.icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--product-accent-soft, #ffe6eb);
+  color: #a52f4d;
+}
+
+.title {
+  min-width: 0;
+}
+
+.title h2 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 720;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title p {
+  overflow: hidden;
+  margin: 3px 0 0;
+  color: var(--product-muted, #756c72);
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 5px 12px 5px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.isLive {
+  background: #e8f3ec;
+  color: #2f7048;
+}
+
+.isHidden {
+  background: var(--product-soft, #f6f1f3);
+  color: #6f6771;
+}
+
+.isPending {
+  background: #fdf0e4;
+  color: #8a5a24;
+}
+
+/* Главное, зачем сюда заходят: сколько ответов и как их открыть. */
+.responses {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid var(--product-line, #e7e0e4);
+  border-bottom: 1px solid var(--product-line, #e7e0e4);
+  background: var(--product-soft, #f6f1f3);
+  padding: 12px 20px;
+}
+
+.responsesLabel {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 9px;
+  color: #4c454b;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.responsesLabel svg {
+  flex: 0 0 auto;
+  color: var(--product-muted, #756c72);
+}
+
+.responsesLabel b {
+  display: grid;
+  min-width: 24px;
+  height: 22px;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--product-ink, #282126);
+  padding: 0 7px;
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+.review {
+  flex: 0 0 auto;
+  min-height: 36px;
+  border: 1px solid var(--product-ink, #282126);
+  border-radius: 999px;
+  background: var(--product-ink, #282126);
+  padding: 8px 16px;
+  color: #fff;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.review:hover:not(:disabled) {
+  border-color: var(--product-accent, #ff4f72);
+  background: var(--product-accent, #ff4f72);
+}
+
+.review:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.quiet {
+  flex: 0 0 auto;
+  color: var(--product-ink, #282126);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.error {
+  margin: 0;
+  border-bottom: 1px solid var(--product-line, #e7e0e4);
+  background: #fff5f3;
+  padding: 10px 20px;
+  color: #9a463e;
+  font-size: 0.78rem;
+}
+
+/* Действия одним рядом и всегда с подписью — иконка без текста не читается. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 20px;
+}
+
+.actions form {
+  display: contents;
+}
+
+.actions a,
+.actions button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--product-line, #e7e0e4);
+  border-radius: 999px;
+  background: transparent;
+  padding: 8px 15px;
+  color: var(--product-ink, #282126);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.actions a:hover,
+.actions button:hover {
+  border-color: var(--product-ink, #282126);
+  background: var(--product-soft, #f6f1f3);
+}
+
+.actions .primary {
+  border-color: var(--product-ink, #282126);
+  background: var(--product-ink, #282126);
+  color: #fff;
+}
+
+.actions .primary:hover {
+  border-color: var(--product-accent, #ff4f72);
+  background: var(--product-accent, #ff4f72);
+}
+
+.actions .pay {
+  border-color: var(--product-accent, #ff4f72);
+  background: var(--product-accent, #ff4f72);
+  color: #fff;
+}
+
+.actions .pay:hover {
+  border-color: var(--product-ink, #282126);
+  background: var(--product-ink, #282126);
+}
+
+@media (max-width: 640px) {
+  .head {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .status {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .responses {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 11px;
+    padding: 14px 16px;
+  }
+
+  .review,
+  .quiet {
+    text-align: center;
+  }
+
+  .review {
+    min-height: 44px;
+  }
+
+  .actions {
+    padding: 14px 16px;
+  }
+
+  .actions a,
+  .actions button {
+    flex: 1 1 auto;
+    min-height: 44px;
+  }
+
+  .actions .primary {
+    flex-basis: 100%;
+  }
+}
