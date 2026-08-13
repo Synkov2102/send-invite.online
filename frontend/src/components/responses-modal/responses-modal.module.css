@@ -1,0 +1,283 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(40, 33, 38, 0.52);
+  backdrop-filter: blur(6px);
+}
+
+/* Фиксированная высота с внутренним скроллом: сама модалка никогда не выходит
+   за экран, длинный список гостей прокручивается внутри .scroll. */
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(1100px, 100%);
+  max-height: min(760px, calc(100vh - 48px));
+  overflow: hidden;
+  border: 1px solid var(--header-line, #e7e0e4);
+  border-radius: 18px;
+  background: var(--header-paper, #fffdfa);
+  box-shadow: 0 24px 60px rgba(45, 38, 43, 0.24);
+  color: var(--header-ink, #282126);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--header-line, #e7e0e4);
+  padding: 16px 18px;
+}
+
+.header p {
+  margin: 0 0 3px;
+  color: var(--header-muted, #756c72);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.download,
+.clear {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--header-line, #e7e0e4);
+  border-radius: 999px;
+  background: transparent;
+  padding: 7px 14px;
+  color: var(--header-ink, #282126);
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.download:hover,
+.clear:hover {
+  border-color: var(--header-accent, #ff4f72);
+  color: var(--header-accent, #ff4f72);
+}
+
+.close {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--header-soft, #f6f1f3);
+  color: var(--header-muted, #756c72);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--header-accent-soft, #ffe6eb);
+  color: var(--header-accent, #ff4f72);
+}
+
+/* Единственный скролл-контейнер, и он двумерный: вниз — по гостям,
+   вбок — по вопросам, которых у приглашения может быть сколько угодно. */
+.scroll {
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+}
+
+/* Ширину держат минимумы колонок, а не max-content по таблице: иначе колонка
+   растягивается по самому длинному ответу и таблица уезжает на тысячи пикселей. */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.82rem;
+}
+
+.table th,
+.table td {
+  min-width: 170px;
+  max-width: 300px;
+  border-bottom: 1px solid var(--header-line, #e7e0e4);
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table td {
+  color: #58535a;
+  line-height: 1.45;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--header-soft, #f6f1f3);
+  color: #675b63;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Первая колонка залипает по горизонтали, чтобы при прокрутке вправо было
+   видно, чей это ответ. Заголовок «Гость» залипает по обеим осям сразу. */
+.table tbody th,
+.table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 170px;
+  background: #fff;
+  color: #29252c;
+  font-weight: 750;
+}
+
+.table thead th:first-child {
+  z-index: 3;
+  background: var(--header-soft, #f6f1f3);
+}
+
+.table tbody th::after,
+.table thead th:first-child::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-right: 1px solid var(--header-line, #e7e0e4);
+}
+
+.table tbody tr:last-child th,
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.updated {
+  min-width: 145px;
+  white-space: nowrap;
+}
+
+.remove,
+.table thead th:last-child {
+  min-width: 0;
+  width: 58px;
+}
+
+.remove button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid var(--header-line, #e7e0e4);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--header-muted, #756c72);
+  cursor: pointer;
+}
+
+.remove button:hover {
+  border-color: var(--header-accent, #ff4f72);
+  color: var(--header-accent, #ff4f72);
+}
+
+.footer {
+  border-top: 1px solid var(--header-line, #e7e0e4);
+  padding: 11px 18px;
+  color: var(--header-muted, #756c72);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .panel {
+    width: 100%;
+    max-height: 100vh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .download,
+  .clear {
+    flex: 1;
+    min-height: 40px;
+  }
+
+  .close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .table td {
+    max-width: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .backdrop {
+    animation: responsesFadeIn 160ms ease;
+  }
+
+  .panel {
+    animation: responsesPanelIn 180ms ease;
+  }
+}
+
+@keyframes responsesFadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes responsesPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+}
