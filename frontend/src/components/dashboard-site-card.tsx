@@ -223,57 +223,61 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
               <span>Не удалось загрузить ответы.</span>
             </div>
           ) : details && details.responses.length > 0 ? (
-            <div className="dashboard-table-wrap">
-              <table className="dashboard-table">
-                <thead>
-                  <tr>
-                    <th>Гость</th>
-                    {details.questions.map((question) => (
-                      <th key={question}>{question}</th>
-                    ))}
-                    <th>Обновлено</th>
-                    <th>
-                      <button
-                        onClick={() => void removeResponses()}
-                        title="Удалить все ответы"
-                        type="button"
-                      >
-                        Очистить
-                      </button>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {details.responses.map((response) => (
-                    <tr key={response.id}>
-                      <th scope="row">{response.guestName}</th>
-                      {details.questions.map((question, questionIndex) => {
-                        const answer = response.answers.find(
-                          (item) => item.questionIndex === questionIndex,
-                        );
-
-                        return (
-                          <td key={`${response.id}-${question}`}>
-                            {answer?.values.join(", ") || "—"}
-                          </td>
-                        );
-                      })}
-                      <td>{formatDateTime(response.updatedAt)}</td>
-                      <td>
-                        <button
-                          aria-label={`Удалить ответ гостя ${response.guestName}`}
-                          onClick={() => void removeResponses(response.id)}
-                          title="Удалить ответ"
-                          type="button"
-                        >
-                          <Trash2 aria-hidden size={15} />
-                        </button>
-                      </td>
+            <>
+              <div className="dashboard-responses__toolbar">
+                <button
+                  onClick={() => void removeResponses()}
+                  title="Удалить все ответы"
+                  type="button"
+                >
+                  Очистить все
+                </button>
+              </div>
+              <div className="dashboard-table-wrap">
+                <table className="dashboard-table">
+                  <thead>
+                    <tr>
+                      <th>Гость</th>
+                      {details.questions.map((question) => (
+                        <th key={question}>{question}</th>
+                      ))}
+                      <th>Обновлено</th>
+                      <th aria-label="Действия" />
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {details.responses.map((response) => (
+                      <tr key={response.id}>
+                        <th scope="row">{response.guestName}</th>
+                        {details.questions.map((question, questionIndex) => {
+                          const answer = response.answers.find(
+                            (item) => item.questionIndex === questionIndex,
+                          );
+
+                          return (
+                            /* data-label feeds the stacked mobile layout, where the header row is hidden. */
+                            <td data-label={question} key={`${response.id}-${question}`}>
+                              {answer?.values.join(", ") || "—"}
+                            </td>
+                          );
+                        })}
+                        <td data-label="Обновлено">{formatDateTime(response.updatedAt)}</td>
+                        <td className="dashboard-table__remove">
+                          <button
+                            aria-label={`Удалить ответ гостя ${response.guestName}`}
+                            onClick={() => void removeResponses(response.id)}
+                            title="Удалить ответ"
+                            type="button"
+                          >
+                            <Trash2 aria-hidden size={15} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           ) : null}
         </details>
       )}

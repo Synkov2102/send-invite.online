@@ -668,19 +668,6 @@
   }
 }
 
-@media (max-width: 720px) {
-  .scope:global(.site-header),
-  .scope :global(.site-header) {
-    flex-wrap: wrap;
-  }
-
-  .scope:global(.site-header__nav),
-  .scope :global(.site-header__nav) {
-    order: 3;
-    width: 100%;
-  }
-}
-
 /* Refined wedding studio */
 
 .scope:global(.marketing-page),
@@ -811,16 +798,6 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-}
-
-.scope:global(.site-header__mobile-menu),
-.scope :global(.site-header__mobile-menu) {
-  display: none;
-}
-
-.scope:global(.site-header__desktop-user-actions),
-.scope :global(.site-header__desktop-user-actions) {
-  display: contents;
 }
 
 .scope:global(.site-header__login),

@@ -38,7 +38,6 @@
 
 .scope:global(.site-header__nav),
 .scope :global(.site-header__nav) {
-  display: flex;
   gap: 22px;
 }
 
@@ -668,19 +667,6 @@
   }
 }
 
-@media (max-width: 720px) {
-  .scope:global(.site-header),
-  .scope :global(.site-header) {
-    flex-wrap: wrap;
-  }
-
-  .scope:global(.site-header__nav),
-  .scope :global(.site-header__nav) {
-    order: 3;
-    width: 100%;
-  }
-}
-
 /* Dashboard refresh */
 
 .scope:global(.dashboard-page),
@@ -1130,6 +1116,9 @@
   .scope:global(.dashboard-stats) strong,
   .scope :global(.dashboard-stats) strong {
     font-size: 1.55rem;
+    /* Two narrow columns: a date like "12 сент. 2026" must wrap instead of being ellipsised away. */
+    overflow: visible;
+    white-space: normal;
   }
 
   .scope:global(.dashboard-site__header),
@@ -1304,16 +1293,6 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-}
-
-.scope:global(.site-header__mobile-menu),
-.scope :global(.site-header__mobile-menu) {
-  display: none;
-}
-
-.scope:global(.site-header__desktop-user-actions),
-.scope :global(.site-header__desktop-user-actions) {
-  display: contents;
 }
 
 .scope:global(.site-header__login),
@@ -3723,5 +3702,142 @@
   .scope:global(.payment-actions) a,
   .scope :global(.payment-actions) a {
     width: 100%;
+  }
+}
+
+/* RSVP responses table */
+
+/* The <details> is a grid: without an explicit track the auto column grows to the table's
+   max-content width, so the wrap could never scroll and the card just clipped it. */
+.scope:global(.dashboard-responses),
+.scope :global(.dashboard-responses) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.scope:global(.dashboard-responses__toolbar),
+.scope :global(.dashboard-responses__toolbar) {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 24px 0;
+}
+
+.scope:global(.dashboard-responses__toolbar) button,
+.scope :global(.dashboard-responses__toolbar) button,
+.scope:global(.dashboard-table__remove) button,
+.scope :global(.dashboard-table__remove) button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 32px;
+  border: 1px solid var(--product-line);
+  border-radius: 999px;
+  background: #fff;
+  padding: 6px 14px;
+  color: #7a5560;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.scope:global(.dashboard-table__remove) button,
+.scope :global(.dashboard-table__remove) button {
+  min-width: 32px;
+  padding: 6px;
+}
+
+.scope:global(.dashboard-responses__toolbar) button:hover,
+.scope :global(.dashboard-responses__toolbar) button:hover,
+.scope:global(.dashboard-table__remove) button:hover,
+.scope :global(.dashboard-table__remove) button:hover {
+  border-color: var(--product-accent);
+  color: var(--product-accent);
+}
+
+@media (max-width: 640px) {
+  .scope:global(.dashboard-responses__toolbar),
+  .scope :global(.dashboard-responses__toolbar) {
+    padding: 12px 18px 0;
+  }
+
+  /* Stacked cards instead of a 6-column table: on a phone the wide table is either
+     clipped by the card or unreadable behind a horizontal scroll. */
+  .scope:global(.dashboard-table-wrap),
+  .scope :global(.dashboard-table-wrap) {
+    overflow-x: visible;
+  }
+
+  .scope:global(.dashboard-table),
+  .scope :global(.dashboard-table) {
+    display: block;
+    min-width: 0;
+  }
+
+  .scope:global(.dashboard-table) thead,
+  .scope :global(.dashboard-table) thead {
+    display: none;
+  }
+
+  .scope:global(.dashboard-table) tbody,
+  .scope :global(.dashboard-table) tbody {
+    display: grid;
+    gap: 10px;
+    padding: 12px 18px 18px;
+  }
+
+  .scope:global(.dashboard-table) tr,
+  .scope :global(.dashboard-table) tr {
+    position: relative;
+    display: grid;
+    gap: 9px;
+    border: 1px solid var(--product-line);
+    border-radius: 10px;
+    padding: 13px 14px;
+  }
+
+  .scope:global(.dashboard-table) th,
+  .scope :global(.dashboard-table) th,
+  .scope:global(.dashboard-table) td,
+  .scope :global(.dashboard-table) td {
+    min-width: 0;
+    border-bottom: 0;
+    padding: 0;
+  }
+
+  .scope:global(.dashboard-table) tbody th,
+  .scope :global(.dashboard-table) tbody th {
+    padding-right: 40px;
+    font-size: 0.92rem;
+  }
+
+  .scope:global(.dashboard-table) td,
+  .scope :global(.dashboard-table) td {
+    display: grid;
+    gap: 3px;
+    font-size: 0.84rem;
+  }
+
+  .scope:global(.dashboard-table) td[data-label]::before,
+  .scope :global(.dashboard-table) td[data-label]::before {
+    content: attr(data-label);
+    color: #8b8289;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .scope:global(.dashboard-table__remove),
+  .scope :global(.dashboard-table__remove) {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .scope:global(.dashboard-table__remove) button,
+  .scope :global(.dashboard-table__remove) button {
+    min-width: 36px;
+    min-height: 36px;
   }
 }
