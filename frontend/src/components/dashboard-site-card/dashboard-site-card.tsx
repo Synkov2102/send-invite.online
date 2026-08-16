@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import ResponsesModal from "@/components/responses-modal";
-import { deleteInviteResponse, fetchInviteResponses } from "@/lib/api/sites";
+import { fetchInviteResponses } from "@/lib/api/sites";
 import type { InviteResponseData, OwnedInviteSite } from "@/lib/backend-api";
 import { getInviteTemplateName } from "@/lib/invite-templates";
 import styles from "./dashboard-site-card.module.css";
@@ -36,8 +36,8 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
   const [loadError, setLoadError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // После удалений число ответов знает только загруженный список — счётчик с
-  // сервера остаётся на значении, с которым отрисовалась страница.
+  // site.responseCount — снэпшот с загрузки страницы; после открытия модалки
+  // предпочитаем свежие данные, если гость успел ответить между загрузкой и открытием.
   const responseCount = details ? details.responses.length : site.responseCount;
 
   async function openResponses() {
@@ -56,37 +56,6 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
       setLoadError(true);
     } finally {
       setIsLoading(false);
-    }
-  }
-
-  async function removeResponses(responseId?: string) {
-    const confirmed = window.confirm(
-      responseId ? "Удалить этот ответ?" : "Удалить все ответы гостей? Отменить нельзя.",
-    );
-
-    if (!confirmed) {
-      return;
-    }
-
-    try {
-      await deleteInviteResponse(site.id, responseId);
-
-      if (!details) {
-        return;
-      }
-
-      const responses = responseId
-        ? details.responses.filter((item) => item.id !== responseId)
-        : [];
-
-      setDetails({ ...details, responses });
-
-      // Пустую таблицу показывать незачем — возвращаем к карточке.
-      if (responses.length === 0) {
-        setIsOpen(false);
-      }
-    } catch {
-      setLoadError(true);
     }
   }
 
@@ -202,7 +171,6 @@ export default function DashboardSiteCard({ site }: DashboardSiteCardProps) {
           data={details}
           downloadUrl={`/downloads/sites/${site.id}/responses`}
           onClose={() => setIsOpen(false)}
-          onRemove={(responseId) => void removeResponses(responseId)}
           title={`${site.groom} & ${site.bride}`}
         />
       ) : null}

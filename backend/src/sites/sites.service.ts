@@ -219,22 +219,6 @@ export class SitesService {
     };
   }
 
-  async deleteResponse(ownerId: string, siteId: string, responseId: string) {
-    await this.getOwnedSite(ownerId, siteId);
-
-    if (!(await this.inviteResponses.deleteResponse(siteId, responseId))) {
-      throw new NotFoundException({ error: "Ответ не найден." });
-    }
-
-    return { id: responseId };
-  }
-
-  async deleteAllResponses(ownerId: string, siteId: string) {
-    await this.getOwnedSite(ownerId, siteId);
-
-    return { deleted: await this.inviteResponses.deleteResponsesBySite(siteId) };
-  }
-
   async getOwnedSites(ownerId: string) {
     const sites = await this.inviteSites.listInviteSitesByOwner(ownerId);
     const counts = await this.inviteResponses.countResponsesBySites(
@@ -259,8 +243,10 @@ export class SitesService {
   }
 
   async getResponses(ownerId: string, siteId: string) {
-    const site = await this.getOwnedSite(ownerId, siteId);
-    const responses = await this.inviteResponses.listResponsesBySite(siteId);
+    const [site, responses] = await Promise.all([
+      this.getOwnedSite(ownerId, siteId),
+      this.inviteResponses.listResponsesBySite(siteId),
+    ]);
 
     return {
       questions: site.invite.rsvpQuestions.map((question) => question.title),

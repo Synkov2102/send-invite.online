@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Headers,
   NotFoundException,
@@ -107,29 +106,6 @@ export class SitesController {
     const user = await this.getUserOrThrow(authorization, cookieHeader);
 
     return this.sitesService.getResponses(user.id, id);
-  }
-
-  @Delete(":id/responses")
-  async deleteAllResponses(
-    @Param("id") id: string,
-    @Headers("authorization") authorization?: string,
-    @Headers("cookie") cookieHeader?: string,
-  ) {
-    const user = await this.getUserOrThrow(authorization, cookieHeader);
-
-    return this.sitesService.deleteAllResponses(user.id, id);
-  }
-
-  @Delete(":id/responses/:responseId")
-  async deleteResponse(
-    @Param("id") id: string,
-    @Param("responseId") responseId: string,
-    @Headers("authorization") authorization?: string,
-    @Headers("cookie") cookieHeader?: string,
-  ) {
-    const user = await this.getUserOrThrow(authorization, cookieHeader);
-
-    return this.sitesService.deleteResponse(user.id, id, responseId);
   }
 
   @Get(":id/responses/export")
