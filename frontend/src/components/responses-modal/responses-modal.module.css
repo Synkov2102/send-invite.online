@@ -59,8 +59,7 @@
   gap: 8px;
 }
 
-.download,
-.clear {
+.download {
   display: inline-flex;
   min-height: 34px;
   align-items: center;
@@ -78,8 +77,7 @@
   cursor: pointer;
 }
 
-.download:hover,
-.clear:hover {
+.download:hover {
   border-color: var(--header-accent, #ff4f72);
   color: var(--header-accent, #ff4f72);
 }
@@ -185,29 +183,6 @@
   white-space: nowrap;
 }
 
-.remove,
-.table thead th:last-child {
-  min-width: 0;
-  width: 58px;
-}
-
-.remove button {
-  display: grid;
-  width: 32px;
-  height: 32px;
-  place-items: center;
-  border: 1px solid var(--header-line, #e7e0e4);
-  border-radius: 50%;
-  background: transparent;
-  color: var(--header-muted, #756c72);
-  cursor: pointer;
-}
-
-.remove button:hover {
-  border-color: var(--header-accent, #ff4f72);
-  color: var(--header-accent, #ff4f72);
-}
-
 .footer {
   border-top: 1px solid var(--header-line, #e7e0e4);
   padding: 11px 18px;
@@ -240,8 +215,7 @@
     width: 100%;
   }
 
-  .download,
-  .clear {
+  .download {
     flex: 1;
     min-height: 40px;
   }

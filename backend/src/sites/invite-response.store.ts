@@ -110,24 +110,6 @@ export class InviteResponseStore {
     return response;
   }
 
-  async deleteResponse(siteId: string, responseId: string) {
-    await this.ensureIndexes();
-
-    const collection = await this.getCollection();
-    const result = await collection.deleteOne({ id: responseId, siteId });
-
-    return result.deletedCount > 0;
-  }
-
-  async deleteResponsesBySite(siteId: string) {
-    await this.ensureIndexes();
-
-    const collection = await this.getCollection();
-    const result = await collection.deleteMany({ siteId });
-
-    return result.deletedCount;
-  }
-
   async listResponsesBySite(siteId: string) {
     await this.ensureIndexes();
 

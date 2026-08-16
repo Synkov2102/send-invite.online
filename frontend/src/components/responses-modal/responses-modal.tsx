@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Trash2, X } from "lucide-react";
+import { Download, X } from "lucide-react";
 import { useEffect, useId } from "react";
 import { createPortal } from "react-dom";
 import type { InviteResponseData } from "@/lib/backend-api";
@@ -10,8 +10,6 @@ type ResponsesModalProps = {
   data: InviteResponseData;
   downloadUrl: string;
   onClose: () => void;
-  /** Без id — очистить все ответы. */
-  onRemove: (responseId?: string) => void;
   title: string;
 };
 
@@ -35,7 +33,6 @@ export default function ResponsesModal({
   data,
   downloadUrl,
   onClose,
-  onRemove,
   title,
 }: ResponsesModalProps) {
   const titleId = useId();
@@ -77,14 +74,6 @@ export default function ResponsesModal({
               <Download aria-hidden size={15} />
               Excel
             </a>
-            <button
-              className={styles.clear}
-              onClick={() => onRemove()}
-              title="Удалить все ответы"
-              type="button"
-            >
-              Очистить все
-            </button>
             <button aria-label="Закрыть" className={styles.close} onClick={onClose} type="button">
               <X aria-hidden size={18} />
             </button>
@@ -102,7 +91,6 @@ export default function ResponsesModal({
                   </th>
                 ))}
                 <th scope="col">Обновлено</th>
-                <th aria-label="Действия" scope="col" />
               </tr>
             </thead>
             <tbody>
@@ -119,16 +107,6 @@ export default function ResponsesModal({
                     );
                   })}
                   <td className={styles.updated}>{formatDateTime(response.updatedAt)}</td>
-                  <td className={styles.remove}>
-                    <button
-                      aria-label={`Удалить ответ гостя ${response.guestName}`}
-                      onClick={() => onRemove(response.id)}
-                      title="Удалить ответ"
-                      type="button"
-                    >
-                      <Trash2 aria-hidden size={15} />
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
