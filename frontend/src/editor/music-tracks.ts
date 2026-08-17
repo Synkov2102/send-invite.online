@@ -263,6 +263,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "editorial-vow": "wedding-ceremony-the-mountain-163870",
   "electric-vows": "energetic-party-humanstudioedm-513983",
   "lagoon-wave": "magical-wedding-daynigthmorning-376131",
+  "manor-stripe": "wedding-music-starostin-345462",
   "minimal-paper": "wedding-romantic-leberch-262606",
   "midnight-memoir": "forever-starts-today-kaazoom-384989",
   "handwritten-note": "wedding-valentines-paulyudin-182505",

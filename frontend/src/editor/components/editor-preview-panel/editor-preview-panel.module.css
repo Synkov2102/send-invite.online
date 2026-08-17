@@ -147,6 +147,17 @@
   padding-block: clamp(56px, 7vw, 80px) !important;
 }
 
+/*
+ * «Особняк»: hero — grid без явных треков, поэтому justify-content: center из правила выше
+ * схлопывает колонку до max-content, и превью в редакторе расходится с полноэкранным.
+ * Высоты экранов шаблон задаёт сам.
+ */
+.canvasWide:not(.canvasMobile) :global(.published-site--manor) [class$="__hero"] {
+  min-height: 0 !important;
+  justify-content: normal;
+  padding-block: 0 !important;
+}
+
 .canvasMobile [class$="__hero"] {
   min-height: 720px !important;
   height: auto !important;

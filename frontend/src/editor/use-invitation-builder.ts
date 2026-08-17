@@ -31,6 +31,7 @@ import {
   getTemplatePalettes,
   hexToRgba,
   inviteImages,
+  manorImages,
   memoirImages,
   minimalImages,
   resolveTemplatePaletteId,
@@ -166,7 +167,9 @@ export function useInvitationBuilder({
                         ? memoirImages
                         : templateKind === "scribble"
                           ? scribbleImages
-                          : inviteImages;
+                          : templateKind === "manor"
+                            ? manorImages
+                            : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

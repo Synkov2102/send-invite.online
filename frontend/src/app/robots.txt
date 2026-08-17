@@ -8,5 +8,6 @@ Disallow: /payment/
 Disallow: /downloads/
 Disallow: /templates/capture/
 Clean-param: site /templates
+Clean-param: etext&ybaip&search
 
 Sitemap: https://send-invite.online/sitemap.xml
