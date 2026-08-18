@@ -1928,6 +1928,55 @@
   gap: 10px;
   margin-top: 30px;
 }
+.scope:global(.payment-panel.payment-state),
+.scope :global(.payment-panel.payment-state) {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.86fr);
+  align-items: center;
+  justify-items: stretch;
+  gap: clamp(30px, 5vw, 64px);
+  width: min(100%, 980px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(255, 79, 114, 0.13), transparent 32%),
+    rgba(255, 253, 250, 0.96);
+  padding: clamp(30px, 5vw, 54px);
+  text-align: left;
+}
+.scope:global(.payment-state__content),
+.scope :global(.payment-state__content) {
+  display: grid;
+  justify-items: start;
+}
+.scope:global(.payment-state__content) h1,
+.scope :global(.payment-state__content) h1 {
+  max-width: 7ch;
+  margin-top: 0;
+  font-size: clamp(3.25rem, 6vw, 5.6rem);
+}
+.scope:global(.payment-state__description),
+.scope :global(.payment-state__description) {
+  max-width: 43ch;
+  margin: 20px 0 0;
+  color: var(--product-muted);
+  line-height: 1.7;
+}
+.scope:global(.payment-state) :global(.payment-actions),
+.scope :global(.payment-state) :global(.payment-actions) {
+  justify-content: flex-start;
+}
+.scope:global(.payment-state__visual),
+.scope :global(.payment-state__visual) {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 79, 114, 0.16);
+  border-radius: 24px;
+  background: #fff0f3;
+}
+.scope:global(.payment-state__visual) > img,
+.scope :global(.payment-state__visual) > img {
+  object-fit: cover;
+}
 .scope:global(.auth-shell),
 .scope :global(.auth-shell) {
   width: min(100%, 640px);
@@ -2596,8 +2645,27 @@
     border-radius: 22px;
     padding-inline: 22px;
   }
+  .scope:global(.payment-panel.payment-state),
+  .scope :global(.payment-panel.payment-state) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 22px;
+  }
+  .scope:global(.payment-state__visual),
+  .scope :global(.payment-state__visual) {
+    grid-row: 1;
+    min-height: 290px;
+    border-radius: 18px;
+  }
+  .scope:global(.payment-state__content) h1,
+  .scope :global(.payment-state__content) h1 {
+    margin-top: 0;
+    font-size: clamp(3rem, 15vw, 4.35rem);
+  }
   .scope:global(.payment-actions),
   .scope :global(.payment-actions),
+  .scope:global(.payment-actions) button,
+  .scope :global(.payment-actions) button,
   .scope:global(.payment-actions) a,
   .scope :global(.payment-actions) a {
     width: 100%;
