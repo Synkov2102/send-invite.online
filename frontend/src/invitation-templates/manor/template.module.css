@@ -1,0 +1,1310 @@
+.shell {
+  --manor-bg: #1a1512;
+  --manor-paper: #f3efe5;
+  --manor-ink: #15120e;
+  --manor-photo-text: #faf6ec;
+  --manor-muted: #736a5f;
+  --manor-accent: #4b3826;
+  --manor-line: #ddd5c4;
+  --manor-serif: var(--font-invite-serif), Georgia, "Times New Roman", serif;
+  --manor-script: var(--font-invite-script), "Segoe Script", cursive;
+  --manor-sans: var(--font-geist-sans), Arial, sans-serif;
+  --manor-inline: clamp(22px, 7vw, 52px);
+  --manor-gap: clamp(36px, 8.5vw, 56px);
+  --manor-stripe: 7px;
+  --manor-dash-x: repeating-linear-gradient(90deg, var(--manor-ink) 0 4px, transparent 4px 10px);
+  --manor-dash-y: repeating-linear-gradient(180deg, var(--manor-ink) 0 4px, transparent 4px 10px);
+  width: min(100%, 680px);
+  max-width: 680px;
+  /* Оболочка превью задаёт article margin: 0 — без !important лист уедет влево. */
+  margin-inline: auto !important;
+  min-height: 100%;
+  padding: 0;
+  background: var(--manor-paper);
+  color: var(--manor-ink);
+  font-family: var(--manor-sans);
+  /* Длинные названия площадок переносим, а не выламываем карточку. */
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site--manor) {
+  background: var(--invite-bg, #1a1512);
+}
+
+:global(.published-site--manor) :global(.invite-music) {
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  padding: 5px !important;
+}
+
+:global(.published-site--manor) :global(.invite-music__copy) {
+  display: none !important;
+}
+
+:global(.published-site--manor) :global(.invite-music__toggle) {
+  width: 36px !important;
+  height: 36px !important;
+  border: 0 !important;
+}
+
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure,
+.shell address,
+.shell ol,
+.shell ul {
+  margin: 0;
+}
+
+.shell ol,
+.shell ul {
+  padding: 0;
+  list-style: none;
+}
+
+.shell address {
+  font-style: normal;
+}
+
+.paper {
+  position: relative;
+  display: grid;
+  gap: var(--manor-gap);
+  background: var(--manor-paper);
+  padding-bottom: clamp(34px, 8vw, 60px);
+  overflow: hidden;
+}
+
+.photoMono {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+}
+
+.sectionTitle {
+  display: grid;
+  justify-items: center;
+  font-family: var(--manor-serif);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+.sectionTitle span {
+  font-size: clamp(30px, 7.8vw, 42px);
+  letter-spacing: 0.1em;
+  text-indent: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Курсивный «хвост» заголовка заходит на строку выше — приём с гравированных приглашений. */
+.sectionTitle em {
+  margin-top: -0.28em;
+  margin-left: 1.05em;
+  font-family: var(--manor-script);
+  font-size: clamp(27px, 7vw, 37px);
+  font-style: normal;
+  line-height: 1.4;
+  color: var(--manor-accent);
+}
+
+.bow {
+  justify-self: center;
+  width: clamp(74px, 20vw, 104px);
+  height: auto;
+  fill: none;
+  stroke: var(--manor-ink);
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.signature {
+  font-family: var(--manor-script);
+  font-size: clamp(21px, 5.6vw, 28px);
+  color: var(--manor-accent);
+  text-align: center;
+}
+
+/* --- Hero --- */
+
+.hero {
+  display: grid;
+  gap: 0;
+}
+
+.heroIntro {
+  position: relative;
+  display: grid;
+  min-height: clamp(500px, 124vw, 660px);
+  place-items: center;
+  padding: clamp(40px, 10vw, 64px) var(--manor-inline);
+  /* Паспарту первого экрана — тон палитры: иначе превью шаблона всегда серое. */
+  background: color-mix(in srgb, var(--manor-paper) 86%, var(--manor-accent));
+  overflow: hidden;
+}
+
+.heroBackdrop {
+  object-fit: cover;
+  filter: grayscale(1) blur(4px) contrast(0.82) brightness(1.12);
+  opacity: 0.62;
+  transform: scale(1.035);
+}
+
+.heroIntro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--manor-paper) 34%, transparent),
+      color-mix(in srgb, var(--manor-paper) 22%, transparent)
+    ),
+    radial-gradient(
+      circle at 50% 38%,
+      transparent 28%,
+      color-mix(in srgb, var(--manor-paper) 26%, transparent) 100%
+    );
+}
+
+/*
+ * Клапан конверта сходится на 66% высоты, а его диагонали съедают ширину,
+ * поэтому имена стоят под конвертом, а не поверх него: так их не режет сгиб.
+ */
+.heroStack {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  gap: clamp(22px, 5.5vw, 32px);
+  width: 100%;
+}
+
+/*
+ * Конверт — почти плоский кремовый PNG, и красить его заливкой нельзя:
+ * пропали бы сгибы. Поэтому саму картинку оставляем как источник светотени,
+ * а поверх кладём акцент палитры в режиме color — он берёт тон и насыщенность
+ * акцента, а светлоту оставляет от бумаги. Маска держит цвет внутри силуэта,
+ * isolation — смешивание внутри конверта, не по фону первого экрана.
+ */
+.heroEnvelope {
+  position: relative;
+  isolation: isolate;
+  width: min(76%, 330px);
+  aspect-ratio: 1.5;
+  background: url("/images/manor-envelope.png") center / contain no-repeat;
+  filter: drop-shadow(0 18px 20px color-mix(in srgb, var(--manor-ink) 22%, transparent));
+  transform: rotate(-1.4deg);
+}
+
+.heroEnvelope::before,
+.heroEnvelope::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mask: url("/images/manor-envelope.png") center / contain no-repeat;
+  -webkit-mask: url("/images/manor-envelope.png") center / contain no-repeat;
+}
+
+.heroEnvelope::before {
+  background: var(--manor-accent);
+  mix-blend-mode: color;
+  opacity: 0.38;
+}
+
+/* Лёгкая светотень поперёк бумаги, чтобы конверт не читался плоской плашкой. */
+.heroEnvelope::after {
+  background: linear-gradient(
+    152deg,
+    rgb(255 255 255 / 24%) 0%,
+    transparent 46%,
+    color-mix(in srgb, var(--manor-accent) 14%, transparent) 100%
+  );
+}
+
+.heroTitle {
+  display: grid;
+  justify-items: center;
+  font-family: var(--manor-serif);
+  font-weight: 400;
+  line-height: 0.92;
+  text-align: center;
+}
+
+.heroTitle span {
+  font-size: clamp(32px, 9vw, 48px);
+  letter-spacing: -0.025em;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.heroTitle em {
+  margin-block: 0.16em 0.2em;
+  font-family: var(--manor-script);
+  font-size: clamp(23px, 6.6vw, 34px);
+  font-style: normal;
+  color: var(--manor-accent);
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.heroTitleLong span {
+  font-size: clamp(18px, 5vw, 28px);
+  line-height: 0.95;
+}
+
+.heroTitleLong em {
+  font-size: clamp(18px, 5vw, 26px);
+}
+
+.heroDate {
+  font-family: var(--manor-sans);
+  font-size: clamp(11px, 3vw, 13px);
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+}
+
+.heroDate::before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 1px;
+  margin: 0 auto 13px;
+  background: currentColor;
+  opacity: 0.42;
+}
+
+.heroPhoto {
+  position: relative;
+  min-height: clamp(560px, 146vw, 820px);
+  overflow: visible;
+}
+
+.heroPhoto .photoMono {
+  object-position: center top;
+}
+
+.heroPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--manor-ink) 18%, transparent), transparent 38%),
+    linear-gradient(0deg, color-mix(in srgb, var(--manor-ink) 10%, transparent), transparent 28%);
+  pointer-events: none;
+}
+
+.heroLetter {
+  position: absolute;
+  top: clamp(46px, 12vw, 68px);
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  width: min(64%, 330px);
+  justify-items: center;
+  gap: clamp(10px, 2.6vw, 14px);
+  border: 1px solid color-mix(in srgb, var(--manor-line) 64%, transparent);
+  padding: clamp(18px, 4.4vw, 26px) clamp(18px, 4.5vw, 30px);
+  background: color-mix(in srgb, var(--manor-paper) 96%, white);
+  box-shadow: 0 18px 36px color-mix(in srgb, var(--manor-ink) 16%, transparent);
+  color: var(--manor-ink);
+  text-align: center;
+  transform: translateX(-50%) rotate(0.7deg);
+}
+
+.heroLetterScript {
+  font-family: var(--manor-script);
+  font-size: clamp(21px, 5.4vw, 28px);
+  line-height: 1.1;
+  color: var(--manor-accent);
+}
+
+.heroLetter .signature {
+  font-size: clamp(17px, 4.3vw, 22px);
+}
+
+.heroLetter .heroSignatureLong {
+  max-height: 3.45em;
+  overflow: hidden;
+  font-size: clamp(10px, 2.8vw, 14px);
+  line-height: 1.15;
+}
+
+.heroLetter .bow {
+  width: clamp(34px, 9vw, 46px);
+}
+
+/* --- История --- */
+
+.story {
+  display: grid;
+  justify-items: center;
+  gap: clamp(20px, 5vw, 30px);
+  padding-inline: var(--manor-inline);
+  text-align: center;
+}
+
+.story > p {
+  max-width: 39ch;
+  font-family: var(--manor-serif);
+  font-size: clamp(14px, 3.5vw, 16px);
+  line-height: 1.72;
+}
+
+.storyPhotos {
+  position: relative;
+  width: min(86%, 420px);
+  min-height: clamp(250px, 68vw, 390px);
+  margin-top: 4px;
+}
+
+.storyPhotos figure {
+  position: absolute;
+  width: 57%;
+  aspect-ratio: 3 / 4;
+  border: 7px solid var(--manor-paper);
+  background: var(--manor-paper);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--manor-ink) 18%, transparent);
+}
+
+.storyPhotos figure:first-child {
+  top: 2%;
+  left: 1%;
+  transform: rotate(-3.2deg);
+}
+
+.storyPhotos figure:last-child {
+  right: 1%;
+  bottom: 1%;
+  transform: rotate(3.8deg);
+}
+
+/* --- Когда --- */
+
+.when {
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 4vw, 24px);
+  padding-inline: var(--manor-inline);
+  text-align: center;
+}
+
+.whenDate {
+  font-family: var(--manor-serif);
+  font-size: clamp(22px, 6vw, 30px);
+  letter-spacing: 0.035em;
+}
+
+.whenTime {
+  font-size: clamp(11px, 2.9vw, 12px);
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  color: var(--manor-muted);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  width: 100%;
+  border-top: 1px solid var(--manor-line);
+  border-bottom: 1px solid var(--manor-line);
+  padding-block: 12px;
+}
+
+.calendar li {
+  display: grid;
+  gap: 5px;
+  justify-items: center;
+  padding-block: 4px;
+}
+
+.calendar small {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--manor-muted);
+}
+
+.calendar strong {
+  font-family: var(--manor-serif);
+  font-size: clamp(15px, 4.2vw, 19px);
+  font-weight: 400;
+}
+
+.calendarSelected {
+  border: 1px solid var(--manor-ink);
+  background: color-mix(in srgb, var(--manor-ink) 4%, transparent);
+}
+
+.calendarSelected strong {
+  color: var(--manor-accent);
+}
+
+.countdown {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: 100%;
+  padding-top: clamp(6px, 2vw, 12px);
+}
+
+.countdownTitle {
+  font-family: var(--manor-script);
+  font-size: clamp(22px, 6vw, 28px);
+  color: var(--manor-accent);
+}
+
+.countdownGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+}
+
+.countdownGrid li {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.countdownGrid strong {
+  font-family: var(--manor-serif);
+  font-size: clamp(30px, 9.5vw, 46px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.countdownGrid small {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-indent: 0.16em;
+  text-transform: uppercase;
+  color: var(--manor-muted);
+}
+
+/* Двоеточие живёт между колонками и не сдвигает цифры при смене разряда. */
+.countdownGrid i {
+  position: absolute;
+  top: 0;
+  right: -0.28em;
+  font-family: var(--manor-serif);
+  font-size: clamp(26px, 8vw, 40px);
+  font-style: normal;
+  line-height: 1.06;
+  color: var(--manor-muted);
+}
+
+.whenPhoto {
+  position: relative;
+  width: 100%;
+  margin-top: clamp(8px, 3vw, 16px);
+  aspect-ratio: 3 / 2;
+}
+
+/* --- Программа --- */
+
+/*
+ * Пунктирная рамка «маркизы» рисуется одним фоном из четырёх лент, а не
+ * псевдоэлементами: так углы сходятся, а ритм штриха общий для всех сторон.
+ */
+.program {
+  position: relative;
+  display: grid;
+  gap: clamp(24px, 6vw, 36px);
+  margin-inline: clamp(14px, 3.6vw, 22px);
+  padding-block: clamp(30px, 8vw, 46px);
+  background-image:
+    var(--manor-dash-x), var(--manor-dash-x), var(--manor-dash-y), var(--manor-dash-y);
+  background-repeat: no-repeat;
+  background-position:
+    left top,
+    left bottom,
+    left top,
+    right top;
+  background-size:
+    100% var(--manor-stripe),
+    100% var(--manor-stripe),
+    var(--manor-stripe) 100%,
+    var(--manor-stripe) 100%;
+}
+
+.timeline.timeline {
+  display: grid;
+  gap: clamp(24px, 6vw, 34px);
+  position: relative;
+  padding-inline: calc(var(--manor-stripe) + var(--manor-inline));
+  text-align: center;
+}
+
+/* Вертикальная нить программы — как на гравированных карточках тайминга. */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 50%;
+  width: 1px;
+  background: var(--manor-line);
+}
+
+.timeline li {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  padding-block: clamp(10px, 3vw, 16px);
+  background: var(--manor-paper);
+}
+
+.timeline time {
+  font-family: var(--manor-script);
+  font-size: clamp(19px, 5vw, 24px);
+  color: var(--manor-accent);
+}
+
+.timeline h3 {
+  font-family: var(--manor-serif);
+  font-size: clamp(15px, 4vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-indent: 0.08em;
+  text-transform: uppercase;
+}
+
+.timeline p {
+  max-width: 32ch;
+  font-family: var(--manor-serif);
+  font-size: clamp(13px, 3.5vw, 14px);
+  line-height: 1.65;
+  color: var(--manor-muted);
+}
+
+/* --- Где --- */
+
+.where {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(38px, 10vw, 66px) var(--manor-inline);
+  color: var(--manor-photo-text);
+}
+
+.wherePhoto {
+  z-index: -2;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+}
+
+.where::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--manor-accent) 76%, black);
+  opacity: 0.82;
+}
+
+.whereBody {
+  display: grid;
+  justify-items: center;
+  gap: clamp(22px, 6vw, 32px);
+}
+
+.where .sectionTitle em {
+  color: var(--manor-photo-text);
+}
+
+.whereVenue {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+/* Название площадки — главный ориентир, поэтому антиква, а не пропись. */
+.whereVenue h3 {
+  max-width: 20ch;
+  font-family: var(--manor-serif);
+  font-size: clamp(21px, 5.6vw, 27px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.whereVenue address {
+  max-width: 28ch;
+  font-family: var(--manor-serif);
+  font-size: clamp(14px, 3.7vw, 15px);
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.whereVenue address::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 1px;
+  margin: 14px auto 12px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.mapLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  border: 1px solid color-mix(in srgb, currentColor 62%, transparent);
+  padding: 12px 24px;
+  color: inherit;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 240ms ease;
+}
+
+.mapLink:hover {
+  background: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.mapLink:focus-visible,
+.detailsBlock :global(a):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* --- Дресс-код --- */
+
+.dress {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  padding: clamp(34px, 9vw, 58px) var(--manor-inline);
+}
+
+.dressPhoto {
+  z-index: -2;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.02);
+}
+
+.dress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--manor-ink) 70%, transparent);
+}
+
+/*
+ * Shared-блоки приезжают в «ванильной» теме (оранжевый + розовый).
+ * Переводим их переменные на палитру шаблона и снимаем скругления.
+ */
+.dressBlock.dressBlock {
+  --dress-accent: var(--manor-accent);
+  --dress-ink: var(--manor-ink);
+  --dress-muted: var(--manor-muted);
+  --dress-line: var(--manor-line);
+  --dress-surface: var(--manor-paper);
+  --dress-veil: var(--manor-paper);
+  --dress-radius: 0;
+  width: 100%;
+  border: 1px solid var(--manor-line);
+  padding: clamp(28px, 7vw, 44px) clamp(18px, 5vw, 32px);
+  box-shadow: none;
+}
+
+.dressBlock :global(h2) {
+  color: var(--manor-ink) !important;
+  font-family: var(--manor-script) !important;
+  font-size: clamp(30px, 8vw, 42px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-indent: 0 !important;
+  text-transform: none !important;
+}
+
+.dressBlock :global([class*="eyebrow"]) {
+  display: none !important;
+}
+
+.dressBlock :global(p) {
+  max-width: 38ch !important;
+  font-family: var(--manor-serif) !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+/* Подпись «Цвет N» не нужна глазу, но нужна скринридеру — прячем визуально. */
+.dressBlock :global([class*="swatchLabel"]) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+/* Квадратные выкраски вместо кружков — ближе к образцам тканей. */
+.dressBlock ul li > span:first-child {
+  width: clamp(42px, 9vw, 54px) !important;
+  border: 1px solid color-mix(in srgb, var(--manor-ink) 20%, transparent) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.dressBlock ul li {
+  min-width: 0 !important;
+}
+
+/* --- Детали --- */
+
+.details {
+  display: grid;
+  justify-items: center;
+  gap: clamp(22px, 5.5vw, 32px);
+  padding-inline: var(--manor-inline);
+}
+
+.detailsBlock.detailsBlock {
+  --info-accent: var(--manor-accent);
+  --info-ink: var(--manor-ink);
+  --info-muted: var(--manor-muted);
+  --info-line: var(--manor-line);
+  --info-surface: transparent;
+  --info-veil: transparent;
+  --info-radius: 0;
+  --chat-accent: var(--manor-accent);
+  --chat-ink: var(--manor-ink);
+  --chat-muted: var(--manor-muted);
+  --chat-line: var(--manor-line);
+  --chat-surface: transparent;
+  --chat-veil: transparent;
+  --chat-radius: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: center;
+  box-shadow: none;
+}
+
+.detailsBlock :global(h2) {
+  font-family: var(--manor-script) !important;
+  font-size: clamp(23px, 6vw, 30px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  text-indent: 0 !important;
+  text-transform: none !important;
+}
+
+.detailsBlock :global([class*="eyebrow"]) {
+  display: none !important;
+}
+
+.detailsBlock :global(p) {
+  margin-inline: auto !important;
+  max-width: 40ch !important;
+  font-family: var(--manor-serif) !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+.detailsBlock :global(a) {
+  min-height: 46px !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 12px 24px !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.2em !important;
+  text-indent: 0.2em !important;
+  text-transform: uppercase !important;
+  transition: background-color 240ms ease !important;
+}
+
+.detailsBlock :global(a):hover {
+  background: color-mix(in srgb, var(--manor-ink) 8%, transparent) !important;
+}
+
+.detailsBlock::after {
+  content: "";
+  width: 74px;
+  height: 1px;
+  margin: 22px auto 0;
+  background: var(--manor-line);
+}
+
+/* --- RSVP --- */
+
+.rsvp {
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 4vw, 22px);
+  padding-inline: var(--manor-inline);
+  text-align: center;
+}
+
+.rsvpTitle {
+  font-family: var(--manor-serif);
+  font-size: clamp(38px, 10vw, 54px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.rsvpPhoto {
+  position: relative;
+  width: 100%;
+  margin-bottom: clamp(14px, 4vw, 24px) !important;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.rsvpPhoto .photoMono {
+  object-position: center 24%;
+}
+
+.rsvpText {
+  max-width: 38ch;
+  font-family: var(--manor-serif);
+  font-size: clamp(13px, 3.5vw, 15px);
+  line-height: 1.68;
+  color: var(--manor-ink);
+}
+
+.rsvpDeadline {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  text-transform: uppercase;
+  color: var(--manor-muted);
+}
+
+.rsvpForm.rsvpForm {
+  --rsvp-accent: var(--manor-accent);
+  --rsvp-accent-soft: color-mix(in srgb, var(--manor-accent) 10%, transparent);
+  --rsvp-button-text: var(--manor-photo-text);
+  --rsvp-control-radius: 0;
+  --rsvp-focus-surface: var(--manor-paper);
+  --rsvp-ink: var(--manor-ink);
+  --rsvp-line: var(--manor-line);
+  --rsvp-muted: var(--manor-muted);
+  --rsvp-radius: 0;
+  --rsvp-section: transparent;
+  --rsvp-shadow: none;
+  --rsvp-surface: transparent;
+  width: 100%;
+  margin-top: 8px;
+  text-align: left;
+}
+
+.rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
+  border-inline: 0 !important;
+  border-top: 1px solid var(--manor-line) !important;
+  border-bottom: 0 !important;
+  padding: 22px 0 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+.rsvpForm :global([class*="__step"]) {
+  background: transparent !important;
+  font-family: var(--manor-serif) !important;
+  font-weight: 400 !important;
+}
+
+/* Заголовки шагов формы живут в той же антикве, что и заголовки секций. */
+.rsvpForm :global([class*="__sectionHeading"]) h3 {
+  font-family: var(--manor-serif) !important;
+  font-size: clamp(17px, 4.4vw, 19px) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+.rsvpForm :global([class*="__sectionHeading"]) p {
+  font-family: var(--manor-serif) !important;
+  font-size: 13px !important;
+}
+
+.rsvpForm :global([class*="__option"]:not([class*="__optionText"])) {
+  border: 0 !important;
+  border-bottom: 1px solid var(--manor-line) !important;
+  padding-inline: 0 !important;
+  background: transparent !important;
+}
+
+.rsvpForm :global([class*="__textInput"]),
+.rsvpForm :global([class*="__textarea"]) {
+  border: 0 !important;
+  border-bottom: 1px solid var(--manor-line) !important;
+  padding-inline: 0 !important;
+  background: transparent !important;
+}
+
+.rsvpForm :global([class*="__submit"]) {
+  min-height: 58px !important;
+  padding-inline: 22px !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* --- Финал --- */
+
+.closing {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: clamp(16px, 4vw, 24px);
+  margin-inline: var(--manor-inline);
+  border: 1px solid var(--manor-line);
+  border-radius: 0;
+  padding: clamp(54px, 13vw, 82px) clamp(20px, 5vw, 34px);
+  background: color-mix(in srgb, var(--manor-paper) 88%, white);
+  box-shadow: none;
+}
+
+.closing::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  width: 42px;
+  height: 1px;
+  background: var(--manor-line);
+  transform: translateX(-50%);
+}
+
+/* Финальный заголовок — тот же приём, что и у секций, только крупнее. */
+.closingTitle span {
+  font-size: clamp(38px, 11vw, 56px);
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.closingTitle em {
+  margin-left: 2.4em;
+  font-size: clamp(30px, 9vw, 42px);
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.closingDate {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: var(--manor-muted);
+}
+
+.closingSignatureLong {
+  max-width: 100%;
+  font-size: clamp(13px, 3.5vw, 18px);
+  line-height: 1.25;
+}
+
+@media (min-width: 560px) {
+  .timeline p {
+    max-width: 38ch;
+  }
+}
+
+@media (max-width: 420px) {
+  .heroEnvelope {
+    width: 84%;
+  }
+
+  .heroLetter {
+    width: 74%;
+  }
+
+  .storyPhotos {
+    width: 94%;
+  }
+
+  .program {
+    margin-inline: 10px;
+  }
+
+  .rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
+    padding-block: 18px !important;
+  }
+
+  .closing {
+    margin-inline: 18px;
+  }
+}
+
+/* --- Появление секций --- */
+
+/* Обложка видна с первого кадра, поэтому играет на загрузке, а не по data-animate:
+   хук ставит его уже после монтирования, и готовый экран успел бы мигнуть. */
+.heroTitle span,
+.heroTitle em,
+.heroDate,
+.heroLetterScript,
+.heroLetter .signature,
+.heroLetter .bow {
+  animation: manorRise 720ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
+/* Конверт и подложка везут собственный наклон/зум на transform,
+   поэтому у них отдельные кадры — общие обнулили бы оформление. */
+.heroEnvelope {
+  animation: manorRiseEnvelope 720ms cubic-bezier(0.22, 0.68, 0.24, 1) 60ms both;
+}
+
+.heroTitle span:first-of-type {
+  animation-delay: 180ms;
+}
+
+.heroTitle em {
+  animation-delay: 280ms;
+}
+
+.heroTitle span:last-of-type {
+  animation-delay: 360ms;
+}
+
+.heroDate {
+  animation-delay: 500ms;
+}
+
+.heroLetterScript {
+  animation-delay: 620ms;
+}
+
+.heroLetter .signature {
+  animation-delay: 700ms;
+}
+
+.heroLetter .bow {
+  animation-delay: 780ms;
+}
+
+/* Кадры «оседают» из лёгкого зума — приём разворота глянцевого журнала. */
+.heroPhoto img {
+  animation: manorSettle 1600ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
+.heroBackdrop {
+  animation: manorSettleBackdrop 1600ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
+.shell[data-animate="on"] [data-reveal] {
+  opacity: 0;
+}
+
+.shell[data-animate="on"] [data-reveal][data-revealed] {
+  animation: manorFade 620ms ease both;
+}
+
+[data-revealed] .sectionTitle span {
+  animation: manorRise 640ms ease both;
+}
+
+[data-revealed] .sectionTitle em {
+  animation: manorRise 640ms ease 120ms both;
+}
+
+.when[data-revealed] .calendar li {
+  animation: manorRise 520ms ease both;
+}
+
+.when[data-revealed] .calendar li:nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(4) {
+  animation-delay: 180ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(5) {
+  animation-delay: 240ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(6) {
+  animation-delay: 300ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(n + 7) {
+  animation-delay: 360ms;
+}
+
+.when[data-revealed] .countdown {
+  animation: manorRise 620ms ease 160ms both;
+}
+
+/* Значение пересоздаётся на каждом тике (key в разметке), поэтому кадр играет заново. */
+.countdownGrid strong {
+  animation: manorTick 420ms ease both;
+}
+
+.program[data-revealed] .timeline li {
+  animation: manorRise 560ms ease both;
+}
+
+.program[data-revealed] .timeline li:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(4) {
+  animation-delay: 270ms;
+}
+
+.program[data-revealed] .timeline li:nth-child(n + 5) {
+  animation-delay: 360ms;
+}
+
+.dress[data-revealed] .dressBlock ul li {
+  animation: manorRise 480ms ease both;
+}
+
+.dress[data-revealed] .dressBlock ul li:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.dress[data-revealed] .dressBlock ul li:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.dress[data-revealed] .dressBlock ul li:nth-child(n + 4) {
+  animation-delay: 240ms;
+}
+
+/* Бант прорисовывается штрихом: pathLength={1} в разметке уравнивает все линии. */
+[data-revealed] .bow path,
+[data-revealed] .bow ellipse {
+  stroke-dasharray: 1;
+  animation: manorDraw 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+[data-revealed] .bow path:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+[data-revealed] .bow path:nth-child(3) {
+  animation-delay: 260ms;
+}
+
+[data-revealed] .bow path:nth-child(4) {
+  animation-delay: 340ms;
+}
+
+[data-revealed] .bow ellipse {
+  animation-delay: 480ms;
+}
+
+@keyframes manorFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes manorRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes manorSettle {
+  from {
+    transform: scale(1.06);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes manorRiseEnvelope {
+  from {
+    opacity: 0;
+    transform: translateY(14px) rotate(-1.4deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-1.4deg);
+  }
+}
+
+@keyframes manorSettleBackdrop {
+  from {
+    transform: scale(1.09);
+  }
+
+  to {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes manorTick {
+  from {
+    transform: translateY(-4px);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes manorDraw {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shell[data-animate="on"] [data-reveal],
+  .shell[data-animate="on"] [data-reveal][data-revealed],
+  .shell [data-revealed] *,
+  .shell .hero *,
+  .shell .heroBackdrop,
+  .shell .countdownGrid strong {
+    animation: none !important;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}

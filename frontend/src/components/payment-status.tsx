@@ -1,6 +1,7 @@
 "use client";
 
-import { CheckCircle2, Clock3, RefreshCw, XCircle } from "lucide-react";
+import { XCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { trackGoal } from "@/lib/analytics";
@@ -133,21 +134,32 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
 
   if (order?.status === "paid") {
     return (
-      <section className="payment-panel is-success">
-        <CheckCircle2 aria-hidden size={34} />
-        <p className="marketing-eyebrow">Оплата подтверждена</p>
-        <h1>Сайт опубликован</h1>
-        <p>Платёж получен, а приглашение уже доступно гостям по публичной ссылке.</p>
-        <div className="payment-actions">
-          <Link
-            className="marketing-button marketing-button--primary"
-            href={order.siteUrl ?? "/dashboard"}
-          >
-            Открыть приглашение
-          </Link>
-          <Link className="marketing-button marketing-button--ghost" href="/dashboard">
-            В личный кабинет
-          </Link>
+      <section className="payment-panel payment-state is-success">
+        <div className="payment-state__content">
+          <h1>Сайт опубликован</h1>
+          <p className="payment-state__description">
+            Платёж получен, а приглашение уже доступно гостям по публичной ссылке.
+          </p>
+          <div className="payment-actions">
+            <Link
+              className="marketing-button marketing-button--primary"
+              href={order.siteUrl ?? "/dashboard"}
+            >
+              Открыть приглашение
+            </Link>
+            <Link className="marketing-button marketing-button--ghost" href="/dashboard">
+              В личный кабинет
+            </Link>
+          </div>
+        </div>
+        <div className="payment-state__visual">
+          <Image
+            alt="Розовый голубь рядом с опубликованным приглашением"
+            fill
+            priority
+            sizes="(max-width: 760px) calc(100vw - 76px), 360px"
+            src="/images/brand/payment-success-mascot.webp"
+          />
         </div>
       </section>
     );
@@ -175,36 +187,52 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
     );
   }
 
+  const needsRetry = Boolean(error || timedOut);
+
   return (
-    <section className="payment-panel is-pending">
-      {error ? <RefreshCw aria-hidden size={34} /> : <Clock3 aria-hidden size={34} />}
-      <p className="marketing-eyebrow">Проверяем платёж</p>
-      <h1>
-        {error
-          ? "Нужна повторная проверка"
-          : timedOut
-            ? "Подтверждение задерживается"
-            : "Почти готово"}
-      </h1>
-      <p>
-        {error ??
-          (timedOut
-            ? "Оплата в Robokassa прошла, но серверное подтверждение ещё не пришло. Мы продолжаем проверку. Если сайт не появится в личном кабинете, напишите в поддержку."
-            : "Robokassa уже вернула вас на сайт. Ждём защищённое серверное подтверждение оплаты.")}
-      </p>
-      <div className="payment-actions">
-        {(error || timedOut) && (
-          <button
-            className="marketing-button marketing-button--primary"
-            onClick={retry}
-            type="button"
-          >
-            Проверить снова
-          </button>
-        )}
-        <Link className="marketing-button marketing-button--ghost" href="/dashboard">
-          В личный кабинет
-        </Link>
+    <section className="payment-panel payment-state is-pending">
+      <div className="payment-state__content">
+        <h1>
+          {error
+            ? "Нужна повторная проверка"
+            : timedOut
+              ? "Подтверждение задерживается"
+              : "Почти готово"}
+        </h1>
+        <p className="payment-state__description">
+          {error
+            ? "Не удалось получить актуальный статус платежа. Попробуйте проверить его ещё раз — приглашение и ваши данные сохранены."
+            : timedOut
+              ? "Оплата прошла, но серверное подтверждение ещё не пришло. Мы продолжаем ждать ответ платёжной системы."
+              : "Robokassa уже вернула вас на сайт. Ждём защищённое серверное подтверждение оплаты."}
+        </p>
+        <div className="payment-actions">
+          {needsRetry && (
+            <button
+              className="marketing-button marketing-button--primary"
+              onClick={retry}
+              type="button"
+            >
+              Проверить снова
+            </button>
+          )}
+          <Link className="marketing-button marketing-button--ghost" href="/dashboard">
+            В личный кабинет
+          </Link>
+        </div>
+      </div>
+      <div className="payment-state__visual">
+        <Image
+          alt={needsRetry ? "Голубь повторно проверяет приглашение" : "Голубь ждёт подтверждение приглашения"}
+          fill
+          priority
+          sizes="(max-width: 760px) calc(100vw - 76px), 360px"
+          src={
+            needsRetry
+              ? "/images/brand/payment-retry-mascot.webp"
+              : "/images/brand/payment-pending-mascot.webp"
+          }
+        />
       </div>
     </section>
   );

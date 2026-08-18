@@ -86,6 +86,12 @@ export const chapterImages = {
   venue: "/images/chapter-ticket-venue.webp",
 } as const;
 
+export const manorImages = {
+  cover: "/images/manor-stripe-cover.webp",
+  portrait: "/images/manor-stripe-portrait.webp",
+  venue: "/images/manor-stripe-venue.webp",
+} as const;
+
 export const memoirImages = {
   cover: "/images/midnight-memoir-cover.webp",
   portrait: "/images/midnight-memoir-portrait.webp",

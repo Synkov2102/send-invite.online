@@ -4,6 +4,7 @@ import { Button } from "@heroui/react";
 import { Eye, Minimize2, Pencil } from "lucide-react";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import { useEditor } from "../../editor-context";
+import { PreviewPaletteDock } from "../preview-palette-dock";
 import inviteOverrides from "../editor-invite-overrides/editor-invite-overrides.module.css";
 import styles from "./fullscreen-preview.module.css";
 
@@ -49,6 +50,7 @@ export function FullscreenPreview() {
           </Button>
         </div>
       </div>
+      <PreviewPaletteDock />
       <div
         className={`fullscreen-preview__page ${
           isWideTemplate ? "fullscreen-preview__page--wide" : "fullscreen-preview__page--alpine"

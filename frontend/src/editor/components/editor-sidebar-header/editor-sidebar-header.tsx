@@ -76,7 +76,7 @@ export function EditorSidebarHeader() {
           href="/"
           onClick={handleEditorExit}
         >
-          <BrandLockup homeLabelSuffix="на главную" />
+          <BrandLockup homeLabelSuffix="на главную" imageLogo />
         </Link>
         <span
           aria-live="polite"

@@ -27,6 +27,8 @@
 *.pem
 .invite-sites/
 /tmp/
+# черновики статей: исходник живёт в Mongo, в git не попадает (docs/seo-articles.md)
+/articles/
 frontend/.cache/
 
 # debug

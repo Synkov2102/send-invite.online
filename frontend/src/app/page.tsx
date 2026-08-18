@@ -16,14 +16,8 @@ import {
   createPageMetadata,
 } from "@/lib/seo";
 import type { Metadata } from "next";
-import {
-  ArrowRight,
-  Check,
-  ClipboardList,
-  Clock3,
-  Eye,
-  type LucideIcon,
-} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { ArrowRight, Check, ClipboardCheck, Eye, Timer } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
@@ -43,23 +37,27 @@ const HERO_STATS = [
 
 type Benefit = {
   icon: LucideIcon;
+  imageSrc: string;
   title: string;
   text: string;
 };
 
 const benefits: Benefit[] = [
   {
-    icon: Clock3,
+    icon: Timer,
+    imageSrc: "/images/brand/benefit-ready-10-min-v3.webp",
     title: "Готово за 10 минут",
     text: "Выберите шаблон и добавьте детали свадьбы.",
   },
   {
     icon: Eye,
+    imageSrc: "/images/brand/benefit-live-preview-v4.webp",
     title: "Результат виден сразу",
     text: "Меняйте текст и цвета прямо в редакторе.",
   },
   {
-    icon: ClipboardList,
+    icon: ClipboardCheck,
+    imageSrc: "/images/brand/benefit-rsvp-v3.webp",
     title: "RSVP без переписок",
     text: "Ответы гостей собираются в личном кабинете.",
   },
@@ -171,17 +169,13 @@ export default async function HomePage() {
 
             <div className={styles.heroVisual}>
               <Image
-                alt="Невеста и жених на свадебной площадке"
+                alt="Невеста и жених рядом с маскотом сервиса приглашений"
                 fill
                 loading="eager"
-                sizes="(max-width: 899px) calc(100vw - 50px), 540px"
-                src="/images/homepage-hero-editorial-v2.webp"
-                unoptimized
+                quality={90}
+                sizes="(max-width: 899px) calc(100vw - 50px), 560px"
+                src="/images/brand/homepage-mascot-delivery-clean.webp"
               />
-              <div aria-hidden className={styles.heroTemplateTitle}>
-                <span>wedding</span>
-                <strong>26—06</strong>
-              </div>
               <div className={styles.heroVisualBadge}>
                 <Check aria-hidden size={14} />
                 Живой сайт
@@ -203,14 +197,29 @@ export default async function HomePage() {
           <div className={styles.sectionIntro}>
             <Eyebrow>Возможности</Eyebrow>
             <h2>Всё главное уже внутри</h2>
+            <p>
+              Редактор, живое превью и сбор ответов гостей — в одном сервисе, без
+              плагинов и настроек.
+            </p>
           </div>
           <div className={styles.benefitsGrid}>
-            {benefits.map((item, index) => (
+            {benefits.map((item) => (
               <article className={styles.benefitCard} key={item.title}>
-                <span className={styles.benefitIndex}>{formatIndex(index)}</span>
-                <item.icon aria-hidden className={styles.benefitIcon} size={22} />
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <div aria-hidden className={styles.benefitImage}>
+                  <Image
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 899px) 300px, 390px"
+                    src={item.imageSrc}
+                  />
+                  <span className={styles.benefitIcon}>
+                    <item.icon aria-hidden size={18} strokeWidth={2.1} />
+                  </span>
+                </div>
+                <div className={styles.benefitBody}>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
               </article>
             ))}
           </div>
@@ -224,10 +233,11 @@ export default async function HomePage() {
         >
           <div className={styles.workflowVisual}>
             <Image
-              alt=""
+              alt="Пара создаёт сайт-приглашение вместе с маскотом сервиса"
               fill
               sizes="(max-width: 899px) calc(100vw - 34px), 520px"
-              src="/images/homepage-wedding-couple.webp"
+              src="/images/brand/homepage-mascot-workflow-photo-v2.webp"
+              unoptimized
             />
             <div className={styles.workflowVisualCopy}>
               <span>Без дизайнера и ожидания</span>

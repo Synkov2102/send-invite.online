@@ -23,6 +23,7 @@ import {
   editorialImages,
   electricImages,
   inviteImages,
+  manorImages,
   memoirImages,
   minimalImages,
   scribbleImages,
@@ -78,7 +79,9 @@ export function InviteSiteRenderer({
                           ? memoirImages
                           : templateKind === "scribble"
                             ? scribbleImages
-                            : inviteImages;
+                            : templateKind === "manor"
+                              ? manorImages
+                              : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;
