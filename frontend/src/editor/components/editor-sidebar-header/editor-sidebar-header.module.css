@@ -44,6 +44,19 @@
   max-width: 100%;
 }
 
+.brand:global(.editor-brand) :global(.brand-lockup--image),
+.brand :global(.brand-lockup--image) {
+  gap: 0 !important;
+}
+
+.brand:global(.editor-brand) :global(.brand-lockup__image),
+.brand :global(.brand-lockup__image) {
+  display: block;
+  width: 225px !important;
+  height: auto !important;
+  mix-blend-mode: multiply;
+}
+
 .brand:global(.editor-brand) :global(.brand-lockup__mark),
 .brand :global(.brand-lockup__mark) {
   display: grid !important;

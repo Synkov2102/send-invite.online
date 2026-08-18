@@ -37,6 +37,18 @@
   text-decoration: none;
 }
 
+.scope :global(.site-header__brand) :global(.brand-lockup--image) {
+  display: inline-flex;
+  gap: 0;
+}
+
+.scope :global(.site-header__brand) :global(.brand-lockup__image) {
+  display: block;
+  width: 280px;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
 .scope :global(.site-header__nav) {
   display: flex;
   gap: 7px;
@@ -176,6 +188,10 @@
 
   .scope :global(.site-header__brand) small {
     display: none;
+  }
+
+  .scope :global(.site-header__brand) :global(.brand-lockup__image) {
+    width: 220px;
   }
 
   /* Qualified by .site-header so the page scopes (product / dashboard), which redefine the
@@ -360,5 +376,11 @@
     font-size: 0.82rem;
     font-weight: 700;
     text-decoration: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .scope :global(.site-header__brand) :global(.brand-lockup__image) {
+    width: 195px;
   }
 }

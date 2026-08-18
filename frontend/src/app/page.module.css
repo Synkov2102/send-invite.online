@@ -286,24 +286,6 @@
   transform: scale(1.025);
 }
 
-.heroTemplateTitle {
-  position: absolute;
-  z-index: 2;
-  top: 34px;
-  left: 30px;
-  display: grid;
-  color: #fff;
-  font-size: clamp(3.4rem, 5vw, 4.7rem);
-  font-weight: 420;
-  letter-spacing: -0.07em;
-  line-height: 0.8;
-  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.18);
-}
-
-.heroTemplateTitle strong {
-  font: inherit;
-}
-
 .heroVisualBadge {
   position: absolute;
   z-index: 2;
@@ -338,7 +320,7 @@
 }
 
 .heroVisualCaption span {
-  color: #ffafbf;
+  color: #ffc9d4;
   font-size: 0.62rem;
   font-weight: 720;
   letter-spacing: 0.12em;
@@ -370,43 +352,57 @@
   border: 1px solid var(--product-line);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.86);
-  padding: 30px 28px 32px;
+  padding: 12px;
   box-shadow: 0 14px 42px rgba(57, 43, 52, 0.045);
   transition:
     background-color 160ms ease,
+    border-color 160ms ease,
     box-shadow 160ms ease,
     transform 160ms ease;
 }
 .benefitCard:hover {
+  border-color: var(--product-accent-soft);
   background: #fff;
   box-shadow: var(--product-shadow);
   transform: translateY(-3px);
 }
 
-.benefitIndex {
-  position: absolute;
-  top: 26px;
-  right: 26px;
-  color: var(--product-muted);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.12em;
+.benefitImage {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  /* Source art is square: 5/4 keeps the illustration readable, 16/9 cropped it in half. */
+  aspect-ratio: 5 / 4;
+  background: var(--product-accent-soft);
+}
+
+.benefitImage > img {
+  object-fit: cover;
 }
 
 .benefitIcon {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  left: 14px;
   display: grid;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   place-items: center;
-  border-radius: 50%;
-  background: var(--product-accent-soft);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
   color: var(--product-accent-text);
-  padding: 11px;
-  box-sizing: border-box;
+  box-shadow: 0 4px 14px rgba(57, 43, 52, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.benefitBody {
+  padding: 20px 6px 10px;
 }
 
 .benefitCard h3 {
-  margin: 20px 0 0;
+  margin: 0;
   font-size: 1.06rem;
   font-weight: 720;
   letter-spacing: -0.03em;
@@ -414,10 +410,11 @@
 }
 
 .benefitCard p {
-  margin: 10px 0 0;
+  margin: 9px 0 0;
   color: var(--product-muted);
-  font-size: 0.84rem;
-  line-height: 1.66;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-wrap: pretty;
 }
 
 /* Workflow */
@@ -596,8 +593,19 @@
   .benefits {
     padding: 72px 0;
   }
+  /* Three cards never split evenly into two columns — go straight to a row layout. */
   .benefitsGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  .benefitCard {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    align-items: center;
+    gap: 6px;
+  }
+  .benefitBody {
+    padding: 10px 20px 10px 14px;
   }
 
   .workflow {
@@ -737,9 +745,15 @@
   .benefits {
     padding: 56px 0;
   }
-  .benefitsGrid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+  .benefitCard {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .benefitBody {
+    padding: 18px 6px 8px;
+  }
+  .benefitCard p {
+    font-size: 0.94rem;
   }
 
   /* Doubled selector: see .hero.hero above — same deliberately tighter gutter, same reason. */

@@ -17,7 +17,7 @@ export default function SiteHeader({ active, initialUser }: SiteHeaderProps) {
   return (
     <PageShellProvider as="header" className="site-header" width="wide">
       <Link className="site-header__brand" href="/">
-        <BrandLockup homeLabelSuffix={brand.homeAriaLabel} showDomain />
+        <BrandLockup homeLabelSuffix={brand.homeAriaLabel} imageLogo />
       </Link>
 
       <nav aria-label="Основная навигация" className="site-header__nav">

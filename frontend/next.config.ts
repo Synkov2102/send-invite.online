@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
     proxyClientMaxBodySize: "30mb",
   },
   images: {
+    // Next 16 allows only [75] by default and coerces anything else to it.
+    // Photographic sources here are already lossy WebP — re-encoding at 75 double-compresses them.
+    qualities: [75, 90],
     localPatterns: [
       {
         pathname: "/images/**",
