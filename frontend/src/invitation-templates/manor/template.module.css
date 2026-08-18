@@ -1054,6 +1054,60 @@
 
 /* --- Появление секций --- */
 
+/* Обложка видна с первого кадра, поэтому играет на загрузке, а не по data-animate:
+   хук ставит его уже после монтирования, и готовый экран успел бы мигнуть. */
+.heroTitle span,
+.heroTitle em,
+.heroDate,
+.heroLetterScript,
+.heroLetter .signature,
+.heroLetter .bow {
+  animation: manorRise 720ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
+/* Конверт и подложка везут собственный наклон/зум на transform,
+   поэтому у них отдельные кадры — общие обнулили бы оформление. */
+.heroEnvelope {
+  animation: manorRiseEnvelope 720ms cubic-bezier(0.22, 0.68, 0.24, 1) 60ms both;
+}
+
+.heroTitle span:first-of-type {
+  animation-delay: 180ms;
+}
+
+.heroTitle em {
+  animation-delay: 280ms;
+}
+
+.heroTitle span:last-of-type {
+  animation-delay: 360ms;
+}
+
+.heroDate {
+  animation-delay: 500ms;
+}
+
+.heroLetterScript {
+  animation-delay: 620ms;
+}
+
+.heroLetter .signature {
+  animation-delay: 700ms;
+}
+
+.heroLetter .bow {
+  animation-delay: 780ms;
+}
+
+/* Кадры «оседают» из лёгкого зума — приём разворота глянцевого журнала. */
+.heroPhoto img {
+  animation: manorSettle 1600ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
+.heroBackdrop {
+  animation: manorSettleBackdrop 1600ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
+}
+
 .shell[data-animate="on"] [data-reveal] {
   opacity: 0;
 }
@@ -1074,8 +1128,37 @@
   animation: manorRise 520ms ease both;
 }
 
+.when[data-revealed] .calendar li:nth-child(2) {
+  animation-delay: 60ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(3) {
+  animation-delay: 120ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(4) {
+  animation-delay: 180ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(5) {
+  animation-delay: 240ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(6) {
+  animation-delay: 300ms;
+}
+
+.when[data-revealed] .calendar li:nth-child(n + 7) {
+  animation-delay: 360ms;
+}
+
 .when[data-revealed] .countdown {
   animation: manorRise 620ms ease 160ms both;
+}
+
+/* Значение пересоздаётся на каждом тике (key в разметке), поэтому кадр играет заново. */
+.countdownGrid strong {
+  animation: manorTick 420ms ease both;
 }
 
 .program[data-revealed] .timeline li {
@@ -1096,6 +1179,45 @@
 
 .program[data-revealed] .timeline li:nth-child(n + 5) {
   animation-delay: 360ms;
+}
+
+.dress[data-revealed] .dressBlock ul li {
+  animation: manorRise 480ms ease both;
+}
+
+.dress[data-revealed] .dressBlock ul li:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.dress[data-revealed] .dressBlock ul li:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.dress[data-revealed] .dressBlock ul li:nth-child(n + 4) {
+  animation-delay: 240ms;
+}
+
+/* Бант прорисовывается штрихом: pathLength={1} в разметке уравнивает все линии. */
+[data-revealed] .bow path,
+[data-revealed] .bow ellipse {
+  stroke-dasharray: 1;
+  animation: manorDraw 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+[data-revealed] .bow path:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+[data-revealed] .bow path:nth-child(3) {
+  animation-delay: 260ms;
+}
+
+[data-revealed] .bow path:nth-child(4) {
+  animation-delay: 340ms;
+}
+
+[data-revealed] .bow ellipse {
+  animation-delay: 480ms;
 }
 
 @keyframes manorFade {
@@ -1120,11 +1242,69 @@
   }
 }
 
+@keyframes manorSettle {
+  from {
+    transform: scale(1.06);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes manorRiseEnvelope {
+  from {
+    opacity: 0;
+    transform: translateY(14px) rotate(-1.4deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(-1.4deg);
+  }
+}
+
+@keyframes manorSettleBackdrop {
+  from {
+    transform: scale(1.09);
+  }
+
+  to {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes manorTick {
+  from {
+    transform: translateY(-4px);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes manorDraw {
+  from {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .shell[data-animate="on"] [data-reveal],
   .shell[data-animate="on"] [data-reveal][data-revealed],
-  .shell [data-revealed] * {
+  .shell [data-revealed] *,
+  .shell .hero *,
+  .shell .heroBackdrop,
+  .shell .countdownGrid strong {
     animation: none !important;
     opacity: 1;
+    stroke-dashoffset: 0;
   }
 }

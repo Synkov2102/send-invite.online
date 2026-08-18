@@ -95,11 +95,11 @@ const countdownPlaceholder = splitCountdown(0);
 function Bow() {
   return (
     <svg aria-hidden className={styles.bow} viewBox="0 0 120 62">
-      <path d="M57 26C44 9 20 6 15 17c-4 10 8 17 22 14 8-2 15-3 20-5Z" />
-      <path d="M63 26c13-17 37-20 42-9 4 10-8 17-22 14-8-2-15-3-20-5Z" />
-      <path d="M56 31c-5 9-12 17-21 24" />
-      <path d="M64 31c5 9 12 17 21 24" />
-      <ellipse cx="60" cy="27" rx="4.6" ry="4.2" />
+      <path d="M57 26C44 9 20 6 15 17c-4 10 8 17 22 14 8-2 15-3 20-5Z" pathLength={1} />
+      <path d="M63 26c13-17 37-20 42-9 4 10-8 17-22 14-8-2-15-3-20-5Z" pathLength={1} />
+      <path d="M56 31c-5 9-12 17-21 24" pathLength={1} />
+      <path d="M64 31c5 9 12 17 21 24" pathLength={1} />
+      <ellipse cx="60" cy="27" pathLength={1} rx="4.6" ry="4.2" />
     </svg>
   );
 }
@@ -230,7 +230,10 @@ function Countdown({ date, time }: Readonly<{ date: string; time: string }>) {
       <ul className={styles.countdownGrid}>
         {(parts ?? countdownPlaceholder).map((part, index) => (
           <li key={part.label}>
-            <strong>{parts ? String(part.value).padStart(2, "0") : "––"}</strong>
+            {/* key на значении: React пересоздаёт узел на каждом тике, и анимация проигрывается заново */}
+            <strong key={parts ? part.value : "idle"}>
+              {parts ? String(part.value).padStart(2, "0") : "––"}
+            </strong>
             <small>{part.label}</small>
             {index < 3 ? <i aria-hidden>:</i> : null}
           </li>
