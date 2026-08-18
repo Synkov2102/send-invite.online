@@ -1945,13 +1945,14 @@
 .scope:global(.payment-state__content),
 .scope :global(.payment-state__content) {
   display: grid;
+  min-width: 0;
   justify-items: start;
 }
 .scope:global(.payment-state__content) h1,
 .scope :global(.payment-state__content) h1 {
   max-width: 7ch;
   margin-top: 0;
-  font-size: clamp(3.25rem, 6vw, 5.6rem);
+  font-size: clamp(3.25rem, 5vw, 4.35rem);
 }
 .scope:global(.payment-state__description),
 .scope :global(.payment-state__description) {
