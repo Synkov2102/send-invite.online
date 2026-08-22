@@ -1,6 +1,5 @@
 "use client";
 
-import { Palette } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useEditor } from "../../editor-context";
 import styles from "./preview-palette-dock.module.css";
@@ -14,7 +13,6 @@ export function PreviewPaletteDock() {
   const { palettes, resolvedPaletteId, selectPalette } = useEditor();
   const stripRef = useRef<HTMLDivElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
-  const activePalette = palettes.find((item) => item.id === resolvedPaletteId);
 
   // Растушёвка по краям нужна только когда лента реально не помещается —
   // иначе она срезала бы крайние образцы без причины.
@@ -47,11 +45,6 @@ export function PreviewPaletteDock() {
 
   return (
     <div className={styles.dock}>
-      <p aria-live="polite" className={styles.caption}>
-        <Palette aria-hidden size={13} />
-        <span className={styles.captionLabel}>Палитра</span>
-        <span className={styles.captionName}>{activePalette?.label ?? "Своя палитра"}</span>
-      </p>
       <div
         aria-label="Палитра приглашения"
         className={styles.strip}

@@ -1,65 +1,17 @@
-/*
- * Док палитр повторяет матовую панель тулбара превью: на десктопе стоит под
- * ней сверху, на мобильном — над нижней пилюлей «Редактор».
- */
+/* Компактная палитра встроена в тулбар полноэкранного превью. */
 .dock {
-  position: fixed;
-  top: 74px;
-  left: 50%;
-  z-index: 109;
-  display: grid;
-  gap: 7px;
-  width: max-content;
-  max-width: calc(100% - 28px);
-  padding: 9px 10px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.76);
-  border-radius: 15px;
-  background: rgba(255, 253, 250, 0.9);
-  box-shadow: 0 16px 54px rgba(57, 43, 52, 0.18);
-  transform: translateX(-50%);
-  backdrop-filter: blur(22px);
-}
-
-/* Название выбранной палитры — единственное текстовое подтверждение выбора,
-   поэтому оно всегда на виду, а не только в подсказке образца. */
-.caption {
   display: flex;
   align-items: center;
-  gap: 6px;
+  width: auto;
   min-width: 0;
-  margin: 0;
-  padding-inline: 4px;
-  color: var(--product-muted, #6a6167);
-  font-size: 0.7rem;
-  line-height: 1.2;
-}
-
-.caption svg {
-  flex: 0 0 auto;
-}
-
-.captionLabel {
-  flex: 0 0 auto;
-  font-weight: 700;
-}
-
-.captionLabel::after {
-  content: "·";
-  padding-left: 6px;
-}
-
-.captionName {
-  overflow: hidden;
-  color: var(--product-ink, #282126);
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 /* Палитр может быть больше десяти — прокручивается лента, а не страница. */
 .strip {
   display: flex;
+  flex: 1 1 auto;
   gap: 2px;
+  min-width: 0;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x proximity;
@@ -84,8 +36,8 @@
   display: grid;
   flex: 0 0 auto;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   border: 0;
   padding: 0;
   background: transparent;
@@ -99,10 +51,10 @@
  * почти одного тона и сливались в одно пятно.
  */
 .sample {
-  width: 34px;
-  height: 34px;
-  padding: 3px;
-  border-radius: 9px;
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  border-radius: 8px;
   background: var(--swatch-ground);
   box-shadow:
     inset 0 0 0 1px rgba(40, 33, 38, 0.16),
@@ -116,7 +68,7 @@
   content: "";
   display: block;
   height: 100%;
-  border-radius: 6px;
+  border-radius: 5px;
   background: linear-gradient(90deg, var(--swatch-paper) 0 62%, var(--swatch-accent) 62% 100%);
 }
 
@@ -149,13 +101,9 @@
 }
 
 @media (max-width: 899px) {
-  .dock {
-    top: auto;
-    bottom: calc(max(16px, env(safe-area-inset-bottom)) + 62px);
-  }
-
-  .captionLabel {
-    display: none;
+  .swatch {
+    width: 32px;
+    height: 32px;
   }
 }
 
