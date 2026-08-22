@@ -32,6 +32,12 @@ export const inviteImages = {
   venue: "/images/wedding-mountain-cover.webp",
 } as const;
 
+export const skazkaImages = {
+  cover: "/images/skazka-lubok-cover.webp",
+  portrait: "/images/skazka-lubok-portrait.webp",
+  venue: "/images/skazka-lubok-venue.webp",
+} as const;
+
 export const alpineImages = {
   cover: "/images/alpine-rings-cover.webp",
   portrait: "/images/alpine-rings-portrait.webp",

@@ -70,4 +70,7 @@ export const sharedTemplateRenderers: Record<
     ssr: true,
   }),
   silk: dynamic(() => import("./silk").then((module) => module.SilkTemplate), { ssr: true }),
+  skazka: dynamic(() => import("./skazka").then((module) => module.SkazkaTemplate), {
+    ssr: true,
+  }),
 };

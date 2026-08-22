@@ -250,6 +250,14 @@ export const editorMusicTracks: readonly EditorMusicTrack[] = [
     audioUrl: "/api/catalog-music/wedding-background-hitslab-277976",
     sourceUrl: "https://pixabay.com/music/wedding-wedding-wedding-background-music-277976/",
   },
+  {
+    id: "slavic-folk-soulfuljamtracks-308126",
+    title: "Славянский хоровод",
+    author: "SOULFULJAMTRACKS",
+    duration: "2:32",
+    audioUrl: "/api/catalog-music/slavic-folk-soulfuljamtracks-308126",
+    sourceUrl: "https://pixabay.com/music/folk-slavic-folk-308126/",
+  },
 ] as const;
 
 const musicTrackById = new Map(editorMusicTracks.map((track) => [track.id, track]));
@@ -268,6 +276,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "midnight-memoir": "forever-starts-today-kaazoom-384989",
   "handwritten-note": "wedding-valentines-paulyudin-182505",
   "silk-monogram": "invitation-wedding-leberch-375839",
+  "skazka-lubok": "slavic-folk-soulfuljamtracks-308126",
 };
 
 export function getEditorMusicTrackByUrl(audioUrl: string) {
