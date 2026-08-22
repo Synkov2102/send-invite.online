@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
     process.env.YANDEX_AUTH_SCOPE ?? "login:info login:email login:avatar",
   );
   authorizeUrl.searchParams.set("state", state);
+  authorizeUrl.searchParams.set("force_confirm", "yes");
   authorizeUrl.searchParams.set("code_challenge", codeChallenge);
   authorizeUrl.searchParams.set("code_challenge_method", "S256");
 
