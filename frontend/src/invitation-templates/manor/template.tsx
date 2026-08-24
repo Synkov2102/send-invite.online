@@ -158,7 +158,7 @@ function EstateSketch() {
     <ThemeEngraving
       className={styles.estateSketch}
       height={1024}
-      src="/images/manor-decor/chateau-engraving-v1.png"
+      src="/images/manor-decor/chateau-engraving-v1.webp"
       width={1536}
     />
   );
@@ -173,7 +173,7 @@ function MonogramCrest({ bride, groom }: Readonly<Pick<InviteState, "bride" | "g
       <ThemeEngraving
         className={styles.monogramCrestArtwork}
         height={1536}
-        src="/images/manor-decor/family-crest-engraving-v1.png"
+        src="/images/manor-decor/family-crest-engraving-v1.webp"
         width={1024}
       />
       <span className={styles.monogramCrestInitials}>{groomInitial}·{brideInitial}</span>
@@ -409,7 +409,7 @@ function ProgramSection({ invite }: Readonly<Pick<ManorTemplateProps, "invite">>
               <ThemeEngraving
                 className={styles.programMedallionArtwork}
                 height={1024}
-                src="/images/manor-decor/program-medallion-v1.png"
+                src="/images/manor-decor/program-medallion-v1.webp"
                 width={1024}
               />
               <span className={styles.programMedallionNumber}>{index + 1}</span>
@@ -450,7 +450,7 @@ function DressCodeSection({
           className={styles.dressOrnament}
           height={1024}
           preserveAspectRatio="none"
-          src="/images/manor-dress-ornament-v2.png"
+          src="/images/manor-dress-ornament-v2.webp"
           width={1536}
         />
         <InvitationDressCodeBlock

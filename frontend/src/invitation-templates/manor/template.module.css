@@ -203,7 +203,7 @@
   isolation: isolate;
   width: min(86%, 380px);
   aspect-ratio: 1.5;
-  background: url("/images/manor-envelope-aristocratic-v2.png") center / contain no-repeat;
+  background: url("/images/manor-envelope-aristocratic-v2.webp") center / contain no-repeat;
   filter: drop-shadow(0 16px 20px color-mix(in srgb, var(--manor-ink) 20%, transparent));
   transform: rotate(-0.8deg);
 }
@@ -213,8 +213,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  mask: url("/images/manor-envelope-aristocratic-v2.png") center / contain no-repeat;
-  -webkit-mask: url("/images/manor-envelope-aristocratic-v2.png") center / contain no-repeat;
+  mask: url("/images/manor-envelope-aristocratic-v2.webp") center / contain no-repeat;
+  -webkit-mask: url("/images/manor-envelope-aristocratic-v2.webp") center / contain no-repeat;
 }
 
 .heroEnvelope::before {
@@ -353,7 +353,7 @@
   justify-items: center;
   gap: clamp(6px, 1.7vw, 10px);
   padding: clamp(30px, 7vw, 44px) clamp(46px, 11vw, 68px);
-  background: url("/images/manor-letter-card-aristocratic-v2.png") center / contain no-repeat;
+  background: url("/images/manor-letter-card-aristocratic-v2.webp") center / contain no-repeat;
   filter: drop-shadow(0 14px 22px color-mix(in srgb, var(--manor-ink) 18%, transparent));
   color: var(--manor-ink);
   isolation: isolate;
@@ -370,8 +370,8 @@
   mix-blend-mode: color;
   opacity: 0.34;
   pointer-events: none;
-  -webkit-mask: url("/images/manor-letter-card-aristocratic-v2.png") center / contain no-repeat;
-  mask: url("/images/manor-letter-card-aristocratic-v2.png") center / contain no-repeat;
+  -webkit-mask: url("/images/manor-letter-card-aristocratic-v2.webp") center / contain no-repeat;
+  mask: url("/images/manor-letter-card-aristocratic-v2.webp") center / contain no-repeat;
 }
 
 .heroLetter > * {
