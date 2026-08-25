@@ -27,6 +27,7 @@ import {
   memoirImages,
   minimalImages,
   scribbleImages,
+  skazkaImages,
   silkImages,
 } from "@/lib/invite-theme";
 import baseStyles from "@/styles/invitation-base.module.css";
@@ -81,7 +82,9 @@ export function InviteSiteRenderer({
                             ? scribbleImages
                             : templateKind === "manor"
                               ? manorImages
-                              : inviteImages;
+                              : templateKind === "skazka"
+                                ? skazkaImages
+                                : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;

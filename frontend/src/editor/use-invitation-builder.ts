@@ -36,6 +36,7 @@ import {
   minimalImages,
   resolveTemplatePaletteId,
   scribbleImages,
+  skazkaImages,
   silkImages,
   type InvitePalette,
 } from "@/lib/invite-theme";
@@ -169,7 +170,9 @@ export function useInvitationBuilder({
                           ? scribbleImages
                           : templateKind === "manor"
                             ? manorImages
-                            : inviteImages;
+                            : templateKind === "skazka"
+                              ? skazkaImages
+                              : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

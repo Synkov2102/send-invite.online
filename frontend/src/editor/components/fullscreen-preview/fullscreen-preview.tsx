@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { Eye, Minimize2, Pencil } from "lucide-react";
+import { Minimize2, Pencil } from "lucide-react";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import { useEditor } from "../../editor-context";
 import { PreviewPaletteDock } from "../preview-palette-dock";
@@ -34,23 +34,20 @@ export function FullscreenPreview() {
       aria-label="Полноэкранный предпросмотр"
     >
       <div className="fullscreen-preview__toolbar">
-        <div>
-          <Eye aria-hidden size={14} />
-          <span>Так приглашение увидят гости</span>
-        </div>
+        <PreviewPaletteDock />
         <div className="fullscreen-preview__actions">
           <Button
+            aria-label={closeLabel}
             className="fullscreen-preview__action fullscreen-preview__action--close"
             onClick={() => setIsFullscreenPreview(false)}
             type="button"
             variant="primary"
           >
             <CloseIcon aria-hidden size={15} />
-            <span>{closeLabel}</span>
+            <span>Редактор</span>
           </Button>
         </div>
       </div>
-      <PreviewPaletteDock />
       <div
         className={`fullscreen-preview__page ${
           isWideTemplate ? "fullscreen-preview__page--wide" : "fullscreen-preview__page--alpine"

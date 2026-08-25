@@ -10,17 +10,22 @@
   --manor-script: var(--font-invite-script), "Segoe Script", cursive;
   --manor-sans: var(--font-geist-sans), Arial, sans-serif;
   --manor-inline: clamp(22px, 7vw, 52px);
-  --manor-gap: clamp(36px, 8.5vw, 56px);
-  --manor-stripe: 7px;
-  --manor-dash-x: repeating-linear-gradient(90deg, var(--manor-ink) 0 4px, transparent 4px 10px);
-  --manor-dash-y: repeating-linear-gradient(180deg, var(--manor-ink) 0 4px, transparent 4px 10px);
+  --manor-gap: clamp(42px, 9.5vw, 64px);
   width: min(100%, 680px);
   max-width: 680px;
   /* Оболочка превью задаёт article margin: 0 — без !important лист уедет влево. */
   margin-inline: auto !important;
   min-height: 100%;
   padding: 0;
-  background: var(--manor-paper);
+  background:
+    radial-gradient(circle at 50% 8%, color-mix(in srgb, white 18%, transparent), transparent 24%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--manor-accent) 2.5%, transparent),
+      transparent 18% 82%,
+      color-mix(in srgb, var(--manor-accent) 2.5%, transparent)
+    ),
+    var(--manor-paper);
   color: var(--manor-ink);
   font-family: var(--manor-sans);
   /* Длинные названия площадок переносим, а не выламываем карточку. */
@@ -29,24 +34,6 @@
 
 :global(.published-site--manor) {
   background: var(--invite-bg, #1a1512);
-}
-
-:global(.published-site--manor) :global(.invite-music) {
-  width: 48px !important;
-  min-width: 48px !important;
-  height: 48px !important;
-  border-radius: 50% !important;
-  padding: 5px !important;
-}
-
-:global(.published-site--manor) :global(.invite-music__copy) {
-  display: none !important;
-}
-
-:global(.published-site--manor) :global(.invite-music__toggle) {
-  width: 36px !important;
-  height: 36px !important;
-  border: 0 !important;
 }
 
 .shell *,
@@ -79,6 +66,9 @@
 .paper {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
   gap: var(--manor-gap);
   background: var(--manor-paper);
   padding-bottom: clamp(34px, 8vw, 60px);
@@ -87,7 +77,7 @@
 
 .photoMono {
   object-fit: cover;
-  filter: grayscale(1) contrast(1.06);
+  filter: grayscale(1) sepia(0.08) contrast(1.06);
 }
 
 .sectionTitle {
@@ -100,16 +90,16 @@
 }
 
 .sectionTitle span {
-  font-size: clamp(30px, 7.8vw, 42px);
-  letter-spacing: 0.1em;
-  text-indent: 0.1em;
+  font-size: clamp(31px, 8vw, 44px);
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
   text-transform: uppercase;
 }
 
 /* Курсивный «хвост» заголовка заходит на строку выше — приём с гравированных приглашений. */
 .sectionTitle em {
-  margin-top: -0.28em;
-  margin-left: 1.05em;
+  margin-top: -0.24em;
+  margin-left: 1.18em;
   font-family: var(--manor-script);
   font-size: clamp(27px, 7vw, 37px);
   font-style: normal;
@@ -139,24 +129,31 @@
 
 .hero {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
   gap: 0;
 }
 
 .heroIntro {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
   min-height: clamp(500px, 124vw, 660px);
   place-items: center;
   padding: clamp(40px, 10vw, 64px) var(--manor-inline);
   /* Паспарту первого экрана — тон палитры: иначе превью шаблона всегда серое. */
   background: color-mix(in srgb, var(--manor-paper) 86%, var(--manor-accent));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--manor-line) 70%, transparent);
   overflow: hidden;
 }
 
 .heroBackdrop {
   object-fit: cover;
-  filter: grayscale(1) blur(4px) contrast(0.82) brightness(1.12);
-  opacity: 0.62;
+  filter: grayscale(1) sepia(0.08) blur(3px) contrast(0.88) brightness(1.08);
+  opacity: 0.66;
   transform: scale(1.035);
 }
 
@@ -168,8 +165,8 @@
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--manor-paper) 34%, transparent),
-      color-mix(in srgb, var(--manor-paper) 22%, transparent)
+      color-mix(in srgb, var(--manor-paper) 38%, transparent),
+      color-mix(in srgb, var(--manor-paper) 18%, transparent)
     ),
     radial-gradient(
       circle at 50% 38%,
@@ -187,25 +184,28 @@
   z-index: 3;
   display: grid;
   justify-items: center;
-  gap: clamp(22px, 5.5vw, 32px);
+  gap: clamp(24px, 6vw, 36px);
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  justify-self: stretch;
 }
 
-/*
- * Конверт — почти плоский кремовый PNG, и красить его заливкой нельзя:
- * пропали бы сгибы. Поэтому саму картинку оставляем как источник светотени,
- * а поверх кладём акцент палитры в режиме color — он берёт тон и насыщенность
- * акцента, а светлоту оставляет от бумаги. Маска держит цвет внутри силуэта,
- * isolation — смешивание внутри конверта, не по фону первого экрана.
- */
+.heroStack > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Сгенерированная бумага хранит фактуру и гравировку, а цветовой слой
+   подстраивает орнамент под палитру, не убирая светотень сгибов. */
 .heroEnvelope {
   position: relative;
   isolation: isolate;
-  width: min(76%, 330px);
+  width: min(86%, 380px);
   aspect-ratio: 1.5;
-  background: url("/images/manor-envelope.png") center / contain no-repeat;
-  filter: drop-shadow(0 18px 20px color-mix(in srgb, var(--manor-ink) 22%, transparent));
-  transform: rotate(-1.4deg);
+  background: url("/images/manor-envelope-aristocratic-v2.webp") center / contain no-repeat;
+  filter: drop-shadow(0 16px 20px color-mix(in srgb, var(--manor-ink) 20%, transparent));
+  transform: rotate(-0.8deg);
 }
 
 .heroEnvelope::before,
@@ -213,8 +213,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  mask: url("/images/manor-envelope.png") center / contain no-repeat;
-  -webkit-mask: url("/images/manor-envelope.png") center / contain no-repeat;
+  mask: url("/images/manor-envelope-aristocratic-v2.webp") center / contain no-repeat;
+  -webkit-mask: url("/images/manor-envelope-aristocratic-v2.webp") center / contain no-repeat;
 }
 
 .heroEnvelope::before {
@@ -233,8 +233,43 @@
   );
 }
 
+.heroSeal {
+  position: absolute;
+  bottom: 27%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  width: clamp(35px, 9vw, 44px);
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--manor-paper) 44%, transparent);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      transparent 37%,
+      color-mix(in srgb, var(--manor-ink) 22%, transparent) 39% 42%,
+      transparent 44%
+    ),
+    color-mix(in srgb, var(--manor-accent) 86%, black);
+  box-shadow:
+    0 3px 7px color-mix(in srgb, var(--manor-ink) 28%, transparent),
+    inset 0 1px 2px rgb(255 255 255 / 24%);
+  transform: translateX(-50%) rotate(4deg);
+  color: color-mix(in srgb, var(--manor-paper) 76%, transparent);
+  font-family: var(--manor-serif);
+  font-size: clamp(8px, 2.1vw, 10px);
+  letter-spacing: 0.04em;
+}
+
+.heroSeal::before {
+  content: none;
+}
+
 .heroTitle {
   display: grid;
+  width: 100%;
+  min-width: 0;
   justify-items: center;
   font-family: var(--manor-serif);
   font-weight: 400;
@@ -243,10 +278,12 @@
 }
 
 .heroTitle span {
-  font-size: clamp(32px, 9vw, 48px);
-  letter-spacing: -0.025em;
-  overflow-wrap: normal;
-  word-break: keep-all;
+  display: block;
+  max-width: 100%;
+  font-size: clamp(34px, 9.4vw, 50px);
+  letter-spacing: -0.012em;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .heroTitle em {
@@ -293,6 +330,7 @@
 
 .heroPhoto .photoMono {
   object-position: center top;
+  filter: grayscale(1) sepia(0.12) contrast(1.08);
 }
 
 .heroPhoto::after {
@@ -306,21 +344,39 @@
 }
 
 .heroLetter {
-  position: absolute;
-  top: clamp(46px, 12vw, 68px);
-  left: 50%;
+  position: relative;
   z-index: 2;
   display: grid;
-  width: min(64%, 330px);
+  width: min(78%, 390px);
+  aspect-ratio: 1.5;
+  align-content: center;
   justify-items: center;
-  gap: clamp(10px, 2.6vw, 14px);
-  border: 1px solid color-mix(in srgb, var(--manor-line) 64%, transparent);
-  padding: clamp(18px, 4.4vw, 26px) clamp(18px, 4.5vw, 30px);
-  background: color-mix(in srgb, var(--manor-paper) 96%, white);
-  box-shadow: 0 18px 36px color-mix(in srgb, var(--manor-ink) 16%, transparent);
+  gap: clamp(6px, 1.7vw, 10px);
+  padding: clamp(30px, 7vw, 44px) clamp(46px, 11vw, 68px);
+  background: url("/images/manor-letter-card-aristocratic-v2.webp") center / contain no-repeat;
+  filter: drop-shadow(0 14px 22px color-mix(in srgb, var(--manor-ink) 18%, transparent));
   color: var(--manor-ink);
+  isolation: isolate;
   text-align: center;
-  transform: translateX(-50%) rotate(0.7deg);
+  transform: rotate(0.35deg);
+}
+
+.heroLetter::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: var(--manor-accent);
+  mix-blend-mode: color;
+  opacity: 0.34;
+  pointer-events: none;
+  -webkit-mask: url("/images/manor-letter-card-aristocratic-v2.webp") center / contain no-repeat;
+  mask: url("/images/manor-letter-card-aristocratic-v2.webp") center / contain no-repeat;
+}
+
+.heroLetter > * {
+  position: relative;
+  z-index: 1;
 }
 
 .heroLetterScript {
@@ -330,15 +386,21 @@
   color: var(--manor-accent);
 }
 
-.heroLetter .signature {
-  font-size: clamp(17px, 4.3vw, 22px);
+.heroLetterEyebrow {
+  font-family: var(--manor-sans);
+  font-size: clamp(8px, 2vw, 10px);
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+  color: var(--manor-muted);
 }
 
-.heroLetter .heroSignatureLong {
-  max-height: 3.45em;
-  overflow: hidden;
-  font-size: clamp(10px, 2.8vw, 14px);
-  line-height: 1.15;
+.heroLetterNote {
+  max-width: 24ch;
+  font-family: var(--manor-serif);
+  font-size: clamp(12px, 3vw, 15px);
+  line-height: 1.25;
+  color: var(--manor-ink);
 }
 
 .heroLetter .bow {
@@ -348,23 +410,41 @@
 /* --- История --- */
 
 .story {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: clamp(20px, 5vw, 30px);
-  padding-inline: var(--manor-inline);
+  padding: 18px var(--manor-inline) 4px;
   text-align: center;
 }
 
+.story::before {
+  content: "";
+  width: 72px;
+  height: 1px;
+  margin-bottom: 2px;
+  background: var(--manor-line);
+}
+
 .story > p {
-  max-width: 39ch;
+  max-width: 40ch;
   font-family: var(--manor-serif);
-  font-size: clamp(14px, 3.5vw, 16px);
-  line-height: 1.72;
+  font-size: clamp(15px, 3.7vw, 17px);
+  line-height: 1.78;
+}
+
+.estateSketch {
+  display: block;
+  width: min(92%, 410px);
+  aspect-ratio: 3 / 2;
+  margin-block: -8px 0;
+  color: color-mix(in srgb, var(--manor-accent) 80%, var(--manor-ink));
+  opacity: 0.74;
 }
 
 .storyPhotos {
   position: relative;
-  width: min(86%, 420px);
+  width: min(89%, 438px);
   min-height: clamp(250px, 68vw, 390px);
   margin-top: 4px;
 }
@@ -373,9 +453,11 @@
   position: absolute;
   width: 57%;
   aspect-ratio: 3 / 4;
-  border: 7px solid var(--manor-paper);
+  border: 9px solid var(--manor-paper);
   background: var(--manor-paper);
-  box-shadow: 0 12px 24px color-mix(in srgb, var(--manor-ink) 18%, transparent);
+  box-shadow:
+    0 15px 28px color-mix(in srgb, var(--manor-ink) 18%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--manor-line) 58%, transparent);
 }
 
 .storyPhotos figure:first-child {
@@ -401,6 +483,8 @@
 }
 
 .whenDate {
+  border-block: 1px solid var(--manor-line);
+  padding: 10px clamp(22px, 6vw, 38px);
   font-family: var(--manor-serif);
   font-size: clamp(22px, 6vw, 30px);
   letter-spacing: 0.035em;
@@ -421,7 +505,8 @@
   width: 100%;
   border-top: 1px solid var(--manor-line);
   border-bottom: 1px solid var(--manor-line);
-  padding-block: 12px;
+  padding-block: 14px;
+  background: color-mix(in srgb, var(--manor-accent) 2.5%, transparent);
 }
 
 .calendar li {
@@ -445,8 +530,9 @@
 }
 
 .calendarSelected {
-  border: 1px solid var(--manor-ink);
+  border: 1px solid var(--manor-accent);
   background: color-mix(in srgb, var(--manor-ink) 4%, transparent);
+  box-shadow: inset 0 0 0 3px var(--manor-paper);
 }
 
 .calendarSelected strong {
@@ -458,7 +544,8 @@
   justify-items: center;
   gap: 14px;
   width: 100%;
-  padding-top: clamp(6px, 2vw, 12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--manor-line) 72%, transparent);
+  padding-block: clamp(8px, 2vw, 14px) clamp(18px, 4vw, 24px);
 }
 
 .countdownTitle {
@@ -482,7 +569,7 @@
 
 .countdownGrid strong {
   font-family: var(--manor-serif);
-  font-size: clamp(30px, 9.5vw, 46px);
+  font-size: clamp(32px, 9.8vw, 48px);
   font-weight: 400;
   font-variant-numeric: tabular-nums;
   line-height: 1;
@@ -510,87 +597,114 @@
 
 .whenPhoto {
   position: relative;
-  width: 100%;
+  width: calc(100% - clamp(8px, 2vw, 14px));
   margin-top: clamp(8px, 3vw, 16px);
   aspect-ratio: 3 / 2;
+  border: 8px solid var(--manor-paper);
+  box-shadow:
+    0 12px 26px color-mix(in srgb, var(--manor-ink) 16%, transparent),
+    0 0 0 1px var(--manor-line);
 }
 
 /* --- Программа --- */
 
-/*
- * Пунктирная рамка «маркизы» рисуется одним фоном из четырёх лент, а не
- * псевдоэлементами: так углы сходятся, а ритм штриха общий для всех сторон.
- */
 .program {
   position: relative;
   display: grid;
-  gap: clamp(24px, 6vw, 36px);
+  gap: clamp(30px, 7vw, 42px);
   margin-inline: clamp(14px, 3.6vw, 22px);
-  padding-block: clamp(30px, 8vw, 46px);
-  background-image:
-    var(--manor-dash-x), var(--manor-dash-x), var(--manor-dash-y), var(--manor-dash-y);
-  background-repeat: no-repeat;
-  background-position:
-    left top,
-    left bottom,
-    left top,
-    right top;
-  background-size:
-    100% var(--manor-stripe),
-    100% var(--manor-stripe),
-    var(--manor-stripe) 100%,
-    var(--manor-stripe) 100%;
+  border: 1px solid color-mix(in srgb, var(--manor-accent) 62%, transparent);
+  padding: clamp(42px, 10vw, 64px) clamp(12px, 4vw, 26px);
+  background: color-mix(in srgb, var(--manor-paper) 94%, white);
+  box-shadow:
+    inset 0 0 0 9px var(--manor-paper),
+    inset 0 0 0 10px var(--manor-line);
 }
 
 .timeline.timeline {
   display: grid;
-  gap: clamp(24px, 6vw, 34px);
-  position: relative;
-  padding-inline: calc(var(--manor-stripe) + var(--manor-inline));
-  text-align: center;
-}
-
-/* Вертикальная нить программы — как на гравированных карточках тайминга. */
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 50%;
-  width: 1px;
-  background: var(--manor-line);
+  padding-inline: clamp(18px, 5vw, 34px);
 }
 
 .timeline li {
-  position: relative;
   display: grid;
-  gap: 6px;
-  justify-items: center;
-  padding-block: clamp(10px, 3vw, 16px);
-  background: var(--manor-paper);
+  grid-template-columns: clamp(88px, 23vw, 124px) minmax(0, 1fr);
+  gap: clamp(18px, 5vw, 34px);
+  align-items: center;
+  min-height: clamp(150px, 38vw, 190px);
+  border-bottom: 1px solid color-mix(in srgb, var(--manor-line) 82%, transparent);
+  padding-block: clamp(20px, 5vw, 30px);
+  text-align: left;
+}
+
+.timeline li:last-child {
+  border-bottom: 0;
+}
+
+.timeline li:nth-child(even) {
+  grid-template-columns: minmax(0, 1fr) clamp(88px, 23vw, 124px);
+  text-align: right;
+}
+
+.timeline li:nth-child(even) .programMedallion {
+  order: 2;
+}
+
+.programMedallion {
+  position: relative;
+  width: 100%;
+}
+
+.programMedallionArtwork {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  color: color-mix(in srgb, var(--manor-accent) 82%, var(--manor-ink));
+  opacity: 0.76;
+}
+
+.programMedallionNumber {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  color: color-mix(in srgb, var(--manor-accent) 88%, var(--manor-ink));
+  font-family: var(--manor-serif);
+  font-size: clamp(30px, 8vw, 42px);
+  font-weight: 500;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+}
+
+.timelineCopy {
+  display: grid;
+  gap: 7px;
 }
 
 .timeline time {
   font-family: var(--manor-script);
-  font-size: clamp(19px, 5vw, 24px);
+  font-size: clamp(22px, 5.8vw, 29px);
   color: var(--manor-accent);
 }
 
 .timeline h3 {
   font-family: var(--manor-serif);
   font-size: clamp(15px, 4vw, 18px);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-indent: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-indent: 0.11em;
   text-transform: uppercase;
 }
 
 .timeline p {
-  max-width: 32ch;
+  max-width: 34ch;
   font-family: var(--manor-serif);
   font-size: clamp(13px, 3.5vw, 14px);
   line-height: 1.65;
   color: var(--manor-muted);
+}
+
+.timeline li:nth-child(even) p {
+  justify-self: end;
 }
 
 /* --- Где --- */
@@ -598,14 +712,17 @@
 .where {
   position: relative;
   isolation: isolate;
-  padding: clamp(38px, 10vw, 66px) var(--manor-inline);
-  color: var(--manor-photo-text);
+  display: grid;
+  min-height: clamp(430px, 102vw, 560px);
+  place-items: center;
+  padding: clamp(36px, 9vw, 58px) var(--manor-inline);
+  color: var(--manor-ink);
 }
 
 .wherePhoto {
   z-index: -2;
   object-fit: cover;
-  filter: grayscale(1) contrast(1.1);
+  filter: grayscale(1) contrast(1.03) brightness(0.86);
 }
 
 .where::before {
@@ -613,18 +730,37 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: color-mix(in srgb, var(--manor-accent) 76%, black);
-  opacity: 0.82;
+  background: color-mix(in srgb, var(--manor-accent) 48%, transparent);
+  opacity: 0.42;
+}
+
+.heroDate::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 1px;
+  margin: 13px auto 0;
+  background: currentColor;
+  opacity: 0.28;
 }
 
 .whereBody {
   display: grid;
   justify-items: center;
   gap: clamp(22px, 6vw, 32px);
+  width: min(100%, 460px);
+  border: 1px solid color-mix(in srgb, var(--manor-accent) 48%, transparent);
+  padding: clamp(34px, 8vw, 48px) clamp(22px, 6vw, 38px);
+  background: color-mix(in srgb, var(--manor-paper) 96%, transparent);
+  box-shadow:
+    inset 0 0 0 8px color-mix(in srgb, var(--manor-paper) 90%, transparent),
+    inset 0 0 0 9px var(--manor-line),
+    0 18px 38px color-mix(in srgb, var(--manor-ink) 18%, transparent);
+  backdrop-filter: blur(3px);
 }
 
 .where .sectionTitle em {
-  color: var(--manor-photo-text);
+  color: var(--manor-accent);
 }
 
 .whereVenue {
@@ -670,6 +806,7 @@
   min-height: 46px;
   border: 1px solid color-mix(in srgb, currentColor 62%, transparent);
   padding: 12px 24px;
+  background: color-mix(in srgb, var(--manor-accent) 4%, transparent);
   color: inherit;
   font-size: 11px;
   letter-spacing: 0.2em;
@@ -709,7 +846,37 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: color-mix(in srgb, var(--manor-ink) 70%, transparent);
+  background: color-mix(in srgb, var(--manor-ink) 62%, transparent);
+}
+
+.dressCard {
+  position: relative;
+  width: 100%;
+}
+
+.dressOrnament {
+  position: absolute;
+  z-index: 1;
+  inset: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  color: color-mix(in srgb, var(--manor-accent) 78%, var(--manor-ink));
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.heroLetterSection {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  justify-items: center;
+  margin-top: clamp(-96px, -14vw, -68px);
+  padding: 0 var(--manor-inline) clamp(12px, 3vw, 20px);
+  background: linear-gradient(
+    180deg,
+    transparent 0 clamp(62px, 12vw, 82px),
+    var(--manor-paper) clamp(62px, 12vw, 82px) 100%
+  );
 }
 
 /*
@@ -727,7 +894,10 @@
   width: 100%;
   border: 1px solid var(--manor-line);
   padding: clamp(28px, 7vw, 44px) clamp(18px, 5vw, 32px);
-  box-shadow: none;
+  box-shadow:
+    inset 0 0 0 8px var(--manor-paper),
+    inset 0 0 0 9px var(--manor-line),
+    0 18px 38px color-mix(in srgb, var(--manor-ink) 18%, transparent);
 }
 
 .dressBlock :global(h2) {
@@ -766,7 +936,7 @@
   width: clamp(42px, 9vw, 54px) !important;
   border: 1px solid color-mix(in srgb, var(--manor-ink) 20%, transparent) !important;
   border-radius: 0 !important;
-  box-shadow: none !important;
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--manor-ink) 12%, transparent) !important;
 }
 
 .dressBlock ul li {
@@ -776,10 +946,11 @@
 /* --- Детали --- */
 
 .details {
+  position: relative;
   display: grid;
   justify-items: center;
   gap: clamp(22px, 5.5vw, 32px);
-  padding-inline: var(--manor-inline);
+  padding: 8px var(--manor-inline);
 }
 
 .detailsBlock.detailsBlock {
@@ -799,15 +970,16 @@
   --chat-radius: 0;
   width: 100%;
   border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--manor-line) 82%, transparent);
   background: transparent;
-  padding: 0;
+  padding: 26px 0 0;
   text-align: center;
   box-shadow: none;
 }
 
 .detailsBlock :global(h2) {
   font-family: var(--manor-script) !important;
-  font-size: clamp(23px, 6vw, 30px) !important;
+  font-size: clamp(25px, 6.5vw, 32px) !important;
   font-weight: 400 !important;
   letter-spacing: 0 !important;
   text-indent: 0 !important;
@@ -862,18 +1034,33 @@
 }
 
 .rsvpTitle {
+  position: relative;
   font-family: var(--manor-serif);
   font-size: clamp(38px, 10vw, 54px);
   font-weight: 400;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
+  text-indent: 0.12em;
   line-height: 1;
+}
+
+.rsvpTitle::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 1px;
+  margin: 16px auto 0;
+  background: var(--manor-line);
 }
 
 .rsvpPhoto {
   position: relative;
-  width: 100%;
+  width: calc(100% - clamp(8px, 2vw, 14px));
   margin-bottom: clamp(14px, 4vw, 24px) !important;
   aspect-ratio: 4 / 3;
+  border: 8px solid var(--manor-paper);
+  box-shadow:
+    0 12px 28px color-mix(in srgb, var(--manor-ink) 17%, transparent),
+    0 0 0 1px var(--manor-line);
   overflow: hidden;
 }
 
@@ -890,6 +1077,8 @@
 }
 
 .rsvpDeadline {
+  border-block: 1px solid color-mix(in srgb, var(--manor-line) 72%, transparent);
+  padding: 9px 16px;
   font-size: 11px;
   letter-spacing: 0.18em;
   text-indent: 0.18em;
@@ -919,13 +1108,15 @@
   border-inline: 0 !important;
   border-top: 1px solid var(--manor-line) !important;
   border-bottom: 0 !important;
-  padding: 22px 0 !important;
+  padding: 26px 0 !important;
   background: transparent !important;
   backdrop-filter: none !important;
 }
 
 .rsvpForm :global([class*="__step"]) {
-  background: transparent !important;
+  border: 1px solid var(--manor-line) !important;
+  background: color-mix(in srgb, var(--manor-paper) 92%, white) !important;
+  color: var(--manor-accent) !important;
   font-family: var(--manor-serif) !important;
   font-weight: 400 !important;
 }
@@ -963,6 +1154,7 @@
   min-height: 58px !important;
   padding-inline: 22px !important;
   letter-spacing: 0.16em !important;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--manor-ink) 16%, transparent) !important;
 }
 
 /* --- Финал --- */
@@ -976,8 +1168,19 @@
   border: 1px solid var(--manor-line);
   border-radius: 0;
   padding: clamp(54px, 13vw, 82px) clamp(20px, 5vw, 34px);
-  background: color-mix(in srgb, var(--manor-paper) 88%, white);
-  box-shadow: none;
+  background: color-mix(in srgb, var(--manor-paper) 90%, white);
+  box-shadow:
+    inset 0 0 0 8px var(--manor-paper),
+    inset 0 0 0 9px var(--manor-line),
+    0 18px 38px color-mix(in srgb, var(--manor-ink) 18%, transparent);
+}
+
+.closing::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid color-mix(in srgb, var(--manor-line) 72%, transparent);
+  pointer-events: none;
 }
 
 .closing::before {
@@ -985,10 +1188,37 @@
   position: absolute;
   top: 24px;
   left: 50%;
-  width: 42px;
+  width: 58px;
   height: 1px;
   background: var(--manor-line);
   transform: translateX(-50%);
+}
+
+.monogramCrest {
+  position: relative;
+  z-index: 1;
+  width: clamp(120px, 31vw, 162px);
+  margin-bottom: clamp(2px, 1vw, 6px);
+}
+
+.monogramCrestArtwork {
+  display: block;
+  width: 100%;
+  position: relative;
+  aspect-ratio: 2 / 3;
+  color: color-mix(in srgb, var(--manor-accent) 82%, var(--manor-ink));
+  opacity: 0.78;
+}
+
+.monogramCrestInitials {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  color: var(--manor-accent);
+  font-family: var(--manor-serif);
+  font-size: clamp(13px, 3.5vw, 18px);
+  letter-spacing: 0.06em;
+  transform: translate(-50%, -50%);
 }
 
 /* Финальный заголовок — тот же приём, что и у секций, только крупнее. */
@@ -1027,20 +1257,58 @@
 }
 
 @media (max-width: 420px) {
+  .shell {
+    --manor-gap: 46px;
+  }
+
+  .sectionTitle span {
+    letter-spacing: 0.09em;
+    text-indent: 0.09em;
+  }
+
+  .program {
+    margin-inline: 10px;
+    padding-inline: 8px;
+  }
+
+  .timeline.timeline {
+    padding-inline: 14px;
+  }
+
+  .timeline li,
+  .timeline li:nth-child(even) {
+    grid-template-columns: 74px minmax(0, 1fr);
+    gap: 16px;
+    min-height: 132px;
+    text-align: left;
+  }
+
+  .timeline li:nth-child(even) .programMedallion {
+    order: 0;
+  }
+
+  .timeline li:nth-child(even) p {
+    justify-self: start;
+  }
+
+  .programMedallionNumber {
+    font-size: 34px;
+  }
+
   .heroEnvelope {
-    width: 84%;
+    width: 90%;
   }
 
   .heroLetter {
-    width: 74%;
+    width: 82%;
   }
 
   .storyPhotos {
     width: 94%;
   }
 
-  .program {
-    margin-inline: 10px;
+  .whereBody {
+    padding-inline: 22px;
   }
 
   .rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
@@ -1049,6 +1317,7 @@
 
   .closing {
     margin-inline: 18px;
+    padding-inline: 22px;
   }
 }
 
@@ -1059,8 +1328,9 @@
 .heroTitle span,
 .heroTitle em,
 .heroDate,
+.heroLetterEyebrow,
 .heroLetterScript,
-.heroLetter .signature,
+.heroLetterNote,
 .heroLetter .bow {
   animation: manorRise 720ms cubic-bezier(0.22, 0.68, 0.24, 1) both;
 }
@@ -1091,7 +1361,7 @@
   animation-delay: 620ms;
 }
 
-.heroLetter .signature {
+.heroLetterNote {
   animation-delay: 700ms;
 }
 

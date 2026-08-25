@@ -30,7 +30,8 @@ export type TemplateKind =
   | "memoir"
   | "minimal"
   | "scribble"
-  | "silk";
+  | "silk"
+  | "skazka";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -453,6 +454,56 @@ const alpineEditorPreset: Partial<InviteState> = {
     "Если планируете остаться на ночь, напишите нам заранее — подскажем варианты проживания рядом с площадкой. Парковка бесплатная.",
 };
 
+const skazkaEditorPreset: Partial<InviteState> = {
+  bride: "Марья",
+  groom: "Иван",
+  date: "2026-08-16",
+  time: "14:00",
+  city: "Кострома",
+  venue: "Терем «Берендеевка»",
+  address: "Волжская наб., 8",
+  mapUrl:
+    "https://yandex.ru/maps/?text=%D0%A2%D0%B5%D1%80%D0%B5%D0%BC%20%D0%91%D0%B5%D1%80%D0%B5%D0%BD%D0%B4%D0%B5%D0%B5%D0%B2%D0%BA%D0%B0",
+  lead: "Жили-были, встретились да сердцем прикипели. Долго ли, коротко ли — а решили сыграть свадьбу честную, весёлую, на радость родне да друзьям. Ждём вас в этот день — без вас праздник не праздник.",
+  dressCode:
+    "Наряжайтесь нарядно, да с душой: подойдут платья, костюмы или рубаха-косоворотка — главное, чтобы вы сияли и улыбались.",
+  dressCodeColors: ["#7d1a26", "#b3273a", "#e8b7bd", "#f6ead8", "#3a231a"],
+  schedule: [
+    { time: "14:00", title: "Сбор гостей", description: "Встречаем хлебом-солью у ворот терема" },
+    { time: "14:30", title: "Церемония", description: "Самый заветный момент дня" },
+    { time: "16:00", title: "Пир на весь мир", description: "Застолье, тосты да задушевные песни" },
+    { time: "19:00", title: "Гуляния", description: "Хороводы, пляски и веселье до звёзд" },
+  ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+skazka-guests",
+  groupChatText:
+    "Завели чат для гостей — там дорога до терема, программа праздника и фото да видео на память.",
+  showAdditionalInfo: true,
+  additionalInfo:
+    "Гуляем всей семьёй — будут и малые дети, и почтенные гости. От всей души просим воздержаться от криков «горько» после полуночи, чтобы не будить малышню.",
+  rsvpText:
+    "Чтобы всё удалось на славу, отзовитесь да подтвердите, ждать ли вас. Ответьте на несколько вопросов ниже.",
+  rsvpQuestions: [
+    {
+      title: "Пожалуете ли на праздник?",
+      type: "single",
+      options: ["Буду", "Будем вдвоём", "Не смогу, увы"],
+    },
+    {
+      title: "Понадобится ли вам транспорт до терема?",
+      type: "single",
+      options: ["Да, буду рад(а)", "Нет, доберусь сам(а)"],
+    },
+    {
+      title: "Что налить для тоста?",
+      type: "multiple",
+      options: ["Шампанское", "Наливочка", "Квас да морс", "Без алкоголя"],
+    },
+  ],
+  rsvpDate: "2026-07-16",
+  paletteId: "skazka-hohloma",
+};
+
 export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   {
     id: "alpine-rings",
@@ -825,6 +876,37 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#f4ede4",
       ink: "#1d160b",
       accent: "#2f2820",
+    },
+  },
+  {
+    id: "skazka-lubok",
+    name: "Сказ",
+    description:
+      "Русский народный стиль: хохломская роспись, старинная вязь в заголовках, берёзы и лубочные орнаменты на кремовой бумаге.",
+    coverType: "arch",
+    kind: "skazka",
+    editorReady: true,
+    editorPreset: skazkaEditorPreset,
+    defaultPaletteId: "skazka-hohloma",
+    recommendedPaletteIds: [
+      "skazka-hohloma",
+      "skazka-malina",
+      "skazka-zoloto",
+      "skazka-gzhel",
+      "skazka-len",
+      "skazka-izumrud",
+      "skazka-mezen",
+      "skazka-severnaya",
+      "skazka-zhostovo",
+      "skazka-oblepikha",
+    ],
+    tags: ["народный стиль", "хохлома"],
+    screenshot: "/images/templates/skazka-lubok-mobile.webp",
+    preview: {
+      background: "#2a0e12",
+      surface: "#f7ebd8",
+      ink: "#25140c",
+      accent: "#8f1722",
     },
   },
 ];

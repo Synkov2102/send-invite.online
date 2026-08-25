@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useId, useState, type CSSProperties } from "react";
 import { MapPin } from "lucide-react";
 import { formatInviteDate, parseDate } from "@/lib/invite-date";
 import { getYandexMapsUrl } from "@/lib/invite-map";
@@ -104,6 +104,83 @@ function Bow() {
   );
 }
 
+function getInitial(value: string) {
+  return Array.from(value.trim())[0]?.toUpperCase() ?? "";
+}
+
+function ThemeEngraving({
+  className,
+  height,
+  preserveAspectRatio = "xMidYMid meet",
+  src,
+  width,
+}: Readonly<{
+  className: string;
+  height: number;
+  preserveAspectRatio?: "none" | "xMidYMid meet";
+  src: string;
+  width: number;
+}>) {
+  const filterId = useId().replaceAll(":", "");
+
+  return (
+    <svg
+      aria-hidden
+      className={className}
+      focusable="false"
+      viewBox={`0 0 ${width} ${height}`}
+    >
+      <defs>
+        <filter id={filterId} colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            in="SourceGraphic"
+            result="inkAlpha"
+            type="matrix"
+            values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -0.2126 -0.7152 -0.0722 1 0"
+          />
+          <feFlood floodColor="currentColor" result="themeColor" />
+          <feComposite in="themeColor" in2="inkAlpha" operator="in" />
+        </filter>
+      </defs>
+      <image
+        filter={`url(#${filterId})`}
+        height={height}
+        href={src}
+        preserveAspectRatio={preserveAspectRatio}
+        width={width}
+      />
+    </svg>
+  );
+}
+
+function EstateSketch() {
+  return (
+    <ThemeEngraving
+      className={styles.estateSketch}
+      height={1024}
+      src="/images/manor-decor/chateau-engraving-v1.webp"
+      width={1536}
+    />
+  );
+}
+
+function MonogramCrest({ bride, groom }: Readonly<Pick<InviteState, "bride" | "groom">>) {
+  const groomInitial = getInitial(groom);
+  const brideInitial = getInitial(bride);
+
+  return (
+    <div aria-hidden className={styles.monogramCrest}>
+      <ThemeEngraving
+        className={styles.monogramCrestArtwork}
+        height={1536}
+        src="/images/manor-decor/family-crest-engraving-v1.webp"
+        width={1024}
+      />
+      <span className={styles.monogramCrestInitials}>{groomInitial}·{brideInitial}</span>
+    </div>
+  );
+}
+
 function SectionTitle({ lead, tail }: Readonly<{ lead: string; tail: string }>) {
   return (
     <h2 className={styles.sectionTitle}>
@@ -132,7 +209,11 @@ function HeroSection({
           unoptimized={isRuntimeImageSource(venueImage)}
         />
         <div className={styles.heroStack}>
-          <div aria-hidden className={styles.heroEnvelope} />
+          <div aria-hidden className={styles.heroEnvelope}>
+            <span className={styles.heroSeal}>
+              {getInitial(invite.groom)}·{getInitial(invite.bride)}
+            </span>
+          </div>
           <h1
             className={`${styles.heroTitle} ${
               invite.groom.length + invite.bride.length > 40 ? styles.heroTitleLong : ""
@@ -158,18 +239,14 @@ function HeroSection({
           src={coverImage}
           unoptimized={isRuntimeImageSource(coverImage)}
         />
-        <figcaption className={styles.heroLetter}>
-          <p className={styles.heroLetterScript}>Она сказала «да»</p>
-          <p
-            className={`${styles.signature} ${
-              invite.groom.length + invite.bride.length > 40 ? styles.heroSignatureLong : ""
-            }`}
-          >
-            {invite.groom} &amp; {invite.bride}
-          </p>
-          <Bow />
-        </figcaption>
       </figure>
+      <div className={styles.heroLetterSection}>
+        <div className={styles.heroLetter}>
+          <p className={styles.heroLetterEyebrow}>Глава первая</p>
+          <p className={styles.heroLetterScript}>Она сказала «да»</p>
+          <p className={styles.heroLetterNote}>Так началась наша история</p>
+        </div>
+      </div>
     </section>
   );
 }
@@ -182,6 +259,7 @@ function StorySection({
   return (
     <section className={styles.story} data-reveal>
       <SectionTitle lead="Наша" tail="история" />
+      <EstateSketch />
       <p>{invite.lead}</p>
       <div className={styles.storyPhotos}>
         <figure>
@@ -327,9 +405,20 @@ function ProgramSection({ invite }: Readonly<Pick<ManorTemplateProps, "invite">>
       <ol className={styles.timeline}>
         {invite.schedule.map((item, index) => (
           <li key={`${item.time}-${index}`}>
-            <time>{item.time}</time>
-            <h3>{item.title}</h3>
-            {item.description ? <p>{item.description}</p> : null}
+            <div aria-hidden className={styles.programMedallion}>
+              <ThemeEngraving
+                className={styles.programMedallionArtwork}
+                height={1024}
+                src="/images/manor-decor/program-medallion-v1.webp"
+                width={1024}
+              />
+              <span className={styles.programMedallionNumber}>{index + 1}</span>
+            </div>
+            <div className={styles.timelineCopy}>
+              <time>{item.time}</time>
+              <h3>{item.title}</h3>
+              {item.description ? <p>{item.description}</p> : null}
+            </div>
           </li>
         ))}
       </ol>
@@ -356,12 +445,21 @@ function DressCodeSection({
         src={venueImage}
         unoptimized={isRuntimeImageSource(venueImage)}
       />
-      <InvitationDressCodeBlock
-        className={styles.dressBlock}
-        colors={invite.dressCodeColors}
-        text={invite.dressCode}
-        variant="vanilla"
-      />
+      <div className={styles.dressCard}>
+        <ThemeEngraving
+          className={styles.dressOrnament}
+          height={1024}
+          preserveAspectRatio="none"
+          src="/images/manor-dress-ornament-v2.webp"
+          width={1536}
+        />
+        <InvitationDressCodeBlock
+          className={styles.dressBlock}
+          colors={invite.dressCodeColors}
+          text={invite.dressCode}
+          variant="vanilla"
+        />
+      </div>
     </section>
   );
 }
@@ -441,6 +539,7 @@ function ClosingSection({
 }: Readonly<Pick<ManorTemplateProps, "invite">>) {
   return (
     <section className={styles.closing} data-reveal>
+      <MonogramCrest bride={invite.bride} groom={invite.groom} />
       <h2 className={`${styles.sectionTitle} ${styles.closingTitle}`}>
         <span>Спасибо</span>
         <em>вам</em>

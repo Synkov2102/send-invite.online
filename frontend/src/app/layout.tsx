@@ -5,6 +5,7 @@ import {
   Geist_Mono,
   Great_Vibes,
   Oswald,
+  Ponomar,
 } from "next/font/google";
 import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
@@ -40,6 +41,14 @@ const inviteCondensed = Oswald({
   subsets: ["cyrillic", "latin"],
 });
 
+/** Уставная кириллица — для акцентного текста шаблона «Сказ» (народный стиль). */
+const inviteSlavic = Ponomar({
+  preload: false,
+  variable: "--font-invite-slavic",
+  subsets: ["cyrillic"],
+  weight: "400",
+});
+
 export const metadata: Metadata = createRootMetadata();
 
 export default function RootLayout({
@@ -50,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} ${inviteCondensed.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} ${inviteCondensed.variable} ${inviteSlavic.variable} h-full antialiased`}
     >
       <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>{children}</body>
       <YandexMetrika />
