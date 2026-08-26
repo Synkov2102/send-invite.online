@@ -125,6 +125,18 @@ export default async function AuthPage({ searchParams }: AuthPageProps) {
                   <span>{mode === "register" ? "Зарегистрироваться" : "Войти"} через Яндекс</span>
                 </a>
               </div>
+
+              <p>
+                Продолжая, вы соглашаетесь с{" "}
+                <Link href="/offer" target="_blank">
+                  публичной офертой
+                </Link>{" "}
+                и{" "}
+                <Link href="/privacy" target="_blank">
+                  политикой обработки персональных данных
+                </Link>
+                .
+              </p>
             </>
           )}
         </section>

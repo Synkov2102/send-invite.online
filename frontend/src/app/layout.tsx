@@ -7,6 +7,7 @@ import {
   Oswald,
   Ponomar,
 } from "next/font/google";
+import CookieConsent from "@/components/cookie-consent";
 import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
 import headerBaseStyles from "@/styles/site-header-base.module.css";
@@ -61,7 +62,10 @@ export default function RootLayout({
       lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} ${inviteCondensed.variable} ${inviteSlavic.variable} h-full antialiased`}
     >
-      <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>{children}</body>
+      <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>
+        {children}
+        <CookieConsent />
+      </body>
       <YandexMetrika />
     </html>
   );

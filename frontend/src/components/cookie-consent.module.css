@@ -1,0 +1,62 @@
+.bar {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  border: 1px solid var(--header-line, rgba(49, 51, 42, 0.12));
+  border-radius: 16px;
+  background: var(--header-paper, #fffdfa);
+  box-shadow: 0 20px 48px rgba(45, 38, 43, 0.22);
+  color: var(--header-ink, #282126);
+}
+
+.bar p {
+  flex: 1 1 280px;
+  margin: 0;
+  color: var(--header-muted, #756c72);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.bar a {
+  color: var(--header-ink, #282126);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.button {
+  flex: 0 0 auto;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--header-ink, #282126);
+  color: #fff;
+  font-size: 0.84rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--header-accent, #ff4f72);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bar {
+    animation: cookieBarIn 200ms ease;
+  }
+}
+
+@keyframes cookieBarIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
