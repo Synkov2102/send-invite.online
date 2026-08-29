@@ -41,6 +41,9 @@ const page = await browser.newPage({
   deviceScaleFactor: 2,
   viewport: { width: 390, height: 844 },
 });
+await page.addInitScript(() => {
+  window.localStorage.setItem("invite.cookieConsent.seen", "1");
+});
 
 for (const template of templates) {
   const templateDir = path.join(templatesDir, template.id);
@@ -56,7 +59,9 @@ for (const template of templates) {
         timeout: 30_000,
       },
     );
-    await page.addStyleTag({ content: "nextjs-portal { display: none !important; }" });
+    await page.addStyleTag({
+      content: "nextjs-portal, .invite-music { display: none !important; }",
+    });
     await page.waitForTimeout(waitMsByTemplate[template.id] ?? 3000);
     await preparePageByTemplate[template.id]?.(page);
 

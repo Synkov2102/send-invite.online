@@ -38,6 +38,7 @@ import {
   scribbleImages,
   skazkaImages,
   silkImages,
+  velvetImages,
   type InvitePalette,
 } from "@/lib/invite-theme";
 import { useRouter } from "next/navigation";
@@ -172,7 +173,9 @@ export function useInvitationBuilder({
                             ? manorImages
                             : templateKind === "skazka"
                               ? skazkaImages
-                              : inviteImages;
+                              : templateKind === "velvet"
+                                ? velvetImages
+                                : inviteImages;
   const coverImage = effectiveInvite.coverImageUrl || templateImages.cover;
   const portraitImage = effectiveInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = effectiveInvite.venueImageUrl || templateImages.venue;

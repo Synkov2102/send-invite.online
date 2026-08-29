@@ -110,6 +110,12 @@ export const crimsonImages = {
   venue: "/images/crimson-editorial-venue.webp",
 } as const;
 
+export const velvetImages = {
+  cover: "/images/velvet-ticket-cover.webp",
+  portrait: "/images/velvet-ticket-portrait.webp",
+  venue: "/images/velvet-ticket-venue.webp",
+} as const;
+
 export const scribbleImages = {
   cover: "/images/handwritten-note-cover.webp",
   portrait: "/images/handwritten-note-portrait.webp",

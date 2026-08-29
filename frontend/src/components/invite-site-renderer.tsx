@@ -29,6 +29,7 @@ import {
   scribbleImages,
   skazkaImages,
   silkImages,
+  velvetImages,
 } from "@/lib/invite-theme";
 import baseStyles from "@/styles/invitation-base.module.css";
 import responsiveStyles from "@/styles/responsive-shells.module.css";
@@ -84,7 +85,9 @@ export function InviteSiteRenderer({
                               ? manorImages
                               : templateKind === "skazka"
                                 ? skazkaImages
-                                : inviteImages;
+                                : templateKind === "velvet"
+                                  ? velvetImages
+                                  : inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;
