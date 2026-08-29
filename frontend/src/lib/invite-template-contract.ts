@@ -669,7 +669,7 @@ ${renderCssVarsTable()}
      venue: "/images/<template-id>-venue.webp",
    } as const;
    \`\`\`
-   и добавь \`kind\` в обе цепочки выбора: \`invite-site-renderer.tsx\` и \`editor/use-invitation-builder.ts\`.
+   и добавь \`kind\` в единую карту \`templateImagesByKind\` там же — это единственное место, куда его нужно добавить (потребители — редактор и живой рендерер — берут картинки из неё, TypeScript не даст собраться при пропущенном kind).
 4. Скриншоты каталога (\`frontend/public/images/templates/<template-id>/<palette-id>.webp\` + \`<template-id>-mobile.webp\`) снимаются скриптом после того, как фото на месте:
    \`\`\`bash
    node frontend/scripts/build-template-mobile-screenshots.mjs

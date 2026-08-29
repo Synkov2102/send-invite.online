@@ -11,26 +11,7 @@ import type { InviteState } from "@/lib/invite-state";
 import { normalizeInviteState } from "@/lib/invite-state";
 import { getCalendarDays } from "@/lib/invite-date";
 import { alpineRenderer as AlpineRenderer, sharedTemplateRenderers } from "@/invitation-templates/registry";
-import {
-  alpineImages,
-  aquaImages,
-  chapterImages,
-  chromeImages,
-  clarityImages,
-  createInviteVars,
-  createRingColor,
-  crimsonImages,
-  editorialImages,
-  electricImages,
-  inviteImages,
-  manorImages,
-  memoirImages,
-  minimalImages,
-  scribbleImages,
-  skazkaImages,
-  silkImages,
-  velvetImages,
-} from "@/lib/invite-theme";
+import { createInviteVars, createRingColor, inviteImages, templateImagesByKind } from "@/lib/invite-theme";
 import baseStyles from "@/styles/invitation-base.module.css";
 import responsiveStyles from "@/styles/responsive-shells.module.css";
 
@@ -56,38 +37,7 @@ export function InviteSiteRenderer({
   const calendarDays = useMemo(() => getCalendarDays(normalizedInvite.date), [normalizedInvite.date]);
   const inviteVars = useMemo(() => createInviteVars(palette), [palette]);
   const ringColor = useMemo(() => createRingColor(normalizedInvite.ringMetal), [normalizedInvite.ringMetal]);
-  const templateImages =
-    templateKind === "alpine"
-      ? alpineImages
-      : templateKind === "aqua"
-        ? aquaImages
-        : templateKind === "chrome"
-          ? chromeImages
-          : templateKind === "crimson"
-            ? crimsonImages
-            : templateKind === "silk"
-              ? silkImages
-              : templateKind === "electric"
-                ? electricImages
-                : templateKind === "editorial"
-                  ? editorialImages
-                  : templateKind === "minimal"
-                    ? minimalImages
-                    : templateKind === "clarity"
-                      ? clarityImages
-                      : templateKind === "chapter"
-                        ? chapterImages
-                        : templateKind === "memoir"
-                          ? memoirImages
-                          : templateKind === "scribble"
-                            ? scribbleImages
-                            : templateKind === "manor"
-                              ? manorImages
-                              : templateKind === "skazka"
-                                ? skazkaImages
-                                : templateKind === "velvet"
-                                  ? velvetImages
-                                  : inviteImages;
+  const templateImages = templateImagesByKind[templateKind] ?? inviteImages;
   const coverImage = normalizedInvite.coverImageUrl || templateImages.cover;
   const portraitImage = normalizedInvite.portraitImageUrl || templateImages.portrait;
   const venueImage = normalizedInvite.venueImageUrl || templateImages.venue;

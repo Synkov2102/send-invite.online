@@ -11,8 +11,6 @@ import "@/styles/heroui.css";
 import productStyles from "@/styles/product.module.css";
 import styles from "./invitation-builder.module.css";
 
-export type { InviteState, InviteVars } from "../types";
-
 function EditorLayout() {
   const isCompactEditor = useCompactEditorViewport();
 

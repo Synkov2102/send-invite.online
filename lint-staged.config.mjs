@@ -8,6 +8,8 @@ const config = {
   "*.{json,md,yml,yaml,css}": "prettier --write --ignore-unknown",
   // Run the full backend suite when any backend source/test file is staged.
   "backend/**/*.{ts,js,cjs,mjs}": () => "npm run test:backend",
+  // Run the frontend unit suite when any frontend source/test file is staged.
+  "frontend/**/*.{js,jsx,mjs,ts,tsx}": () => "npm run test:frontend",
 };
 
 export default config;

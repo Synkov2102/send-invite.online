@@ -1,4 +1,5 @@
 ﻿import type { CSSProperties } from "react";
+import type { TemplateKind } from "@/lib/invite-templates";
 import type { InviteSitePalette } from "@/lib/invite-site-types";
 
 export type { InvitePalette, InvitePalettePreset } from "@/lib/invite-palette-catalog";
@@ -6,7 +7,6 @@ export {
   getPalettePreset,
   invitePaletteCatalog,
   invitePalettePresets,
-  palettePresets,
 } from "@/lib/invite-palette-catalog";
 export {
   getRecommendedPaletteIds,
@@ -121,6 +121,27 @@ export const scribbleImages = {
   portrait: "/images/handwritten-note-portrait.webp",
   venue: "/images/handwritten-note-venue.webp",
 } as const;
+
+export type TemplateImageSet = { cover: string; portrait: string; venue: string };
+
+/** Единственное место, куда нужно добавить новый TemplateKind — потребители (редактор, живой рендерер) берут картинки только отсюда. */
+export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  alpine: alpineImages,
+  aqua: aquaImages,
+  chapter: chapterImages,
+  chrome: chromeImages,
+  clarity: clarityImages,
+  crimson: crimsonImages,
+  editorial: editorialImages,
+  electric: electricImages,
+  manor: manorImages,
+  memoir: memoirImages,
+  minimal: minimalImages,
+  scribble: scribbleImages,
+  silk: silkImages,
+  skazka: skazkaImages,
+  velvet: velvetImages,
+};
 
 const ringColors = {
   gold: "#d7a83a",
