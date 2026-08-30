@@ -1538,9 +1538,6 @@ export const invitePaletteCatalog = Object.fromEntries(
   invitePalettePresets.map((palette) => [palette.id, palette]),
 ) as Record<string, InvitePalettePreset>;
 
-/** @deprecated Используйте invitePalettePresets или getPalettePreset. */
-export const palettePresets = invitePalettePresets;
-
 export function getPalettePreset(paletteId: string): InvitePalettePreset | undefined {
   return invitePaletteCatalog[paletteId];
 }

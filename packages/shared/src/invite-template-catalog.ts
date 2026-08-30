@@ -31,7 +31,8 @@ export type TemplateKind =
   | "minimal"
   | "scribble"
   | "silk"
-  | "skazka";
+  | "skazka"
+  | "velvet";
 
 export type InviteTemplateDefinition = InviteTemplate & {
   /** Какой React-движок рисует шаблон. */
@@ -260,6 +261,34 @@ const crimsonEditorPreset: Partial<InviteState> = {
     "Пожалуйста, подтвердите присутствие. Ваш ответ поможет нам сохранить для вас место за общим столом.",
   rsvpDate: "2027-06-17",
   paletteId: "crimson-paper",
+};
+
+const velvetEditorPreset: Partial<InviteState> = {
+  bride: "Наталья",
+  groom: "Олег",
+  date: "2027-07-11",
+  time: "16:00",
+  city: "Москва",
+  venue: "Особняк Леман",
+  address: "Гранатный пер., 7",
+  mapUrl: "https://yandex.ru/maps/?text=%D0%9E%D1%81%D0%BE%D0%B1%D0%BD%D1%8F%D0%BA%20%D0%9B%D0%B5%D0%BC%D0%B0%D0%BD%20%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
+  lead: "Мы женимся и мечтаем разделить этот день с вами. Будем счастливы видеть рядом самых родных и близких — тех, с кем хочется смеяться, обниматься и хранить этот вечер в памяти.",
+  dressCode: "Нам будет приятно, если ваши образы поддержат палитру вечера: глубокий винный, молочный, пудровый, графитовый и чёрный.",
+  dressCodeColors: ["#f4e5d8", "#d5bca8", "#b56a70", "#650817", "#211719"],
+  schedule: [
+    { time: "15:30", title: "Сбор гостей", description: "Игристое, объятия и первые фотографии" },
+    { time: "16:00", title: "Церемония", description: "Главные слова этого дня" },
+    { time: "17:00", title: "Праздничный ужин", description: "Тёплые тосты и любимая музыка" },
+    { time: "20:00", title: "Танцы", description: "Оставляем формальности и празднуем" },
+  ],
+  showGroupChat: true,
+  groupChatUrl: "https://t.me/+velvet-guests",
+  groupChatText: "В чате гостей появятся новости дня, детали маршрута и фотографии после праздника.",
+  showAdditionalInfo: true,
+  additionalInfo: "Главное для нас — ваше присутствие. Если захочется подарить цветы, замените их бутылкой любимого вина или открыткой с пожеланием.",
+  rsvpText: "Пожалуйста, подтвердите присутствие — ваш ответ поможет нам сохранить для вас место за общим столом.",
+  rsvpDate: "2027-06-11",
+  paletteId: "crimson-rosewood",
 };
 
 const chromeEditorPreset: Partial<InviteState> = {
@@ -527,7 +556,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "alpine-terracotta",
     ],
     tags: ["3D", "минимализм"],
-    screenshot: "/images/templates/alpine-rings-mobile.webp",
+    screenshot: "/images/templates/alpine-rings-mobile.webp?v=20260830-1",
     preview: {
       background: "#dfe8e7",
       surface: "#f7fbf8",
@@ -554,7 +583,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "fjord",
     ],
     tags: ["анимация", "вода"],
-    screenshot: "/images/templates/lagoon-wave-mobile.webp",
+    screenshot: "/images/templates/lagoon-wave-mobile.webp?v=20260830-1",
     preview: {
       background: "#0e3a44",
       surface: "#eafaf9",
@@ -573,7 +602,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "silk",
     recommendedPaletteIds: ["silk", "pearl", "graphite", "champagne", "nocturne"],
     tags: ["фото", "классика"],
-    screenshot: "/images/templates/silk-monogram-mobile.webp",
+    screenshot: "/images/templates/silk-monogram-mobile.webp?v=20260830-1",
     preview: {
       background: "#d5c7bd",
       surface: "#fffefd",
@@ -592,7 +621,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "clarity",
     recommendedPaletteIds: ["clarity", "graphite", "pearl", "silk", "nocturne"],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/clarity-editorial-mobile.webp",
+    screenshot: "/images/templates/clarity-editorial-mobile.webp?v=20260830-1",
     preview: {
       background: "#b8b4aa",
       surface: "#f5f3e9",
@@ -622,7 +651,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "lavender-pop",
     ],
     tags: ["яркий", "editorial"],
-    screenshot: "/images/templates/electric-vows-mobile.webp",
+    screenshot: "/images/templates/electric-vows-mobile.webp?v=20260830-1",
     preview: {
       background: "#fff600",
       surface: "#fffaf0",
@@ -652,7 +681,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "paper-noir-blush",
     ],
     tags: ["минимализм", "бумага"],
-    screenshot: "/images/templates/minimal-paper-mobile.webp",
+    screenshot: "/images/templates/minimal-paper-mobile.webp?v=20260830-1",
     preview: {
       background: "#d9e0e5",
       surface: "#f7f3ea",
@@ -683,7 +712,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "chrome-rose",
     ],
     tags: ["editorial", "хром"],
-    screenshot: "/images/templates/chrome-affair-mobile.webp",
+    screenshot: "/images/templates/chrome-affair-mobile.webp?v=20260830-1",
     preview: {
       background: "#101712",
       surface: "#f3f0e8",
@@ -714,7 +743,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "editorial-sepia",
     ],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/editorial-vow-mobile.webp",
+    screenshot: "/images/templates/editorial-vow-mobile.webp?v=20260830-1",
     preview: {
       background: "#09090b",
       surface: "#f6f1e9",
@@ -745,12 +774,43 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "crimson-champagne-ink",
     ],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/crimson-letter-mobile.webp",
+    screenshot: "/images/templates/crimson-letter-mobile.webp?v=20260830-1",
     preview: {
       background: "#6c1c22",
       surface: "#fffdf9",
       ink: "#161313",
       accent: "#b3000b",
+    },
+  },
+  {
+    id: "velvet-ticket",
+    name: "Бархатный билет",
+    description:
+      "Бордовое приглашение-билет с конвертом, рваными бумажными кромками, жемчужной нитью и кружевными деталями.",
+    coverType: "arch",
+    kind: "velvet",
+    editorReady: true,
+    editorPreset: velvetEditorPreset,
+    defaultPaletteId: "crimson-rosewood",
+    recommendedPaletteIds: [
+      "crimson-rosewood",
+      "crimson-paper",
+      "crimson-black-tie",
+      "crimson-midnight-ruby",
+      "crimson-plum-orchid",
+      "crimson-mocha-copper",
+      "crimson-champagne-ink",
+      "crimson-emerald-gold",
+      "crimson-terracotta",
+      "crimson-slate-blue",
+    ],
+    tags: ["винтаж", "коллаж"],
+    screenshot: "/images/templates/velvet-ticket-mobile.webp?v=20260830-1",
+    preview: {
+      background: "#650817",
+      surface: "#f4e5d8",
+      ink: "#5b1020",
+      accent: "#7b0018",
     },
   },
   {
@@ -776,7 +836,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "graphite",
     ],
     tags: ["фотоархив", "рукописный"],
-    screenshot: "/images/templates/midnight-memoir-mobile.webp",
+    screenshot: "/images/templates/midnight-memoir-mobile.webp?v=20260830-1",
     preview: {
       background: "#171821",
       surface: "#f4f2ec",
@@ -807,7 +867,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "nocturne",
     ],
     tags: ["ретро", "editorial"],
-    screenshot: "/images/templates/chapter-ticket-mobile.webp?v=20260729-1",
+    screenshot: "/images/templates/chapter-ticket-mobile.webp?v=20260830-1",
     preview: {
       background: "#2f2721",
       surface: "#f7f0e2",
@@ -839,7 +899,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "scribble-bronze",
     ],
     tags: ["рукописный", "коллаж"],
-    screenshot: "/images/templates/handwritten-note-mobile.webp",
+    screenshot: "/images/templates/handwritten-note-mobile.webp?v=20260830-1",
     preview: {
       background: "#8f001b",
       surface: "#f8f1e7",
@@ -870,7 +930,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "manor-plum",
     ],
     tags: ["old money", "editorial"],
-    screenshot: "/images/templates/manor-stripe-mobile.webp",
+    screenshot: "/images/templates/manor-stripe-mobile.webp?v=20260830-1",
     preview: {
       background: "#271c0c",
       surface: "#f4ede4",
@@ -901,7 +961,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "skazka-oblepikha",
     ],
     tags: ["народный стиль", "хохлома"],
-    screenshot: "/images/templates/skazka-lubok-mobile.webp",
+    screenshot: "/images/templates/skazka-lubok-mobile.webp?v=20260830-1",
     preview: {
       background: "#2a0e12",
       surface: "#f7ebd8",

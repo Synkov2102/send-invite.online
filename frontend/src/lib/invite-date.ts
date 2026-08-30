@@ -42,3 +42,19 @@ export function getCalendarDays(value: string) {
     };
   });
 }
+
+export function getMonthCalendar(value: string) {
+  const firstDay = parseDate(value);
+  firstDay.setDate(1);
+  const offset = (firstDay.getDay() + 6) % 7;
+  const lastDay = new Date(firstDay);
+  lastDay.setMonth(firstDay.getMonth() + 1, 0);
+  const daysInMonth = lastDay.getDate();
+
+  return Array.from({ length: Math.ceil((offset + daysInMonth) / 7) }, (_, week) =>
+    Array.from({ length: 7 }, (_, weekday) => {
+      const day = week * 7 + weekday - offset + 1;
+      return day >= 1 && day <= daysInMonth ? day : null;
+    }),
+  );
+}

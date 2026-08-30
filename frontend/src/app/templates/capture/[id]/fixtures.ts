@@ -105,10 +105,12 @@ const limits: Partial<InviteState> = {
   })),
 };
 
-export const captureFixtures = { limits, minimal, overflow } satisfies Record<
-  string,
-  Partial<InviteState>
->;
+export const captureFixtures = {
+  limits,
+  minimal,
+  overflow,
+  "date-descenders": { date: "2026-09-19" },
+} satisfies Record<string, Partial<InviteState>>;
 
 export type CaptureFixtureName = keyof typeof captureFixtures;
 

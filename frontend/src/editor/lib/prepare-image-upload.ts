@@ -12,7 +12,7 @@ export const imageUploadAccept = [
   ".heif",
 ].join(",");
 
-export function isAllowedImageUpload(file: File) {
+function isAllowedImageUpload(file: File) {
   if (imageUploadTypes.includes(file.type) || HEIC_TYPES.has(file.type)) {
     return true;
   }

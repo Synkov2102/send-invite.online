@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="600" viewBox="0 153.19 200 600">
+  <defs>
+    <radialGradient id="pearl" cx="32%" cy="25%" r="75%">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset=".28" stop-color="#f9f2e5"/>
+      <stop offset=".62" stop-color="#dccdb5"/>
+      <stop offset=".86" stop-color="#a79378"/>
+      <stop offset="1" stop-color="#f2e5cf"/>
+    </radialGradient>
+  <g id="pearl-segment" fill="url(#pearl)" stroke="#eee0c5" stroke-width=".4">
+    <circle cx="100.00" cy="0.00" r="5.3" />
+    <circle cx="107.75" cy="9.75" r="5.3" />
+    <circle cx="115.12" cy="19.13" r="5.3" />
+    <circle cx="122.35" cy="28.50" r="5.3" />
+    <circle cx="129.63" cy="38.25" r="5.3" />
+    <circle cx="136.61" cy="48.00" r="5.3" />
+    <circle cx="143.46" cy="58.13" r="5.3" />
+    <circle cx="149.81" cy="68.25" r="5.3" />
+    <circle cx="155.81" cy="78.75" r="5.3" />
+    <circle cx="161.13" cy="89.25" r="5.3" />
+    <circle cx="166.02" cy="100.50" r="5.3" />
+    <circle cx="169.98" cy="111.75" r="5.3" />
+    <circle cx="173.07" cy="123.38" r="5.3" />
+    <circle cx="175.06" cy="135.00" r="5.3" />
+    <circle cx="175.96" cy="147.00" r="5.3" />
+    <circle cx="175.63" cy="159.38" r="5.3" />
+    <circle cx="174.17" cy="171.00" r="5.3" />
+    <circle cx="171.51" cy="183.00" r="5.3" />
+    <circle cx="167.99" cy="194.25" r="5.3" />
+    <circle cx="163.52" cy="205.50" r="5.3" />
+    <circle cx="158.37" cy="216.37" r="5.3" />
+    <circle cx="152.67" cy="226.88" r="5.3" />
+    <circle cx="146.34" cy="237.38" r="5.3" />
+    <circle cx="139.71" cy="247.50" r="5.3" />
+    <circle cx="132.90" cy="257.25" r="5.3" />
+    <circle cx="125.74" cy="267.00" r="5.3" />
+    <circle cx="118.61" cy="276.38" r="5.3" />
+    <circle cx="111.00" cy="286.13" r="5.3" />
+    <circle cx="103.58" cy="295.50" r="5.3" />
+    <circle cx="96.12" cy="304.88" r="5.3" />
+    <circle cx="88.70" cy="314.25" r="5.3" />
+    <circle cx="81.10" cy="324.00" r="5.3" />
+    <circle cx="73.98" cy="333.38" r="5.3" />
+    <circle cx="66.83" cy="343.13" r="5.3" />
+    <circle cx="60.04" cy="352.88" r="5.3" />
+    <circle cx="53.42" cy="363.00" r="5.3" />
+    <circle cx="47.11" cy="373.50" r="5.3" />
+    <circle cx="41.44" cy="384.00" r="5.3" />
+    <circle cx="36.32" cy="394.88" r="5.3" />
+    <circle cx="31.88" cy="406.13" r="5.3" />
+    <circle cx="28.39" cy="417.38" r="5.3" />
+    <circle cx="25.77" cy="429.38" r="5.3" />
+    <circle cx="24.34" cy="441.00" r="5.3" />
+    <circle cx="24.05" cy="453.38" r="5.3" />
+    <circle cx="24.98" cy="465.38" r="5.3" />
+    <circle cx="27.02" cy="477.00" r="5.3" />
+    <circle cx="30.13" cy="488.63" r="5.3" />
+    <circle cx="34.13" cy="499.88" r="5.3" />
+    <circle cx="39.05" cy="511.13" r="5.3" />
+    <circle cx="44.39" cy="521.63" r="5.3" />
+    <circle cx="50.42" cy="532.13" r="5.3" />
+    <circle cx="56.79" cy="542.25" r="5.3" />
+    <circle cx="63.65" cy="552.38" r="5.3" />
+    <circle cx="70.64" cy="562.13" r="5.3" />
+    <circle cx="77.94" cy="571.88" r="5.3" />
+    <circle cx="85.17" cy="581.25" r="5.3" />
+    <circle cx="92.55" cy="590.63" r="5.3" />
+  </g>
+  </defs>
+  <!-- Repeat boundaries lie between whole beads, never through a bead. -->
+  <use href="#pearl-segment" />
+  <use href="#pearl-segment" y="600" />
+</svg>

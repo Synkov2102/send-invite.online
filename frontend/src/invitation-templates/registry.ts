@@ -73,4 +73,7 @@ export const sharedTemplateRenderers: Record<
   skazka: dynamic(() => import("./skazka").then((module) => module.SkazkaTemplate), {
     ssr: true,
   }),
+  velvet: dynamic(() => import("./velvet").then((module) => module.VelvetTemplate), {
+    ssr: true,
+  }),
 };

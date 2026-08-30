@@ -144,7 +144,7 @@ npm run test:watch --workspace invite-backend
 
 ### Husky
 
-`pre-commit` → `lint-staged`. Если в коммите есть `backend/**/*.{ts,js,cjs,mjs}`, дополнительно запускается `npm run test:backend`. Падение suite блокирует коммит.
+`pre-commit` → `lint-staged`. Если в коммите есть `backend/**/*.{ts,js,cjs,mjs}`, дополнительно запускается `npm run test:backend`; если есть `frontend/**/*.{js,jsx,mjs,ts,tsx}` — `npm run test:frontend` (юнит-тесты на `node:test` + `tsx`, без React-рендеринга — см. `frontend/src/**/*.test.ts`). Падение suite блокирует коммит.
 
 ### Практика для AI / разработчиков
 
@@ -206,6 +206,7 @@ npm run dev:backend       # :3001, предварительно собирает
 npm run build
 npm run lint
 npm run test:backend
+npm run test:frontend
 docker compose -f docker-compose.local.yml up --build   # :8080 / :8081
 
 node backend/scripts/publish-article.mjs --file=~/my.md  # SEO-статья в Mongo, картинки в S3

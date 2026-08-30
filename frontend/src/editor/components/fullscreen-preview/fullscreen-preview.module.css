@@ -491,15 +491,16 @@
   }
 }
 
+/* Без transform: заданный в keyframes даже как none, он всё равно держит
+   на элементе анимированный transform и превращает эту обёртку в containing
+   block для fixed-плеера музыки — тот приклеивается к низу страницы вместо
+   вьюпорта. Поэтому анимируем только opacity. */
 @keyframes fullscreen-preview-enter {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
 
   to {
     opacity: 1;
-    /* `transform: none` — иначе fixed-плеер музыки цепляется к низу всей страницы */
-    transform: none;
   }
 }

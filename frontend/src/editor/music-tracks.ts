@@ -277,6 +277,7 @@ const templateMusicTrackIds: Record<string, string> = {
   "handwritten-note": "wedding-valentines-paulyudin-182505",
   "silk-monogram": "invitation-wedding-leberch-375839",
   "skazka-lubok": "slavic-folk-soulfuljamtracks-308126",
+  "velvet-ticket": "wedding-romantic-paulyudin-155785",
 };
 
 export function getEditorMusicTrackByUrl(audioUrl: string) {
