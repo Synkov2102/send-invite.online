@@ -112,9 +112,15 @@
   justify-items: center;
   color: var(--accent);
   font-family: var(--font-invite-script), "Segoe Script", cursive;
-  font-size: 8.5cqw;
+  font-size: var(--hero-name-size, 8.5cqw);
   font-weight: 400;
   line-height: 0.95;
+}
+
+.heroNames > span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .heroNames i {

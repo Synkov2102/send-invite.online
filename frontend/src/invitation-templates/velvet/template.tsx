@@ -94,6 +94,18 @@ function formatNumericDate(value: string) {
 }
 
 function Hero({ invite }: Readonly<Pick<VelvetTemplateProps, "invite">>) {
+  const names = [invite.bride.trim(), invite.groom.trim()];
+  const longestNameLength = Math.max(...names.map((name) => name.length), 1);
+  const longestWordLength = Math.max(
+    ...names.flatMap((name) => name.split(/\s+/).map((word) => word.length)),
+    1,
+  );
+  const heroNameSize = Math.max(
+    3.2,
+    Math.min(8.5, 94 / longestWordLength, 188 / longestNameLength),
+  );
+  const heroNameStyle = { "--hero-name-size": `${heroNameSize}cqw` } as CSSProperties;
+
   return (
     <section className={styles.hero}>
       <div className={styles.ticket}>
@@ -109,7 +121,7 @@ function Hero({ invite }: Readonly<Pick<VelvetTemplateProps, "invite">>) {
             sizes="(max-width: 640px) 64vw, 410px"
             src={decorativeImages.envelope}
           />
-          <h1 className={styles.heroNames}>
+          <h1 className={styles.heroNames} style={heroNameStyle}>
             <span>{invite.bride}</span>
             <i>&amp;</i>
             <span>{invite.groom}</span>
