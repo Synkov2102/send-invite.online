@@ -556,7 +556,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "alpine-terracotta",
     ],
     tags: ["3D", "минимализм"],
-    screenshot: "/images/templates/alpine-rings-mobile.webp",
+    screenshot: "/images/templates/alpine-rings-mobile.webp?v=20260830-1",
     preview: {
       background: "#dfe8e7",
       surface: "#f7fbf8",
@@ -583,7 +583,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "fjord",
     ],
     tags: ["анимация", "вода"],
-    screenshot: "/images/templates/lagoon-wave-mobile.webp",
+    screenshot: "/images/templates/lagoon-wave-mobile.webp?v=20260830-1",
     preview: {
       background: "#0e3a44",
       surface: "#eafaf9",
@@ -602,7 +602,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "silk",
     recommendedPaletteIds: ["silk", "pearl", "graphite", "champagne", "nocturne"],
     tags: ["фото", "классика"],
-    screenshot: "/images/templates/silk-monogram-mobile.webp",
+    screenshot: "/images/templates/silk-monogram-mobile.webp?v=20260830-1",
     preview: {
       background: "#d5c7bd",
       surface: "#fffefd",
@@ -621,7 +621,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "clarity",
     recommendedPaletteIds: ["clarity", "graphite", "pearl", "silk", "nocturne"],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/clarity-editorial-mobile.webp",
+    screenshot: "/images/templates/clarity-editorial-mobile.webp?v=20260830-1",
     preview: {
       background: "#b8b4aa",
       surface: "#f5f3e9",
@@ -651,7 +651,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "lavender-pop",
     ],
     tags: ["яркий", "editorial"],
-    screenshot: "/images/templates/electric-vows-mobile.webp",
+    screenshot: "/images/templates/electric-vows-mobile.webp?v=20260830-1",
     preview: {
       background: "#fff600",
       surface: "#fffaf0",
@@ -681,7 +681,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "paper-noir-blush",
     ],
     tags: ["минимализм", "бумага"],
-    screenshot: "/images/templates/minimal-paper-mobile.webp",
+    screenshot: "/images/templates/minimal-paper-mobile.webp?v=20260830-1",
     preview: {
       background: "#d9e0e5",
       surface: "#f7f3ea",
@@ -712,7 +712,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "chrome-rose",
     ],
     tags: ["editorial", "хром"],
-    screenshot: "/images/templates/chrome-affair-mobile.webp",
+    screenshot: "/images/templates/chrome-affair-mobile.webp?v=20260830-1",
     preview: {
       background: "#101712",
       surface: "#f3f0e8",
@@ -743,7 +743,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "editorial-sepia",
     ],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/editorial-vow-mobile.webp",
+    screenshot: "/images/templates/editorial-vow-mobile.webp?v=20260830-1",
     preview: {
       background: "#09090b",
       surface: "#f6f1e9",
@@ -774,7 +774,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "crimson-champagne-ink",
     ],
     tags: ["фото", "editorial"],
-    screenshot: "/images/templates/crimson-letter-mobile.webp",
+    screenshot: "/images/templates/crimson-letter-mobile.webp?v=20260830-1",
     preview: {
       background: "#6c1c22",
       surface: "#fffdf9",
@@ -805,7 +805,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "crimson-slate-blue",
     ],
     tags: ["винтаж", "коллаж"],
-    screenshot: "/images/templates/velvet-ticket-mobile.webp",
+    screenshot: "/images/templates/velvet-ticket-mobile.webp?v=20260830-1",
     preview: {
       background: "#650817",
       surface: "#f4e5d8",
@@ -836,7 +836,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "graphite",
     ],
     tags: ["фотоархив", "рукописный"],
-    screenshot: "/images/templates/midnight-memoir-mobile.webp",
+    screenshot: "/images/templates/midnight-memoir-mobile.webp?v=20260830-1",
     preview: {
       background: "#171821",
       surface: "#f4f2ec",
@@ -867,7 +867,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "nocturne",
     ],
     tags: ["ретро", "editorial"],
-    screenshot: "/images/templates/chapter-ticket-mobile.webp?v=20260729-1",
+    screenshot: "/images/templates/chapter-ticket-mobile.webp?v=20260830-1",
     preview: {
       background: "#2f2721",
       surface: "#f7f0e2",
@@ -899,7 +899,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "scribble-bronze",
     ],
     tags: ["рукописный", "коллаж"],
-    screenshot: "/images/templates/handwritten-note-mobile.webp",
+    screenshot: "/images/templates/handwritten-note-mobile.webp?v=20260830-1",
     preview: {
       background: "#8f001b",
       surface: "#f8f1e7",
@@ -930,7 +930,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "manor-plum",
     ],
     tags: ["old money", "editorial"],
-    screenshot: "/images/templates/manor-stripe-mobile.webp",
+    screenshot: "/images/templates/manor-stripe-mobile.webp?v=20260830-1",
     preview: {
       background: "#271c0c",
       surface: "#f4ede4",
@@ -961,7 +961,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       "skazka-oblepikha",
     ],
     tags: ["народный стиль", "хохлома"],
-    screenshot: "/images/templates/skazka-lubok-mobile.webp",
+    screenshot: "/images/templates/skazka-lubok-mobile.webp?v=20260830-1",
     preview: {
       background: "#2a0e12",
       surface: "#f7ebd8",

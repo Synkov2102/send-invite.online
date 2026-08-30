@@ -31,12 +31,8 @@ const nextConfig: NextConfig = {
         search: "",
       },
       {
-        pathname: "/images/templates/chapter-ticket/**",
-        search: "?v=20260729-1",
-      },
-      {
-        pathname: "/images/templates/chapter-ticket-mobile.webp",
-        search: "?v=20260728-2",
+        pathname: "/images/templates/**",
+        search: "?v=20260830-1",
       },
     ],
     remotePatterns: [
