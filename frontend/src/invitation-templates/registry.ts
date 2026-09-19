@@ -35,6 +35,7 @@ export const sharedTemplateRenderers: Record<
   SharedTemplateKind,
   ComponentType<SharedTemplateViewProps>
 > = {
+  petal: dynamic(() => import("./petal").then((module) => module.PetalTemplate), { ssr: true }),
   aqua: dynamic(() => import("./aqua").then((module) => module.AquaTemplate), { ssr: true }),
   chapter: dynamic(() => import("./chapter").then((module) => module.ChapterTemplate), {
     ssr: true,

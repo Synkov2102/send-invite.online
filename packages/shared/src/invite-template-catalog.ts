@@ -29,6 +29,7 @@ export type TemplateKind =
   | "manor"
   | "memoir"
   | "minimal"
+  | "petal"
   | "scribble"
   | "silk"
   | "skazka"
@@ -967,6 +968,58 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       surface: "#f7ebd8",
       ink: "#25140c",
       accent: "#8f1722",
+    },
+  },
+  {
+    id: "petal-party",
+    name: "Лепестки",
+    description:
+      "Крупные цветы, рисованные детали и чёрно-белая фотоистория в десяти мягких цветовых сочетаниях.",
+    coverType: "arch",
+    kind: "petal",
+    editorReady: true,
+    defaultPaletteId: "petal-cornflower",
+    recommendedPaletteIds: [
+      "petal-cornflower",
+      "petal-pistachio",
+      "petal-lavender",
+      "petal-butter",
+      "petal-powder",
+      "petal-aqua",
+      "petal-sand",
+      "petal-apricot",
+      "petal-mauve",
+      "petal-mist",
+    ],
+    tags: ["яркий", "цветы"],
+    screenshot: "/images/templates/petal-party-mobile.webp",
+    preview: { background: "#dce5f3", surface: "#faf9f4", ink: "#252c3d", accent: "#9aafda" },
+    editorPreset: {
+      groom: "Артём",
+      bride: "Анна",
+      date: "2027-06-15",
+      time: "15:00",
+      city: "Москва",
+      venue: "Загородная усадьба",
+      address: "ул. Центральная, 10",
+      lead: "С радостью приглашаем вас на нашу свадьбу! Мы будем очень рады видеть всех вас в этот особенный день и разделить с вами радость нашего союза.",
+      dressCode:
+        "Будем рады, если вы поддержите настроение нашего праздника и выберете наряды в мягких оттенках нашей палитры. Самое главное — ваше хорошее настроение!",
+      dressCodeColors: ["#dce5f3", "#9aafda", "#f5f1e8", "#c9c8c6", "#687995"],
+      showSchedule: true,
+      schedule: [
+        { time: "15:00", title: "Церемония", description: "Тот самый момент — мы говорим «да»" },
+        { time: "16:00", title: "Аперитив", description: "Объятия, фотографии и первые тосты" },
+        { time: "18:00", title: "Ужин", description: "Тёплые слова и праздничный вечер" },
+        { time: "21:00", title: "Танцы", description: "Веселье до самого утра" },
+      ],
+      showAdditionalInfo: true,
+      additionalInfo:
+        "Ваше присутствие — самый ценный подарок. Если хочется порадовать нас ещё чем-то, будем рады бутылочке любимого вина вместо цветов. А ваши пожелания сохраним на долгую память!",
+      rsvpDate: "2027-05-15",
+      rsvpText:
+        "Пожалуйста, подтвердите ваше присутствие и расскажите о предпочтениях. Это поможет нам сделать праздник уютным для каждого.",
+      paletteId: "petal-cornflower",
     },
   },
 ];

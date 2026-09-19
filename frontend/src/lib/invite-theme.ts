@@ -124,8 +124,15 @@ export const scribbleImages = {
 
 export type TemplateImageSet = { cover: string; portrait: string; venue: string };
 
+export const petalImages = {
+  cover: "/images/petal-party-cover.webp",
+  portrait: "/images/petal-party-portrait.webp",
+  venue: "/images/petal-party-venue-modern.webp",
+} as const;
+
 /** Единственное место, куда нужно добавить новый TemplateKind — потребители (редактор, живой рендерер) берут картинки только отсюда. */
 export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  petal: petalImages,
   alpine: alpineImages,
   aqua: aquaImages,
   chapter: chapterImages,

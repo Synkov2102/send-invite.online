@@ -153,6 +153,8 @@ const collectLayoutProblems = () => {
 
   return {
     brokenImages,
+    cardWidth: cardRect.width,
+    cardCenterOffset: Math.abs((cardRect.left + cardRect.right) / 2 - document.documentElement.clientWidth / 2),
     clipped,
     documentOverflow:
       document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -293,6 +295,10 @@ for (const template of templates) {
             const result = await page.evaluate(collectLayoutProblems);
 
             assert.ok(!result.fatal, result.fatal);
+            if (template.kind === "petal") {
+              assert.ok(result.cardWidth <= 601, "ширина «Лепестков» не должна превышать 600px");
+              assert.ok(result.cardCenterOffset <= 1, "приглашение должно быть по центру экрана");
+            }
             assert.deepEqual(pageErrors, [], "не должно быть ошибок выполнения");
             assert.deepEqual(consoleErrors, [], "не должно быть ошибок в консоли");
             assert.deepEqual(failedRequests, [], "статика шаблона должна отдаваться без ошибок");
