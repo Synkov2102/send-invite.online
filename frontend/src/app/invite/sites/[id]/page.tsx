@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PublishedInviteSiteView from "@/components/published-invite-site";
-import { brand } from "@/lib/brand";
+import { getInviteSocialImagePath } from "@/lib/invite-social-image";
 import { getPublishedInviteSite } from "@/lib/backend-api";
 import { getInviteTemplate } from "@/lib/invite-templates";
 import { formatDate } from "@/lib/invite-date";
@@ -15,23 +15,6 @@ export const dynamic = "force-dynamic";
 type InviteSitePageProps = {
   params: Promise<{ id: string }>;
 };
-
-function getInviteCoverImage(coverImageUrl?: string) {
-  if (!coverImageUrl) {
-    return undefined;
-  }
-
-  if (coverImageUrl.startsWith("http://") || coverImageUrl.startsWith("https://")) {
-    return coverImageUrl;
-  }
-
-  if (coverImageUrl.startsWith("/")) {
-    const origin = process.env.FRONTEND_ORIGIN?.trim() || brand.url;
-    return new URL(coverImageUrl, origin).toString();
-  }
-
-  return undefined;
-}
 
 function buildInviteDescription(invite: {
   groom: string;
@@ -61,13 +44,12 @@ export async function generateMetadata({ params }: InviteSitePageProps): Promise
 
   const title = `${site.invite.groom} & ${site.invite.bride}`;
   const description = buildInviteDescription(site.invite);
-  const coverImage = getInviteCoverImage(site.invite.coverImageUrl);
 
   return createPageMetadata({
     title,
     description,
     path: `/invite/sites/${id}`,
-    images: coverImage ? [coverImage] : undefined,
+    images: [getInviteSocialImagePath(site)],
     robots: privateRobots,
     type: "article",
   });
