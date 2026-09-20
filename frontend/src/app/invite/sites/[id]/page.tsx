@@ -16,7 +16,11 @@ type InviteSitePageProps = {
 };
 
 function getInviteCoverImage(coverImageUrl?: string) {
-  if (coverImageUrl?.startsWith("http://") || coverImageUrl?.startsWith("https://")) {
+  if (
+    coverImageUrl?.startsWith("http://") ||
+    coverImageUrl?.startsWith("https://") ||
+    coverImageUrl?.startsWith("/")
+  ) {
     return coverImageUrl;
   }
 
