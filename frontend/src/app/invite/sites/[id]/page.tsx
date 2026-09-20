@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PublishedInviteSiteView from "@/components/published-invite-site";
+import { brand } from "@/lib/brand";
 import { getPublishedInviteSite } from "@/lib/backend-api";
 import { getInviteTemplate } from "@/lib/invite-templates";
 import { formatDate } from "@/lib/invite-date";
@@ -16,8 +17,17 @@ type InviteSitePageProps = {
 };
 
 function getInviteCoverImage(coverImageUrl?: string) {
-  if (coverImageUrl?.startsWith("http://") || coverImageUrl?.startsWith("https://")) {
+  if (!coverImageUrl) {
+    return undefined;
+  }
+
+  if (coverImageUrl.startsWith("http://") || coverImageUrl.startsWith("https://")) {
     return coverImageUrl;
+  }
+
+  if (coverImageUrl.startsWith("/")) {
+    const origin = process.env.FRONTEND_ORIGIN?.trim() || brand.url;
+    return new URL(coverImageUrl, origin).toString();
   }
 
   return undefined;
