@@ -8,6 +8,7 @@ import {
   Ponomar,
 } from "next/font/google";
 import CookieConsent from "@/components/cookie-consent";
+import { TopMailRuCounter } from "@/components/top-mailru-counter";
 import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
 import headerBaseStyles from "@/styles/site-header-base.module.css";
@@ -67,6 +68,7 @@ export default function RootLayout({
         <CookieConsent />
       </body>
       <YandexMetrika />
+      <TopMailRuCounter />
     </html>
   );
 }
