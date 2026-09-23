@@ -33,6 +33,7 @@ export type TemplateKind =
   | "scribble"
   | "silk"
   | "skazka"
+  | "voyage"
   | "velvet";
 
 export type InviteTemplateDefinition = InviteTemplate & {
@@ -1020,6 +1021,56 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       rsvpText:
         "Пожалуйста, подтвердите ваше присутствие и расскажите о предпочтениях. Это поможет нам сделать праздник уютным для каждого.",
       paletteId: "petal-cornflower",
+    },
+  },
+  {
+    id: "voyage-ticket",
+    name: "Билет в счастье",
+    description:
+      "Свадебный билет в большое путешествие: глубокий синий, перфорированная бумага, воздушные маршруты и чёрно-белые фотографии.",
+    coverType: "arch",
+    kind: "voyage",
+    editorReady: true,
+    defaultPaletteId: "voyage-navy",
+    recommendedPaletteIds: ["voyage-navy", "voyage-burgundy", "voyage-graphite"],
+    tags: ["путешествия", "билет"],
+    screenshot: "/images/templates/voyage-ticket-mobile.webp",
+    preview: { background: "#17233d", surface: "#f5f3ef", ink: "#17233d", accent: "#a73747" },
+    editorPreset: {
+      groom: "Дмитрий",
+      bride: "Виктория",
+      date: "2027-06-21",
+      time: "12:00",
+      city: "Санкт-Петербург",
+      venue: "Особняк у Невы",
+      address: "Английская набережная, 28",
+      lead: "Мы отправляемся в самое важное путешествие — семейную жизнь. И очень хотим, чтобы в день его начала рядом были вы. Приглашаем вас разделить с нами радость, объятия и первый праздник нашей семьи!",
+      dressCode:
+        "Будем рады, если вы поддержите настроение нашего дня нарядами в палитре праздника: молочный, песочный, глубокий синий и графитовый.",
+      dressCodeColors: ["#f5f3ef", "#d3c5b9", "#17233d", "#303033"],
+      showSchedule: true,
+      showDressCode: true,
+      schedule: [
+        {
+          time: "12:00",
+          title: "Сбор гостей",
+          description: "Знакомимся, обнимаемся, поднимаем первые бокалы",
+        },
+        { time: "12:30", title: "Церемония", description: "Начало нашего большого путешествия" },
+        {
+          time: "13:30",
+          title: "Праздничный ужин",
+          description: "Тёплые слова, любимая музыка и танцы",
+        },
+        { time: "23:00", title: "Завершение вечера", description: "До новых счастливых встреч" },
+      ],
+      showAdditionalInfo: true,
+      additionalInfo:
+        "Главный подарок для нас — ваше присутствие. Вместо цветов будем рады открытке с пожеланием или советом для нашего первого семейного путешествия.",
+      rsvpDate: "2027-05-21",
+      rsvpText:
+        "Подтвердите, пожалуйста, ваше присутствие. Так мы сможем позаботиться о каждом госте на борту нашего праздника.",
+      paletteId: "voyage-navy",
     },
   },
 ];
