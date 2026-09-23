@@ -2,6 +2,7 @@ import { BadRequestException } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { INVITE_SITE_PRICE, applyPromoDiscount, INVITE_SITE_PRICE_RUB } from "@invite/shared";
 import type { AuthUser } from "../auth/auth.types";
+import { MailService } from "../mail/mail.service";
 import { SitesService } from "../sites/sites.service";
 import { PaymentOrderStore, type PaymentOrder } from "./payment-order.store";
 import { PaymentsService } from "./payments.service";
@@ -81,6 +82,7 @@ describe("PaymentsService", () => {
     restoreCancelledToPending: jest.Mock;
   };
   let opState: { fetchOperationState: jest.Mock };
+  let mail: { sendOrderPaidEmail: jest.Mock };
 
   /**
    * Опрос состояния запускается без await, чтобы ответ API не ждал Robokassa.
@@ -137,6 +139,7 @@ describe("PaymentsService", () => {
       restoreCancelledToPending: jest.fn(),
     };
     opState = { fetchOperationState: jest.fn().mockResolvedValue(null) };
+    mail = { sendOrderPaidEmail: jest.fn().mockResolvedValue(undefined) };
     sites = {
       createDraftForCheckout: jest.fn().mockResolvedValue({ id: "site-1" }),
       updateDraftForCheckout: jest.fn().mockResolvedValue({ id: "site-1" }),
@@ -169,6 +172,7 @@ describe("PaymentsService", () => {
         { provide: SitesService, useValue: sites },
         { provide: PromoService, useValue: promoService },
         { provide: RobokassaOpStateClient, useValue: opState },
+        { provide: MailService, useValue: mail },
       ],
     }).compile();
 
@@ -460,6 +464,37 @@ describe("PaymentsService", () => {
         expect.objectContaining({ id: "order-1", status: "paid" }),
       );
       expect(sites.publishAfterPayment).toHaveBeenCalledWith("site-1");
+      expect(mail.sendOrderPaidEmail).toHaveBeenCalledWith({
+        amount: "2000.00",
+        email: order.email,
+        orderId: "order-1",
+        siteId: "site-1",
+      });
+    });
+
+    it("does not resend the order email on a duplicate Result URL webhook", async () => {
+      const order = makeOrder({ status: "paid", paidAt: "2026-01-01T01:00:00.000Z" });
+      orders.getOrderByInvoice.mockResolvedValue(order);
+
+      const outSum = order.amount;
+      const invIdRaw = String(order.invId);
+      const signature = createRobokassaSignature([
+        outSum,
+        invIdRaw,
+        "password2",
+        `Shp_order=${order.id}`,
+      ]);
+
+      const response = await service.processResult({
+        OutSum: outSum,
+        InvId: invIdRaw,
+        SignatureValue: signature,
+        Shp_order: order.id,
+      });
+
+      expect(response).toBe("OK42");
+      expect(orders.markPaidIfPending).not.toHaveBeenCalled();
+      expect(mail.sendOrderPaidEmail).not.toHaveBeenCalled();
     });
 
     it("does not publish when the order was cancelled before markPaid", async () => {
