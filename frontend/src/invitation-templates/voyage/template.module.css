@@ -7,8 +7,8 @@
   background: var(--invite-bg);
   color: var(--invite-photo-text);
   font-family: var(--font-geist-sans), Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.65;
   overflow-wrap: anywhere;
 }
 .shell * {
@@ -30,8 +30,10 @@
   font-weight: 400;
 }
 .shell h2 {
-  font-size: clamp(28px, 7.7cqw, 44px);
-  line-height: 1.08;
+  font-size: clamp(30px, 8.5cqw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
   text-transform: uppercase;
 }
 .shell p {
@@ -40,31 +42,16 @@
 .ticket,
 .darkPanel {
   position: relative;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   text-align: center;
-  padding: 48px 26px;
+  padding: 36px 26px;
 }
 .ticket {
   background: var(--invite-surface);
   color: var(--invite-ink);
-}
-.ticket::before,
-.ticket::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  background: radial-gradient(circle at 10px 0, var(--invite-bg) 6px, transparent 6.6px) 0 0 / 20px
-    10px repeat-x;
-  pointer-events: none;
-}
-.ticket::before {
-  top: 0;
-}
-.ticket::after {
-  bottom: 0;
-  transform: rotate(180deg);
+  mask:
+    radial-gradient(circle at 10px 0, transparent 6px, #000 6.6px) top / 20px 51% repeat-x,
+    radial-gradient(circle at 10px 100%, transparent 6px, #000 6.6px) bottom / 20px 51% repeat-x;
 }
 .darkPanel {
   border: 1px solid color-mix(in srgb, var(--invite-photo-text) 55%, transparent);
@@ -72,16 +59,17 @@
 }
 .ticket > p,
 .darkPanel > p {
-  margin-top: 22px;
+  margin-top: 16px;
 }
 .ticket > .eyebrow,
 .darkPanel > .eyebrow {
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 .eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .hero {
@@ -93,18 +81,19 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  padding: 18px 0 24px;
+  padding: 12px 0 20px;
   border-bottom: 1px dashed var(--invite-ink);
   text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: 0.15em;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
 }
 .globe {
   position: relative;
   width: 60%;
   max-width: 220px;
   aspect-ratio: 1;
-  margin: 30px auto 24px;
+  margin: 24px auto 20px;
 }
 .globeArtwork,
 .stampArtwork {
@@ -133,20 +122,20 @@
 .hero h1 {
   display: flex;
   flex-direction: column;
-  font-size: clamp(32px, 9.6cqw, 56px);
+  font-size: clamp(38px, 11cqw, 62px);
   text-transform: uppercase;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
 }
 .hero h1 em {
-  font-size: 0.65em;
-  line-height: 1.25;
+  font-size: 0.5em;
+  line-height: 1.4;
 }
 .boarding {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   text-align: left;
-  margin-top: 30px !important;
+  margin-top: 24px !important;
   border-top: 1px solid var(--invite-line);
 }
 .boarding > div {
@@ -160,12 +149,13 @@
 .boarding dt {
   color: var(--invite-muted);
   font-size: 12px;
-  letter-spacing: 0.07em;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .boarding dd {
-  margin: 3px 0 0;
-  font-size: 16px;
+  margin: 6px 0 0;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -175,10 +165,11 @@
   align-items: center;
   gap: 12px;
   margin-top: 24px;
-  padding-top: 22px;
+  padding-top: 16px;
   border-top: 1px dashed var(--invite-ink);
-  font-size: 10px;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .stamp {
@@ -217,7 +208,7 @@
 .landscape {
   position: relative;
   overflow: hidden;
-  margin-top: 30px;
+  margin-top: 24px;
   border-radius: 5px;
   aspect-ratio: 4 / 5;
 }
@@ -230,7 +221,7 @@
 }
 .flightPath {
   position: relative;
-  margin: 22px -18px;
+  margin: 16px -18px;
   height: 75px;
 }
 .flightPath > svg {
@@ -241,12 +232,12 @@
   background: var(--invite-surface);
   color: var(--invite-ink);
   border-radius: 6px;
-  margin-top: 30px;
-  padding: 25px 12px;
+  margin-top: 24px;
+  padding: 24px 12px;
 }
 .calendar h3 {
   font-size: 30px;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 }
 .calendarGrid {
   display: grid;
@@ -280,7 +271,7 @@
   gap: 8px;
   margin-top: 24px;
   font-family: var(--font-geist-sans), Arial, sans-serif;
-  font-size: clamp(24px, 6.5cqw, 32px);
+  font-size: clamp(28px, 7.5cqw, 36px);
   font-variant-numeric: lining-nums tabular-nums;
   line-height: 1.4;
 }
@@ -288,7 +279,8 @@
   font-size: 16px;
 }
 .ticket .venue {
-  font-size: 19px;
+  font-size: 21px;
+  line-height: 1.35;
   font-weight: 600;
 }
 .button {
@@ -312,7 +304,7 @@
 }
 .timeline {
   list-style: none;
-  margin: 30px 0 0;
+  margin: 24px 0 0;
   padding: 0;
 }
 .timeline li {
@@ -321,29 +313,30 @@
   align-items: start;
 }
 .timeline li > div {
-  padding: 18px 18px 18px 0;
+  padding: 16px 16px 16px 0;
   border-right: 1px solid currentColor;
   text-align: right;
 }
 .timeline h3 {
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 .timeline p {
-  margin-top: 8px;
-  font-size: 15px;
+  margin-top: 6px;
+  font-size: 16px;
   line-height: 1.55;
 }
 .timeline time {
   font-family: var(--font-invite-serif), Georgia, serif;
   font-size: clamp(27px, 7.5cqw, 42px);
-  padding: 18px 0 0 12px;
+  padding: 16px 0 0 12px;
   font-variant-numeric: lining-nums tabular-nums;
   line-height: 1.2;
 }
 .shell .sharedBlock {
+  gap: 16px;
   padding: 0;
   background: transparent;
   border: 0;
@@ -351,11 +344,17 @@
 }
 .shell .sharedBlock h2 {
   color: var(--invite-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(30px, 8.5cqw, 46px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
   text-wrap: balance;
 }
 .shell .sharedBlock p {
   color: var(--invite-muted);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
   line-height: 1.65;
 }
@@ -371,7 +370,7 @@
   line-height: 1.6;
 }
 .shell .rsvpForm {
-  margin-top: 26px;
+  margin-top: 24px;
 }
 .shell .rsvpForm h3 {
   font-family: var(--font-geist-sans), Arial, sans-serif;
@@ -381,7 +380,7 @@
 }
 .shell .rsvpForm p,
 .shell .rsvpForm > label {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.55;
 }
 .shell .rsvpForm strong {
@@ -404,35 +403,11 @@
   outline-offset: 3px;
 }
 .closingNames {
-  font-size: clamp(26px, 7cqw, 40px);
+  font-size: clamp(30px, 8cqw, 44px);
   line-height: 1.2;
 }
 .shell footer {
   margin-bottom: 0;
-}
-.shell .musicControl {
-  margin-top: 24px;
-}
-.shell .musicControl :global(.invite-music) {
-  position: static;
-  width: 100%;
-  max-width: none;
-  min-height: 48px;
-  background: var(--invite-ink);
-  color: var(--invite-surface);
-  box-shadow: none;
-}
-.shell .musicControl :global(.invite-music__copy) small {
-  color: var(--invite-surface);
-  font-size: 11px;
-}
-.shell .musicControl :global(.invite-music__copy) strong {
-  font-size: 14px;
-  white-space: normal;
-}
-.shell .musicControl button:focus-visible {
-  outline: 2px solid var(--invite-ink);
-  outline-offset: 3px;
 }
 @container (max-width: 340px) {
   .ticket,

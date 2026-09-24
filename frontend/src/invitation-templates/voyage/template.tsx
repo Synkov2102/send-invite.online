@@ -118,6 +118,11 @@ export default function VoyageTemplate({
 
   return (
     <>
+      <InvitationMusicPlayer
+        enabled={invite.musicEnabled}
+        title={invite.musicTitle}
+        url={invite.musicUrl}
+      />
       <article className={styles.shell} style={inviteVars}>
         <header className={`${styles.ticket} ${styles.hero}`}>
           <div className={styles.ticketLabel}>
@@ -167,16 +172,6 @@ export default function VoyageTemplate({
               </time>
             </span>
           </div>
-          {invite.musicEnabled && invite.musicUrl && (
-            <div className={styles.musicControl}>
-              <InvitationMusicPlayer
-                autoStart={false}
-                enabled={invite.musicEnabled}
-                title={invite.musicTitle}
-                url={invite.musicUrl}
-              />
-            </div>
-          )}
         </header>
 
         <RevealSection className={styles.darkPanel}>
