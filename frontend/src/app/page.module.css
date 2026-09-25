@@ -136,10 +136,11 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 79, 114, 0.55);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.07);
-  padding: 12px 20px;
+  background: linear-gradient(135deg, rgba(255, 79, 114, 0.22), rgba(255, 255, 255, 0.07));
+  box-shadow: 0 10px 30px rgba(255, 79, 114, 0.18);
+  padding: 14px 22px;
   text-align: left;
 }
 .heroPrice span {
@@ -151,38 +152,41 @@
 }
 .heroPrice strong {
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.85rem;
+  line-height: 1;
   letter-spacing: -0.045em;
   white-space: nowrap;
 }
 .heroPriceValue {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
 }
 .heroPriceOld {
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1.05rem;
+  line-height: 1;
   text-decoration: line-through;
   white-space: nowrap;
 }
 .heroPriceBadge {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
+  padding: 4px 11px;
+  line-height: 1.2;
   border-radius: 999px;
   background: #ff4f72;
+  box-shadow: 0 4px 14px rgba(255, 79, 114, 0.5);
   color: #fff;
-  font-size: 0.64rem;
+  font-size: 0.95rem;
   font-weight: 800;
   white-space: nowrap;
 }
 .heroPrice small {
   display: block;
-  margin-top: 2px;
-  color: #ff9eb2;
-  font-size: 0.58rem;
-  font-weight: 720;
+  color: #ffb3c3;
+  font-size: 0.68rem;
+  font-weight: 760;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -676,6 +680,10 @@
     width: 100%;
     flex-direction: column;
     margin-top: 28px;
+  }
+
+  .heroPriceValue {
+    flex-wrap: wrap;
   }
 
   .heroPrice {

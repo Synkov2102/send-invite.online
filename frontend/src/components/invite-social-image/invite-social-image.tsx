@@ -27,6 +27,7 @@ export const socialImageStyles: Record<TemplateKind, { font: Font; size: number 
   manor: { font: "serif", size: 104 },
   skazka: { font: "slavic", size: 86 },
   petal: { font: "serif", size: 104 },
+  voyage: { font: "serif", size: 102 },
 };
 
 function renderDecoration({
@@ -363,6 +364,30 @@ function renderDecoration({
               ))}
               <circle r="34" fill={p.ink} />
               <circle r="22" fill={p.surface} />
+            </g>
+          ))}
+        </g>
+      );
+    case "voyage":
+      return (
+        <g>
+          {paper}
+          <path d="M90 85H1110V545H90Z" fill="none" stroke={p.ink} strokeWidth="2" />
+          <path
+            d="M70 475Q145 360 155 215T370 110M830 520Q1080 560 1040 405T1140 165"
+            fill="none"
+            stroke={p.accent}
+            strokeWidth="2"
+            strokeDasharray="6 8"
+          />
+          <path
+            d="M580 120L620 120L650 142L620 137L614 153L603 153L603 135L580 130Z"
+            fill={p.accent}
+          />
+          {Array.from({ length: 24 }, (_, i) => (
+            <g key={i}>
+              <circle cx={76 + i * 46} cy="44" r="5" fill={p.background} />
+              <circle cx={76 + i * 46} cy="586" r="5" fill={p.background} />
             </g>
           ))}
         </g>

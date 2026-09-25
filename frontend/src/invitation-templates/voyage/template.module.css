@@ -1,0 +1,462 @@
+.shell {
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto !important;
+  padding: 24px 14px;
+  container-type: inline-size;
+  background: var(--invite-bg);
+  color: var(--invite-photo-text);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.shell * {
+  box-sizing: border-box;
+}
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell dl {
+  margin: 0;
+}
+.shell h1,
+.shell h2,
+.shell h3,
+.date,
+.closingNames {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-weight: 400;
+}
+.shell h2 {
+  font-size: clamp(30px, 8.5cqw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-transform: uppercase;
+}
+.shell p {
+  white-space: pre-line;
+}
+.ticket,
+.darkPanel {
+  position: relative;
+  margin-bottom: 24px;
+  text-align: center;
+  padding: 36px 26px;
+}
+.ticket {
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  mask:
+    radial-gradient(circle at 10px 0, transparent 6px, #000 6.6px) top / 20px 51% repeat-x,
+    radial-gradient(circle at 10px 100%, transparent 6px, #000 6.6px) bottom / 20px 51% repeat-x;
+}
+.darkPanel {
+  border: 1px solid color-mix(in srgb, var(--invite-photo-text) 55%, transparent);
+  border-radius: 10px;
+}
+.ticket > p,
+.darkPanel > p {
+  margin-top: 16px;
+}
+.ticket > .eyebrow,
+.darkPanel > .eyebrow {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.eyebrow {
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero {
+  padding-top: 20px;
+  padding-bottom: 24px;
+}
+.ticketLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 12px 0 20px;
+  border-bottom: 1px dashed var(--invite-ink);
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+}
+.globe {
+  position: relative;
+  width: 60%;
+  max-width: 220px;
+  aspect-ratio: 1;
+  margin: 24px auto 20px;
+}
+.globeArtwork,
+.stampArtwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--invite-ink);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-mode: alpha;
+  pointer-events: none;
+}
+.globeArtwork {
+  mask-image: url("/images/voyage-ticket/globe.webp");
+}
+.globe .orbitPlane {
+  position: absolute;
+  width: 27px;
+  height: 27px;
+  left: -8%;
+  top: 10%;
+  transform: rotate(15deg);
+  animation: orbitDrift 5s ease-in-out infinite;
+}
+.hero h1 {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(38px, 11cqw, 62px);
+  text-transform: uppercase;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+.hero h1 em {
+  font-size: 0.5em;
+  line-height: 1.4;
+}
+.boarding {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  text-align: left;
+  margin-top: 24px !important;
+  border-top: 1px solid var(--invite-line);
+}
+.boarding > div {
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--invite-line);
+  min-width: 0;
+}
+.boarding > div:nth-child(odd) {
+  border-right: 1px solid var(--invite-line);
+}
+.boarding dt {
+  color: var(--invite-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.boarding dd {
+  margin: 6px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.stub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--invite-ink);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.stamp {
+  position: relative;
+  display: block;
+  width: clamp(100px, 29cqw, 140px);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  transform: rotate(-15deg);
+  color: var(--invite-ink);
+  letter-spacing: 0.015em;
+}
+.stampArtwork {
+  position: absolute;
+  inset: 0;
+  mask-image: url("/images/voyage-ticket/stamp.webp");
+}
+.stampTitle,
+.stampDate {
+  position: absolute;
+  left: 14%;
+  width: 72%;
+  text-align: center;
+}
+.stampTitle {
+  top: 42%;
+  font-size: clamp(8px, 2.2cqw, 11px);
+  line-height: 1.05;
+}
+.stampDate {
+  top: 64%;
+  font-size: clamp(6px, 1.7cqw, 9px);
+  line-height: 1.2;
+}
+.photo,
+.landscape {
+  position: relative;
+  overflow: hidden;
+  margin-top: 24px;
+  border-radius: 5px;
+  aspect-ratio: 4 / 5;
+}
+.landscape {
+  aspect-ratio: 3 / 2;
+}
+.photo img,
+.landscape img {
+  object-fit: cover;
+}
+.flightPath {
+  position: relative;
+  margin: 16px -18px;
+  height: 75px;
+}
+.flightPath > svg {
+  width: 100%;
+  height: 100%;
+}
+.calendar {
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  border-radius: 6px;
+  margin-top: 24px;
+  padding: 24px 12px;
+}
+.calendar h3 {
+  font-size: 30px;
+  margin-bottom: 16px;
+}
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 9px 0;
+}
+.calendarGrid > span {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 32px;
+  font-size: 15px;
+}
+.calendarGrid .weekday {
+  color: var(--invite-muted);
+  font-size: 12px;
+}
+.selectedDay svg {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  fill: var(--invite-accent);
+  stroke: var(--invite-accent);
+}
+.selectedDay > span {
+  z-index: 1;
+  color: var(--invite-photo-text);
+}
+.date {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(28px, 7.5cqw, 36px);
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1.4;
+}
+.date span:last-child {
+  font-size: 16px;
+}
+.ticket .venue {
+  font-size: 21px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 46px;
+  margin-top: 24px;
+  padding: 12px;
+  background: var(--invite-ink);
+  color: var(--invite-surface);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.button:focus-visible {
+  outline: 2px solid var(--invite-accent);
+  outline-offset: 4px;
+}
+.timeline {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(85px, 0.65fr);
+  align-items: start;
+}
+.timeline li > div {
+  padding: 16px 16px 16px 0;
+  border-right: 1px solid currentColor;
+  text-align: right;
+}
+.timeline h3 {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.timeline p {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.timeline time {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(27px, 7.5cqw, 42px);
+  padding: 16px 0 0 12px;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1.2;
+}
+.shell .sharedBlock {
+  gap: 16px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: var(--invite-ink);
+}
+.shell .sharedBlock h2 {
+  color: var(--invite-ink);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(30px, 8.5cqw, 46px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.shell .sharedBlock p {
+  color: var(--invite-muted);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.shell .sharedBlock a:focus-visible {
+  outline: 2px solid var(--invite-ink);
+  outline-offset: 4px;
+}
+.shell .rsvpDeadline {
+  padding: 14px 12px;
+  border-block: 1px solid var(--invite-line);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.shell .rsvpForm {
+  margin-top: 24px;
+}
+.shell .rsvpForm h3 {
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.shell .rsvpForm p,
+.shell .rsvpForm > label {
+  font-size: 15px;
+  line-height: 1.55;
+}
+.shell .rsvpForm strong {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.shell .rsvpForm input:not([type="checkbox"]):not([type="radio"]) {
+  font-size: 16px;
+}
+.shell .rsvpForm input::placeholder {
+  color: var(--invite-muted);
+  opacity: 1;
+}
+.shell .rsvpForm button[type="submit"] {
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+.shell .rsvpForm :focus-visible {
+  outline: 2px solid var(--invite-ink);
+  outline-offset: 3px;
+}
+.closingNames {
+  font-size: clamp(30px, 8cqw, 44px);
+  line-height: 1.2;
+}
+.shell footer {
+  margin-bottom: 0;
+}
+@container (max-width: 340px) {
+  .ticket,
+  .darkPanel {
+    padding-inline: 18px;
+  }
+  .eyebrow {
+    letter-spacing: 0.1em;
+  }
+  .timeline li {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 22px 0;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+    text-align: left;
+  }
+  .timeline li:first-child {
+    padding-top: 0;
+  }
+  .timeline li:last-child {
+    border-bottom: 0;
+  }
+  .timeline li > div {
+    padding: 0;
+    border: 0;
+    text-align: left;
+  }
+  .timeline time {
+    grid-row: 1;
+    font-size: 28px;
+    padding: 0;
+  }
+  .shell .rsvpForm > section {
+    padding: 14px 10px;
+  }
+}
+
+@keyframes orbitDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(15deg);
+  }
+  50% {
+    transform: translate(7px, -7px) rotate(23deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe .orbitPlane {
+    animation: none;
+  }
+}

@@ -1631,14 +1631,16 @@
 .scope:global(.template-card__price),
 .scope :global(.template-card__price) {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 7px;
+  gap: 4px 8px;
   margin-top: 10px;
 }
 .scope:global(.template-card__price) strong,
 .scope :global(.template-card__price) strong {
   color: var(--product-ink);
-  font-size: 1rem;
+  font-size: 1.3rem;
+  line-height: 1;
   letter-spacing: -0.04em;
 }
 .scope:global(.template-card__price) span,
@@ -1649,19 +1651,22 @@
 .scope:global(.template-card__price-old),
 .scope :global(.template-card__price-old) {
   color: var(--product-muted);
-  font-size: 0.78rem;
+  font-size: 0.9rem;
+  line-height: 1;
   text-decoration: line-through;
 }
 .scope:global(.template-card__price-badge),
 .scope :global(.template-card__price-badge) {
   display: inline-flex;
   align-items: center;
-  padding: 2px 7px;
+  padding: 4px 10px;
   border-radius: 999px;
   background: var(--product-accent);
+  box-shadow: 0 4px 12px rgba(255, 79, 114, 0.4);
   color: #fff;
-  font-size: 0.66rem;
+  font-size: 0.82rem;
   font-weight: 800;
+  line-height: 1.2;
   letter-spacing: 0.01em;
 }
 .scope:global(.template-card__arrow),
