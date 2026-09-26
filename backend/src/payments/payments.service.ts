@@ -15,6 +15,7 @@ import {
   type PromoPricing,
 } from "@invite/shared";
 import type { AuthUser } from "../auth/auth.types";
+import { MailService } from "../mail/mail.service";
 import { SitesService } from "../sites/sites.service";
 import {
   PAYMENT_PENDING_TTL_MS,
@@ -90,6 +91,7 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     private readonly sites: SitesService,
     private readonly promoService: PromoService,
     private readonly opState: RobokassaOpStateClient,
+    private readonly mail: MailService,
   ) {}
 
   onModuleInit() {
@@ -683,10 +685,13 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
     paymentMethod: string | null,
     options: { requirePromoConfirmation?: boolean } = {},
   ) {
-    let paidOrder =
-      order.status === "paid"
-        ? order
-        : await this.orders.markPaidIfPending(order.invId, paymentMethod);
+    const wasPending = order.status !== "paid";
+    let paidOrder = wasPending
+      ? await this.orders.markPaidIfPending(order.invId, paymentMethod)
+      : order;
+    // Только эта транзакция перевела заказ pending -> paid: письмо шлём один раз,
+    // а не на каждый повторный вызов Result URL для уже оплаченного заказа.
+    const justPaid = wasPending && paidOrder !== null;
 
     if (!paidOrder) {
       // Re-read: another worker may have paid, or order was cancelled mid-flight.
@@ -708,6 +713,16 @@ export class PaymentsService implements OnModuleInit, OnModuleDestroy {
 
     await this.sites.publishAfterPayment(paidOrder.siteId);
     this.logger.log(`Payment completed for order ${paidOrder.id}, site ${paidOrder.siteId}`);
+
+    if (justPaid && paidOrder.email) {
+      // Best-effort: доставка письма не должна ронять подтверждение оплаты Robokassa.
+      void this.mail.sendOrderPaidEmail({
+        amount: paidOrder.amount,
+        email: paidOrder.email,
+        orderId: paidOrder.id,
+        siteId: paidOrder.siteId,
+      });
+    }
 
     return paidOrder;
   }
