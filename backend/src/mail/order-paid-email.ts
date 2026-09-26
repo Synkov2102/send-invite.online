@@ -31,9 +31,6 @@ export function createOrderPaidEmail(input: OrderPaidEmailInput, origin: string)
   .outer { padding:16px 8px !important; }
   .inset { padding-left:24px !important; padding-right:24px !important; }
   .headline { font-size:36px !important; letter-spacing:-1.6px !important; }
-  .stack { display:block !important; width:100% !important; }
-  .mascot-cell { padding-top:12px !important; }
-  .mascot { margin:0 auto !important; }
 }
 </style>
 </head>
@@ -53,15 +50,18 @@ export function createOrderPaidEmail(input: OrderPaidEmailInput, origin: string)
 <table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr><td bgcolor="#fff0f4" style="padding:9px 13px;border-radius:30px;color:#b72e50;font-size:16px;font-weight:bold;line-height:1.4;">&#10003;&nbsp; Покупка подтверждена</td></tr></table>
 </td></tr>
 <tr><td class="inset" style="padding:8px 40px 28px;">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-<td class="stack" valign="middle" style="padding:0;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td align="center" style="padding:0;font-size:0;line-height:0;text-align:center;">
+<!--[if mso]><table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td width="310" valign="middle"><![endif]-->
+<div style="display:inline-block;vertical-align:middle;width:100%;max-width:310px;text-align:left;font-size:16px;line-height:normal;">
 <h1 class="headline" style="margin:16px 0 14px;font-size:44px;line-height:1.06;font-weight:700;letter-spacing:-2px;">Ваш праздник<br>начинается<span style="color:#ff4f72;">.</span></h1>
-<p style="margin:0;color:#736a71;font-size:18px;line-height:1.6;">Приглашение опубликовано.<br>Осталось самое приятное — позвать близких.</p>
-</td>
-<td class="stack mascot-cell" width="190" valign="middle" align="right" style="padding:0;">
-<img class="mascot" src="${escapeHtml(origin)}/images/brand/order-email-mascot.webp" width="190" height="262" alt="Инви с письмом в руках" style="display:block;width:190px;height:auto;max-width:100%;border:0;">
-</td>
-</tr></table>
+<p style="margin:0 0 12px;color:#736a71;font-size:18px;line-height:1.6;">Приглашение опубликовано.<br>Осталось самое приятное — позвать близких.</p>
+</div>
+<!--[if mso]></td><td width="190" valign="middle"><![endif]-->
+<div style="display:inline-block;vertical-align:middle;width:100%;max-width:190px;text-align:center;font-size:16px;line-height:normal;">
+<img class="mascot" src="${escapeHtml(origin)}/images/brand/order-email-mascot.jpg" width="190" height="262" alt="Инви с письмом в руках" style="display:block;width:190px;height:auto;max-width:100%;margin:0 auto;border:0;">
+</div>
+<!--[if mso]></td></tr></table><![endif]-->
+</td></tr></table>
 </td></tr>
 <tr><td class="inset" style="padding:0 40px 32px;">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td align="center" bgcolor="#ff4f72" style="border-radius:16px;">
