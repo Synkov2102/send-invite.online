@@ -1,5 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { createTransport, type Transporter } from "nodemailer";
+import { createOrderPaidEmail } from "./order-paid-email";
 
 export type OrderPaidEmailInput = {
   amount: string;
@@ -68,17 +69,11 @@ export class MailService {
     }
 
     const origin = (process.env.FRONTEND_ORIGIN ?? "http://localhost:3000").replace(/\/$/, "");
-    const siteUrl = `${origin}/invite/sites/${input.siteId}`;
 
     try {
       await transporter.sendMail({
         from: this.config.from,
-        subject: "Оплата приглашения прошла успешно",
-        text: [
-          `Спасибо за оплату! Сумма: ${input.amount} ₽.`,
-          `Номер заказа: ${input.orderId}.`,
-          `Ваше приглашение опубликовано: ${siteUrl}`,
-        ].join("\n"),
+        ...createOrderPaidEmail(input, origin),
         to: input.email,
       });
     } catch (error) {

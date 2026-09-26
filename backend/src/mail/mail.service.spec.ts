@@ -79,6 +79,13 @@ describe("MailService", () => {
     const body = sendMail.mock.calls[0][0].text as string;
     expect(body).toContain("order-1");
     expect(body).toContain("https://send-invite.online/invite/sites/site-1");
+    expect(body).toContain("https://send-invite.online/dashboard");
+    expect(body).toContain("Ответы гостей");
+    const html = sendMail.mock.calls[0][0].html as string;
+    expect(html).toContain("Покупка подтверждена!");
+    expect(html).toContain('href="https://send-invite.online/invite/sites/site-1"');
+    expect(html).toContain('href="https://send-invite.online/dashboard"');
+    expect(html).toContain('src="https://send-invite.online/images/brand/invi-dance.gif"');
   });
 
   it("swallows transport errors instead of throwing", async () => {
