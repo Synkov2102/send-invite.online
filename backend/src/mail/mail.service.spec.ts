@@ -85,7 +85,7 @@ describe("MailService", () => {
     expect(html).toContain("Покупка подтверждена!");
     expect(html).toContain('href="https://send-invite.online/invite/sites/site-1"');
     expect(html).toContain('href="https://send-invite.online/dashboard"');
-    expect(html).toContain('src="https://send-invite.online/images/brand/invi-dance.gif"');
+    expect(html).toContain('src="https://send-invite.online/images/brand/order-email-mascot.webp"');
   });
 
   it("swallows transport errors instead of throwing", async () => {

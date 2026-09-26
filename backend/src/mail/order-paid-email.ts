@@ -58,8 +58,8 @@ export function createOrderPaidEmail(input: OrderPaidEmailInput, origin: string)
 <h1 class="headline" style="margin:16px 0 14px;font-size:44px;line-height:1.06;font-weight:700;letter-spacing:-2px;">Ваш праздник<br>начинается<span style="color:#ff4f72;">.</span></h1>
 <p style="margin:0;color:#736a71;font-size:18px;line-height:1.6;">Приглашение опубликовано.<br>Осталось самое приятное — позвать близких.</p>
 </td>
-<td class="stack mascot-cell" width="200" valign="middle" align="right" style="padding:0;">
-<img class="mascot" src="${escapeHtml(origin)}/images/brand/invi-dance.gif" width="200" height="200" alt="Инви танцует и радуется вашей покупке" style="display:block;width:200px;height:200px;max-width:100%;border:0;">
+<td class="stack mascot-cell" width="190" valign="middle" align="right" style="padding:0;">
+<img class="mascot" src="${escapeHtml(origin)}/images/brand/order-email-mascot.webp" width="190" height="262" alt="Инви с письмом в руках" style="display:block;width:190px;height:auto;max-width:100%;border:0;">
 </td>
 </tr></table>
 </td></tr>
