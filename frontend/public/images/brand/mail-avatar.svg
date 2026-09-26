@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny-ps" viewBox="0 0 1254 1254" width="1254" height="1254">
+<title>send-invite.online</title>
+<rect width="1254" height="1254" fill="#fdeff3"/>
+<g stroke="#000000" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+<path d="M236 622 C232 604 242 594 254 586 L352 514" fill="none"/>
+<path d="M902 512 L1000 584 C1016 596 1022 608 1018 622" fill="none"/>
+<path d="M627 295 C500 295 348 420 346 592 C344 745 470 840 627 868 C784 840 900 745 898 592 C896 430 770 295 627 295 Z" fill="#ff416a"/>
+<path d="M560 300 C520 290 505 262 530 238 C555 225 585 232 610 250 C590 215 600 185 635 180 C672 178 700 220 700 265 C702 285 695 300 690 305 C650 296 600 300 560 300 Z" fill="#ff416a"/>
+</g>
+<path d="M578 395 C515 395 450 470 450 575 C450 680 515 745 578 745 C640 745 706 690 706 575 C706 470 640 395 578 395 Z" fill="#ffffff"/>
+<path d="M800 412 C760 412 715 470 715 545 C715 610 745 650 790 650 C850 650 890 600 885 530 C880 470 850 412 800 412 Z" fill="#ffffff"/>
+<path d="M470 700 C520 770 600 860 640 858 C720 850 820 780 870 700 C880 660 700 640 560 650 C500 655 470 670 470 700 Z" fill="#ffffff"/>
+<g fill="#000000">
+<ellipse cx="605" cy="588" rx="36" ry="47"/>
+<ellipse cx="812" cy="585" rx="31" ry="43"/>
+</g>
+<g fill="#ffffff"><circle cx="615" cy="572" r="10"/><circle cx="815" cy="570" r="9"/></g>
+<g fill="#ffd3dc"><ellipse cx="553" cy="651" rx="30" ry="22"/><ellipse cx="845" cy="646" rx="21" ry="18"/></g>
+<path d="M690 590 C720 570 765 585 768 625 C768 655 745 675 715 676 C685 674 668 650 668 628 C668 610 676 598 690 590 Z" fill="#ffa07a" stroke="#000000" stroke-width="14" stroke-linejoin="round"/>
+<path d="M678 628 C700 640 735 640 764 628" fill="none" stroke="#000000" stroke-width="12" stroke-linecap="round"/>
+<g stroke="#000000" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+<path d="M240 622 L585 848 C610 866 645 866 668 848 L1012 618 L1024 1002 C1026 1036 1000 1046 975 1046 L272 1046 C240 1046 226 1020 228 990 Z" fill="#ffffff"/>
+<path d="M508 812 L246 1022" fill="none"/>
+<path d="M750 812 L1010 1010" fill="none"/>
+</g>
+</svg>
