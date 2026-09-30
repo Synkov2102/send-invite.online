@@ -74,7 +74,7 @@ function HeroSection({
   invite,
 }: Readonly<{ coverImage: string; invite: InviteState }>) {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <div className={styles.heroPaper}>
         <h1 className={styles.heroStatement} aria-label="Она сказала да!">
           <span className={styles.heroPrelude}>Она сказала</span>
@@ -117,7 +117,7 @@ function HeroSection({
 
 function GreetingSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
-    <section className={styles.greeting}>
+    <section className={styles.greeting} data-invite-section="greeting">
       <span className={styles.sectionIndex}>01</span>
       <div>
         <p className={styles.kicker}>Дорогие гости</p>
@@ -136,7 +136,7 @@ function DateSection({
   invite: InviteState;
 }>) {
   return (
-    <section className={styles.dateSection}>
+    <section className={styles.dateSection} data-invite-section="date">
       <header className={styles.sectionHeader}>
         <span className={styles.sectionIndex}>02</span>
         <div>
@@ -175,7 +175,7 @@ function VenueSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.venueSection}>
+    <section className={styles.venueSection} data-invite-section="location">
       <figure className={styles.venuePhoto}>
         <Image
           alt={`Место проведения — ${invite.venue}`}
@@ -214,7 +214,7 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={styles.program}>
+    <section className={styles.program} data-invite-section="schedule">
       <header className={styles.sectionHeader}>
         <span className={styles.sectionIndex}>04</span>
         <div>
@@ -243,7 +243,7 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={styles.dressSection}>
+    <section className={styles.dressSection} data-invite-section="dress-code">
       <span className={styles.sectionIndex}>05</span>
       <InvitationDressCodeBlock
         className={styles.dressBlock}
@@ -264,7 +264,7 @@ function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={styles.detailsSection}>
+    <section className={styles.detailsSection} data-invite-section="chat info">
       <header>
         <p className={styles.kicker}>На заметку</p>
         <h2>Детали</h2>
@@ -296,7 +296,7 @@ function RsvpSection({ invite, siteId }: Readonly<{ invite: InviteState; siteId?
   }
 
   return (
-    <section className={styles.rsvpSection} id="rsvp">
+    <section className={styles.rsvpSection} data-invite-section="rsvp" id="rsvp">
       <header className={styles.sectionHeader}>
         <span className={styles.sectionIndex}>06</span>
         <div>
@@ -322,7 +322,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<{ invite: InviteState; portraitImage: string }>) {
   return (
-    <section className={styles.closing}>
+    <section className={styles.closing} data-invite-section="portrait">
       <Image
         alt={`${invite.bride} и ${invite.groom}`}
         className={styles.photo}

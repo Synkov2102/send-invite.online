@@ -17,6 +17,7 @@ export function ContentStep({ isActive }: StepPanelProps) {
   return (
     <section className={`${panelStyles.panel} ${isActive ? panelStyles.active : ""}`}>
       <FieldGroup
+        previewSection="hero"
         title="Пара"
         description="Эти данные попадут в первый экран приглашения."
         hint="На телефоне лучше смотрятся короткие имена и текст в 1-2 предложения."
@@ -33,19 +34,22 @@ export function ContentStep({ isActive }: StepPanelProps) {
             onChange={(value) => updateInvite("bride", value)}
           />
         </div>
-        <TextAreaField
-          label="Текст приглашения"
-          value={invite.lead}
-          onChange={(value) => updateInvite("lead", value)}
-        />
+        <div data-preview-section="greeting hero">
+          <TextAreaField
+            label="Текст приглашения"
+            value={invite.lead}
+            onChange={(value) => updateInvite("lead", value)}
+          />
+        </div>
       </FieldGroup>
 
       <FieldGroup
+        previewSection="location date hero"
         title="Событие"
         description="Дата, время и адрес помогут гостям сразу сохранить планы."
         hint="Если место уже есть на Яндекс Картах, добавьте ссылку: кнопка маршрута появится в приглашении."
       >
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2" data-preview-section="date hero">
           <TextInput
             label="Дата"
             type="date"

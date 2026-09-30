@@ -192,26 +192,44 @@
   padding-block: 0 !important;
 }
 
+/*
+ * Мобильный сплит: верхняя половина экрана (media query, а не класс — чтобы SSR-кадр
+ * уже был разложен правильно). Скроллится .inner, а transform на .root
+ * делает его containing block для position: fixed внутри шаблонов (фон aqua и т.п.),
+ * чтобы они оставались в пределах превью и не наезжали на форму.
+ */
 @media (max-width: 899px) {
   .root {
-    height: auto;
-    overflow: visible;
-  }
-
-  .inner {
-    width: 100%;
+    position: relative;
+    order: -1;
+    flex: 0 0 50dvh;
+    height: 50dvh;
     overflow: hidden;
-  }
-}
-
-@media (max-width: 640px) {
-  .toolbar {
-    top: 8px;
-    width: calc(100% - 12px);
+    transform: translateZ(0);
   }
 
-  .canvas,
-  .canvasMobile {
-    width: 100%;
+  .root .inner {
+    height: 100%;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* Кнопка «Просмотр» на мобильном живёт в нижней панели шагов. */
+  .root .toolbar {
+    display: none;
+  }
+
+  .root .canvas {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .root .canvas::before {
+    display: none;
   }
 }

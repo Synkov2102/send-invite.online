@@ -8,7 +8,11 @@ import { useEditor } from "../../editor-context";
 import inviteOverrides from "../editor-invite-overrides/editor-invite-overrides.module.css";
 import styles from "./editor-preview-panel.module.css";
 
-export function EditorPreviewPanel() {
+type EditorPreviewPanelProps = Readonly<{
+  isCompact?: boolean;
+}>;
+
+export function EditorPreviewPanel({ isCompact = false }: EditorPreviewPanelProps) {
   const {
     effectiveInvite,
     invite,
@@ -21,7 +25,8 @@ export function EditorPreviewPanel() {
     template,
     templateKind,
   } = useEditor();
-  const showPhoneChrome = previewDevice === "mobile";
+  // На телефоне превью уже рендерится в реальной мобильной ширине — рамка не нужна.
+  const showPhoneChrome = previewDevice === "mobile" && !isCompact;
 
   const invitation = (
     <InviteSiteRenderer
@@ -37,7 +42,7 @@ export function EditorPreviewPanel() {
   return (
     <section className={`${styles.root} ${inviteOverrides.scope}`} id="invite-preview">
       <div className={styles.inner}>
-        <div className={styles.toolbar}>
+        <div className={styles.toolbar} data-preview-toolbar>
           <div>
             <p>
               <Eye aria-hidden size={14} /> Живой предпросмотр
@@ -68,6 +73,7 @@ export function EditorPreviewPanel() {
               </Button>
             </div>
             <Button
+              aria-label="На весь экран"
               className={styles.action}
               onClick={() => setIsFullscreenPreview(true)}
               type="button"

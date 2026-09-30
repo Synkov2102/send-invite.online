@@ -115,3 +115,11 @@
     font-size: 0.72rem;
   }
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .heading p,
+  .hint {
+    font-size: 0.75rem;
+  }
+}

@@ -68,16 +68,19 @@ function RevealSection({
   children,
   className,
   id,
+  section,
 }: {
   children: ReactNode;
   className: string;
   id?: string;
+  section: string;
 }) {
   const reducedMotion = useReducedMotion();
 
   return (
     <motion.section
       className={className}
+      data-invite-section={section}
       id={id}
       initial={false}
       whileInView={{ y: 0 }}
@@ -124,7 +127,7 @@ export default function VoyageTemplate({
         url={invite.musicUrl}
       />
       <article className={styles.shell} style={inviteVars}>
-        <header className={`${styles.ticket} ${styles.hero}`}>
+        <header className={`${styles.ticket} ${styles.hero}`} data-invite-section="hero">
           <div className={styles.ticketLabel}>
             Свадебный билет <Plane size={15} aria-hidden="true" />
           </div>
@@ -174,7 +177,7 @@ export default function VoyageTemplate({
           </div>
         </header>
 
-        <RevealSection className={styles.darkPanel}>
+        <RevealSection className={styles.darkPanel} section="greeting date cover">
           <p className={styles.eyebrow}>Самое важное путешествие</p>
           <h2>
             Дорогие наши
@@ -214,7 +217,7 @@ export default function VoyageTemplate({
           </time>
         </RevealSection>
 
-        <RevealSection className={styles.ticket}>
+        <RevealSection className={styles.ticket} section="location">
           <p className={styles.eyebrow}>Место назначения</p>
           <h2>
             Место
@@ -236,7 +239,7 @@ export default function VoyageTemplate({
         </RevealSection>
 
         {invite.showSchedule && (
-          <RevealSection className={styles.darkPanel}>
+          <RevealSection className={styles.darkPanel} section="schedule">
             <p className={styles.eyebrow}>Маршрут нашего дня</p>
             <h2>Тайминг</h2>
             <ol className={styles.timeline}>
@@ -255,7 +258,7 @@ export default function VoyageTemplate({
         )}
 
         {invite.showDressCode && (
-          <RevealSection className={styles.ticket}>
+          <RevealSection className={styles.ticket} section="dress-code">
             <InvitationDressCodeBlock
               className={styles.sharedBlock}
               colors={invite.dressCodeColors}
@@ -266,7 +269,7 @@ export default function VoyageTemplate({
           </RevealSection>
         )}
         {invite.showGroupChat && getSafeHttpUrl(invite.groupChatUrl) && (
-          <RevealSection className={styles.ticket}>
+          <RevealSection className={styles.ticket} section="chat">
             <InvitationGroupChatBlock
               className={styles.sharedBlock}
               show={invite.showGroupChat}
@@ -277,7 +280,7 @@ export default function VoyageTemplate({
           </RevealSection>
         )}
         {invite.showAdditionalInfo && invite.additionalInfo.trim() && (
-          <RevealSection className={styles.ticket}>
+          <RevealSection className={styles.ticket} section="info">
             <InvitationAdditionalInfoBlock
               className={styles.sharedBlock}
               show={invite.showAdditionalInfo}
@@ -287,7 +290,7 @@ export default function VoyageTemplate({
           </RevealSection>
         )}
         {invite.showRsvp && (
-          <RevealSection className={styles.ticket} id="rsvp">
+          <RevealSection className={styles.ticket} id="rsvp" section="rsvp">
             <p className={styles.eyebrow}>Подтвердите посадку</p>
             <h2>Анкета гостя</h2>
             <p>{invite.rsvpText}</p>
@@ -304,7 +307,7 @@ export default function VoyageTemplate({
             />
           </RevealSection>
         )}
-        <footer className={styles.darkPanel}>
+        <footer className={styles.darkPanel} data-invite-section="portrait">
           <h2>
             Счастье —<br />
             быть вместе

@@ -32,18 +32,21 @@ export function MediaStep({ isActive }: StepPanelProps) {
       description: "Первое фото пары в начале приглашения",
       field: "coverImageUrl" as const,
       label: "Фото пары 1",
+      previewSection: "cover hero",
       src: coverImage,
     },
     {
       description: "Второе фото пары для финального блока",
       field: "portraitImageUrl" as const,
       label: "Фото пары 2",
+      previewSection: "portrait greeting",
       src: portraitImage,
     },
     {
       description: "Фото площадки или места церемонии",
       field: "venueImageUrl" as const,
       label: "Фото места",
+      previewSection: "location",
       src: venueImage,
     },
   ];
@@ -57,7 +60,11 @@ export function MediaStep({ isActive }: StepPanelProps) {
       >
         <div className={styles.photoGrid}>
           {photoSlots.map((item) => (
-            <div className={styles.photoUpload} key={item.field}>
+            <div
+              className={styles.photoUpload}
+              data-preview-section={item.previewSection}
+              key={item.field}
+            >
               <label className={styles.photoUploadPicker}>
                 <div
                   aria-hidden

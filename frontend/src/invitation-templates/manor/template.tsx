@@ -196,7 +196,7 @@ function HeroSection({
   venueImage,
 }: Readonly<Pick<ManorTemplateProps, "coverImage" | "invite" | "venueImage">>) {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <div className={styles.heroIntro}>
         <Image
           alt=""
@@ -257,7 +257,7 @@ function StorySection({
   portraitImage,
 }: Readonly<Pick<ManorTemplateProps, "coverImage" | "invite" | "portraitImage">>) {
   return (
-    <section className={styles.story} data-reveal>
+    <section className={styles.story} data-reveal data-invite-section="greeting portrait">
       <SectionTitle lead="Наша" tail="история" />
       <EstateSketch />
       <p>{invite.lead}</p>
@@ -327,7 +327,7 @@ function WhenSection({
   invite,
 }: Readonly<Pick<ManorTemplateProps, "calendarDays" | "coverImage" | "invite">>) {
   return (
-    <section className={styles.when} data-reveal>
+    <section className={styles.when} data-reveal data-invite-section="date">
       <SectionTitle lead="Когда" tail="мы вас ждём" />
       <time className={styles.whenDate} dateTime={invite.date}>
         {formatLongDate(invite.date)}
@@ -366,7 +366,7 @@ function WhereSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.where} data-reveal>
+    <section className={styles.where} data-reveal data-invite-section="location">
       <Image
         alt={`Место проведения — ${invite.venue}`}
         className={styles.wherePhoto}
@@ -400,7 +400,7 @@ function ProgramSection({ invite }: Readonly<Pick<ManorTemplateProps, "invite">>
   }
 
   return (
-    <section className={styles.program} data-reveal>
+    <section className={styles.program} data-reveal data-invite-section="schedule">
       <SectionTitle lead="Программа" tail="дня" />
       <ol className={styles.timeline}>
         {invite.schedule.map((item, index) => (
@@ -435,7 +435,7 @@ function DressCodeSection({
   }
 
   return (
-    <section className={styles.dress} data-reveal>
+    <section className={styles.dress} data-reveal data-invite-section="dress-code">
       <Image
         alt=""
         aria-hidden
@@ -477,7 +477,7 @@ function DetailsSection({ invite }: Readonly<Pick<ManorTemplateProps, "invite">>
   }
 
   return (
-    <section className={styles.details} data-reveal>
+    <section className={styles.details} data-reveal data-invite-section="chat info">
       <SectionTitle lead="Детали" tail="и вопросы" />
       <InvitationAdditionalInfoBlock
         className={styles.detailsBlock}
@@ -507,7 +507,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={styles.rsvp} data-reveal id="rsvp">
+    <section className={styles.rsvp} data-reveal data-invite-section="rsvp" id="rsvp">
       <figure className={styles.rsvpPhoto}>
         <Image
           alt={`${invite.groom} и ${invite.bride}`}

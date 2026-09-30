@@ -9,8 +9,11 @@ import type { InvitePalette } from "@/lib/invite-theme";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { buildLoginUrl, getEditorReturnTo } from "./lib/editor-auth-redirect";
+import { showEditorError } from "./lib/editor-toast";
 import type { AppliedPromo } from "./use-promo-code";
 import type { getEditorStepErrors } from "./validation";
+
+export const PURCHASE_TERMS_INPUT_ID = "editor-purchase-terms";
 
 type UsePublishSiteArgs = {
   allErrors: string[];
@@ -46,8 +49,16 @@ export function usePublishSite({
   template,
 }: UsePublishSiteArgs) {
   const router = useRouter();
-  const [acceptedPurchaseTerms, setAcceptedPurchaseTerms] = useState(false);
+  const [acceptedPurchaseTerms, setAcceptedPurchaseTermsState] = useState(false);
+  const [showPurchaseTermsError, setShowPurchaseTermsError] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
+
+  function setAcceptedPurchaseTerms(value: boolean) {
+    setAcceptedPurchaseTermsState(value);
+    if (value) {
+      setShowPurchaseTermsError(false);
+    }
+  }
   const [receiptEmail, setReceiptEmail] = useState("");
 
   async function publishSite() {
@@ -61,15 +72,20 @@ export function usePublishSite({
       return;
     }
 
+    // Раньше логина: иначе гость уходит на авторизацию и возвращается к той же неотмеченной галочке.
+    if (requiresPayment && !acceptedPurchaseTerms) {
+      setShowPurchaseTermsError(true);
+      showEditorError("Отметьте согласие с офертой, чтобы перейти к оплате");
+      const terms = document.getElementById(PURCHASE_TERMS_INPUT_ID);
+      terms?.scrollIntoView({ behavior: "smooth", block: "center" });
+      terms?.focus({ preventScroll: true });
+      return;
+    }
+
     const returnTo = getEditorReturnTo(siteId, template.id);
 
     if (!isAuthenticated) {
       router.push(buildLoginUrl(returnTo));
-      return;
-    }
-
-    if (requiresPayment && !acceptedPurchaseTerms) {
-      setPublishError("Подтвердите согласие с офертой и условиями оплаты.");
       return;
     }
 
@@ -162,5 +178,6 @@ export function usePublishSite({
     receiptEmail,
     setAcceptedPurchaseTerms,
     setReceiptEmail,
+    showPurchaseTermsError,
   };
 }

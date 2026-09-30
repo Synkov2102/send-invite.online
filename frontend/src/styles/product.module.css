@@ -2600,14 +2600,77 @@
     margin-top: 18px;
     padding: 14px 16px;
   }
+  /* Каталог на телефоне — две колонки компактных карточек: 17 шаблонов в одну колонку
+     растягивали главную до ~15 000px. Вся карточка кликабельна, поэтому номер и стрелка
+     скрыты, а старая цена уступает место текущей. */
   .scope:global(.templates-page__grid),
   .scope :global(.templates-page__grid) {
-    grid-template-columns: 1fr;
-    gap: 36px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 12px;
   }
   .scope:global(.template-card__showcase),
   .scope :global(.template-card__showcase) {
-    width: min(100%, 320px);
+    width: 100%;
+  }
+  .scope:global(.template-card__index),
+  .scope :global(.template-card__index),
+  .scope:global(.template-card__arrow),
+  .scope :global(.template-card__arrow),
+  .scope:global(.template-card__price-old),
+  .scope :global(.template-card__price-old) {
+    display: none;
+  }
+  .scope:global(.template-card__device),
+  .scope :global(.template-card__device) {
+    padding: 6px;
+    border-radius: 22px;
+  }
+  .scope:global(.template-card__device-screen),
+  .scope :global(.template-card__device-screen) {
+    border-radius: 17px;
+  }
+  .scope:global(.template-card__meta),
+  .scope :global(.template-card__meta) {
+    padding: 8px 2px 0;
+  }
+  .scope:global(.template-card__meta) > div,
+  .scope :global(.template-card__meta) > div {
+    min-width: 0;
+  }
+  .scope:global(.template-card__meta) small,
+  .scope :global(.template-card__meta) small {
+    display: block;
+    overflow: hidden;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .scope:global(.template-card__meta) h2,
+  .scope :global(.template-card__meta) h2,
+  .scope:global(.template-card__meta) h3,
+  .scope :global(.template-card__meta) h3 {
+    margin-top: 3px;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  .scope:global(.template-card__price),
+  .scope :global(.template-card__price) {
+    gap: 4px 6px;
+    margin-top: 6px;
+  }
+  .scope:global(.template-card__price) strong,
+  .scope :global(.template-card__price) strong {
+    font-size: 1.1rem;
+  }
+  .scope:global(.template-card__price) span,
+  .scope :global(.template-card__price) span {
+    font-size: 0.75rem;
+  }
+  .scope:global(.template-card__price-badge),
+  .scope :global(.template-card__price-badge) {
+    padding: 2px 7px;
+    font-size: 0.75rem;
   }
   .scope:global(.auth-panel),
   .scope :global(.auth-panel) {
@@ -2632,6 +2695,34 @@
   .scope :global(.commerce-footer__seller) {
     justify-items: start;
     text-align: left;
+  }
+  /* Ссылки футера — зона нажатия 44px, текст не мельче 12px. */
+  .scope:global(.commerce-footer) nav,
+  .scope :global(.commerce-footer) nav {
+    gap: 0;
+  }
+  .scope:global(.commerce-footer) nav a,
+  .scope :global(.commerce-footer) nav a,
+  .scope:global(.commerce-footer__seller) a,
+  .scope :global(.commerce-footer__seller) a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+  .scope:global(.commerce-footer__brand) p,
+  .scope :global(.commerce-footer__brand) p {
+    font-size: 0.8rem;
+  }
+  .scope:global(.commerce-footer__brand) > a,
+  .scope :global(.commerce-footer__brand) > a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+  .scope:global(.commerce-footer__seller) span,
+  .scope :global(.commerce-footer__seller) span {
+    font-size: 0.75rem;
   }
   .scope:global(.legal-shell),
   .scope :global(.legal-shell) {

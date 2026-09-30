@@ -139,7 +139,7 @@ export default function ScribbleTemplate({
         ref={shellRef}
         style={createScribbleStyle(inviteVars)}
       >
-        <section className={styles.hero}>
+        <section className={styles.hero} data-invite-section="hero greeting">
           <p className={styles.heroKicker}>Приглашение на свадьбу</p>
           <h1>Вот это новость!</h1>
           <div className={styles.heroHearts} aria-hidden>
@@ -161,7 +161,7 @@ export default function ScribbleTemplate({
           <p className={styles.lead}>{invite.lead}</p>
         </section>
 
-        <section className={styles.story} data-reveal>
+        <section className={styles.story} data-reveal data-invite-section="portrait">
           <figure className={`${styles.polaroid} ${styles.polaroidLeft}`}>
             <div>
               <Photo alt={`${invite.bride} и ${invite.groom} вместе`} src={coverImage} />
@@ -179,7 +179,7 @@ export default function ScribbleTemplate({
           <Heart className={styles.storyHeartTwo} />
         </section>
 
-        <section className={styles.when} data-reveal>
+        <section className={styles.when} data-reveal data-invite-section="date">
           <Heart className={styles.looseHeart} />
           <p>
             Поэтому мы приглашаем вас разделить с нами радостный день, в котором мы станем семьёй!
@@ -205,7 +205,7 @@ export default function ScribbleTemplate({
           </time>
         </section>
 
-        <section className={styles.location} data-reveal>
+        <section className={styles.location} data-reveal data-invite-section="location">
           <DoodleTitle kicker="Где встречаемся?">Локация</DoodleTitle>
           <h3>{invite.venue}</h3>
           {locationAddress ? <address>{locationAddress}</address> : null}
@@ -222,7 +222,7 @@ export default function ScribbleTemplate({
         </section>
 
         {invite.showSchedule ? (
-          <section className={styles.program} data-reveal>
+          <section className={styles.program} data-reveal data-invite-section="schedule">
             <DoodleTitle kicker={formatDate(invite.date)}>Во сколько?</DoodleTitle>
             <ol>
               {invite.schedule.map((item, index) => (
@@ -240,7 +240,7 @@ export default function ScribbleTemplate({
         ) : null}
 
         {invite.showDressCode ? (
-          <section className={styles.sharedPaper} data-reveal>
+          <section className={styles.sharedPaper} data-reveal data-invite-section="dress-code">
             <p className={styles.marginNote}>Будем в одной палитре</p>
             <InvitationDressCodeBlock
               className={styles.sharedBlock}
@@ -252,7 +252,7 @@ export default function ScribbleTemplate({
         ) : null}
 
         {invite.showAdditionalInfo || invite.showGroupChat ? (
-          <section className={styles.details} data-reveal>
+          <section className={styles.details} data-reveal data-invite-section="chat info">
             <DoodleTitle>На заметку</DoodleTitle>
             <InvitationAdditionalInfoBlock
               className={styles.sharedBlock}
@@ -271,7 +271,7 @@ export default function ScribbleTemplate({
         ) : null}
 
         {invite.showRsvp ? (
-          <section className={styles.rsvp} data-reveal id="rsvp">
+          <section className={styles.rsvp} data-reveal data-invite-section="rsvp" id="rsvp">
             <Heart className={styles.rsvpHeart} />
             <DoodleTitle kicker="Очень ждём ответ">Будете с нами?</DoodleTitle>
             <p>{invite.rsvpText}</p>

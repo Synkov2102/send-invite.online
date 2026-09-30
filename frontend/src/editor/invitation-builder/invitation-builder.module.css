@@ -35,9 +35,17 @@
   }
 }
 
+/* Мобильный сплит: сверху предпросмотр, снизу форма — каждая половина скроллится сама. */
 @media (max-width: 899px) {
+  .shell {
+    min-height: 0;
+  }
+
   .layout {
-    display: block;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircle, ArrowLeft, Check, Eye, Save, Sparkles } from "lucide-react";
+import { AlertCircle, ArrowLeft, Check, Save, Sparkles } from "lucide-react";
 import Link from "next/link";
 import type { MouseEvent } from "react";
 import BrandLockup from "@/components/brand-lockup";
@@ -37,7 +37,7 @@ export function EditorStepNav() {
             type="button"
           >
             <span className={styles.stepIcon}>
-              {isComplete ? (
+              {isComplete && !isActive ? (
                 <Check aria-hidden size={15} />
               ) : (
                 <StepIcon aria-hidden size={15} />
@@ -56,7 +56,7 @@ export function EditorStepNav() {
 }
 
 export function EditorSidebarHeader() {
-  const { confirmLeaveEditor, saveStatus, setIsFullscreenPreview, siteId, template } = useEditor();
+  const { confirmLeaveEditor, saveStatus, siteId, template } = useEditor();
 
   function handleEditorExit(event: MouseEvent<HTMLAnchorElement>) {
     if (!confirmLeaveEditor()) {
@@ -100,14 +100,6 @@ export function EditorSidebarHeader() {
             </>
           )}
         </span>
-        <button
-          className={styles.previewJump}
-          onClick={() => setIsFullscreenPreview(true)}
-          type="button"
-        >
-          <Eye aria-hidden size={14} />
-          Предпросмотр
-        </button>
       </div>
 
       <div className={styles.intro}>

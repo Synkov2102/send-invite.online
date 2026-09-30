@@ -136,7 +136,7 @@ function HeroSection({
   invite,
 }: Readonly<Pick<ChapterTemplateProps, "coverImage" | "invite">>) {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <h1 className={styles.heroTitle}>
         <span>Наше особенное</span>
         <em>приглашение</em>
@@ -172,7 +172,7 @@ function HeroSection({
 
 function GreetingSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite">>) {
   return (
-    <section className={styles.greeting} data-reveal>
+    <section className={styles.greeting} data-reveal data-invite-section="greeting">
       <h2 className={styles.sectionTitle}>
         <span>Дорогие</span>
         <em>наши</em>
@@ -188,7 +188,7 @@ function WhenSection({
   invite,
 }: Readonly<Pick<ChapterTemplateProps, "calendarDays" | "invite">>) {
   return (
-    <section className={styles.when} data-reveal>
+    <section className={styles.when} data-reveal data-invite-section="date">
       <SectionLabel index="01">Когда</SectionLabel>
       <time className={styles.datePill} dateTime={invite.date}>
         <i>({formatInviteDate(invite.date, { day: "numeric" })})</i>
@@ -218,7 +218,7 @@ function WhereSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.where} data-reveal>
+    <section className={styles.where} data-reveal data-invite-section="location">
       <SectionLabel index="02">Где</SectionLabel>
       <h2 className={styles.venue}>{invite.venue}</h2>
       <address className={styles.address}>
@@ -255,7 +255,7 @@ function ProgramSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite"
   }
 
   return (
-    <section className={styles.program} data-reveal>
+    <section className={styles.program} data-reveal data-invite-section="schedule">
       <SectionLabel index="03">Программа</SectionLabel>
       <h2 className={styles.sectionTitle}>
         <span>План</span>
@@ -283,7 +283,7 @@ function DressCodeSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invit
   }
 
   return (
-    <section className={styles.dress} data-reveal>
+    <section className={styles.dress} data-reveal data-invite-section="dress-code">
       <SectionLabel index="04">Дресс-код</SectionLabel>
       <InvitationDressCodeBlock
         className={styles.dressBlock}
@@ -308,7 +308,7 @@ function DetailsSection({ invite }: Readonly<Pick<ChapterTemplateProps, "invite"
   }
 
   return (
-    <section className={styles.details} data-reveal>
+    <section className={styles.details} data-reveal data-invite-section="chat info">
       <SectionLabel index="05">На заметку</SectionLabel>
       <InvitationAdditionalInfoBlock
         className={styles.infoBlock}
@@ -336,7 +336,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={styles.rsvp} data-reveal id="rsvp">
+    <section className={styles.rsvp} data-reveal data-invite-section="rsvp" id="rsvp">
       <SectionLabel index={hasDetailsContent(invite) ? "06" : "05"}>Ваш ответ</SectionLabel>
       <h2 className={styles.sectionTitle}>
         <span>Будете</span>
@@ -363,7 +363,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<Pick<ChapterTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing} data-reveal>
+    <section className={styles.closing} data-reveal data-invite-section="portrait">
       <figure className={styles.closingPhoto}>
         <Image
           alt={`${invite.groom} и ${invite.bride}`}

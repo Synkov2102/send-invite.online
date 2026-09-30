@@ -61,7 +61,7 @@ function HeroSection({
   invite,
 }: Readonly<Pick<CrimsonTemplateProps, "coverImage" | "invite">>) {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <Image
         alt={`${invite.bride} и ${invite.groom} на берегу`}
         className={styles.photo}
@@ -100,7 +100,7 @@ function GreetingSection({
   invite,
 }: Readonly<Pick<CrimsonTemplateProps, "coverImage" | "invite">>) {
   return (
-    <section className={styles.greeting}>
+    <section className={styles.greeting} data-invite-section="greeting">
       <div className={styles.loveWord} aria-hidden>
         <span>LO</span>
         <span>VE</span>
@@ -134,7 +134,7 @@ function LocationSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.location}>
+    <section className={styles.location} data-invite-section="location">
       <header className={styles.locationHeading}>
         <span>место</span>
         <h2 aria-label="Location">
@@ -178,7 +178,7 @@ function DressCodeSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invit
   }
 
   return (
-    <section className={styles.dressCode}>
+    <section className={styles.dressCode} data-invite-section="dress-code">
       <p className={styles.sectionNumber}>03</p>
       <h2>Дресс-код</h2>
       <p>{invite.dressCode}</p>
@@ -200,7 +200,7 @@ function ProgramSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite"
   }
 
   return (
-    <section className={styles.program}>
+    <section className={styles.program} data-invite-section="schedule">
       <header>
         <p className={styles.sectionNumber}>04</p>
         <h2>Тайминг</h2>
@@ -233,7 +233,7 @@ function DetailsSection({ invite }: Readonly<Pick<CrimsonTemplateProps, "invite"
   }
 
   return (
-    <section className={styles.details} id="details">
+    <section className={styles.details} data-invite-section="chat info" id="details">
       <header>
         <span>05</span>
         <h2>
@@ -279,7 +279,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={styles.rsvp} id="rsvp">
+    <section className={styles.rsvp} data-invite-section="rsvp" id="rsvp">
       <header>
         <p className={styles.sectionNumber}>06</p>
         <h2>
@@ -305,7 +305,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<Pick<CrimsonTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing}>
+    <section className={styles.closing} data-invite-section="portrait">
       <p className={styles.closingScript} aria-hidden>
         Just married!
       </p>

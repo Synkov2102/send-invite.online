@@ -272,6 +272,7 @@
   font-size: 0.62rem;
   font-weight: 650;
   letter-spacing: 0;
+  white-space: nowrap;
   text-transform: none;
 }
 
@@ -312,5 +313,29 @@
 @media (max-width: 640px) {
   .questionAddOption {
     min-height: 44px !important;
+  }
+}
+
+@media (max-width: 899px) {
+  .questionAddOption {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .formBuilderHead span,
+  .formBuilderAdd,
+  .formBuilderGuide span,
+  .questionHead span,
+  .questionHint,
+  .questionInlineHelp,
+  .answerType button strong,
+  .answerType button small,
+  .questionOptionsHead,
+  .questionOptionsHead p,
+  .questionOptionsHead small,
+  .questionOptionIndex {
+    font-size: 0.75rem;
   }
 }

@@ -72,7 +72,7 @@ function HeroSection({
   return (
     <motion.header
       animate="visible"
-      className={styles.hero}
+      className={styles.hero} data-invite-section="hero"
       initial="hidden"
       variants={heroSequence}
     >
@@ -133,7 +133,7 @@ function StorySection({
 }: Readonly<Pick<ChromeTemplateProps, "invite" | "portraitImage">>) {
   return (
     <motion.section
-      className={styles.story}
+      className={styles.story} data-invite-section="greeting portrait"
       id="story"
       initial="hidden"
       variants={sectionReveal}
@@ -176,7 +176,7 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
 
   return (
     <motion.section
-      className={styles.program}
+      className={styles.program} data-invite-section="schedule"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -215,7 +215,7 @@ function VenueSection({
 
   return (
     <motion.section
-      className={styles.venue}
+      className={styles.venue} data-invite-section="location"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -268,7 +268,7 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
 
   return (
     <motion.section
-      className={styles.dress}
+      className={styles.dress} data-invite-section="dress-code"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -308,7 +308,7 @@ function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
 
   return (
     <motion.section
-      className={styles.details}
+      className={styles.details} data-invite-section="chat info"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -353,7 +353,7 @@ function RsvpSection({ invite, siteId }: Readonly<Pick<ChromeTemplateProps, "inv
 
   return (
     <motion.section
-      className={styles.rsvp}
+      className={styles.rsvp} data-invite-section="rsvp"
       id="rsvp"
       initial="hidden"
       variants={sectionReveal}

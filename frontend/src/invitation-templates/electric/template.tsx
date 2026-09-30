@@ -80,7 +80,7 @@ function HeroSection({ coverImage, invite }: Readonly<{ coverImage: string; invi
   const date = getDateParts(invite.date);
 
   return (
-    <motion.header animate="visible" className={styles.hero} initial="hidden" variants={heroSequence}>
+    <motion.header animate="visible" className={styles.hero} data-invite-section="hero" initial="hidden" variants={heroSequence}>
       <motion.div className={styles.heroNames} variants={heroSequence}>
         <motion.span variants={nameFromLeft}>{invite.bride}</motion.span>
         <motion.span className={styles.plus} variants={plusReveal}>+</motion.span>
@@ -111,7 +111,7 @@ function HeroSection({ coverImage, invite }: Readonly<{ coverImage: string; invi
 
 function GreetingSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
-    <motion.section className={styles.greeting} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.section className={styles.greeting} data-invite-section="greeting" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.span className={styles.sectionNumber} variants={copyFromLeft}>01</motion.span>
       <motion.p variants={copyFromRight}>{invite.lead}</motion.p>
       <motion.span className={styles.greetingMark} variants={plusReveal}>*</motion.span>
@@ -121,7 +121,7 @@ function GreetingSection({ invite }: Readonly<{ invite: InviteState }>) {
 
 function DateSection({ calendarDays, invite }: Readonly<Pick<ElectricTemplateProps, "calendarDays" | "invite">>) {
   return (
-    <motion.section className={styles.dateSection} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.section className={styles.dateSection} data-invite-section="date" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.sectionHeading} variants={copyFromRight}>
         <span className={styles.sectionNumber}>02</span>
         <h2>Когда</h2>
@@ -146,7 +146,7 @@ function PlaceSection({ invite, venueImage }: Readonly<Pick<ElectricTemplateProp
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <motion.section className={styles.placeSection} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.section className={styles.placeSection} data-invite-section="location" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.placePhoto} variants={photoMaskReveal}>
         <Image
           alt={`Площадка ${invite.venue}`}
@@ -174,7 +174,7 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <motion.section className={styles.programSection} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.section className={styles.programSection} data-invite-section="schedule" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.sectionHeading} variants={copyFromRight}>
         <span className={styles.sectionNumber}>04</span>
         <h2>Программа</h2>
@@ -201,7 +201,7 @@ function DressSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <motion.section className={styles.dressSection} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.section className={styles.dressSection} data-invite-section="dress-code" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.span className={styles.sectionNumber} variants={copyFromLeft}>05</motion.span>
       <motion.div variants={copyFromRight}>
         <InvitationDressCodeBlock
@@ -222,7 +222,7 @@ function GroupChatSection({ invite }: Readonly<{ invite: InviteState }>) {
 
   return (
     <motion.section
-      className={styles.groupChatSection}
+      className={styles.groupChatSection} data-invite-section="chat"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -252,7 +252,7 @@ function AdditionalInfoSection({ invite }: Readonly<{ invite: InviteState }>) {
 
   return (
     <motion.section
-      className={styles.additionalInfoSection}
+      className={styles.additionalInfoSection} data-invite-section="info"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -278,7 +278,7 @@ function RsvpSection({ invite, siteId }: Readonly<Pick<ElectricTemplateProps, "i
   if (!invite.showRsvp) return null;
 
   return (
-    <motion.section className={styles.rsvpSection} id="rsvp" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.section className={styles.rsvpSection} data-invite-section="rsvp" id="rsvp" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.rsvpIntro} variants={copyFromLeft}>
         <span className={styles.sectionNumber}>08</span>
         <h2>Вы с нами?</h2>
@@ -300,7 +300,7 @@ function RsvpSection({ invite, siteId }: Readonly<Pick<ElectricTemplateProps, "i
 
 function ClosingSection({ invite, portraitImage }: Readonly<Pick<ElectricTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <motion.footer className={styles.closing} initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
+    <motion.footer className={styles.closing} data-invite-section="portrait" initial="hidden" variants={sectionReveal} viewport={revealViewport} whileInView="visible">
       <motion.div className={styles.closingPhoto} variants={photoMaskReveal}>
         <Image
           alt="Свадебный портрет пары"

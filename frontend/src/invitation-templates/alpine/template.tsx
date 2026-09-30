@@ -78,6 +78,7 @@ export default function AlpineTemplate({
       {coverType === "rings" ? (
         <motion.section
           className="invite-cover invite-cover--three"
+          data-invite-section="hero"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
@@ -103,6 +104,7 @@ export default function AlpineTemplate({
       ) : (
         <motion.section
           className="invite-cover"
+          data-invite-section="hero"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
@@ -132,6 +134,7 @@ export default function AlpineTemplate({
 
       <motion.section
         className="invite-panel"
+        data-invite-section="greeting date cover"
         initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}
@@ -181,6 +184,7 @@ export default function AlpineTemplate({
       {invite.showSchedule ? (
         <motion.section
           className="invite-details"
+          data-invite-section="schedule"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
@@ -229,6 +233,7 @@ export default function AlpineTemplate({
 
       <motion.section
         className="invite-photo-band"
+        data-invite-section="location"
         initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}
@@ -263,6 +268,7 @@ export default function AlpineTemplate({
       {invite.showDressCode ? (
         <motion.section
           className="invite-dress-code"
+          data-invite-section="dress-code"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
@@ -279,6 +285,7 @@ export default function AlpineTemplate({
       {invite.showGroupChat ? (
         <motion.section
           className="invite-group-chat"
+          data-invite-section="chat"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
@@ -296,6 +303,7 @@ export default function AlpineTemplate({
       {invite.showAdditionalInfo ? (
         <motion.section
           className="invite-additional-info"
+          data-invite-section="info"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
@@ -312,6 +320,7 @@ export default function AlpineTemplate({
       {invite.showRsvp ? (
         <motion.section
           className="invite-rsvp"
+          data-invite-section="rsvp"
           initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}
@@ -334,6 +343,7 @@ export default function AlpineTemplate({
 
       <motion.section
         className="invite-final"
+        data-invite-section="portrait"
         initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}

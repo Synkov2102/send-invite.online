@@ -78,7 +78,7 @@ function HeroSection({
   const date = getDateParts(invite.date);
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero greeting">
       <Image
         alt="Современный свадебный портрет пары"
         className={styles.coverImage}
@@ -111,7 +111,7 @@ function DateSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.dateSection}>
+    <section className={styles.dateSection} data-invite-section="date location">
       <div className={styles.dateLockup}>
         <time dateTime={invite.date}>
           <span>{date.day}</span>
@@ -157,7 +157,7 @@ function ScheduleSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={styles.scheduleSection}>
+    <section className={styles.scheduleSection} data-invite-section="schedule">
       <header className={styles.sectionHeader}>
         <span>план</span>
         <h2>События дня</h2>
@@ -189,7 +189,7 @@ function DressCodeSection({
   portraitImage,
 }: Readonly<{ invite: InviteState; portraitImage: string }>) {
   return (
-    <section className={styles.dressSection}>
+    <section className={styles.dressSection} data-invite-section="dress-code portrait">
       {invite.showDressCode ? (
         <InvitationDressCodeBlock
           className={styles.dressBlock}
@@ -224,7 +224,7 @@ function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
     <>
       {showChat ? (
-        <section className={styles.groupChatSection}>
+        <section className={styles.groupChatSection} data-invite-section="chat">
           <div className={styles.groupChatIntro}>
             <span>чат гостей</span>
             <h2>общий чат</h2>
@@ -239,7 +239,7 @@ function DetailsSection({ invite }: Readonly<{ invite: InviteState }>) {
         </section>
       ) : null}
       {showInfo ? (
-        <section className={styles.additionalInfoSection}>
+        <section className={styles.additionalInfoSection} data-invite-section="info">
           <div className={styles.additionalInfoIntro}>
             <span>заметка</span>
             <h2>важно знать</h2>
@@ -265,7 +265,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={styles.rsvpSection} id="rsvp">
+    <section className={styles.rsvpSection} data-invite-section="rsvp" id="rsvp">
       <div className={styles.rsvpIntro}>
         <span>ответьте до {formatShortDate(invite.rsvpDate)}</span>
         <h2>Будете с нами?</h2>
