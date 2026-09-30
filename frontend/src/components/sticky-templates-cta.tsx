@@ -6,7 +6,9 @@ import TrackedLink from "./tracked-link";
 import styles from "./sticky-templates-cta.module.css";
 
 export default function StickyTemplatesCta() {
-  const [visible, setVisible] = useState(false);
+  const [isPastHero, setIsPastHero] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const visible = isPastHero && !isFooterVisible;
 
   useEffect(() => {
     const hero = document.getElementById("hero");
@@ -14,11 +16,24 @@ export default function StickyTemplatesCta() {
       return;
     }
 
+    // У футера прячемся: иначе фиксированная кнопка закрывает правовые ссылки и контакты.
+    const footer = document.querySelector(".commerce-footer");
     const observer = new IntersectionObserver(
-      ([entry]) => setVisible(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.target === hero) {
+            setIsPastHero(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+          } else {
+            setIsFooterVisible(entry.isIntersecting);
+          }
+        }
+      },
       { threshold: 0 },
     );
     observer.observe(hero);
+    if (footer) {
+      observer.observe(footer);
+    }
 
     return () => observer.disconnect();
   }, []);

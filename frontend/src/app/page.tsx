@@ -29,11 +29,26 @@ export const metadata: Metadata = createPageMetadata({
     "Создайте сайт-приглашение на свадьбу за 10 минут: выберите шаблон, добавьте детали и соберите ответы гостей через RSVP. Разовая оплата.",
 });
 
-const HERO_STATS = [
-  { value: "12", label: "готовых шаблонов" },
-  { value: "10 мин", label: "до готовой ссылки" },
-  { value: "1", label: "ссылка для гостей" },
-] as const;
+/** Формы для 1 / 2–4 / 5+ (шаблон, шаблона, шаблонов). */
+function pluralizeRu(count: number, [one, few, many]: readonly [string, string, string]) {
+  const rule = new Intl.PluralRules("ru").select(count);
+  return rule === "one" ? one : rule === "few" ? few : many;
+}
+
+function getHeroStats(templateCount: number) {
+  return [
+    {
+      value: String(templateCount),
+      label: pluralizeRu(templateCount, [
+        "готовый шаблон",
+        "готовых шаблона",
+        "готовых шаблонов",
+      ]),
+    },
+    { value: "10 мин", label: "на сборку" },
+    { value: "0 ₽", label: "до публикации" },
+  ];
+}
 
 type Benefit = {
   icon: LucideIcon;
@@ -46,40 +61,20 @@ const benefits: Benefit[] = [
   {
     icon: Timer,
     imageSrc: "/images/brand/benefit-ready-10-min-v3.webp",
-    title: "Готово за 10 минут",
-    text: "Выберите шаблон и добавьте детали свадьбы.",
+    title: "Быстрее, чем обзвонить гостей",
+    text: "Выбрали шаблон, вписали имена, дату и место — ссылка готова.",
   },
   {
     icon: Eye,
     imageSrc: "/images/brand/benefit-live-preview-v4.webp",
-    title: "Результат виден сразу",
-    text: "Меняйте текст и цвета прямо в редакторе.",
+    title: "Видите то же, что гости",
+    text: "Меняете текст, фото и цвета — превью обновляется на лету.",
   },
   {
     icon: ClipboardCheck,
     imageSrc: "/images/brand/benefit-rsvp-v3.webp",
-    title: "RSVP без переписок",
-    text: "Ответы гостей собираются в личном кабинете.",
-  },
-];
-
-type Step = {
-  title: string;
-  text: string;
-};
-
-const steps: Step[] = [
-  {
-    title: "Выберите шаблон",
-    text: "11 готовых вариантов оформления.",
-  },
-  {
-    title: "Добавьте детали",
-    text: "Дата, место, программа и фотографии.",
-  },
-  {
-    title: "Отправьте ссылку",
-    text: "Сайт готов для гостей сразу после публикации.",
+    title: "Ответы гостей — в одной таблице",
+    text: "Кто придёт, с кем — и ответы на ваши вопросы. Без переписок и напоминаний.",
   },
 ];
 
@@ -90,10 +85,6 @@ function Eyebrow({ children }: { children: ReactNode }) {
       {children}
     </p>
   );
-}
-
-function formatIndex(index: number) {
-  return String(index + 1).padStart(2, "0");
 }
 
 export default async function HomePage() {
@@ -116,20 +107,22 @@ export default async function HomePage() {
         <PageShellProvider as="section" className={styles.hero} id="hero" width="wide">
           <div className={styles.heroStage}>
             <div className={styles.heroContent}>
-              <Eyebrow>Для вашей свадьбы</Eyebrow>
+              <Eyebrow>Без дизайнера и программиста</Eyebrow>
               <h1>
-                <span>Индивидуальный</span>
+                <span>Сайт-приглашение</span>
+                <span>на свадьбу</span>
                 <span>
-                  сайт <em>за 10 минут</em>
+                  <em>за 10 минут</em>
                 </span>
               </h1>
               <p className={styles.heroLead}>
-                Все детали свадьбы и RSVP — в одном редакторе.
+                Программа дня, место на карте, дресс-код и анкета для гостей — одной
+                ссылкой, которую удобно отправить в любой мессенджер.
               </p>
 
               <div className={styles.heroRow}>
                 <div className={styles.heroPrice}>
-                  <span>Один сайт</span>
+                  <span>Сайт под ключ</span>
                   <div className={styles.heroPriceValue}>
                     {discountPercent !== null ? (
                       <s className={styles.heroPriceOld}>
@@ -141,7 +134,7 @@ export default async function HomePage() {
                       <b className={styles.heroPriceBadge}>−{discountPercent}%</b>
                     ) : null}
                   </div>
-                  <small>{discountPercent !== null ? "Ограниченная скидка" : "разовая оплата"}</small>
+                  <small>Разовая оплата, без подписки</small>
                 </div>
                 <TrackedLink
                   className={styles.primaryButton}
@@ -154,11 +147,11 @@ export default async function HomePage() {
 
               <p className={styles.heroTrust}>
                 <Check aria-hidden size={14} />
-                Создайте бесплатно. Оплата — при публикации.
+                Собирайте бесплатно — платите, только когда решите опубликовать.
               </p>
 
               <div className={styles.heroStats}>
-                {HERO_STATS.map((stat) => (
+                {getHeroStats(templates.length).map((stat) => (
                   <div key={stat.label}>
                     <strong>{stat.value}</strong>
                     <span>{stat.label}</span>
@@ -196,10 +189,10 @@ export default async function HomePage() {
         >
           <div className={styles.sectionIntro}>
             <Eyebrow>Возможности</Eyebrow>
-            <h2>Всё главное уже внутри</h2>
+            <h2>Всё в одной ссылке</h2>
             <p>
-              Редактор, живое превью и сбор ответов гостей — в одном сервисе, без
-              плагинов и настроек.
+              Дата, место на карте, программа, дресс-код, музыка и чат гостей — на одной
+              странице. Гости не звонят с вопросами «а во сколько?» и «а где парковка?».
             </p>
           </div>
           <div className={styles.benefitsGrid}>
@@ -225,47 +218,17 @@ export default async function HomePage() {
           </div>
         </PageShellProvider>
 
-        <PageShellProvider
-          aria-label="Как это работает"
-          as="section"
-          className={styles.workflow}
-          width="wide"
-        >
-          <div className={styles.workflowVisual}>
-            <Image
-              alt="Пара создаёт сайт-приглашение вместе с маскотом сервиса"
-              fill
-              sizes="(max-width: 899px) calc(100vw - 34px), 520px"
-              src="/images/brand/homepage-mascot-workflow-photo-v2.webp"
-              unoptimized
-            />
-            <div className={styles.workflowVisualCopy}>
-              <span>Без дизайнера и ожидания</span>
-              <strong>Соберите приглашение сами.</strong>
-            </div>
-          </div>
-          <div className={styles.workflowContent}>
-            <div className={styles.sectionIntro}>
-              <Eyebrow>Как это работает</Eyebrow>
-              <h2>Три шага — и готово</h2>
-            </div>
-            <ol className={styles.stepsRow}>
-              {steps.map((step, index) => (
-                <li key={step.title}>
-                  <span>{formatIndex(index)}</span>
-                  <h3>{step.title}</h3>
-                  <p>{step.text}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </PageShellProvider>
-
         <PageShellProvider as="section" className={styles.templates} id="templates" width="wide">
           <div className={styles.sectionIntro}>
             <Eyebrow>Шаблоны</Eyebrow>
-            <h2>Выберите свой дизайн</h2>
-            <p>Посмотрите демо и начните редактировать.</p>
+            <h2>
+              {templates.length}{" "}
+              {pluralizeRu(templates.length, ["дизайн", "дизайна", "дизайнов"])} на выбор
+            </h2>
+            <p>
+              От классики до авиабилета. Листайте карточку, чтобы примерить цвета, — и
+              нажмите, чтобы начать заполнять.
+            </p>
           </div>
           <div className={`templates-page__grid ${styles.templateGrid}`}>
             {templates.map((template, index) => (
