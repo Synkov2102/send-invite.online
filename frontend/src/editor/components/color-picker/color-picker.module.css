@@ -82,3 +82,10 @@
   font-size: 0.7rem;
   text-transform: uppercase;
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .hex input {
+    font-size: 0.75rem;
+  }
+}

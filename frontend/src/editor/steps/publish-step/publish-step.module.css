@@ -125,3 +125,11 @@
   gap: 7px;
   border-radius: 8px;
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .reviewHint,
+  .reviewSections small {
+    font-size: 0.75rem;
+  }
+}

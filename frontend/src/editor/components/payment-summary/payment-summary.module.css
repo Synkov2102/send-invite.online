@@ -77,6 +77,45 @@
   accent-color: #ff4f72;
 }
 
+.labelError {
+  margin: -6px;
+  border-radius: 10px;
+  background: #fff0f0;
+  padding: 6px;
+  color: #9d2727;
+  box-shadow: 0 0 0 1px rgba(166, 43, 43, 0.35);
+  animation: termsShake 360ms ease;
+}
+
+.labelError input {
+  outline: 2px solid #d63a3a;
+  outline-offset: 1px;
+}
+
+@keyframes termsShake {
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .labelError {
+    animation: none;
+  }
+}
+
+.termsError {
+  margin: -4px 0 0;
+  color: #9d2727;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .label a {
   color: #b43151;
   text-decoration: underline;
@@ -199,4 +238,19 @@
   color: #786d74;
   font-size: 0.7rem;
   line-height: 1.5;
+}
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .saleBadge,
+  .root > p,
+  .label,
+  .termsError,
+  .discountRow,
+  .promoLabel,
+  .promoError,
+  .receiptLabel,
+  .receiptHint {
+    font-size: 0.75rem;
+  }
 }

@@ -1,9 +1,10 @@
 "use client";
 
-import { Button } from "@heroui/react";
+import { Button, Input, TextArea } from "@heroui/react";
 import { Plus, Trash2 } from "lucide-react";
 import { ColorPicker, FieldGroup, TextAreaField, TextInput } from "../../components";
 import panelStyles from "../../components/editor-step-panel/editor-step-panel.module.css";
+import fieldStyles from "../../components/text-field/text-field.module.css";
 import toggleStyles from "../../components/editor-toggle/editor-toggle.module.css";
 import { useEditor } from "../../editor-context";
 import styles from "./schedule-step.module.css";
@@ -44,41 +45,63 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
         </label>
         {invite.showSchedule ? (
           <div className={styles.schedule}>
-            {invite.schedule.map((item, index) => (
-              <div className={styles.scheduleItem} key={`schedule-${index}`}>
-                <div className={styles.scheduleItemHead}>
-                  <span>Событие {index + 1}</span>
-                  <Button
-                    aria-label={`Удалить событие ${index + 1}`}
-                    className={styles.dressCodeRemove}
-                    isDisabled={invite.schedule.length <= 1}
-                    onClick={() => removeScheduleItem(index)}
-                    type="button"
-                    variant="outline"
-                  >
-                    <Trash2 aria-hidden size={13} />
-                  </Button>
-                </div>
-                <div className="grid grid-cols-[92px_1fr] gap-2">
-                  <TextInput
-                    label="Время"
-                    type="time"
-                    value={item.time}
-                    onChange={(value) => updateScheduleItem(index, "time", value)}
-                  />
-                  <TextInput
-                    label="Название"
-                    value={item.title}
-                    onChange={(value) => updateScheduleItem(index, "title", value)}
-                  />
-                </div>
-                <TextInput
-                  label="Описание"
-                  value={item.description}
-                  onChange={(value) => updateScheduleItem(index, "description", value)}
-                />
-              </div>
-            ))}
+            <ol className={styles.scheduleList}>
+              {invite.schedule.map((item, index) => (
+                <li className={styles.scheduleItem} key={`schedule-${index}`}>
+                  <label className={styles.scheduleField}>
+                    <span className={styles.scheduleLabel}>Время</span>
+                    <Input
+                      aria-label={`Время события ${index + 1}`}
+                      className={`${fieldStyles.input} ${styles.scheduleTime}`}
+                      onChange={(event) => updateScheduleItem(index, "time", event.target.value)}
+                      type="time"
+                      value={item.time}
+                      variant="secondary"
+                    />
+                  </label>
+                  <div className={styles.scheduleText}>
+                    <label className={styles.scheduleField}>
+                      <span className={styles.scheduleLabel}>Название</span>
+                      <Input
+                        aria-label={`Название события ${index + 1}`}
+                        className={`${fieldStyles.input} ${styles.scheduleTitle}`}
+                        fullWidth
+                        onChange={(event) => updateScheduleItem(index, "title", event.target.value)}
+                        placeholder="Например, «Церемония»"
+                        value={item.title}
+                        variant="secondary"
+                      />
+                    </label>
+                    <label className={styles.scheduleField}>
+                      <span className={styles.scheduleLabel}>Описание</span>
+                      <TextArea
+                        aria-label={`Описание события ${index + 1}`}
+                        className={`${fieldStyles.input} ${styles.scheduleDescription}`}
+                        fullWidth
+                        onChange={(event) =>
+                          updateScheduleItem(index, "description", event.target.value)
+                        }
+                        placeholder="Необязательно"
+                        rows={1}
+                        value={item.description}
+                        variant="secondary"
+                      />
+                    </label>
+                  </div>
+                  {invite.schedule.length > 1 ? (
+                    <button
+                      aria-label={`Удалить событие ${index + 1}`}
+                      className={styles.scheduleRemove}
+                      onClick={() => removeScheduleItem(index)}
+                      type="button"
+                    >
+                      <Trash2 aria-hidden size={13} />
+                      Удалить
+                    </button>
+                  ) : null}
+                </li>
+              ))}
+            </ol>
             <Button
               className={styles.scheduleAdd}
               isDisabled={invite.schedule.length >= 10}

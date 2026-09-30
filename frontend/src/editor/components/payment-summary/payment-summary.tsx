@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { formatRubPrice, formatRubPriceLabel, getSaleDiscountPercent } from "@/lib/commerce";
 import { useEditor } from "../../editor-context";
+import { PURCHASE_TERMS_INPUT_ID } from "../../use-publish-site";
 import styles from "./payment-summary.module.css";
 
 export function PaymentSummary() {
@@ -21,6 +22,7 @@ export function PaymentSummary() {
     setAcceptedPurchaseTerms,
     setPromoCodeInput,
     setReceiptEmail,
+    showPurchaseTermsError,
     sitePricing,
   } = useEditor();
 
@@ -138,9 +140,12 @@ export function PaymentSummary() {
         </div>
       ) : null}
 
-      <label className={styles.label}>
+      <label className={`${styles.label} ${showPurchaseTermsError ? styles.labelError : ""}`}>
         <input
+          aria-describedby={showPurchaseTermsError ? "editor-purchase-terms-error" : undefined}
+          aria-invalid={showPurchaseTermsError || undefined}
           checked={acceptedPurchaseTerms}
+          id={PURCHASE_TERMS_INPUT_ID}
           onChange={(event) => setAcceptedPurchaseTerms(event.target.checked)}
           type="checkbox"
         />
@@ -150,6 +155,11 @@ export function PaymentSummary() {
           {" "}и <Link href="/privacy" target="_blank">политику обработки данных</Link>.
         </span>
       </label>
+      {showPurchaseTermsError ? (
+        <p className={styles.termsError} id="editor-purchase-terms-error" role="alert">
+          Отметьте согласие, чтобы перейти к оплате.
+        </p>
+      ) : null}
     </section>
   );
 }

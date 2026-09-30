@@ -504,3 +504,10 @@
     opacity: 1;
   }
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .scope :global(.fullscreen-preview__action) {
+    font-size: 0.75rem;
+  }
+}

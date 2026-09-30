@@ -348,3 +348,18 @@
     transform: scaleY(1);
   }
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .headCopy span,
+  .sourceLink,
+  .empty,
+  .hint,
+  .trackMeta,
+  .duration,
+  .selectedMark,
+  .selectedCard span,
+  .selectedPlay {
+    font-size: 0.75rem;
+  }
+}

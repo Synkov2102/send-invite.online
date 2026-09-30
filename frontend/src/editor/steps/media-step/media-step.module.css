@@ -215,3 +215,16 @@
 .musicNote {
   margin: 0;
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .photoUploadPickerLabel,
+  .photoUploadCopy small,
+  .photoUploadButton,
+  .photoError,
+  .musicUpload small,
+  .musicNote,
+  .musicUpload input {
+    font-size: 0.75rem;
+  }
+}

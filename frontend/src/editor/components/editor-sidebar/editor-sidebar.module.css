@@ -10,6 +10,11 @@
   box-shadow: 14px 0 45px rgba(57, 43, 52, 0.06);
 }
 
+/* На десктопе обёртка не влияет на раскладку (иначе sticky topbar ограничится ею). */
+.head {
+  display: contents;
+}
+
 .form {
   display: grid;
   gap: 24px;
@@ -31,16 +36,34 @@
 
 @media (max-width: 899px) {
   .root {
+    flex: 1 1 auto;
     width: 100%;
     height: auto;
-    overflow: visible;
+    min-height: 0;
+    overscroll-behavior: contain;
     border-right: 0;
-    border-bottom: 1px solid rgba(40, 33, 38, 0.1);
+    border-top: 1px solid var(--product-line);
+    box-shadow: 0 -12px 32px rgba(57, 43, 52, 0.1);
+  }
+
+  /* Шапка и шаги — одна липкая строка: ← · шаги · статус сохранения. */
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-bottom: 1px solid var(--product-line);
+    background: rgba(255, 253, 250, 0.94);
+    backdrop-filter: blur(18px);
   }
 }
 
 @media (max-width: 640px) {
+  /* Панель «Назад / Следующий» — последний элемент формы, в конце скролла она у нижнего края. */
   .form {
-    padding-bottom: 96px;
+    padding-bottom: 0;
   }
 }

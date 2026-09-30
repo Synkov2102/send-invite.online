@@ -33,3 +33,10 @@
   accent-color: var(--product-accent);
   cursor: pointer;
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .toggle small {
+    font-size: 0.75rem;
+  }
+}

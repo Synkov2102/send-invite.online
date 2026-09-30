@@ -139,6 +139,7 @@ export function useInvitationBuilder({
     setPreviewDevice: navigation.setPreviewDevice,
     setPromoCodeInput: promo.setPromoCodeInput,
     setReceiptEmail: publish.setReceiptEmail,
+    showPurchaseTermsError: publish.showPurchaseTermsError,
     siteId,
     sitePricing,
     stepErrors,

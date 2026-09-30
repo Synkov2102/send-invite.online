@@ -1,9 +1,11 @@
 ﻿"use client";
 
+import { Toast } from "@heroui/react";
 import { EditorProvider } from "../editor-context";
 import { EditorPreviewPanel } from "../components/editor-preview-panel";
 import { EditorSidebar } from "../components/editor-sidebar";
 import { FullscreenPreview } from "../components/fullscreen-preview";
+import { editorToastQueue } from "../lib/editor-toast";
 import type { InvitationBuilderProps } from "../types";
 import { useCompactEditorViewport } from "../use-compact-editor-viewport";
 import { useInvitationBuilder } from "../use-invitation-builder";
@@ -17,7 +19,7 @@ function EditorLayout() {
   return (
     <div className={styles.layout}>
       <EditorSidebar />
-      {!isCompactEditor ? <EditorPreviewPanel /> : null}
+      <EditorPreviewPanel isCompact={isCompactEditor} />
     </div>
   );
 }
@@ -28,6 +30,7 @@ export default function InvitationBuilder(props: InvitationBuilderProps) {
   return (
     <EditorProvider value={controller}>
       <main className={`${productStyles.scope} ${styles.shell}`}>
+        <Toast.Provider placement="top" queue={editorToastQueue} />
         <FullscreenPreview />
         {!controller.isFullscreenPreview ? <EditorLayout /> : null}
       </main>

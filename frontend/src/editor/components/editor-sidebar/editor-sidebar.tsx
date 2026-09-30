@@ -19,9 +19,11 @@ export function EditorSidebar() {
   const { activeStep } = useEditor();
 
   return (
-    <aside className={styles.root}>
-      <EditorSidebarHeader />
-      <EditorStepNav />
+    <aside className={styles.root} id="editor-form">
+      <div className={styles.head}>
+        <EditorSidebarHeader />
+        <EditorStepNav />
+      </div>
 
       <div className={styles.form}>
         <ContentStep isActive={activeStep === 0} />

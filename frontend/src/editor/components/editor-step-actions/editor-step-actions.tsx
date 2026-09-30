@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { ArrowRight, ChevronLeft, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, Maximize2, Sparkles } from "lucide-react";
 import { formatRubPriceLabel } from "@/lib/commerce";
 import { editorSteps } from "../../constants";
 import { useEditor } from "../../editor-context";
@@ -9,9 +9,7 @@ import styles from "./editor-step-actions.module.css";
 
 export function EditorStepActions() {
   const {
-    acceptedPurchaseTerms,
     activeStep,
-    allErrors,
     checkoutPricing,
     continueToNextStep,
     isPublishing,
@@ -19,24 +17,12 @@ export function EditorStepActions() {
     publishError,
     publishSite,
     requiresPayment,
-    visibleValidationStep,
-    stepErrors,
+    setIsFullscreenPreview,
   } = useEditor();
   const isFreeCheckout = requiresPayment && Number(checkoutPricing.amount) <= 0;
 
   return (
     <>
-      {visibleValidationStep === activeStep && stepErrors[activeStep].length > 0 ? (
-        <div className={styles.validation} role="alert">
-          <strong>Проверьте этот раздел</strong>
-          <ul>
-            {stepErrors[activeStep].map((error) => (
-              <li key={error}>{error}</li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-
       {publishError && activeStep === editorSteps.length - 1 ? (
         <p className={styles.publishError} role="alert">
           {publishError}
@@ -54,6 +40,16 @@ export function EditorStepActions() {
           <ChevronLeft aria-hidden size={16} />
           <span>Предыдущий</span>
         </Button>
+        <Button
+          aria-label="Открыть предпросмотр на весь экран"
+          className={styles.preview}
+          onClick={() => setIsFullscreenPreview(true)}
+          type="button"
+          variant="outline"
+        >
+          <Maximize2 aria-hidden size={15} />
+          Просмотр
+        </Button>
         {activeStep < editorSteps.length - 1 ? (
           <Button
             className={styles.next}
@@ -67,11 +63,7 @@ export function EditorStepActions() {
         ) : (
           <Button
             className={styles.next}
-            isDisabled={
-              isPublishing ||
-              allErrors.length > 0 ||
-              (requiresPayment && !acceptedPurchaseTerms)
-            }
+            isDisabled={isPublishing}
             onClick={publishSite}
             type="button"
             variant="primary"

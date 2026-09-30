@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { editorStepIds, editorSteps } from "./constants";
+import { showStepErrors } from "./lib/editor-toast";
 import type { getEditorStepErrors } from "./validation";
 
 const leaveEditorMessage =
@@ -82,13 +83,14 @@ export function useEditorNavigation({
     setVisibleValidationStep(null);
 
     if (window.matchMedia("(max-width: 899px)").matches) {
-      window.scrollTo({ top: 0 });
+      document.getElementById("editor-form")?.scrollTo({ top: 0 });
     }
   }
 
   function goToStepWithErrors(index: number) {
     openStep(index);
     setVisibleValidationStep(index);
+    showStepErrors(editorSteps[index].title, stepErrors[index]);
   }
 
   const setFullscreenPreview = useCallback(
@@ -116,6 +118,7 @@ export function useEditorNavigation({
   function continueToNextStep() {
     if (stepErrors[activeStep].length > 0) {
       setVisibleValidationStep(activeStep);
+      showStepErrors(editorSteps[activeStep].title, stepErrors[activeStep]);
       return;
     }
 
@@ -178,7 +181,7 @@ export function useEditorNavigation({
         setVisibleValidationStep(null);
 
         if (didStepChange && window.matchMedia("(max-width: 899px)").matches) {
-          window.scrollTo({ top: 0 });
+          document.getElementById("editor-form")?.scrollTo({ top: 0 });
         }
         return;
       }

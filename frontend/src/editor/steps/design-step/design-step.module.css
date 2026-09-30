@@ -240,3 +240,15 @@
   background: rgba(246, 241, 243, 0.8);
   padding: 9px;
 }
+
+/* Мобильный редактор: текст не мельче 12px. */
+@media (max-width: 899px) {
+  .paletteMode button,
+  .palette,
+  .paletteCopy small,
+  .colorStudioHead span,
+  .colorStudioStart,
+  .colorStudioPreview small {
+    font-size: 0.75rem;
+  }
+}
