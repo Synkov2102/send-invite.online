@@ -64,15 +64,18 @@ function GlassSection({
   className,
   id,
   light,
+  section,
 }: Readonly<{
   children: ReactNode;
   className?: string;
   id?: string;
   light?: boolean;
+  section: string;
 }>) {
   return (
     <motion.section
       className={`${styles.glass} ${light ? styles.glassLight : ""} ${className ?? ""}`}
+      data-invite-section={section}
       id={id}
       initial="hidden"
       variants={sectionReveal}
@@ -120,6 +123,7 @@ export default function AquaTemplate({
         <div className={styles.content}>
           <motion.section
             className={styles.hero}
+            data-invite-section="hero"
             initial="hidden"
             variants={sectionReveal}
             viewport={revealViewport}
@@ -188,14 +192,14 @@ export default function AquaTemplate({
             </a>
           </motion.section>
 
-          <GlassSection className={styles.greetingSection} id="aqua-greeting" light>
+          <GlassSection className={styles.greetingSection} id="aqua-greeting" light section="greeting">
             <span className={styles.sectionNumber}>01</span>
             <Heart aria-hidden className={styles.sectionIcon} size={22} />
             <h2 className={styles.heading}>Дорогие гости!</h2>
             <p className={styles.lead}>{invite.lead}</p>
           </GlassSection>
 
-          <GlassSection className={styles.whenSection}>
+          <GlassSection className={styles.whenSection} section="date">
             <span className={styles.sectionNumber}>02</span>
             <CalendarDays aria-hidden className={styles.sectionIcon} size={22} />
             <h2 className={styles.heading}>Когда?</h2>
@@ -227,7 +231,7 @@ export default function AquaTemplate({
             </p>
           </GlassSection>
 
-          <GlassSection className={styles.locationSection}>
+          <GlassSection className={styles.locationSection} section="location">
             <motion.figure className={styles.venuePhoto} variants={photoReveal}>
               <span className={`${styles.sectionNumber} ${styles.sectionNumberOnPhoto}`}>03</span>
               <Image
@@ -255,7 +259,7 @@ export default function AquaTemplate({
           </GlassSection>
 
           {invite.showSchedule ? (
-            <GlassSection className={styles.programSection}>
+            <GlassSection className={styles.programSection} section="schedule">
               <span className={styles.sectionNumber}>04</span>
               <h2 className={styles.heading}>Программа</h2>
               <motion.ul
@@ -284,7 +288,7 @@ export default function AquaTemplate({
           ) : null}
 
           {invite.showDressCode ? (
-            <GlassSection className={styles.dressSection}>
+            <GlassSection className={styles.dressSection} section="dress-code">
               <span className={styles.sectionNumber}>05</span>
               <InvitationDressCodeBlock
                 colors={invite.dressCodeColors}
@@ -295,7 +299,7 @@ export default function AquaTemplate({
           ) : null}
 
           {invite.showGroupChat ? (
-            <GlassSection className={styles.groupChatSection}>
+            <GlassSection className={styles.groupChatSection} section="chat">
               <span className={styles.sectionNumber}>06</span>
               <InvitationGroupChatBlock
                 show={invite.showGroupChat}
@@ -307,7 +311,7 @@ export default function AquaTemplate({
           ) : null}
 
           {invite.showAdditionalInfo ? (
-            <GlassSection className={styles.additionalInfoSection}>
+            <GlassSection className={styles.additionalInfoSection} section="info">
               <span className={styles.sectionNumber}>07</span>
               <InvitationAdditionalInfoBlock
                 show={invite.showAdditionalInfo}
@@ -318,7 +322,7 @@ export default function AquaTemplate({
           ) : null}
 
           {invite.showRsvp ? (
-            <GlassSection className={styles.rsvpSection} id="rsvp">
+            <GlassSection className={styles.rsvpSection} id="rsvp" section="rsvp">
               <span className={styles.sectionNumber}>08</span>
               <div className={styles.rsvpHeader}>
                 <span className={styles.rsvpEyebrow}>RSVP</span>
@@ -339,6 +343,7 @@ export default function AquaTemplate({
 
           <motion.section
             className={styles.closing}
+            data-invite-section="portrait"
             initial="hidden"
             variants={sectionReveal}
             viewport={revealViewport}

@@ -107,7 +107,7 @@ function Hero({ invite }: Readonly<Pick<VelvetTemplateProps, "invite">>) {
   const heroNameStyle = { "--hero-name-size": `${heroNameSize}cqw` } as CSSProperties;
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <div className={styles.ticket}>
         <p className={styles.ticketHeading}>
           Приглашаем
@@ -146,7 +146,7 @@ function Greeting({
   const images = [coverImage, portraitImage, venueImage];
 
   return (
-    <section className={styles.greeting} id="greeting">
+    <section className={styles.greeting} data-invite-section="greeting" id="greeting">
       <p className={styles.script} aria-hidden>for love forever</p>
       <h2>Дорогие родные<br />и близкие</h2>
       <div className={styles.collage}>
@@ -178,7 +178,7 @@ function DateAndPlace({
   const weeks = getMonthCalendar(invite.date);
 
   return (
-    <section className={styles.datePlace}>
+    <section className={styles.datePlace} data-invite-section="date location">
       <header className={styles.dateHeading}>
         <p>тот самый день</p>
         <h2>Дата свадьбы</h2>
@@ -248,7 +248,7 @@ function Program({ invite }: Readonly<Pick<VelvetTemplateProps, "invite">>) {
   if (!invite.showSchedule) return null;
 
   return (
-    <section className={styles.program}>
+    <section className={styles.program} data-invite-section="schedule">
       <div className={styles.programHeading}>
         <span className={styles.programBow} aria-hidden>
           <Image alt="" fill sizes="(max-width: 640px) 29vw, 186px" src="/images/velvet-ticket/silk-bow.webp" />
@@ -278,7 +278,7 @@ function DressCode({ invite, portraitImage }: Readonly<Pick<VelvetTemplateProps,
   if (!invite.showDressCode) return null;
 
   return (
-    <section className={styles.dressCode}>
+    <section className={styles.dressCode} data-invite-section="dress-code">
       <figure>
         <Image
           alt=""
@@ -303,7 +303,7 @@ function Details({ invite }: Readonly<Pick<VelvetTemplateProps, "invite">>) {
   if (!invite.showGroupChat && !invite.showAdditionalInfo) return null;
 
   return (
-    <section className={styles.details}>
+    <section className={styles.details} data-invite-section="chat info">
       <h2>Детали</h2>
       <div className={styles.laceCard}>
         <p className={styles.laceMonogram} aria-hidden>
@@ -333,7 +333,7 @@ function Rsvp({ invite, siteId }: Readonly<Pick<VelvetTemplateProps, "invite" | 
   if (!invite.showRsvp) return null;
 
   return (
-    <section className={styles.rsvp}>
+    <section className={styles.rsvp} data-invite-section="rsvp">
       <p className={styles.eyebrow}>мы будем ждать вас</p>
       <h2>Будете<br />с нами?</h2>
       <p>{invite.rsvpText}</p>
@@ -354,7 +354,7 @@ function Closing({
   portraitImage,
 }: Readonly<Pick<VelvetTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing}>
+    <section className={styles.closing} data-invite-section="portrait">
       <figure>
         <Image
           alt={`${invite.bride} и ${invite.groom}`}

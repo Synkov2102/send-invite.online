@@ -42,7 +42,7 @@ export function EditorPreviewPanel({ isCompact = false }: EditorPreviewPanelProp
   return (
     <section className={`${styles.root} ${inviteOverrides.scope}`} id="invite-preview">
       <div className={styles.inner}>
-        <div className={styles.toolbar}>
+        <div className={styles.toolbar} data-preview-toolbar>
           <div>
             <p>
               <Eye aria-hidden size={14} /> Живой предпросмотр

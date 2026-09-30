@@ -92,6 +92,7 @@ function HeroSection({ invite }: Readonly<{ invite: InviteState }>) {
     <motion.section
       animate="visible"
       className={styles.hero}
+      data-invite-section="hero"
       initial="hidden"
       variants={staggerContainer}
     >
@@ -127,6 +128,7 @@ function GreetingSection({
   return (
     <motion.section
       className={styles.greeting}
+      data-invite-section="greeting cover"
       id="minimal-greeting"
       initial="hidden"
       variants={sectionReveal}
@@ -163,6 +165,7 @@ function DateSection({
   return (
     <motion.section
       className={styles.dateSection}
+      data-invite-section="date"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -208,6 +211,7 @@ function VenueSection({
   return (
     <motion.section
       className={styles.venueSection}
+      data-invite-section="location"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -248,6 +252,7 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
     <motion.section
       className={styles.program}
+      data-invite-section="schedule"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -284,6 +289,7 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
     <motion.section
       className={styles.dressSection}
+      data-invite-section="dress-code"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -310,6 +316,7 @@ function GroupChatSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
     <motion.section
       className={styles.groupChatSection}
+      data-invite-section="chat"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -339,6 +346,7 @@ function AdditionalInfoSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
     <motion.section
       className={styles.additionalInfoSection}
+      data-invite-section="info"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}
@@ -369,6 +377,7 @@ function RsvpSection({
   return (
     <motion.section
       className={styles.rsvp}
+      data-invite-section="rsvp"
       id="rsvp"
       initial="hidden"
       variants={sectionReveal}
@@ -404,6 +413,7 @@ function ClosingSection({
   return (
     <motion.footer
       className={styles.closing}
+      data-invite-section="portrait"
       initial="hidden"
       variants={sectionReveal}
       viewport={revealViewport}

@@ -131,7 +131,7 @@ function HeroSection({
   invite,
 }: Readonly<Pick<SkazkaTemplateProps, "coverImage" | "invite">>) {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <div className={styles.heroIntro}>
         <div className={styles.heroStack}>
           <p className={styles.heroKicker}>Жили-были</p>
@@ -171,7 +171,7 @@ function StorySection({
   invite,
 }: Readonly<Pick<SkazkaTemplateProps, "invite">>) {
   return (
-    <section className={styles.story} data-reveal>
+    <section className={styles.story} data-reveal data-invite-section="greeting">
       <HohlomaSprig />
       <p className={styles.storyKicker}>Дорогие гости!</p>
       <p className={styles.storyDrop}>{invite.lead}</p>
@@ -219,7 +219,7 @@ function WhenSection({
   invite,
 }: Readonly<Pick<SkazkaTemplateProps, "calendarDays" | "invite">>) {
   return (
-    <section className={styles.when} data-reveal>
+    <section className={styles.when} data-reveal data-invite-section="date">
       <SectionTitle lead="Когда" tail="ждём гостей" />
       <time className={styles.whenDate} dateTime={invite.date}>
         {formatLongDate(invite.date)}
@@ -247,7 +247,7 @@ function ProgramSection({ invite }: Readonly<Pick<SkazkaTemplateProps, "invite">
   }
 
   return (
-    <section className={styles.program} data-reveal>
+    <section className={styles.program} data-reveal data-invite-section="schedule">
       <HohlomaSprig side="right" />
       <SectionTitle lead="Программа" tail="гуляний" />
       <ol className={styles.timeline}>
@@ -273,7 +273,7 @@ function WhereSection({
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.where} data-reveal>
+    <section className={styles.where} data-reveal data-invite-section="location">
       <Image
         alt={`Место проведения — ${invite.venue}`}
         className={styles.wherePhoto}
@@ -310,7 +310,7 @@ function DressCodeSection({
   }
 
   return (
-    <section className={styles.dress} data-reveal>
+    <section className={styles.dress} data-reveal data-invite-section="dress-code">
       <HohlomaSprig />
       <SectionTitle lead="Наряды" tail="к празднику" />
       <InvitationDressCodeBlock
@@ -336,7 +336,7 @@ function DetailsSection({ invite }: Readonly<Pick<SkazkaTemplateProps, "invite">
   }
 
   return (
-    <section className={styles.details} data-reveal>
+    <section className={styles.details} data-reveal data-invite-section="chat info">
       <SectionTitle lead="На" tail="заметку" />
       <InvitationAdditionalInfoBlock
         className={styles.detailsBlock}
@@ -364,7 +364,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={styles.rsvp} data-reveal id="rsvp">
+    <section className={styles.rsvp} data-reveal data-invite-section="rsvp" id="rsvp">
       <HohlomaSprig side="right" />
       <SectionTitle lead="Анкета" tail="гостя" />
       <p className={styles.rsvpText}>{invite.rsvpText}</p>
@@ -387,7 +387,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<Pick<SkazkaTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing} data-reveal>
+    <section className={styles.closing} data-reveal data-invite-section="portrait">
       <Image
         alt={`Финальный портрет — ${invite.groom} и ${invite.bride}`}
         className={styles.closingPortrait}

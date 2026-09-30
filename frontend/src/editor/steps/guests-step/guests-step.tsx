@@ -28,6 +28,7 @@ export function GuestsStep({ isActive }: StepPanelProps) {
   return (
     <section className={`${panelStyles.panel} ${isActive ? panelStyles.active : ""}`}>
       <FieldGroup
+        previewSection="rsvp"
         title="Гости"
         description="Настройте подтверждение участия и вопросы для анкеты."
         hint="Поле имени будет добавлено автоматически, поэтому здесь нужны только вопросы к гостям."

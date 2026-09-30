@@ -107,7 +107,7 @@ function HeroSection({
   const brideInitial = invite.bride.trim().charAt(0) || "A";
 
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <Image
         alt="Свадебная фотография пары"
         className={styles.heroImage}
@@ -134,7 +134,7 @@ function HeroSection({
 
 function GreetingSection({ invite }: Readonly<{ invite: InviteState }>) {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} data-invite-section="greeting">
       <h2>Дорогие гости!</h2>
       <p>{invite.lead}</p>
     </section>
@@ -152,7 +152,7 @@ function CalendarSection({
   const fallbackSelected = calendarDays.find((day) => day.selected)?.day;
 
   return (
-    <section className={styles.calendarSection}>
+    <section className={styles.calendarSection} data-invite-section="date">
       <h2>{formatMonthName(invite.date)}</h2>
       <div className={styles.weekdays} aria-hidden>
         {weekLabels.map((label) => (
@@ -179,7 +179,7 @@ function LocationSection({ invite }: Readonly<{ invite: InviteState }>) {
   const mapUrl = getYandexMapsUrl(invite.mapUrl);
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} data-invite-section="location">
       <h2>Локация</h2>
       <p>
         {invite.venue}
@@ -234,7 +234,7 @@ function ProgramSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={cx(styles.section, styles.programSection)}>
+    <section className={cx(styles.section, styles.programSection)} data-invite-section="schedule">
       <h2>Тайминг</h2>
       <ol className={styles.timeline}>
         {invite.schedule.map((item, index) => (
@@ -255,7 +255,7 @@ function DressCodeSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={cx(styles.section, styles.dressSection)}>
+    <section className={cx(styles.section, styles.dressSection)} data-invite-section="dress-code">
       <InvitationDressCodeBlock
         className={styles.dressBlock}
         colors={invite.dressCodeColors}
@@ -272,7 +272,7 @@ function GroupChatSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={cx(styles.section, styles.groupChatSection)}>
+    <section className={cx(styles.section, styles.groupChatSection)} data-invite-section="chat">
       <InvitationGroupChatBlock
         className={styles.groupChatBlock}
         show={invite.showGroupChat}
@@ -290,7 +290,7 @@ function AdditionalInfoSection({ invite }: Readonly<{ invite: InviteState }>) {
   }
 
   return (
-    <section className={cx(styles.section, styles.additionalInfoSection)}>
+    <section className={cx(styles.section, styles.additionalInfoSection)} data-invite-section="info">
       <InvitationAdditionalInfoBlock
         className={styles.additionalInfoBlock}
         show={invite.showAdditionalInfo}
@@ -310,7 +310,7 @@ function RsvpSection({
   }
 
   return (
-    <section className={cx(styles.section, styles.rsvpSection)} id="rsvp">
+    <section className={cx(styles.section, styles.rsvpSection)} data-invite-section="rsvp" id="rsvp">
       <h2>Анкета гостя</h2>
       <p>{invite.rsvpText}</p>
       <span className={styles.rsvpDeadline}>
@@ -334,7 +334,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<{ invite: InviteState; portraitImage: string }>) {
   return (
-    <section className={styles.closing}>
+    <section className={styles.closing} data-invite-section="portrait">
       <h2>До встречи!</h2>
       <div className={styles.closingImage}>
         <Image

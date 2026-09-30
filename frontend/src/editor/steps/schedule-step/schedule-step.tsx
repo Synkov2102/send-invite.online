@@ -28,6 +28,7 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
   return (
     <section className={`${panelStyles.panel} ${isActive ? panelStyles.active : ""}`}>
       <FieldGroup
+        previewSection="schedule"
         title="Расписание"
         description="Добавьте ключевые моменты дня в порядке, как их увидят гости."
         hint="Блок появится на сайте только после включения."
@@ -117,6 +118,7 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
       </FieldGroup>
 
       <FieldGroup
+        previewSection="dress-code"
         title="Дресс-код"
         description="Опишите пожелания к образам и покажите гостям цветовые ориентиры."
         hint="Блок появится на сайте только после включения."
@@ -185,6 +187,7 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
       </FieldGroup>
 
       <FieldGroup
+        previewSection="chat"
         title="Общий чат"
         description="Если у гостей есть общий чат в Telegram, WhatsApp или другом мессенджере — добавьте ссылку."
         hint="Блок появится на сайте только после включения. Ссылка должна открываться в браузере."
@@ -217,6 +220,7 @@ export function ScheduleStep({ isActive }: StepPanelProps) {
       </FieldGroup>
 
       <FieldGroup
+        previewSection="info"
         title="Дополнительная информация"
         description="Любой абзац, который важно сообщить гостям: трансфер, парковка, подарки и т.п."
         hint="Блок появится на сайте только после включения."

@@ -93,7 +93,7 @@ export default function PetalTemplate({
           <span>Приглашение на свадьбу</span>
           <span>{formatInviteDate(invite.date, { year: "numeric" })}</span>
         </div>
-        <section className={styles.hero}>
+        <section className={styles.hero} data-invite-section="hero">
           <div className={styles.cover}>
             <Photo src={coverImage} alt={names} priority />
           </div>
@@ -124,7 +124,7 @@ export default function PetalTemplate({
           </div>
         </section>
 
-        <section className={styles.greeting} data-reveal>
+        <section className={styles.greeting} data-reveal data-invite-section="greeting">
           <p className={styles.eyebrow}>Вместе — самое важное</p>
           <h2>
             Дорогие
@@ -136,7 +136,7 @@ export default function PetalTemplate({
           <Doodle className={styles.doodle} name="calendar" />
         </section>
 
-        <section className={styles.when} data-reveal>
+        <section className={styles.when} data-reveal data-invite-section="date">
           <Flower className={styles.pinkFlower} />
           <div className={styles.content}>
             <p className={styles.eyebrow}>Тот самый день</p>
@@ -159,7 +159,7 @@ export default function PetalTemplate({
           </div>
         </section>
 
-        <section className={styles.location} data-reveal>
+        <section className={styles.location} data-reveal data-invite-section="location">
           <div className={styles.locationText}>
             <p className={styles.eyebrow}>Место нашей встречи</p>
             <h2>
@@ -181,7 +181,7 @@ export default function PetalTemplate({
         </section>
 
         {invite.showSchedule ? (
-          <section className={styles.program} data-reveal>
+          <section className={styles.program} data-reveal data-invite-section="schedule">
             <Doodle className={styles.programDoodle} name="glasses" />
             <p className={styles.eyebrow}>От первого объятия до последнего танца</p>
             <h2>
@@ -208,7 +208,7 @@ export default function PetalTemplate({
         ) : null}
 
         {invite.showDressCode ? (
-          <section className={styles.dressCode} data-reveal>
+          <section className={styles.dressCode} data-reveal data-invite-section="dress-code">
             <Flower className={styles.dressFlower} />
             <InvitationDressCodeBlock
               className={styles.sharedBlock}
@@ -219,7 +219,7 @@ export default function PetalTemplate({
         ) : null}
 
         {invite.showAdditionalInfo ? (
-          <section className={styles.details} data-reveal>
+          <section className={styles.details} data-reveal data-invite-section="info">
             <Flower className={styles.orangeFlower} />
             <InvitationAdditionalInfoBlock
               className={styles.sharedBlock}
@@ -231,7 +231,7 @@ export default function PetalTemplate({
         ) : null}
 
         {invite.showGroupChat ? (
-          <section className={styles.chat} data-reveal>
+          <section className={styles.chat} data-reveal data-invite-section="chat">
             <InvitationGroupChatBlock
               className={styles.sharedBlock}
               show={invite.showGroupChat}
@@ -242,7 +242,7 @@ export default function PetalTemplate({
         ) : null}
 
         {invite.showRsvp ? (
-          <section className={styles.rsvp} data-reveal>
+          <section className={styles.rsvp} data-reveal data-invite-section="rsvp">
             <p className={styles.eyebrow}>Праздник начинается с вас</p>
             <h2>Вы с нами?</h2>
             <p>{invite.rsvpText}</p>
@@ -258,7 +258,7 @@ export default function PetalTemplate({
           </section>
         ) : null}
 
-        <section className={styles.closing} data-reveal>
+        <section className={styles.closing} data-reveal data-invite-section="portrait">
           <Photo src={portraitImage} alt={names} />
           <div className={styles.closingText}>
             <h2>

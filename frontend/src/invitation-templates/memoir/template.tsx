@@ -81,7 +81,7 @@ function HeroSection({
   invite,
 }: Readonly<Pick<MemoirTemplateProps, "coverImage" | "invite">>) {
   return (
-    <section className={styles.hero}>
+    <section className={styles.hero} data-invite-section="hero">
       <p className={styles.invitationLabel}>приглашение на свадьбу</p>
       <h1 className={styles.heroTitle}>Мы женимся!</h1>
       <p className={styles.heroNames}>
@@ -120,7 +120,7 @@ function HeroSection({
 
 function GreetingSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">>) {
   return (
-    <section className={styles.greeting} data-reveal>
+    <section className={styles.greeting} data-reveal data-invite-section="greeting">
       <p>Дорогие гости!</p>
       <div className={styles.greetingRule} aria-hidden />
       <div className={styles.greetingCopy}>
@@ -136,7 +136,7 @@ function WhenSection({
   invite,
 }: Readonly<Pick<MemoirTemplateProps, "calendarDays" | "invite">>) {
   return (
-    <section className={styles.when} data-reveal>
+    <section className={styles.when} data-reveal data-invite-section="date">
       <SectionHeading note="сохраните дату">Когда</SectionHeading>
       <p className={styles.month}>
         {capitalize(formatInviteDate(invite.date, { month: "long" }))}{" "}
@@ -170,7 +170,7 @@ function WhereSection({
   const address = invite.address.trim();
 
   return (
-    <section className={styles.where} data-reveal>
+    <section className={styles.where} data-reveal data-invite-section="location">
       <SectionHeading note="точка встречи">Место</SectionHeading>
       <div className={styles.venueCopy}>
         <h3>{invite.venue}</h3>
@@ -214,7 +214,7 @@ function ProgramSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">
   }
 
   return (
-    <section className={styles.program} data-reveal>
+    <section className={styles.program} data-reveal data-invite-section="schedule">
       <div className={styles.programFrame}>
         <p className={styles.programNote}>наш день</p>
         <h2>Тайминг</h2>
@@ -241,7 +241,7 @@ function DressCodeSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite
   }
 
   return (
-    <section className={styles.dress} data-reveal>
+    <section className={styles.dress} data-reveal data-invite-section="dress-code">
       <p className={styles.dressScript} aria-hidden>
         Дресс-код
       </p>
@@ -268,7 +268,7 @@ function DetailsSection({ invite }: Readonly<Pick<MemoirTemplateProps, "invite">
   }
 
   return (
-    <section className={styles.details} data-reveal>
+    <section className={styles.details} data-reveal data-invite-section="chat info">
       <SectionHeading note="на заметку">Детали</SectionHeading>
       <div className={styles.detailsStack}>
         <InvitationAdditionalInfoBlock
@@ -295,7 +295,7 @@ function RsvpSection({ invite, siteId }: Readonly<Pick<MemoirTemplateProps, "inv
   }
 
   return (
-    <section className={styles.rsvp} data-reveal id="rsvp">
+    <section className={styles.rsvp} data-reveal data-invite-section="rsvp" id="rsvp">
       <p className={styles.rsvpScript}>Будем очень ждать вас</p>
       <h2>Подтвердите присутствие</h2>
       <p>{invite.rsvpText}</p>
@@ -316,7 +316,7 @@ function ClosingSection({
   portraitImage,
 }: Readonly<Pick<MemoirTemplateProps, "invite" | "portraitImage">>) {
   return (
-    <section className={styles.closing} data-reveal>
+    <section className={styles.closing} data-reveal data-invite-section="portrait">
       <div className={styles.closingCopy}>
         <p>а теперь — навсегда</p>
         <h2>
