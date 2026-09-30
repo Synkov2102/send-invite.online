@@ -4,7 +4,7 @@ import { XCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { trackGoal } from "@/lib/analytics";
+import { trackGoalOnceWhenReady } from "@/lib/analytics";
 
 type OrderState = {
   amount: string;
@@ -123,13 +123,10 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
       return;
     }
 
-    const sentKey = `payment_goal_sent:${orderId}`;
-    if (window.sessionStorage.getItem(sentKey)) {
-      return;
-    }
-
-    trackGoal("payment_success", { currency: "RUB", order_price: Number(order.amount) });
-    window.sessionStorage.setItem(sentKey, "1");
+    return trackGoalOnceWhenReady(`payment_goal_sent:${orderId}`, "payment_success", {
+      currency: "RUB",
+      order_price: Number(order.amount),
+    });
   }, [order, orderId]);
 
   if (order?.status === "paid") {
