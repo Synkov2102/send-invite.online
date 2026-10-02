@@ -23,6 +23,7 @@ export type TemplateKind =
   | "chapter"
   | "chrome"
   | "clarity"
+  | "cinema"
   | "crimson"
   | "editorial"
   | "electric"
@@ -1082,6 +1083,66 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       rsvpText:
         "Подтвердите, пожалуйста, ваше присутствие. Так мы сможем позаботиться о каждом госте на борту нашего праздника.",
       paletteId: "voyage-navy",
+    },
+  },
+  {
+    id: "quiet-cinema",
+    name: "Тихое кино",
+    description:
+      "Чёрно-белая история любви с рукописными заголовками, фотографиями на всю ширину и воздушными белыми секциями.",
+    coverType: "arch",
+    kind: "cinema",
+    editorReady: true,
+    defaultPaletteId: "cinema-monochrome",
+    recommendedPaletteIds: [
+      "cinema-monochrome",
+      "cinema-ivory",
+      "cinema-taupe",
+      "cinema-blush",
+      "cinema-lilac",
+      "cinema-sage",
+      "cinema-blue",
+      "cinema-burgundy",
+      "cinema-midnight",
+      "cinema-nocturne",
+    ],
+    tags: ["фото", "минимализм"],
+    screenshot: "/images/templates/quiet-cinema-mobile.webp",
+    preview: { background: "#292929", surface: "#ffffff", ink: "#252525", accent: "#555555" },
+    editorPreset: {
+      groom: "Виктор",
+      bride: "Мария",
+      date: "2027-06-24",
+      time: "15:00",
+      city: "Солнечногорск",
+      venue: "Солнечный берег",
+      address: "Озёрная улица, 36",
+      lead: "Дорогие родные и близкие!\n\nПриглашаем вас разделить радость особенного для нас события и стать частью начала нашей семейной истории.",
+      dressCode: "Нам будет очень приятно, если вы поддержите цветовую гамму нашего торжества.",
+      dressCodeColors: ["#eee9de", "#d3c6ae", "#a7a7a7", "#393939"],
+      showSchedule: true,
+      showDressCode: true,
+      schedule: [
+        {
+          time: "15:00",
+          title: "Сбор гостей",
+          description: "Объятия, новые знакомства и первые бокалы",
+        },
+        { time: "16:30", title: "Церемония", description: "Самое главное событие в нашей жизни" },
+        { time: "17:00", title: "Фотографии", description: "Запомним этот момент навсегда" },
+        {
+          time: "17:30",
+          title: "Ужин и танцы",
+          description: "Время вкусной еды, тёплых слов и веселья",
+        },
+        { time: "21:30", title: "Свадебный торт", description: "Сладкий момент нашего вечера" },
+        { time: "22:00", title: "Вечеринка", description: "Танцуем под любимые песни" },
+      ],
+      showAdditionalInfo: true,
+      additionalInfo:
+        "Главное для нас — ваше присутствие на свадьбе и внимание. Если захотите сделать подарок, будем благодарны за вклад в нашу семейную мечту.",
+      rsvpDate: "2027-05-24",
+      paletteId: "cinema-monochrome",
     },
   },
 ];
