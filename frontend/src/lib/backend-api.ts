@@ -2,6 +2,7 @@ import "server-only";
 
 import { INVITE_SITE_PRICE_RUB, isSitePricing } from "@invite/shared";
 import type { InviteSitePricing } from "@/lib/commerce";
+import { getIncomingForwardedForHeaders } from "@/lib/forwarded-for";
 import { isPublishedInviteSite, type PublishedInviteSite } from "@/lib/invite-site-types";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
@@ -38,6 +39,7 @@ export async function getPublishedInviteSite(id: string): Promise<PublishedInvit
       `${getServerApiBaseUrl()}/api/sites/${encodeURIComponent(id)}`,
       {
         cache: "no-store",
+        headers: await getIncomingForwardedForHeaders(),
       },
     );
 
@@ -101,6 +103,7 @@ async function fetchAuthorizedJson<T>(path: string, sessionToken: string): Promi
   const response = await fetch(`${getServerApiBaseUrl()}${path}`, {
     cache: "no-store",
     headers: {
+      ...(await getIncomingForwardedForHeaders()),
       Authorization: `Bearer ${sessionToken}`,
     },
   });

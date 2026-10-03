@@ -1,0 +1,485 @@
+:global(.published-site--cinema):has(> .shell) {
+  background: var(--invite-bg);
+}
+
+.shell {
+  --cinema-script: var(--font-invite-script), "Segoe Script", cursive;
+  --cinema-serif: var(--font-invite-serif), Georgia, serif;
+  --cinema-gutter: clamp(28px, 8%, 52px);
+  container-type: inline-size;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  margin-inline: auto !important;
+  overflow: hidden;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+.shell h2 {
+  margin: 0 0 32px;
+  font: 400 clamp(34px, 10cqw, 54px)/1.2 var(--cinema-script);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.photo {
+  object-fit: cover;
+  filter: grayscale(1);
+}
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 640px;
+  height: min(190cqw, 800px);
+  padding: 100px var(--cinema-gutter) 44px;
+  color: var(--invite-photo-text);
+}
+.hero .photo {
+  object-position: 50% 32%;
+}
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(0 0 0 / 26%),
+    transparent 28%,
+    rgb(0 0 0 / 14%) 45%,
+    rgb(0 0 0 / 72%)
+  );
+}
+.heroEyebrow {
+  position: absolute;
+  top: 30px;
+  left: 24px;
+  right: 24px;
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+.names {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 0 0 34px;
+  font: 400 clamp(44px, 14cqw, 76px)/1.12 var(--cinema-script);
+  overflow-wrap: anywhere;
+}
+.names > span {
+  max-width: 100%;
+}
+.names .ampersand {
+  font: italic 400 24px/1.1 var(--cinema-serif);
+  margin: 2px 0 8px;
+}
+.heroDate {
+  position: relative;
+  z-index: 1;
+  line-height: 1.6;
+}
+.heroDate::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  margin: 0 auto 20px;
+  background: currentColor;
+  opacity: 0.55;
+}
+.heroDate p {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 11px;
+}
+.heroDate time {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
+}
+.section {
+  position: relative;
+  padding: 68px var(--cinema-gutter);
+  scroll-margin-top: 30px;
+}
+.section + .section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 52px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: color-mix(in srgb, var(--invite-line) 65%, transparent);
+}
+.greeting {
+  padding-block: 76px 64px;
+}
+.copy {
+  max-width: 350px;
+  margin: 0 auto;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+.rule {
+  display: block;
+  width: 1px;
+  height: 36px;
+  margin: 30px auto;
+  background: var(--invite-line);
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 22px;
+  padding: 6px 0;
+  color: var(--invite-ink);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-decoration-color: var(--invite-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+  transition: text-decoration-color 180ms ease;
+}
+.link:hover {
+  text-decoration-color: var(--invite-ink);
+}
+.link:focus-visible {
+  outline: 2px solid var(--invite-accent);
+  outline-offset: 6px;
+}
+.filmStrip {
+  position: relative;
+  height: clamp(230px, 70cqw, 340px);
+}
+.filmStrip .photo {
+  object-position: 50% 25%;
+}
+.dateSection {
+  padding-bottom: 58px;
+}
+.dateLockup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  margin: 8px 0 28px;
+}
+.dateDay {
+  font: 400 clamp(76px, 20cqw, 104px)/0.95 var(--cinema-serif);
+  letter-spacing: -0.045em;
+}
+.dateMonth {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 10px 0 10px 22px;
+  border-left: 1px solid var(--invite-line);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+}
+.dateMonth > span {
+  color: var(--invite-muted);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 2px;
+  margin: 0 auto 22px;
+  max-width: 340px;
+}
+.day,
+.selectedDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 0;
+}
+.calendar span {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--invite-muted);
+}
+.calendar strong {
+  font-family: var(--cinema-serif);
+  font-size: 24px;
+  font-weight: 400;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+}
+.selectedDay strong {
+  border: 1px solid var(--invite-accent);
+  border-radius: 50%;
+}
+.startTime {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.startTime time {
+  margin-left: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.venue {
+  margin: 0 auto 18px;
+  max-width: 360px;
+  font: 500 clamp(26px, 7.5cqw, 36px)/1.2 var(--cinema-serif);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.venuePhoto {
+  position: relative;
+  aspect-ratio: 3 / 2;
+}
+.schedule {
+  list-style: none;
+  padding: 10px 0 0;
+  margin: 0 auto;
+  max-width: 370px;
+  text-align: left;
+}
+.schedule li {
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr);
+  gap: 22px;
+  margin-bottom: 34px;
+}
+.schedule li:last-child {
+  margin-bottom: 0;
+}
+.schedule time {
+  align-self: stretch;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center;
+  font: 400 28px/1 var(--cinema-serif);
+  font-variant-numeric: tabular-nums;
+  border-left: 1px solid var(--invite-line);
+  padding-left: 12px;
+}
+.schedule h3 {
+  margin: 0 0 7px;
+  font: 500 clamp(24px, 6.5cqw, 30px)/1.2 var(--cinema-serif);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.schedule p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--invite-muted);
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+.shared {
+  padding: 0 !important;
+  gap: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--invite-ink) !important;
+  box-shadow: none !important;
+}
+.shared > :global(.invite-section-eyebrow) {
+  display: none;
+}
+.shared h2 {
+  font-family: var(--cinema-script) !important;
+  font-weight: 400 !important;
+  font-size: clamp(34px, 10cqw, 54px) !important;
+  letter-spacing: 0 !important;
+  line-height: 1.2 !important;
+  margin: 0 0 32px !important;
+}
+.shared > p {
+  min-width: 0;
+  width: 100%;
+  overflow-wrap: anywhere;
+  margin: 0 auto !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+  max-width: 350px;
+  text-wrap: pretty;
+  color: var(--invite-ink) !important;
+}
+.shared ul {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 30px 0 0;
+}
+.shared li > span:first-child {
+  border-radius: 0;
+  width: 46px;
+  height: 56px;
+  border: 1px solid color-mix(in srgb, var(--invite-line) 45%, transparent);
+  box-shadow: none;
+}
+.shared li > span:last-child {
+  display: none;
+}
+.shell .shared a {
+  margin-top: 26px;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid var(--invite-line);
+  padding: 8px 0;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  box-shadow: none;
+}
+.details .shared h2 {
+  display: none;
+}
+.deadline {
+  color: var(--invite-muted);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  margin: 20px 0 38px;
+}
+.shell .form {
+  --rsvp-button-text: var(--invite-surface);
+  --rsvp-radius: 0;
+  --rsvp-control-radius: 2px;
+  --rsvp-shadow: none;
+  --rsvp-section: transparent;
+  --rsvp-surface: transparent;
+  --rsvp-accent-soft: color-mix(in srgb, var(--invite-accent) 6%, var(--invite-surface));
+  text-align: left;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  gap: 28px;
+}
+.form > section {
+  border: 0;
+  border-top: 1px solid var(--invite-line);
+  padding: 24px 0 0;
+  backdrop-filter: none;
+}
+.form > section > div:first-child > span {
+  border: 0;
+  background: transparent;
+  color: var(--invite-muted);
+  font-size: 12px;
+  font-weight: 400;
+  width: 24px;
+  flex-basis: 24px;
+  height: 26px;
+}
+.form h3 {
+  font-family: var(--cinema-serif);
+  font-size: clamp(22px, 6cqw, 26px) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+.form input[type="text"],
+.form textarea {
+  font-size: 16px;
+}
+.form [data-selected] {
+  border-color: var(--invite-accent);
+}
+.shell .form strong {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.form button[type="submit"] {
+  border-radius: 2px;
+  background: var(--invite-ink);
+  color: var(--invite-surface);
+  min-height: 54px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  box-shadow: none;
+}
+.closing {
+  position: relative;
+  min-height: 580px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--invite-photo-text);
+  padding: 60px var(--cinema-gutter);
+}
+.closing .photo {
+  object-position: 50% 30%;
+}
+.closing > div:last-child {
+  position: relative;
+  z-index: 1;
+}
+.closing p {
+  margin: 0 0 20px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+}
+.closing h2 {
+  margin-bottom: 24px;
+  font-size: clamp(38px, 11cqw, 62px);
+}
+.closing time {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+}
+@container (max-width: 360px) {
+  .hero {
+    min-height: 590px;
+  }
+  .section {
+    padding-block: 56px;
+  }
+  .schedule li {
+    gap: 18px;
+  }
+  .calendar strong {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}
+
+.form > section > div:first-child > div > p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.shell .form > label span,
+.form footer > p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.names > span,
+.closing h2 {
+  text-wrap: balance;
+}

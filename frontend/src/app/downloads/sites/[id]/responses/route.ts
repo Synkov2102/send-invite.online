@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
+import { getForwardedForHeaders } from "@/lib/forwarded-for";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function GET(
@@ -20,6 +21,7 @@ export async function GET(
       {
         cache: "no-store",
         headers: {
+          ...getForwardedForHeaders(request),
           Authorization: `Bearer ${sessionToken}`,
         },
       },

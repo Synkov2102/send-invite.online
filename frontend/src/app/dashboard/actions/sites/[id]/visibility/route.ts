@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authSessionCookieName } from "@/lib/auth";
 import { getRequestUrl } from "@/lib/request-origin";
+import { getForwardedForHeaders } from "@/lib/forwarded-for";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export async function POST(
@@ -22,6 +23,7 @@ export async function POST(
       body: JSON.stringify({ isPublished }),
       cache: "no-store",
       headers: {
+        ...getForwardedForHeaders(request),
         Authorization: `Bearer ${sessionToken}`,
         "Content-Type": "application/json",
       },

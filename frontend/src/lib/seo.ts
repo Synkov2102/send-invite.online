@@ -28,6 +28,7 @@ export const privateRobots: NonNullable<Metadata["robots"]> = {
 export const publicSitemapRoutes = [
   { path: "/", changeFrequency: "weekly" as const, priority: 1 },
   { path: "/templates", changeFrequency: "weekly" as const, priority: 0.9 },
+  { path: "/how-it-works", changeFrequency: "weekly" as const, priority: 0.9 },
   { path: "/blog", changeFrequency: "weekly" as const, priority: 0.7 },
   { path: "/contacts", changeFrequency: "monthly" as const, priority: 0.5 },
   { path: "/offer", changeFrequency: "monthly" as const, priority: 0.4 },

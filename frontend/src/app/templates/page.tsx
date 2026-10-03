@@ -33,24 +33,12 @@ export default async function TemplatesPage({ searchParams }: TemplatesPageProps
 
       <PageShellProvider as="main" className="templates-page" width="wide">
         <section className="templates-page__hero">
-          <p className="marketing-eyebrow">
-            {siteId ? "Смена оформления" : "Каталог"}
-          </p>
-          <h1>
-            {siteId
-              ? "Выберите новый шаблон"
-              : "Шаблоны свадебных сайтов-приглашений"}
-          </h1>
-          <p>
-            Сначала посмотрите живой сайт на весь экран, затем откройте редактор —
-            обложку, палитру и тексты можно изменить в любой момент.
-          </p>
-          <p className="templates-page__service">
-            Услуга: создание и публикация одного сайта-приглашения с уникальной ссылкой,
-            редактором, шаблоном и формой RSVP.
-          </p>
+          {siteId ? <p className="marketing-eyebrow">Смена оформления</p> : null}
+          <h1>{siteId ? "Выберите новый шаблон" : "Шаблоны приглашений"}</h1>
+          <p>Посмотрите живой свадебный сайт и настройте его под себя в редакторе.</p>
           <div className="templates-page__price">
-            <span>Создание и публикация одного сайта</span>
+            {/* Описание услуги нужно для модерации Robokassa — не убирать. */}
+            <span>Сайт-приглашение: своя ссылка, редактор, RSVP</span>
             <strong>
               {discountPercent !== null ? (
                 <s>{formatRubPrice(pricing.originalPriceRub as number)}</s>

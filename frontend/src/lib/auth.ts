@@ -2,6 +2,7 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
+import { getIncomingForwardedForHeaders } from "@/lib/forwarded-for";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 
 export const authSessionCookieName = "invite_session";
@@ -55,6 +56,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
     const response = await fetch(`${getServerApiBaseUrl()}/api/auth/session`, {
       cache: "no-store",
       headers: {
+        ...(await getIncomingForwardedForHeaders()),
         Authorization: `Bearer ${sessionToken}`,
       },
     });

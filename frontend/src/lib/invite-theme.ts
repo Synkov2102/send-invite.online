@@ -56,6 +56,12 @@ export const silkImages = {
   venue: "/images/silk-wedding-venue.webp",
 } as const;
 
+export const cinemaImages = {
+  cover: "/images/quiet-cinema-cover.webp",
+  portrait: "/images/quiet-cinema-portrait.webp",
+  venue: "/images/quiet-cinema-venue.webp",
+} as const;
+
 export const clarityImages = {
   cover: "/images/clarity-editorial-cover.webp",
   portrait: "/images/clarity-editorial-portrait.webp",
@@ -145,6 +151,7 @@ export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
   chapter: chapterImages,
   chrome: chromeImages,
   clarity: clarityImages,
+  cinema: cinemaImages,
   crimson: crimsonImages,
   editorial: editorialImages,
   electric: electricImages,

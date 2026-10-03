@@ -33,8 +33,7 @@ export function PaymentSummary() {
   const hasDiscount = Number(checkoutPricing.discountAmount) > 0;
   const isFree = Number(checkoutPricing.amount) <= 0;
   const promoApplied =
-    Boolean(appliedPromo) &&
-    appliedPromo?.promoCode === promoCodeInput.trim().toUpperCase();
+    Boolean(appliedPromo) && appliedPromo?.promoCode === promoCodeInput.trim().toUpperCase();
   const saleDiscountPercent = getSaleDiscountPercent(sitePricing);
   const showSaleBadge = saleDiscountPercent !== null && !hasDiscount;
 
@@ -71,6 +70,7 @@ export function PaymentSummary() {
       </p>
 
       <div className={styles.promo}>
+        <p>Сайт доступен до даты мероприятия и ещё 10 календарных дней после неё.</p>
         <label className={styles.promoLabel} htmlFor="editor-promo-code">
           Промокод
         </label>
@@ -93,11 +93,7 @@ export function PaymentSummary() {
             value={promoCodeInput}
           />
           {promoApplied ? (
-            <button
-              className={styles.promoButtonSecondary}
-              onClick={clearPromoCode}
-              type="button"
-            >
+            <button className={styles.promoButtonSecondary} onClick={clearPromoCode} type="button">
               Сбросить
             </button>
           ) : (
@@ -150,9 +146,19 @@ export function PaymentSummary() {
           type="checkbox"
         />
         <span>
-          Я принимаю <Link href="/offer" target="_blank">публичную оферту</Link>,
-          условия <Link href="/payment-and-refund" target="_blank">оплаты и возврата</Link>
-          {" "}и <Link href="/privacy" target="_blank">политику обработки данных</Link>.
+          Я принимаю{" "}
+          <Link href="/offer" target="_blank">
+            публичную оферту
+          </Link>
+          , условия{" "}
+          <Link href="/payment-and-refund" target="_blank">
+            оплаты и возврата
+          </Link>{" "}
+          и{" "}
+          <Link href="/privacy" target="_blank">
+            политику обработки данных
+          </Link>
+          .
         </span>
       </label>
       {showPurchaseTermsError ? (

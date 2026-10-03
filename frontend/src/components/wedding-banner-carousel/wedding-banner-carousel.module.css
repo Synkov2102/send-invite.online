@@ -1,0 +1,307 @@
+.carousel {
+  min-width: 0;
+}
+.stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--product-ink);
+}
+.preview {
+  position: relative;
+  height: 460px;
+  isolation: isolate;
+}
+.stageLabel {
+  position: absolute;
+  z-index: 3;
+  top: 28px;
+  left: 28px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.photoFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.photoFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--product-ink) 50%, transparent),
+      color-mix(in srgb, var(--product-ink) 10%, transparent) 60%
+    ),
+    linear-gradient(0deg, color-mix(in srgb, var(--product-ink) 85%, transparent), transparent 65%);
+}
+.photo {
+  object-fit: cover;
+  object-position: 35% center;
+}
+.device {
+  position: absolute;
+  top: 48px;
+  right: 30px;
+  width: 218px;
+  height: 368px;
+  overflow: hidden;
+  border: 6px solid #fff;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 20px 45px #0005;
+  transition: transform 0.2s;
+}
+.device:hover {
+  transform: translateY(-4px);
+}
+.device:focus-visible {
+  outline: 3px solid var(--product-accent);
+  outline-offset: 4px;
+}
+.previewLink {
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 8px;
+  border-radius: 999px;
+  background: var(--product-paper);
+  color: var(--product-ink);
+  box-shadow: 0 2px 12px #0002;
+  font-size: 12px;
+  font-weight: 550;
+}
+.device img {
+  object-fit: cover;
+  object-position: top;
+}
+.note {
+  position: absolute;
+  left: 28px;
+  bottom: 34px;
+  max-width: 210px;
+  color: #fff;
+  font-size: 29px;
+  font-weight: 550;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+.note > svg {
+  display: block;
+  margin-bottom: 12px;
+}
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 2px 0;
+}
+.navigation strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 550;
+}
+.navigation div > span {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--product-muted);
+  line-height: 1.5;
+}
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+.controls button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--product-line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--product-ink);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.controls button:hover {
+  background: var(--product-accent-soft);
+}
+.controls button:focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 3px;
+}
+.controls > span {
+  margin: 0 !important;
+  font-size: 11px !important;
+}
+.guestDemo {
+  position: absolute;
+  inset: 70px 28px 30px;
+  padding: 28px;
+  background: var(--product-paper);
+  border-radius: 12px;
+}
+.demoLabel {
+  color: var(--product-muted);
+  font-size: 11px;
+}
+.guestDemo h3 {
+  margin: 18px 0 6px;
+  font-size: 27px;
+  font-weight: 550;
+  letter-spacing: -0.03em;
+}
+.guestDemo p {
+  margin: 0 0 20px;
+  color: var(--product-muted);
+  font-size: 12px;
+}
+.guestRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 0;
+  border-top: 1px solid var(--product-line);
+  font-size: 13px;
+}
+.guestRow > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--product-accent-text);
+}
+.guestRow > span.declined {
+  color: var(--product-muted);
+}
+.excelNote {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+@media (max-width: 1100px) and (min-width: 801px) {
+  .device {
+    width: 180px;
+    right: 20px;
+  }
+  .note {
+    font-size: 24px;
+    max-width: 160px;
+    left: 22px;
+  }
+}
+@media (max-width: 640px) {
+  .stage {
+    border-radius: 14px;
+  }
+  .preview {
+    height: 320px;
+  }
+  .stageLabel {
+    top: 20px;
+    left: 20px;
+    font-size: 11px;
+  }
+  .device {
+    top: 48px;
+    right: 18px;
+    width: 155px;
+    height: 250px;
+    border-width: 4px;
+    border-radius: 8px;
+  }
+  .previewLink {
+    bottom: 8px;
+    left: 6px;
+    right: 6px;
+    font-size: 12px;
+    padding: 8px 4px;
+    gap: 5px;
+  }
+  .note {
+    left: 20px;
+    bottom: 26px;
+    max-width: 140px;
+    font-size: 22px;
+  }
+  .navigation {
+    padding-top: 14px;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .navigation strong {
+    font-size: 14px;
+  }
+  .navigation div > span {
+    font-size: 13px;
+  }
+  .controls {
+    gap: 5px;
+  }
+  .controls button {
+    width: 44px;
+    height: 44px;
+  }
+  .preview:has(.guestDemo) {
+    height: auto;
+    min-height: 320px;
+    padding: 52px 16px 16px;
+  }
+  .guestDemo {
+    position: relative;
+    inset: auto;
+    padding: 16px;
+  }
+  .guestDemo h3 {
+    font-size: 22px;
+    margin: 12px 0;
+  }
+  .guestDemo p {
+    display: none;
+  }
+  .guestRow {
+    padding-block: 8px;
+    font-size: 11px;
+  }
+  .excelNote {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+}
+@media (max-width: 360px) {
+  .device {
+    width: 135px;
+    right: 14px;
+  }
+  .note {
+    font-size: 19px;
+    max-width: 115px;
+    left: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .carousel :global(.swiper-wrapper) {
+    transition-duration: 0.01ms !important;
+  }
+  .controls button,
+  .device {
+    transition: none;
+  }
+}

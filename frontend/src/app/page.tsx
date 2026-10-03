@@ -39,11 +39,7 @@ function getHeroStats(templateCount: number) {
   return [
     {
       value: String(templateCount),
-      label: pluralizeRu(templateCount, [
-        "готовый шаблон",
-        "готовых шаблона",
-        "готовых шаблонов",
-      ]),
+      label: pluralizeRu(templateCount, ["готовый шаблон", "готовых шаблона", "готовых шаблонов"]),
     },
     { value: "10 мин", label: "на сборку" },
     { value: "0 ₽", label: "до публикации" },
@@ -95,11 +91,7 @@ export default async function HomePage() {
   return (
     <ProductPageShell className={styles.page}>
       <JsonLd
-        data={[
-          buildOrganizationJsonLd(),
-          buildWebSiteJsonLd(),
-          buildWebApplicationJsonLd(),
-        ]}
+        data={[buildOrganizationJsonLd(), buildWebSiteJsonLd(), buildWebApplicationJsonLd()]}
       />
       <SiteHeader active="home" />
 
@@ -116,8 +108,8 @@ export default async function HomePage() {
                 </span>
               </h1>
               <p className={styles.heroLead}>
-                Программа дня, место на карте, дресс-код и анкета для гостей — одной
-                ссылкой, которую удобно отправить в любой мессенджер.
+                Программа дня, место на карте, дресс-код и анкета для гостей — одной ссылкой,
+                которую удобно отправить в любой мессенджер.
               </p>
 
               <div className={styles.heroRow}>
@@ -134,7 +126,7 @@ export default async function HomePage() {
                       <b className={styles.heroPriceBadge}>−{discountPercent}%</b>
                     ) : null}
                   </div>
-                  <small>Разовая оплата, без подписки</small>
+                  <small>Разовая оплата · до даты свадьбы + 10 дней</small>
                 </div>
                 <TrackedLink
                   className={styles.primaryButton}
@@ -191,8 +183,8 @@ export default async function HomePage() {
             <Eyebrow>Возможности</Eyebrow>
             <h2>Всё в одной ссылке</h2>
             <p>
-              Дата, место на карте, программа, дресс-код, музыка и чат гостей — на одной
-              странице. Гости не звонят с вопросами «а во сколько?» и «а где парковка?».
+              Дата, место на карте, программа, дресс-код, музыка и чат гостей — на одной странице.
+              Гости не звонят с вопросами «а во сколько?» и «а где парковка?».
             </p>
           </div>
           <div className={styles.benefitsGrid}>
@@ -222,12 +214,12 @@ export default async function HomePage() {
           <div className={styles.sectionIntro}>
             <Eyebrow>Шаблоны</Eyebrow>
             <h2>
-              {templates.length}{" "}
-              {pluralizeRu(templates.length, ["дизайн", "дизайна", "дизайнов"])} на выбор
+              {templates.length} {pluralizeRu(templates.length, ["дизайн", "дизайна", "дизайнов"])}{" "}
+              на выбор
             </h2>
             <p>
-              От классики до авиабилета. Листайте карточку, чтобы примерить цвета, — и
-              нажмите, чтобы начать заполнять.
+              От классики до авиабилета. Листайте карточку, чтобы примерить цвета, — и нажмите,
+              чтобы начать заполнять.
             </p>
           </div>
           <div className={`templates-page__grid ${styles.templateGrid}`}>
