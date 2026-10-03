@@ -69,8 +69,8 @@ export function PaymentSummary() {
           : "Разовая оплата через Robokassa. После оплаты сайт публикуется автоматически, чек приходит на email."}
       </p>
 
+      <p>Сайт доступен до даты мероприятия и ещё 10 календарных дней после неё.</p>
       <div className={styles.promo}>
-        <p>Сайт доступен до даты мероприятия и ещё 10 календарных дней после неё.</p>
         <label className={styles.promoLabel} htmlFor="editor-promo-code">
           Промокод
         </label>

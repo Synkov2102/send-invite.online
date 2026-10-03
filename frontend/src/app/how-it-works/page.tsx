@@ -66,11 +66,6 @@ function getQuestions(price: string): { question: string; answer: ReactNode }[] 
       answer: `Собрать приглашение и посмотреть его можно бесплатно. Платите один раз — ${price} — когда решите опубликовать сайт и отправить ссылку гостям. Без подписки и доплат за правки, смену шаблона или ответы гостей.`,
     },
     {
-      question: "Как долго будет доступен сайт?",
-      answer:
-        "Сайт доступен до даты свадьбы, указанной в приглашении, и ещё 10 календарных дней после неё.",
-    },
-    {
       question: "Что увидят гости и нужно ли им что-то устанавливать?",
       answer:
         "Гости открывают ссылку в браузере — на телефоне или компьютере, прямо из мессенджера. Ничего устанавливать и регистрироваться не нужно. Приглашение не попадает в поисковики: его увидят только те, кому вы отправили ссылку.",
@@ -155,10 +150,11 @@ export default async function HowItWorksPage() {
             </p>
             <div className={styles.heroPrice}>
               <span>
-                {discount !== null && <s>{formatRubPrice(pricing.originalPriceRub!)}</s>}{" "}
-                <strong>{formatRubPrice(pricing.currentPriceRub)}</strong> за публикацию
+                {discount !== null && <s>{formatRubPrice(pricing.originalPriceRub!)}</s>}
+                <strong>{formatRubPrice(pricing.currentPriceRub)}</strong>
+                {discount !== null && <b>−{discount}%</b>}
               </span>
-              <span>Один платёж · без подписки</span>
+              <span>Разовая оплата · до даты свадьбы + 10 дней</span>
             </div>
           </div>
           <WeddingBannerCarousel />
