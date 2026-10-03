@@ -5,6 +5,7 @@ import {
   isSafeReturnPath,
 } from "@/lib/auth";
 import { getRequestUrl } from "@/lib/request-origin";
+import { getForwardedForHeaders } from "@/lib/forwarded-for";
 import { getServerApiBaseUrl } from "@/lib/server-api-base-url";
 import { getYandexRedirectUri } from "@/lib/yandex-oauth";
 
@@ -106,6 +107,7 @@ export async function GET(request: NextRequest) {
       }),
       cache: "no-store",
       headers: {
+        ...getForwardedForHeaders(request),
         "Content-Type": "application/json",
       },
       method: "POST",
