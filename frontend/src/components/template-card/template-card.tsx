@@ -25,6 +25,8 @@ type TemplateCardProps = {
   template: InviteTemplate;
   titleAs?: "h2" | "h3";
   trackingGoal?: string;
+  actionLabel?: string;
+  caption?: string;
 };
 
 export default function TemplateCard({
@@ -42,6 +44,8 @@ export default function TemplateCard({
   template,
   titleAs: Title = "h2",
   trackingGoal,
+  actionLabel,
+  caption,
 }: TemplateCardProps) {
   const palettes = getTemplatePalettes(template);
   const rootClassName = `template-card${className ? ` ${className}` : ""}`;
@@ -50,7 +54,7 @@ export default function TemplateCard({
   const meta = (
     <div className="template-card__meta">
       <div>
-        <small>{template.tags.join(" · ")}</small>
+        <small>{caption ?? template.tags.join(" · ")}</small>
         <Title>{template.name}</Title>
         <span className="template-card__price">
           {discountPercent !== null ? (
@@ -67,6 +71,7 @@ export default function TemplateCard({
         </span>
       </div>
       <span className="template-card__arrow">
+        {actionLabel && <span>{actionLabel}</span>}
         <ArrowRight aria-hidden size={17} />
       </span>
     </div>

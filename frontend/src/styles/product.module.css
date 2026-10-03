@@ -1318,6 +1318,10 @@
   --product-accent: #ff4f72;
   --product-accent-soft: #ffe6eb;
   --product-accent-text: #d6355a;
+  --product-accent-hover: #ff6c89;
+  /* Текст на тёмных блоках (--product-ink фон). */
+  --product-accent-on-dark: #ff9eb2;
+  --product-muted-on-dark: rgba(255, 255, 255, 0.7);
   --product-grid:
     linear-gradient(rgba(40, 33, 38, 0.026) 1px, transparent 1px),
     linear-gradient(90deg, rgba(40, 33, 38, 0.026) 1px, transparent 1px);

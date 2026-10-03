@@ -1,13 +1,22 @@
 "use client";
 
-import { ArrowUpRight, BookOpen, House, LifeBuoy, Menu, PanelsTopLeft, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  House,
+  LifeBuoy,
+  ListOrdered,
+  Menu,
+  PanelsTopLeft,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
 import SupportModal from "./support-modal";
 
 type SiteHeaderMobileMenuProps = {
-  active?: "blog" | "home" | "templates";
+  active?: "blog" | "home" | "how-it-works" | "templates";
   initialUser?: HeaderUser | null;
 };
 
@@ -46,6 +55,15 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
             >
               <PanelsTopLeft aria-hidden size={18} />
               <span><strong>Шаблоны</strong><small>Выбрать дизайн приглашения</small></span>
+            </Link>
+            <Link
+              aria-current={active === "how-it-works" ? "page" : undefined}
+              className={active === "how-it-works" ? "is-active" : undefined}
+              href="/how-it-works"
+              onClick={() => setIsOpen(false)}
+            >
+              <ListOrdered aria-hidden size={18} />
+              <span><strong>Как это работает</strong><small>Три шага, цена и ответы на вопросы</small></span>
             </Link>
             <Link
               aria-current={active === "blog" ? "page" : undefined}
