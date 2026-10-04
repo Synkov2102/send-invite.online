@@ -258,11 +258,20 @@ export const editorMusicTracks: readonly EditorMusicTrack[] = [
     audioUrl: "/api/catalog-music/slavic-folk-soulfuljamtracks-308126",
     sourceUrl: "https://pixabay.com/music/folk-slavic-folk-308126/",
   },
+  {
+    id: "reading-soft-piano-clavier-221781",
+    title: "Между строк",
+    author: "Clavier-Music",
+    duration: "2:28",
+    audioUrl: "/api/catalog-music/reading-soft-piano-clavier-221781",
+    sourceUrl: "https://pixabay.com/music/modern-classical-reading-soft-piano-221781/",
+  },
 ] as const;
 
 const musicTrackById = new Map(editorMusicTracks.map((track) => [track.id, track]));
 
 const templateMusicTrackIds: Record<string, string> = {
+  "villa-amore": "reading-soft-piano-clavier-221781",
   "quiet-cinema": "wedding-romantic-love-krasnoshchok-409293",
   "voyage-ticket": "wedding-the-mountain-487025",
   "petal-party": "wedding-day-soulprodmusic-318423",
@@ -320,7 +329,8 @@ export function isTemplateDemoMusicUrl(audioUrl: string) {
     return false;
   }
 
-  return Object.values(templateMusicTrackIds).some(
+  // Предыдущая демо-мелодия «Вилла Аморе» также обновляется в старых черновиках.
+  return [...Object.values(templateMusicTrackIds), "wedding-paulyudin-485932"].some(
     (trackId) => musicTrackById.get(trackId)?.audioUrl === audioUrl,
   );
 }

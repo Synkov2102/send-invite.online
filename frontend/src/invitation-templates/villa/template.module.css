@@ -1,0 +1,600 @@
+/* Общая оболочка опубликованного сайта задаёт width: 100%; сохраняем формат приглашения. */
+.shell {
+  width: min(100%, 640px);
+  max-width: 640px;
+  margin: 0 auto;
+  margin-inline: auto !important;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-kerning: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+.shell p,
+.shell h1,
+.shell h2,
+.shell h3,
+.shell figure {
+  margin: 0;
+}
+.shell img {
+  object-fit: cover;
+}
+.shell a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+.eyebrow {
+  font:
+    500 11px/1.6 var(--font-geist-sans),
+    sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 700px;
+  padding: 66px 42px 48px;
+  background: var(--invite-bg);
+  color: var(--invite-surface);
+  box-shadow: inset 8px 0 14px color-mix(in srgb, var(--invite-ink) 16%, transparent);
+}
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, currentColor 48%, transparent);
+}
+.hero::before {
+  inset: 18px;
+}
+.hero::after {
+  inset: 24px;
+  border-color: color-mix(in srgb, currentColor 22%, transparent);
+}
+.hero .eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  flex: 1;
+  padding: 60px 0;
+  font:
+    500 clamp(38px, 8vw, 56px)/1.15 var(--font-invite-serif),
+    Georgia,
+    serif;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+.names span {
+  min-width: 0;
+  max-width: 100%;
+}
+.names i {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font:
+    italic 26px/1 var(--font-invite-serif),
+    Georgia,
+    serif;
+  letter-spacing: 0;
+}
+.names i::before,
+.names i::after {
+  content: "";
+  width: 32px;
+  border-top: 1px solid color-mix(in srgb, currentColor 55%, transparent);
+}
+.heroDate {
+  font:
+    500 20px/1.4 var(--font-invite-serif),
+    Georgia,
+    serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.02em;
+}
+.shell .heroCity {
+  margin-top: 12px;
+  font:
+    500 11px/1.5 var(--font-geist-sans),
+    sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.heroLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 34px;
+  color: inherit;
+  text-decoration: none;
+  font:
+    11px/1.5 var(--font-geist-sans),
+    sans-serif;
+  letter-spacing: 0.08em;
+}
+.heroLink span {
+  font-size: 16px;
+}
+.greeting {
+  padding: 64px 32px 56px;
+}
+.shell .ovalTitle {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 18px auto 32px;
+  padding: 32px 56px;
+  font:
+    500 clamp(29px, 5vw, 38px)/1.15 var(--font-invite-serif),
+    Georgia,
+    serif;
+  text-wrap: balance;
+}
+.ovalTitle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  -webkit-mask: url("/images/villa-amore-decor/oval-v1.webp") center / 100% 100% no-repeat;
+  mask: url("/images/villa-amore-decor/oval-v1.webp") center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.ovalTitle > span {
+  position: relative;
+  z-index: 1;
+}
+.shell .lead {
+  max-width: 42ch;
+  margin: auto;
+  white-space: pre-line;
+  font-size: 16px;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.shell .signature {
+  margin-top: 24px;
+  font:
+    36px/1.5 var(--font-invite-script),
+    cursive;
+}
+.dateScene {
+  min-height: 440px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 40px 12px;
+}
+.dateScene > img {
+  filter: brightness(0.8);
+}
+.flower {
+  position: relative;
+  width: min(100%, 370px);
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+.flowerShape {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  fill: var(--invite-surface);
+}
+.flowerCopy {
+  position: relative;
+  width: 72%;
+  padding: 72px 0;
+}
+.flowerCopy h2 {
+  margin: 14px 0;
+  font:
+    500 34px/1.15 var(--font-invite-serif),
+    Georgia,
+    serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-wrap: balance;
+}
+.flowerCopy > p:not(.eyebrow) {
+  font:
+    400 13px/1.6 var(--font-geist-sans),
+    sans-serif;
+}
+.calendar {
+  padding: 0;
+  margin: 24px 0 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+}
+.calendar li {
+  display: grid;
+  gap: 9px;
+  justify-items: center;
+}
+.calendar small {
+  font:
+    500 10px/1.4 var(--font-geist-sans),
+    sans-serif;
+  text-transform: uppercase;
+}
+.calendar strong {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 29px;
+  font-weight: 400;
+  font-size: 14px;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.selected strong {
+  border: 1px solid var(--invite-accent);
+  border-radius: 50%;
+}
+.program {
+  background: var(--invite-bg);
+  color: var(--invite-surface);
+  padding: 58px 32px 38px;
+}
+.shell .sectionTitle {
+  font:
+    500 clamp(34px, 6vw, 44px)/1.15 var(--font-invite-serif),
+    Georgia,
+    serif;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  margin: 16px 0 32px;
+}
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 36px auto 0;
+  max-width: 370px;
+  text-align: left;
+}
+.timeline li {
+  display: grid;
+  grid-template-columns: 65px minmax(0, 1fr);
+  gap: 24px;
+  padding-bottom: 25px;
+}
+.timeline time {
+  padding-top: 2px;
+  text-align: right;
+  font:
+    italic 500 24px/1.2 var(--font-invite-serif),
+    Georgia,
+    serif;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.timeline li > div {
+  position: relative;
+  padding-left: 24px;
+  border-left: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+}
+.timeline li > div::before {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.timeline h3 {
+  font:
+    500 25px/1.2 var(--font-invite-serif),
+    Georgia,
+    serif;
+  text-wrap: balance;
+}
+.timeline p {
+  margin-top: 8px;
+  font:
+    400 14px/1.65 var(--font-geist-sans),
+    sans-serif;
+  text-wrap: pretty;
+  opacity: 0.9;
+}
+.star {
+  display: block;
+  width: 44px;
+  height: 44px;
+  margin: 18px auto 0;
+  background: currentColor;
+  -webkit-mask: url("/images/villa-amore-decor/rosette-v1.webp") center / contain no-repeat;
+  mask: url("/images/villa-amore-decor/rosette-v1.webp") center / contain no-repeat;
+}
+.location {
+  padding: 48px 32px 52px;
+}
+.location h3 {
+  margin: 16px 0 12px;
+  font:
+    500 32px/1.2 var(--font-invite-serif),
+    Georgia,
+    serif;
+  text-wrap: balance;
+}
+.location address {
+  font:
+    400 14px/1.65 var(--font-geist-sans),
+    sans-serif;
+  text-wrap: pretty;
+}
+.shell .locationPhoto {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 30px 0 24px;
+  -webkit-mask: url("/images/villa-amore-decor/photo-cartouche-v1.webp") center / 100% 100%
+    no-repeat;
+  mask: url("/images/villa-amore-decor/photo-cartouche-v1.webp") center / 100% 100% no-repeat;
+}
+.locationPhoto img {
+  object-position: center;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border: 1px solid var(--invite-muted);
+  border-radius: 50%;
+  padding: 13px 25px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 12px;
+}
+.dress {
+  padding: 42px 32px;
+  border-top: 1px solid var(--invite-line);
+  border-bottom: 1px solid var(--invite-line);
+}
+.shell .dressBlock {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+.dressBlock h2 {
+  color: var(--invite-ink);
+  font:
+    500 36px/1.15 var(--font-invite-serif),
+    Georgia,
+    serif;
+  letter-spacing: -0.015em;
+}
+.dressBlock p {
+  max-width: 42ch;
+  font-family: Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.dressBlock ul {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dressBlock ul li {
+  min-width: 34px;
+}
+.dressBlock ul li > span:first-child {
+  width: 38px;
+  border-radius: 50%;
+  box-shadow: none;
+}
+.dressBlock ul li > span:last-child {
+  font-size: 10px;
+  font-weight: 400;
+}
+.details {
+  padding: 46px 32px 58px;
+}
+.detailsGrid {
+  display: grid;
+  gap: 28px;
+  text-align: left;
+}
+.shell .detailBlock {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  text-align: left;
+  align-items: start;
+  justify-items: start;
+}
+.detailBlock h2 {
+  font:
+    500 27px/1.2 var(--font-invite-serif),
+    Georgia,
+    serif;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: var(--invite-ink);
+}
+.detailBlock p {
+  max-width: 45ch;
+  font:
+    400 15px/1.75 Georgia,
+    serif;
+  text-wrap: pretty;
+}
+.detailBlock a {
+  font-size: 12px;
+}
+.rsvp {
+  padding: 50px 28px;
+  background: color-mix(in srgb, var(--invite-bg) 5%, var(--invite-surface));
+}
+.shell .rsvpText {
+  max-width: 42ch;
+  margin-inline: auto;
+  font-size: 16px;
+  line-height: 1.75;
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+.deadline {
+  display: block;
+  margin: 20px 0 32px;
+  color: var(--invite-ink);
+  font:
+    400 13px/1.65 var(--font-geist-sans),
+    sans-serif;
+  text-wrap: balance;
+}
+.shell .form {
+  --rsvp-radius: 0px;
+  --rsvp-control-radius: 0px;
+  --rsvp-shadow: none;
+  --rsvp-accent: var(--invite-bg);
+  --rsvp-button-text: var(--invite-surface);
+  --rsvp-surface: var(--invite-surface);
+  --rsvp-section: var(--invite-surface);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+.form h3 {
+  font:
+    500 24px/1.25 var(--font-invite-serif),
+    Georgia,
+    serif;
+}
+.form p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.form input,
+.form textarea {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.form label,
+.form [role="radio"],
+.form [role="checkbox"] {
+  line-height: 1.5;
+}
+.form strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+.form button {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.closingPhoto {
+  position: relative;
+  height: 420px;
+}
+.closingCopy {
+  background: var(--invite-bg);
+  color: var(--invite-surface);
+  padding: 44px 24px 36px;
+}
+.closingCopy .signature {
+  margin: 14px 0;
+}
+.closingCopy time {
+  font:
+    500 18px/1.5 var(--font-invite-serif),
+    Georgia,
+    serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.02em;
+}
+@media (min-width: 540px) {
+  .hero {
+    min-height: 780px;
+    padding: 76px 64px 56px;
+  }
+  .names {
+    padding: 32px 0;
+  }
+  .greeting {
+    padding: 72px 65px;
+  }
+  .dateScene {
+    min-height: 520px;
+  }
+  .flower {
+    width: 420px;
+    min-height: 410px;
+  }
+  .flowerCopy {
+    width: 66%;
+  }
+  .location,
+  .details {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .detailsGrid:has(> :nth-child(2)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+  }
+  .rsvp {
+    padding: 60px;
+  }
+  .closingPhoto {
+    height: 520px;
+  }
+}
+@media (max-width: 359px) {
+  .names {
+    font-size: 34px;
+  }
+  .flower {
+    min-height: 310px;
+  }
+  .flowerCopy h2 {
+    font-size: 24px;
+  }
+  .calendar {
+    gap: 0;
+  }
+  .calendar strong {
+    width: 22px;
+  }
+  .timeline li {
+    gap: 16px;
+    grid-template-columns: 50px minmax(0, 1fr);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shell[data-animate="on"] [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s ease;
+  }
+  .shell[data-animate="on"] [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
+}

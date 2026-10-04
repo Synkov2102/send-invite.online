@@ -7,6 +7,7 @@
  * Optional:
  *   --dry-run          download only, do not upload / rewrite
  *   --skip-download    reuse files already in frontend/.cache/catalog-music/
+ *   --track-id=ID      mirror only the selected catalog track
  *   --public-base=URL  optional direct public object base; default uses /api/catalog-music/{id}
  */
 
@@ -31,6 +32,7 @@ const keyPrefix = "catalog-music/";
 const args = new Set(process.argv.slice(2));
 const dryRun = args.has("--dry-run");
 const skipDownload = args.has("--skip-download");
+const trackIdArg = [...args].find((arg) => arg.startsWith("--track-id="));
 const publicBaseArg = [...args].find((arg) => arg.startsWith("--public-base="));
 
 function loadEnvFile(filePath) {
@@ -170,7 +172,10 @@ async function uploadTrack(client, config, key, buffer) {
 
 async function main() {
   const source = await readFile(tracksFile, "utf8");
-  const tracks = parseTracks(source);
+  const tracks = parseTracks(source).filter(
+    (track) => !trackIdArg || track.id === trackIdArg.slice("--track-id=".length),
+  );
+  if (tracks.length === 0) throw new Error("Selected catalog track was not found");
   await mkdir(cacheDir, { recursive: true });
 
   const config = dryRun
