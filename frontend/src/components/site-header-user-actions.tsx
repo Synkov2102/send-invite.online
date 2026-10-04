@@ -142,13 +142,13 @@ export default function SiteHeaderUserActions({
         <LayoutDashboard aria-hidden size={15} />
         <span>Мои сайты</span>
       </Link>
-      <Link className="site-header__profile" href="/dashboard">
+      {/* Avatar only: with the name the logged-in row is wider than the 1240px header shell. */}
+      <Link aria-label={user.name} className="site-header__profile" href="/dashboard" title={user.name}>
         {user.avatarUrl ? (
           <Image alt="" height={32} src={user.avatarUrl} width={32} />
         ) : (
           <span>{user.name.slice(0, 1).toUpperCase()}</span>
         )}
-        <strong>{user.name}</strong>
       </Link>
       <form action="/api/auth/logout" method="post">
         <button aria-label="Выйти" title="Выйти" type="submit">
