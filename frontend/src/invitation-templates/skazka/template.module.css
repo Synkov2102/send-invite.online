@@ -208,13 +208,15 @@
   display: grid;
   justify-items: center;
   gap: 0;
-  margin-top: clamp(8px, 1.8svh, 16px) !important;
   font-family: var(--skazka-slavic);
   font-size: clamp(48px, min(18vw, 9svh), 86px);
   font-weight: 400;
   letter-spacing: -0.025em;
   line-height: 0.86;
   color: var(--skazka-accent);
+}
+.shell .heroTitle {
+  margin-top: clamp(8px, 1.8svh, 16px);
 }
 .heroTitleLong {
   width: 100%;
@@ -292,10 +294,12 @@
   pointer-events: none;
 }
 .heroPhoto img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
   object-position: center 58%;
+}
+.shell .heroPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .story {
@@ -351,10 +355,12 @@
 .storyKicker {
   position: relative;
   z-index: 1;
-  margin-bottom: 22px !important;
   font-family: var(--skazka-slavic);
   font-size: clamp(30px, 9vw, 42px);
   line-height: 1;
+}
+.shell .storyKicker {
+  margin-bottom: 22px;
 }
 .storyDrop {
   position: relative;
@@ -387,9 +393,11 @@
   text-transform: uppercase;
 }
 .whenTime {
-  margin-top: -10px !important;
   font-size: 19px;
   color: color-mix(in srgb, var(--skazka-muted) 72%, var(--skazka-ink));
+}
+.shell .whenTime {
+  margin-top: -10px;
 }
 .calendar {
   display: grid;
@@ -432,10 +440,12 @@
   background: color-mix(in srgb, var(--skazka-accent) 3%, transparent);
 }
 .countdownTitle {
-  margin-bottom: 16px !important;
   font-family: var(--skazka-slavic);
   font-size: 23px;
   color: var(--skazka-accent);
+}
+.shell .countdownTitle {
+  margin-bottom: 16px;
 }
 .countdownGrid {
   display: flex;
@@ -612,18 +622,22 @@
   color: var(--skazka-accent);
 }
 .timeline h3 {
-  margin-top: 2px !important;
   font-family: var(--skazka-slavic);
   font-size: 24px;
   font-weight: 400;
   color: var(--skazka-accent);
 }
+.shell .timeline h3 {
+  margin-top: 2px;
+}
 .timeline p {
-  margin-top: 7px !important;
   max-width: 30ch;
   font-size: 18px;
   line-height: 1.52;
   color: color-mix(in srgb, var(--skazka-muted) 70%, var(--skazka-ink));
+}
+.shell .timeline p {
+  margin-top: 7px;
 }
 
 .dress {
@@ -661,28 +675,28 @@
   padding: 4px 0 0;
   box-shadow: none;
 }
-.dressBlock :global(h2),
-.dressBlock :global([class*="eyebrow"]) {
-  display: none !important;
+.shell .dressBlock :global(h2),
+.shell .dressBlock :global([class*="eyebrow"]) {
+  display: none;
 }
-.dressBlock :global(p) {
-  max-width: 36ch !important;
-  margin-inline: auto !important;
-  font-family: var(--skazka-serif) !important;
-  font-size: 19px !important;
-  line-height: 1.62 !important;
+.shell .dressBlock :global(p) {
+  max-width: 36ch;
+  margin-inline: auto;
+  font-family: var(--skazka-serif);
+  font-size: 19px;
+  line-height: 1.62;
 }
-.dressBlock :global([class*="swatchLabel"]) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  clip-path: inset(50%) !important;
-  white-space: nowrap !important;
+.shell .dressBlock :global([class*="swatchLabel"]) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-.dressBlock ul li > span:first-child {
-  border: 3px solid var(--skazka-paper) !important;
-  box-shadow: 0 0 0 1px rgb(255 249 237 / 55%) !important;
+.shell .dressBlock ul li > span:first-child {
+  border: 3px solid var(--skazka-paper);
+  box-shadow: 0 0 0 1px rgb(255 249 237 / 55%);
 }
 
 .details {
@@ -712,31 +726,31 @@
   border-radius: 0;
   box-shadow: none;
 }
-.detailsBlock :global(h2) {
-  font-family: var(--skazka-slavic) !important;
-  font-size: clamp(24px, 7vw, 30px) !important;
-  font-weight: 400 !important;
-  color: var(--skazka-accent) !important;
+.shell .detailsBlock :global(h2) {
+  font-family: var(--skazka-slavic);
+  font-size: clamp(24px, 7vw, 30px);
+  font-weight: 400;
+  color: var(--skazka-accent);
 }
-.detailsBlock :global([class*="eyebrow"]) {
-  display: none !important;
+.shell .detailsBlock :global([class*="eyebrow"]) {
+  display: none;
 }
-.detailsBlock :global(p) {
-  margin-inline: auto !important;
-  max-width: 36ch !important;
-  font-family: var(--skazka-serif) !important;
-  font-size: 18px !important;
-  line-height: 1.62 !important;
+.shell .detailsBlock :global(p) {
+  margin-inline: auto;
+  max-width: 36ch;
+  font-family: var(--skazka-serif);
+  font-size: 18px;
+  line-height: 1.62;
 }
-.detailsBlock :global(a) {
-  min-height: 48px !important;
-  border-radius: 0 !important;
-  background: var(--skazka-accent) !important;
-  padding: 13px 26px !important;
-  font-family: var(--skazka-condensed) !important;
-  font-size: 14px !important;
-  letter-spacing: 0.08em !important;
-  color: var(--skazka-photo-text) !important;
+.shell .detailsBlock :global(a) {
+  min-height: 48px;
+  border-radius: 0;
+  background: var(--skazka-accent);
+  padding: 13px 26px;
+  font-family: var(--skazka-condensed);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--skazka-photo-text);
 }
 
 .rsvp {
@@ -792,41 +806,41 @@
   background: transparent;
   text-align: left;
 }
-.rsvpForm :global([class$="__section"]) {
-  backdrop-filter: none !important;
+.shell .rsvpForm :global([class$="__section"]) {
+  backdrop-filter: none;
 }
-.rsvpForm :global([class*="__submit"]) {
-  border-radius: 0 !important;
-  font-family: var(--skazka-condensed) !important;
-  letter-spacing: 0.1em !important;
+.shell .rsvpForm :global([class*="__submit"]) {
+  border-radius: 0;
+  font-family: var(--skazka-condensed);
+  letter-spacing: 0.1em;
 }
-.rsvpForm :global([class*="sectionHeading"]) h3 {
-  font-size: 19px !important;
+.shell .rsvpForm :global([class*="sectionHeading"]) h3 {
+  font-size: 19px;
 }
-.rsvpForm :global([class*="sectionHeading"]) p {
-  font-size: 15px !important;
+.shell .rsvpForm :global([class*="sectionHeading"]) p {
+  font-size: 15px;
 }
-.rsvpForm :global([class*="fieldLabel"]) {
-  font-size: 13px !important;
+.shell .rsvpForm :global([class*="fieldLabel"]) {
+  font-size: 13px;
 }
-.rsvpForm :global([class*="textInput"]),
-.rsvpForm :global([class*="textarea"]) {
-  font-size: 16px !important;
+.shell .rsvpForm :global([class*="textInput"]),
+.shell .rsvpForm :global([class*="textarea"]) {
+  font-size: 16px;
 }
-.rsvpForm :global([class*="optionText"]) strong {
-  font-size: 16px !important;
+.shell .rsvpForm :global([class*="optionText"]) strong {
+  font-size: 16px;
 }
-.rsvpForm :global([class*="optionText"]) span {
-  font-size: 14px !important;
+.shell .rsvpForm :global([class*="optionText"]) span {
+  font-size: 14px;
 }
-.rsvpForm :global([class*="consent"]) {
-  font-size: 14px !important;
+.shell .rsvpForm :global([class*="consent"]) {
+  font-size: 14px;
 }
-.rsvpForm :global([class*="submit"]) {
-  font-size: 14px !important;
+.shell .rsvpForm :global([class*="submit"]) {
+  font-size: 14px;
 }
-.rsvpForm :global([class*="helper"]) {
-  font-size: 13px !important;
+.shell .rsvpForm :global([class*="helper"]) {
+  font-size: 13px;
 }
 
 .closing {
@@ -1004,7 +1018,13 @@
   .shell [data-revealed] *,
   .shell .hero *,
   .shell .countdownGrid strong {
-    animation: none !important;
     opacity: 1;
+  }
+  .shell.shell[data-animate="on"] [data-reveal],
+  .shell.shell[data-animate="on"] [data-reveal][data-revealed],
+  .shell.shell [data-revealed] *,
+  .shell.shell .hero *,
+  .shell.shell .countdownGrid strong {
+    animation: none;
   }
 }

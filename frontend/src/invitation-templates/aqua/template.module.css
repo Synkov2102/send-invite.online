@@ -514,13 +514,19 @@
 .groupChatSection :global(h2),
 .additionalInfoSection :global(h2),
 .rsvpSection :global(h2) {
-  color: var(--glass-ink) !important;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(28px, 5.5vw, 40px) !important;
   font-weight: 400;
-  letter-spacing: -0.02em !important;
   line-height: 1.05;
-  text-transform: none !important;
+}
+
+.shell .dressSection :global(h2),
+.shell .groupChatSection :global(h2),
+.shell .additionalInfoSection :global(h2),
+.shell .rsvpSection :global(h2) {
+  color: var(--glass-ink);
+  font-size: clamp(28px, 5.5vw, 40px);
+  letter-spacing: -0.02em;
+  text-transform: none;
 }
 
 .month {
@@ -565,18 +571,17 @@
 }
 
 .calendarSelected {
-  border-color: transparent !important;
-  background: color-mix(
-    in srgb,
-    var(--glass-accent) 82%,
-    var(--invite-surface, #f1fbfb)
-  ) !important;
   box-shadow: 0 10px 24px color-mix(in srgb, var(--glass-accent) 30%, transparent);
 }
 
-.calendarSelected span,
-.calendarSelected strong {
-  color: var(--glass-foam) !important;
+.shell .calendarSelected {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--glass-accent) 82%, var(--invite-surface, #f1fbfb));
+}
+
+.shell .calendarSelected span,
+.shell .calendarSelected strong {
+  color: var(--glass-foam);
 }
 
 .metaRow {

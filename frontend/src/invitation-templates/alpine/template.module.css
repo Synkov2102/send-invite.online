@@ -1,0 +1,1576 @@
+/* Текст приглашения; раньше задавался утилитами Tailwind. */
+.lead {
+  max-width: 34ch;
+  margin-inline: auto;
+  margin-top: 1rem;
+  color: var(--invite-muted);
+  text-align: center;
+}
+
+/*
+ * Хуки контекста: .published-site — корень рендерера (сайт, capture, превью),
+ * .editor-preview-scope — превью редактора и полноэкранный режим.
+ */
+
+/* Базовая раскладка */
+
+:global(.published-site.published-site--alpine) > .shell {
+  min-height: 100svh;
+  border: 0;
+  border-radius: 0;
+}
+
+:global(.published-site.published-site--alpine) .rings {
+  --published-alpine-gutter: 14px;
+  --published-alpine-bleed: 28px;
+  gap: var(--published-alpine-gutter);
+  padding: 0 var(--published-alpine-gutter) var(--published-alpine-gutter);
+}
+
+:global(.published-site.published-site--alpine) .rings .cover {
+  width: calc(100% + var(--published-alpine-bleed));
+  margin-inline: calc(-1 * var(--published-alpine-gutter));
+  height: 100svh !important;
+  min-height: 100svh !important;
+  border-radius: 0 !important;
+}
+
+:global(.published-site) .shell {
+  position: relative;
+  width: min(100%, 520px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 8px;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  box-shadow: 0 34px 120px rgba(35, 39, 34, 0.28);
+  isolation: isolate;
+}
+
+:global(.published-site) .shell,
+:global(.published-site) .panel,
+:global(.published-site) .details,
+:global(.published-site) .rsvp,
+:global(.published-site) .calendar strong,
+:global(.published-site) .program div {
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+:global(.published-site) .shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 34%);
+}
+
+:global(.published-site) .cover {
+  position: relative;
+  height: 620px;
+  overflow: hidden;
+  padding: 0;
+  background: var(--invite-ink);
+}
+
+:global(.published-site) .coverThree::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 42%, transparent 0 34%, rgba(0, 0, 0, 0.16) 72%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.28));
+}
+
+:global(.published-site) .coverScene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+:global(.published-site) .arch {
+  position: relative;
+  height: 548px;
+  overflow: hidden;
+  border-radius: 0 0 280px 280px;
+  background: var(--invite-bg);
+}
+
+:global(.published-site) .photo {
+  object-fit: cover;
+  object-position: center;
+}
+
+:global(.published-site) .imageMotion {
+  position: absolute;
+  inset: 0;
+}
+
+:global(.published-site) .photoBand::after,
+:global(.published-site) .final::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+:global(.published-site) .heroCopy {
+  position: absolute;
+  inset: auto 28px 54px;
+  z-index: 2;
+  text-align: center;
+  color: var(--invite-photo-text);
+  text-shadow: 0 3px 26px rgba(26, 30, 28, 0.34);
+}
+
+:global(.published-site) .coverThree .heroCopy {
+  pointer-events: none;
+}
+
+:global(.published-site) .heroCopy p {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+:global(.published-site) .heroCopy h1 {
+  margin-top: 30px;
+  display: grid;
+  gap: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 62px;
+  font-weight: 400;
+  line-height: 0.96;
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site) .heroCopy span {
+  color: color-mix(in srgb, var(--invite-photo-text) 68%, transparent);
+  font-style: italic;
+}
+
+:global(.published-site) .panel {
+  margin: -42px 34px 0;
+  padding: 94px 32px 72px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 250px 250px 8px 8px;
+  background: var(--invite-veil);
+  backdrop-filter: blur(16px);
+}
+
+:global(.published-site) .small {
+  text-align: center;
+  color: var(--invite-muted);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+:global(.published-site) .heading {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.08;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+:global(.published-site) .calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+:global(.published-site) .calendar div {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  color: var(--invite-muted);
+  font-size: 12px;
+}
+
+:global(.published-site) .calendar strong {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--invite-ink);
+  font-weight: 400;
+}
+
+:global(.published-site) .calendar .selected strong {
+  background: white;
+  box-shadow: 0 12px 32px rgba(50, 54, 50, 0.12);
+}
+
+:global(.published-site) .photoBand {
+  position: relative;
+  min-height: 640px;
+  margin-top: -1px;
+  overflow: hidden;
+}
+
+:global(.published-site) .when {
+  display: grid;
+  gap: 22px;
+  margin-top: 32px;
+}
+
+:global(.published-site) .whenContent {
+  display: grid;
+  gap: 18px;
+}
+
+:global(.published-site) .whenMonth {
+  margin: 0;
+  color: var(--invite-muted);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+:global(.published-site) .whenPhoto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 360px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 22px 55px rgba(36, 42, 39, 0.22);
+}
+
+:global(.published-site) .whenPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(21, 26, 28, 0.08), rgba(20, 25, 24, 0.66));
+}
+
+:global(.published-site) .whenPhoto .whenContent {
+  position: relative;
+  z-index: 2;
+  padding: 22px var(--alpine-pad-x, 22px) 24px;
+  color: var(--invite-photo-text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.32);
+}
+
+:global(.published-site) .whenPhoto .heading,
+:global(.published-site) .rings .whenPhoto .heading {
+  color: var(--invite-photo-text);
+}
+
+:global(.published-site) .whenPhoto .whenMonth {
+  color: color-mix(in srgb, var(--invite-photo-text) 82%, transparent);
+}
+
+:global(.published-site) .whenPhoto .calendar div {
+  color: color-mix(in srgb, var(--invite-photo-text) 80%, transparent);
+}
+
+:global(.published-site) .whenPhoto .calendar strong {
+  color: var(--invite-photo-text);
+}
+
+:global(.published-site) .whenPhoto .calendar .selected strong {
+  color: var(--invite-ink);
+}
+
+:global(.published-site) .threeCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  height: 100%;
+}
+
+:global(.published-site) .threeCanvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+:global(.published-site) .photoBand::after {
+  background: linear-gradient(180deg, rgba(21, 26, 28, 0.02), rgba(23, 28, 27, 0.54));
+}
+
+:global(.published-site) .photoBandContent {
+  position: absolute;
+  inset: auto 34px 44px;
+  z-index: 2;
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  color: var(--invite-photo-text);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.28);
+}
+
+:global(.published-site) .photoBandContent p {
+  font-size: 18px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site) .details {
+  padding: 68px 34px 82px;
+  background: var(--invite-surface);
+}
+
+:global(.published-site) .dressCode {
+  padding: 0 28px 70px;
+  background: var(--invite-surface);
+}
+
+:global(.published-site) .groupChat,
+:global(.published-site) .additionalInfo {
+  padding: 0 28px 70px;
+  background: var(--invite-surface);
+}
+
+:global(.published-site) .details {
+  --plan-bg: var(--invite-surface);
+}
+
+:global(.published-site) .planHead {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  text-align: center;
+}
+
+:global(.published-site) .planTitle {
+  margin: 0;
+}
+
+:global(.published-site) .planMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+:global(.published-site) .planChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--invite-line);
+  border-radius: 999px;
+  padding: 7px 14px;
+  color: var(--invite-ink);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+:global(.published-site) .planChip svg {
+  color: var(--invite-accent);
+}
+
+:global(.published-site) .program {
+  margin: 30px auto 0;
+  display: grid;
+  width: 100%;
+  max-width: 460px;
+  padding: 0;
+  list-style: none;
+}
+
+:global(.published-site) .timelineItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70px 22px minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: start;
+  padding: 14px 0;
+}
+
+:global(.published-site) .timelineTime {
+  padding-top: 0;
+  color: var(--invite-accent);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 0.95;
+}
+
+:global(.published-site) .timelineRail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+:global(.published-site) .timelineRail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--invite-line);
+}
+
+:global(.published-site) .timelineItem:first-child .timelineRail::before {
+  top: 22px;
+}
+
+:global(.published-site) .timelineItem:last-child .timelineRail::before {
+  bottom: auto;
+  height: 22px;
+}
+
+:global(.published-site) .timelineDot {
+  position: relative;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--plan-bg);
+  border: 2px solid var(--invite-accent);
+  box-shadow: 0 0 0 5px var(--plan-bg);
+}
+
+:global(.published-site) .timelineBody strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site) .timelineBody p {
+  margin-top: 4px;
+  color: var(--invite-muted);
+  font-size: 14px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+:global(.published-site) .rsvp {
+  position: relative;
+  z-index: 2;
+  margin: -56px 26px 0;
+  padding: 88px 28px 104px;
+  border: 1px solid rgba(220, 224, 216, 0.9);
+  border-radius: 260px;
+  background: rgba(255, 255, 255, 0.94);
+  text-align: center;
+}
+
+:global(.published-site) .rsvpHeader {
+  display: grid;
+  width: min(100%, 640px);
+  justify-items: center;
+  gap: 15px;
+  margin: 0 auto 34px;
+}
+
+:global(.published-site) .rsvpHeader h2,
+:global(.published-site) .rsvpHeader p {
+  margin: 0;
+}
+
+:global(.published-site) .rsvpHeader > p {
+  max-width: 470px;
+  color: var(--invite-muted);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+:global(.published-site) .rsvpHeader > span:last-child {
+  border: 1px solid var(--invite-line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--invite-accent) 10%, transparent);
+  padding: 8px 13px;
+  color: var(--invite-accent);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+:global(.published-site) .final {
+  position: relative;
+  min-height: 690px;
+  overflow: hidden;
+}
+
+:global(.published-site) .final::after {
+  background: linear-gradient(180deg, rgba(20, 25, 24, 0.02), rgba(18, 24, 22, 0.5));
+}
+
+:global(.published-site) .finalContent {
+  position: absolute;
+  inset: auto 28px 48px;
+  z-index: 2;
+  color: var(--invite-photo-text);
+  text-align: center;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.28);
+}
+
+:global(.published-site) .finalContent h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.12;
+  text-transform: uppercase;
+}
+
+:global(.published-site) .finalContent p {
+  margin-top: 18px;
+  font-size: 24px;
+  font-weight: 300;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  :global(.published-site) .cover {
+    height: clamp(520px, 145vw, 580px);
+  }
+
+  :global(.published-site) .arch {
+    height: calc(clamp(520px, 145vw, 580px) - 72px);
+  }
+
+  :global(.published-site) .heroCopy h1 {
+    font-size: clamp(44px, 13vw, 54px);
+  }
+
+  :global(.published-site) .panel {
+    margin-inline: 18px;
+    padding: clamp(68px, 20vw, 80px) 24px 62px;
+  }
+
+  :global(.published-site) .heading {
+    font-size: clamp(38px, 11vw, 44px);
+  }
+
+  :global(.published-site) .details {
+    padding-inline: 24px;
+  }
+
+  :global(.published-site) .dressCode {
+    padding-inline: 22px;
+    padding-bottom: 58px;
+  }
+
+  :global(.published-site) .groupChat,
+  :global(.published-site) .additionalInfo {
+    padding-inline: 22px;
+    padding-bottom: 58px;
+  }
+
+  :global(.published-site) .rsvp {
+    margin-inline: 14px;
+    padding-inline: 20px;
+  }
+
+  :global(.published-site) .photoBand {
+    min-height: clamp(500px, 160vw, 640px);
+  }
+
+  :global(.published-site) .final {
+    min-height: clamp(540px, 175vw, 690px);
+  }
+}
+
+/* Вариант с 3D-кольцами (coverType: rings) */
+:global(.published-site) .rings {
+  --alpine-card: color-mix(in srgb, var(--invite-surface) 94%, var(--invite-bg));
+  --alpine-card-soft: color-mix(in srgb, var(--invite-veil) 88%, var(--invite-surface));
+  --alpine-border: color-mix(in srgb, var(--invite-line) 58%, transparent);
+  --alpine-pad-y: clamp(40px, 6vw, 56px);
+  --alpine-pad-x: clamp(22px, 4vw, 32px);
+  --alpine-heading: clamp(34px, 7vw, 48px);
+  --alpine-title: 15px;
+  --alpine-body: 16px;
+  --alpine-label: 11px;
+  --alpine-radius: 20px;
+  --alpine-radius-sm: 14px;
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      color-mix(in srgb, var(--invite-accent) 8%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      var(--invite-surface),
+      var(--alpine-card-soft) 52%,
+      var(--invite-surface)
+    );
+  color: var(--invite-ink);
+  letter-spacing: -0.01em;
+}
+
+:global(.published-site) .rings .coverThree {
+  min-height: min(720px, 100svh);
+}
+
+:global(.published-site) .rings .coverThree::after {
+  background:
+    radial-gradient(circle at 50% 34%, transparent 0 30%, rgba(0, 0, 0, 0.18) 76%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.48));
+}
+
+:global(.published-site) .rings .heroCopy {
+  inset: auto 24px 56px;
+  text-shadow: 0 8px 40px rgba(0, 0, 0, 0.28);
+}
+
+:global(.published-site) .rings .heroCopy p {
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: var(--alpine-label);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+:global(.published-site) .rings .heroCopy h1 {
+  margin-top: 14px;
+  gap: 2px;
+  font-family: var(--font-invite-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(48px, 11vw, 72px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+:global(.published-site) .rings .heroCopy span {
+  color: color-mix(in srgb, var(--invite-photo-text) 72%, transparent);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 0.42em;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+:global(.published-site) .rings .panel {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  margin: -28px 14px 14px;
+  border: 1px solid var(--alpine-border);
+  border-radius: var(--alpine-radius);
+  background: var(--alpine-card-soft);
+  padding: var(--alpine-pad-y) var(--alpine-pad-x);
+  box-shadow: 0 18px 48px color-mix(in srgb, var(--invite-ink) 7%, transparent);
+  backdrop-filter: none;
+}
+
+:global(.published-site) .rings .panel > :global(.invite-section-eyebrow) {
+  margin-bottom: 18px;
+}
+
+:global(.published-site) .rings .panel > svg {
+  display: none;
+}
+
+:global(.published-site) .rings .small {
+  color: var(--invite-ink);
+  font-family: var(--font-invite-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 5vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+:global(.published-site) .rings .panel > p:last-of-type {
+  max-width: 34ch;
+  margin-inline: auto;
+  color: var(--invite-muted);
+  font-size: var(--alpine-body);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.65;
+}
+
+:global(.published-site) .rings .heading {
+  color: var(--invite-ink);
+  font-family: var(--font-invite-serif), Georgia, "Times New Roman", serif;
+  font-size: var(--alpine-heading);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-transform: none;
+}
+
+:global(.published-site) .rings :global(.invite-section-eyebrow) {
+  gap: 12px;
+  color: var(--invite-muted);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+}
+
+:global(.published-site) .rings :global(.invite-section-eyebrow) span {
+  width: 18px;
+  opacity: 0.55;
+}
+
+:global(.published-site) .rings .when {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin-top: 28px;
+  min-height: 0;
+}
+
+:global(.published-site) .rings .whenPhoto {
+  flex: 1 1 auto;
+  min-height: clamp(300px, 52vh, 540px);
+  overflow: hidden;
+  border-radius: var(--alpine-radius-sm);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--invite-ink) 12%, transparent);
+}
+
+:global(.published-site) .rings .whenPhoto::after {
+  background: linear-gradient(180deg, rgba(21, 26, 28, 0.02), rgba(20, 25, 24, 0.68));
+}
+
+:global(.published-site) .rings .whenPhoto .imageMotion .photo {
+  object-position: center 28%;
+}
+
+:global(.published-site) .rings .whenPhoto .whenContent {
+  gap: 12px;
+  padding: 18px var(--alpine-pad-x) 20px;
+}
+
+:global(.published-site) .rings .whenPhoto .heading {
+  font-size: clamp(28px, 6vw, 36px);
+  letter-spacing: -0.035em;
+}
+
+:global(.published-site) .rings .whenMonth {
+  color: color-mix(in srgb, var(--invite-photo-text) 78%, transparent);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.2em;
+}
+
+:global(.published-site) .rings .calendar {
+  gap: 4px;
+}
+
+:global(.published-site) .rings .calendar div {
+  gap: 6px;
+  color: color-mix(in srgb, var(--invite-photo-text) 62%, transparent);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 10px;
+  font-weight: 550;
+  letter-spacing: 0.04em;
+}
+
+:global(.published-site) .rings .calendar strong {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--invite-photo-text);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 550;
+}
+
+:global(.published-site) .rings .calendar .selected strong {
+  background: var(--invite-photo-text);
+  color: var(--invite-ink);
+  box-shadow: none;
+}
+
+:global(.published-site) .rings .photoBand {
+  min-height: 480px;
+  margin: 0 14px 14px;
+  border-radius: var(--alpine-radius);
+  box-shadow: 0 14px 36px color-mix(in srgb, var(--invite-ink) 10%, transparent);
+}
+
+:global(.published-site) .rings .photoBandContent {
+  inset: auto 18px 18px;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--alpine-radius-sm);
+  background: rgba(12, 18, 17, 0.42);
+  padding: 22px 20px;
+  backdrop-filter: blur(16px);
+}
+
+:global(.published-site) .rings .photoBandContent svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.72;
+}
+
+:global(.published-site) .rings .photoBandContent .heading {
+  color: var(--invite-photo-text);
+  font-size: var(--alpine-heading);
+}
+
+:global(.published-site) .rings .photoBandContent p {
+  max-width: 28ch;
+  font-size: var(--alpine-body);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.55;
+}
+
+:global(.published-site) .rings .mapLink {
+  margin-top: 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--invite-photo-text) 45%, transparent);
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 2px;
+  color: var(--invite-photo-text);
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: 0.02em;
+}
+
+:global(.published-site) .rings .details,
+:global(.published-site) .rings .dressCode,
+:global(.published-site) .rings .groupChat,
+:global(.published-site) .rings .additionalInfo {
+  margin: 0 14px 14px;
+  border: 1px solid var(--alpine-border);
+  border-radius: var(--alpine-radius);
+  background: var(--alpine-card);
+  padding: var(--alpine-pad-y) var(--alpine-pad-x);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--invite-ink) 5%, transparent);
+}
+
+:global(.published-site) .rings .details {
+  --plan-bg: var(--alpine-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+:global(.published-site) .rings .planHead {
+  gap: 14px;
+}
+
+:global(.published-site) .rings .planChip {
+  gap: 6px;
+  border-color: var(--alpine-border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--invite-surface) 70%, transparent);
+  padding: 6px 12px;
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+:global(.published-site) .rings .planChip svg {
+  width: 14px;
+  height: 14px;
+}
+
+:global(.published-site) .rings .timeline {
+  margin-top: 36px;
+  max-width: 420px;
+}
+
+:global(.published-site) .rings .timelineItem {
+  grid-template-columns: 64px 18px minmax(0, 1fr);
+  column-gap: 14px;
+  padding: 16px 0;
+}
+
+:global(.published-site) .rings .timelineTime {
+  color: var(--invite-ink);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+:global(.published-site) .rings .timelineRail::before,
+:global(.published-site) .rings .timelineDot {
+  border-color: var(--invite-accent);
+}
+
+:global(.published-site) .rings .timelineRail::before {
+  background: var(--alpine-border);
+}
+
+:global(.published-site) .rings .timelineDot {
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  background: var(--invite-accent);
+}
+
+:global(.published-site) .rings .timelineBody strong {
+  font-family: var(--font-invite-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(20px, 4.5vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+:global(.published-site) .rings .timelineBody p {
+  margin-top: 6px;
+  color: var(--invite-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+:global(.published-site) .rings .dressCode,
+:global(.published-site) .rings .groupChat,
+:global(.published-site) .rings .additionalInfo {
+  display: grid;
+  align-items: center;
+}
+
+:global(.published-site) .rings .dressCode > div,
+:global(.published-site) .rings .groupChat > div,
+:global(.published-site) .rings .additionalInfo > div {
+  border-color: transparent;
+  border-radius: var(--alpine-radius-sm);
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+:global(.published-site) .rings .rsvp {
+  margin: 0 14px 14px;
+  border: 1px solid var(--alpine-border);
+  border-radius: var(--alpine-radius);
+  background: var(--alpine-card-soft);
+  padding: 44px var(--alpine-pad-x) 48px;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--invite-ink) 6%, transparent);
+}
+
+:global(.published-site) .rings .rsvpHeader {
+  gap: 12px;
+}
+
+:global(.published-site) .rings .rsvpHeader > p {
+  max-width: 36ch;
+  margin-inline: auto;
+  color: var(--invite-muted);
+  font-size: var(--alpine-body);
+  line-height: 1.6;
+}
+
+:global(.published-site) .rings .rsvpHeader > span:last-child {
+  color: var(--invite-ink);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:global(.published-site) .rings .final {
+  min-height: min(720px, 100svh);
+}
+
+:global(.published-site) .rings .final .photo {
+  object-position: center 22%;
+}
+
+:global(.published-site) .rings .finalContent h2 {
+  font-family: var(--font-invite-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(44px, 11vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-transform: none;
+}
+
+:global(.published-site) .rings .finalContent p {
+  margin-top: 14px;
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 380px) {
+  :global(.published-site) .rings .panel,
+  :global(.published-site) .rings .photoBand,
+  :global(.published-site) .rings .details,
+  :global(.published-site) .rings .dressCode,
+  :global(.published-site) .rings .groupChat,
+  :global(.published-site) .rings .additionalInfo,
+  :global(.published-site) .rings .rsvp {
+    margin-right: 8px;
+    margin-left: 8px;
+    border-radius: 16px;
+  }
+
+  :global(.published-site) .rings .panel,
+  :global(.published-site) .rings .details,
+  :global(.published-site) .rings .rsvp {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :global(.published-site.published-site--alpine) .rings {
+    --published-alpine-gutter: 16px;
+    --published-alpine-bleed: 32px;
+    gap: 16px;
+    padding: 0 16px 16px;
+  }
+
+  :global(.published-site.published-site--alpine) .rings .cover,
+  :global(.published-site.published-site--alpine) .rings .final {
+    border-radius: 24px;
+  }
+
+  :global(.published-site.published-site--alpine) .rings .panel,
+  :global(.published-site.published-site--alpine) .rings .photoBand,
+  :global(.published-site.published-site--alpine) .rings .details,
+  :global(.published-site.published-site--alpine) .rings .dressCode,
+  :global(.published-site.published-site--alpine) .rings .groupChat,
+  :global(.published-site.published-site--alpine) .rings .additionalInfo,
+  :global(.published-site.published-site--alpine) .rings .rsvp {
+    width: auto;
+    margin: 0;
+  }
+
+  :global(.published-site.published-site--alpine) .rings .panel {
+    display: flex;
+    flex-direction: column;
+    min-height: clamp(700px, 40vw, 860px);
+    padding: clamp(40px, 4vw, 52px) var(--alpine-pad-x) clamp(32px, 3vw, 40px);
+  }
+
+  :global(.published-site.published-site--alpine) .rings .whenPhoto {
+    flex: 1 1 auto;
+    min-height: clamp(320px, 34vw, 560px);
+  }
+
+  :global(.published-site.published-site--alpine) .rings .details,
+  :global(.published-site.published-site--alpine) .rings .photoBand,
+  :global(.published-site.published-site--alpine) .rings .dressCode {
+    align-self: stretch;
+    min-height: clamp(620px, 36vw, 760px);
+    height: 100%;
+  }
+
+  :global(.published-site.published-site--alpine) .rings .groupChat,
+  :global(.published-site.published-site--alpine) .rings .additionalInfo {
+    align-self: stretch;
+    min-height: 0;
+    height: auto;
+  }
+
+  :global(.published-site.published-site--alpine) .rings .rsvp {
+    width: min(980px, 100%);
+    margin: 28px auto;
+    border-radius: 40px;
+  }
+}
+
+/* Превью редактора и полноэкранный режим: десктопная сетка */
+
+@media (min-width: 1200px) {
+  :global(.editor-preview-scope) :global(.published-site--alpine) > .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: stretch;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .cover,
+  :global(.editor-preview-scope) :global(.published-site--alpine) .final,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .cover,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .final {
+    grid-column: 1 / -1;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .cover {
+    height: clamp(760px, 46vw, 980px);
+    min-height: 760px;
+  }
+
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .rings .cover {
+    height: min(clamp(540px, 44vw, 860px), calc(100vh - 72px));
+    min-height: 360px;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .heroCopy,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .heroCopy {
+    inset: auto clamp(38px, 5vw, 86px) clamp(50px, 7vh, 82px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .heroCopy p,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .heroCopy p {
+    font-size: clamp(12px, 0.95vw, 14px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .heroCopy h1,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .heroCopy h1 {
+    margin-top: 18px;
+    font-size: clamp(84px, 7.2vw, 128px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .panel,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .panel {
+    align-self: center;
+    margin: clamp(24px, 3vw, 48px);
+    padding: clamp(56px, 5vw, 84px) clamp(34px, 4vw, 62px) clamp(48px, 4.5vw, 72px);
+    border-radius: 24px;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .heading,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .heading {
+    font-size: clamp(44px, 3.6vw, 64px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .photoBand,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .photoBand {
+    min-height: clamp(780px, 44vw, 940px);
+    margin-top: 0;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .photoBandContent,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .photoBandContent {
+    inset: auto clamp(36px, 5vw, 74px) clamp(48px, 6vw, 78px);
+    max-width: 560px;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .details,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .details {
+    padding: clamp(72px, 7vw, 110px) clamp(42px, 6vw, 90px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .dressCode,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .dressCode,
+  :global(.editor-preview-scope) :global(.published-site--alpine) .groupChat,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .groupChat,
+  :global(.editor-preview-scope) :global(.published-site--alpine) .additionalInfo,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .additionalInfo {
+    align-self: center;
+    padding: clamp(24px, 3vw, 48px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rsvp,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .rsvp {
+    grid-column: 1 / -1;
+    width: min(900px, calc(100% - 64px));
+    justify-self: center;
+    align-self: center;
+    margin: clamp(24px, 3vw, 48px);
+    padding: clamp(56px, 5vw, 84px) clamp(34px, 4vw, 62px) clamp(64px, 5.5vw, 96px);
+    border-radius: 24px;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .final,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .final {
+    min-height: clamp(760px, 46vw, 980px);
+  }
+
+  :global(.editor-preview-scope)
+    :global(.published-site--alpine)
+    .rings
+    :global(.invite-section-eyebrow),
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .rings
+    :global(.invite-section-eyebrow) {
+    font-size: clamp(11px, 0.9vw, 12px);
+  }
+
+  :global(.editor-preview-scope)
+    :global(.published-site--alpine)
+    .rings
+    :global(.invite-section-eyebrow)
+    span,
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .rings
+    :global(.invite-section-eyebrow)
+    span {
+    width: 22px;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rings .panel > .small,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .rings .panel > .small {
+    font-size: clamp(36px, 3.2vw, 48px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rings .panel > p:not(.small),
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .rings
+    .panel
+    > p:not(.small) {
+    max-width: clamp(360px, 32vw, 480px);
+    font-size: clamp(16px, 1.2vw, 18px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rings .whenPhoto .heading,
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .rings
+    .whenPhoto
+    .heading {
+    font-size: clamp(36px, 3vw, 48px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .whenMonth,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .whenMonth {
+    font-size: clamp(14px, 1.15vw, 17px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .calendar div,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .calendar div {
+    font-size: clamp(14px, 1.15vw, 17px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .calendar strong,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .calendar strong {
+    width: clamp(44px, 3.4vw, 54px);
+    height: clamp(44px, 3.4vw, 54px);
+    font-size: clamp(17px, 1.35vw, 21px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .planChip,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .planChip {
+    padding: 8px 14px;
+    font-size: clamp(13px, 1.05vw, 15px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .timelineItem,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .timelineItem {
+    grid-template-columns: clamp(72px, 6vw, 96px) 20px minmax(0, 1fr);
+    column-gap: clamp(14px, 1.2vw, 20px);
+    padding: clamp(16px, 1.3vw, 22px) 0;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .timelineTime,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .timelineTime {
+    padding-top: 2px;
+    font-size: clamp(15px, 1.2vw, 18px);
+    letter-spacing: -0.02em;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .timelineDot,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .timelineDot {
+    width: 11px;
+    height: 11px;
+    margin-top: clamp(5px, 0.5vw, 8px);
+  }
+
+  :global(.editor-preview-scope)
+    :global(.published-site--alpine)
+    .timelineItem:first-child
+    .timelineRail::before,
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .timelineItem:first-child
+    .timelineRail::before {
+    top: clamp(13px, 1.2vw, 18px);
+  }
+
+  :global(.editor-preview-scope)
+    :global(.published-site--alpine)
+    .timelineItem:last-child
+    .timelineRail::before,
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .timelineItem:last-child
+    .timelineRail::before {
+    height: clamp(13px, 1.2vw, 18px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .timelineBody strong,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .timelineBody strong {
+    font-size: clamp(22px, 1.8vw, 28px);
+    line-height: 1.2;
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .timelineBody p,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .timelineBody p {
+    margin-top: 6px;
+    font-size: clamp(15px, 1.2vw, 18px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rings .photoBandContent p,
+  :global(.editor-preview-scope)
+    :global(.editor-preview__canvas--alpine)
+    .rings
+    .photoBandContent
+    p {
+    font-size: clamp(19px, 1.5vw, 26px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rings .finalContent h2,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .rings .finalContent h2 {
+    font-size: clamp(72px, 6.2vw, 118px);
+  }
+
+  :global(.editor-preview-scope) :global(.published-site--alpine) .rings .finalContent p,
+  :global(.editor-preview-scope) :global(.editor-preview__canvas--alpine) .rings .finalContent p {
+    font-size: clamp(23px, 2vw, 34px);
+  }
+}
+
+/* Полноэкранное превью */
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .cover {
+    height: 100svh;
+    min-height: 660px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .arch {
+    width: min(86%, 820px);
+    height: calc(100% - 48px);
+    margin-inline: auto;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .heroCopy {
+    inset: auto clamp(36px, 6vw, 72px) clamp(48px, 7vh, 76px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .heroCopy h1 {
+    font-size: clamp(66px, 10vw, 104px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .panel {
+    width: min(680px, calc(100% - 48px));
+    margin: -54px auto 0;
+    padding-inline: clamp(44px, 8vw, 80px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .photoBand {
+    min-height: 760px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .photoBandContent {
+    inset: auto clamp(40px, 7vw, 74px) clamp(48px, 7vw, 76px);
+    max-width: 560px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .details {
+    padding-inline: clamp(56px, 10vw, 110px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .rsvp {
+    width: min(720px, calc(100% - 48px));
+    margin: -56px auto 0;
+    padding-inline: clamp(44px, 9vw, 90px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .final {
+    min-height: max(700px, 100svh);
+  }
+}
+
+@media (min-width: 1200px) {
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .cover,
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .final {
+    grid-column: 1 / -1;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .cover {
+    height: max(100svh, min(1400px, 50vw));
+    min-height: 720px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .rings .coverThree {
+    height: calc(100svh - 36px);
+    min-height: 460px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .arch {
+    width: min(100%, 1320px);
+    height: calc(100% - 72px);
+    margin-inline: auto;
+    border-radius: 0 0 min(24vw, 380px) min(24vw, 380px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .heroCopy {
+    inset: auto clamp(40px, 6vw, 110px) clamp(54px, 8vh, 100px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .heroCopy p {
+    font-size: clamp(12px, 0.95vw, 14px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .heroCopy h1 {
+    margin-top: clamp(14px, 2vh, 22px);
+    font-size: clamp(84px, 7.2vw, 128px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .panel {
+    align-self: center;
+    margin: clamp(24px, 3vw, 48px);
+    padding: clamp(56px, 5vw, 84px) clamp(34px, 4vw, 62px) clamp(48px, 4.5vw, 72px);
+    border-radius: 24px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .heading {
+    font-size: clamp(44px, 3.6vw, 64px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .photoBand {
+    min-height: 860px;
+    margin-top: 0;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .photoBandContent {
+    inset: auto clamp(40px, 6vw, 100px) clamp(54px, 7vw, 100px);
+    max-width: 620px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .photoBandContent p {
+    font-size: clamp(18px, 1.6vw, 25px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .details {
+    padding: clamp(84px, 9vw, 150px) clamp(48px, 8vw, 130px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .dressCode,
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .groupChat,
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .additionalInfo {
+    align-self: center;
+    padding: clamp(32px, 5vw, 88px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .program {
+    margin-top: 56px;
+    max-width: 560px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .timelineItem {
+    grid-template-columns: clamp(72px, 6vw, 96px) 20px minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 18px 0;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .timelineTime {
+    padding-top: 2px;
+    font-size: clamp(15px, 1.2vw, 18px);
+    letter-spacing: -0.02em;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .timelineDot {
+    width: 11px;
+    height: 11px;
+    margin-top: clamp(5px, 0.5vw, 8px);
+  }
+
+  :global(.fullscreen-preview)
+    :global(.fullscreen-preview__page--alpine)
+    .timelineItem:first-child
+    .timelineRail::before {
+    top: clamp(12px, 1.1vw, 16px);
+  }
+
+  :global(.fullscreen-preview)
+    :global(.fullscreen-preview__page--alpine)
+    .timelineItem:last-child
+    .timelineRail::before {
+    height: clamp(12px, 1.1vw, 16px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .timelineBody strong {
+    font-size: clamp(22px, 1.9vw, 29px);
+    line-height: 1.2;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .timelineBody p {
+    margin-top: 6px;
+    font-size: clamp(15px, 1.25vw, 18px);
+  }
+
+  :global(.fullscreen-preview)
+    :global(.fullscreen-preview__page--alpine)
+    .rings
+    :global(.invite-section-eyebrow) {
+    font-size: clamp(11px, 0.9vw, 12px);
+  }
+
+  :global(.fullscreen-preview)
+    :global(.fullscreen-preview__page--alpine)
+    .rings
+    :global(.invite-section-eyebrow)
+    span {
+    width: 22px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .rings .panel > .small {
+    font-size: clamp(36px, 3.2vw, 48px);
+  }
+
+  :global(.fullscreen-preview)
+    :global(.fullscreen-preview__page--alpine)
+    .rings
+    .whenPhoto
+    .heading {
+    font-size: clamp(36px, 3vw, 48px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .whenMonth,
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .calendar div {
+    font-size: clamp(11px, 0.9vw, 13px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .calendar strong {
+    width: clamp(36px, 2.8vw, 44px);
+    height: clamp(36px, 2.8vw, 44px);
+    font-size: clamp(14px, 1.1vw, 17px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .planChip {
+    padding: 8px 14px;
+    font-size: clamp(13px, 1.05vw, 15px);
+  }
+
+  :global(.fullscreen-preview)
+    :global(.fullscreen-preview__page--alpine)
+    .rings
+    .panel
+    > p:not(.small) {
+    max-width: clamp(360px, 32vw, 480px);
+    font-size: clamp(16px, 1.2vw, 18px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .rsvp {
+    grid-column: 1 / -1;
+    width: min(940px, calc(100% - 80px));
+    justify-self: center;
+    align-self: center;
+    margin: clamp(24px, 3vw, 48px);
+    padding: clamp(56px, 5vw, 84px) clamp(34px, 4vw, 62px) clamp(64px, 5.5vw, 96px);
+    border-radius: 24px;
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .final {
+    min-height: max(100svh, min(1400px, 50vw));
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .finalContent {
+    inset: auto clamp(40px, 6vw, 110px) clamp(54px, 8vh, 100px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .finalContent h2 {
+    font-size: clamp(64px, 7vw, 112px);
+  }
+
+  :global(.fullscreen-preview) :global(.fullscreen-preview__page--alpine) .finalContent p {
+    font-size: clamp(24px, 2.4vw, 38px);
+  }
+}

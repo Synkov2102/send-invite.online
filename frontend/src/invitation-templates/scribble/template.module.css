@@ -550,8 +550,10 @@
 }
 .sharedBlock {
   width: 100%;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+}
+.shell .sharedBlock {
+  border-radius: 0;
+  box-shadow: none;
 }
 .sharedPaper .sharedBlock {
   --dress-accent: var(--scribble-accent);
@@ -559,11 +561,13 @@
   --dress-muted: var(--scribble-muted);
   --dress-line: var(--scribble-line);
   --dress-surface: var(--scribble-paper);
-  background: var(--scribble-paper) !important;
 }
-.details .sharedBlock {
-  border: 1px solid var(--scribble-line) !important;
-  background: var(--scribble-paper) !important;
+.shell .sharedPaper .sharedBlock {
+  background: var(--scribble-paper);
+}
+.shell .details .sharedBlock {
+  border: 1px solid var(--scribble-line);
+  background: var(--scribble-paper);
 }
 .details .sharedBlock:nth-of-type(2) {
   transform: rotate(-0.6deg);
@@ -573,18 +577,18 @@
 }
 /* Общие блоки поднимают заголовок в uppercase — рукописный шрифт в верхнем регистре
    нечитаем и вылезает за рамку, поэтому возвращаем обычный регистр. */
-.sharedPaper .sharedBlock :global(h2),
-.details .sharedBlock :global(h2) {
-  color: var(--scribble-accent) !important;
-  font-family: var(--scribble-script) !important;
-  font-size: clamp(27px, 6.4vw, 36px) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  line-height: 1.12 !important;
-  text-transform: none !important;
+.shell .sharedPaper .sharedBlock :global(h2),
+.shell .details .sharedBlock :global(h2) {
+  color: var(--scribble-accent);
+  font-family: var(--scribble-script);
+  font-size: clamp(27px, 6.4vw, 36px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.12;
+  text-transform: none;
 }
-.details .sharedBlock :global(p) {
-  line-height: 1.6 !important;
+.shell .details .sharedBlock :global(p) {
+  line-height: 1.6;
 }
 
 .rsvp {
@@ -626,12 +630,12 @@
   margin-top: 18px;
   text-align: left;
 }
-.rsvpForm :global([class*="section_"]) {
-  border: 1px solid var(--scribble-line) !important;
-  box-shadow: 7px 7px 0 color-mix(in srgb, var(--scribble-accent) 7%, transparent) !important;
+.shell .rsvpForm :global([class*="section_"]) {
+  border: 1px solid var(--scribble-line);
+  box-shadow: 7px 7px 0 color-mix(in srgb, var(--scribble-accent) 7%, transparent);
 }
-.rsvpForm :global([class*="submit_"]) {
-  box-shadow: 5px 6px 0 color-mix(in srgb, var(--scribble-ink) 12%, transparent) !important;
+.shell .rsvpForm :global([class*="submit_"]) {
+  box-shadow: 5px 6px 0 color-mix(in srgb, var(--scribble-ink) 12%, transparent);
 }
 
 .closing {

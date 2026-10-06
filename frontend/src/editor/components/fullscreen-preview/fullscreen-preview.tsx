@@ -5,7 +5,6 @@ import { Minimize2, Pencil } from "lucide-react";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import { useEditor } from "../../editor-context";
 import { PreviewPaletteDock } from "../preview-palette-dock";
-import inviteOverrides from "../editor-invite-overrides/editor-invite-overrides.module.css";
 import styles from "./fullscreen-preview.module.css";
 
 export function FullscreenPreview() {
@@ -30,7 +29,7 @@ export function FullscreenPreview() {
 
   return (
     <section
-      className={`fullscreen-preview ${styles.scope} ${inviteOverrides.scope}`}
+      className={`fullscreen-preview ${styles.scope} editor-preview-scope`}
       aria-label="Полноэкранный предпросмотр"
     >
       <div className="fullscreen-preview__toolbar">

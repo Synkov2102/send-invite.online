@@ -291,9 +291,12 @@
 .venuePhoto {
   position: relative;
   min-height: clamp(420px, 118vw, 680px);
-  margin-top: 28px !important;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--crimson-photo-text) 45%, transparent);
+}
+
+.shell .venuePhoto {
+  margin-top: 28px;
 }
 
 .venuePhoto .photo {
@@ -323,10 +326,13 @@
 
 .locationInvite {
   max-width: 42ch;
-  margin-top: 30px !important;
   color: color-mix(in srgb, var(--crimson-photo-text) 72%, transparent);
   font-size: 12px;
   line-height: 1.55;
+}
+
+.shell .locationInvite {
+  margin-top: 30px;
 }
 
 .dressCode,

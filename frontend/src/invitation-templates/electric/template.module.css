@@ -401,14 +401,14 @@
 .dressBlock :global([class*="swatchLabel"]) {
   display: none;
 }
-.dressBlock :global(h2) {
-  color: var(--electric-on-bright) !important;
-  font-family: Arial, sans-serif !important;
-  font-size: clamp(58px, 10vw, 148px) !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.08em !important;
-  line-height: 0.82 !important;
-  text-transform: uppercase !important;
+.shell .dressBlock :global(h2) {
+  color: var(--electric-on-bright);
+  font-family: Arial, sans-serif;
+  font-size: clamp(58px, 10vw, 148px);
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 0.82;
+  text-transform: uppercase;
 }
 .dressBlock :global(p) {
   max-width: 54ch;
@@ -416,10 +416,10 @@
   font-size: 16px;
   line-height: 1.45;
 }
-.dressBlock :global(span[class*="swatch"]) {
-  border: 2px solid var(--electric-on-bright) !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+.shell .dressBlock :global(span[class*="swatch"]) {
+  border: 2px solid var(--electric-on-bright);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .groupChatSection {
@@ -613,10 +613,12 @@
   color: var(--electric-ink);
 }
 .rsvpForm :global([class*="submit"]) {
-  border-color: var(--electric-on-dark) !important;
-  background: var(--electric-on-dark) !important;
-  color: var(--electric-ink) !important;
   box-shadow: 5px 5px 0 var(--electric-punch);
+}
+.shell .rsvpForm :global([class*="submit"]) {
+  border-color: var(--electric-on-dark);
+  background: var(--electric-on-dark);
+  color: var(--electric-ink);
 }
 
 .closing {
@@ -824,10 +826,10 @@
     min-width: 0;
     flex: 0 1 46px;
   }
-  .dressBlock :global(span[class*="swatch"]) {
-    width: 46px !important;
-    border: 1px solid var(--electric-on-bright) !important;
-    box-shadow: none !important;
+  .shell .dressBlock :global(span[class*="swatch"]) {
+    width: 46px;
+    border: 1px solid var(--electric-on-bright);
+    box-shadow: none;
   }
   .groupChatSection {
     gap: 40px;

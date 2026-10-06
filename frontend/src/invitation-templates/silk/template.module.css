@@ -190,7 +190,10 @@
 
 .selectedDay {
   position: relative;
-  color: var(--silk-ink) !important;
+}
+
+.shell .selectedDay {
+  color: var(--silk-ink);
 }
 
 .selectedDay::before {
@@ -345,15 +348,21 @@
 .rsvpFormWrap :global(h2) {
   max-width: 100%;
   margin-inline: auto;
-  font-family: Georgia, "Times New Roman", serif !important;
-  font-size: clamp(28px, 6.4vw, 42px) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.02em !important;
-  line-height: 1.12 !important;
   overflow-wrap: anywhere;
-  text-transform: uppercase !important;
   text-wrap: balance;
   white-space: normal;
+}
+
+.shell .dressSection :global(h2),
+.shell .groupChatSection :global(h2),
+.shell .additionalInfoSection :global(h2),
+.shell .rsvpFormWrap :global(h2) {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 6.4vw, 42px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.12;
+  text-transform: uppercase;
 }
 
 .groupChatSection :global(h2),
@@ -361,8 +370,12 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
-  font-size: clamp(24px, 5.2vw, 34px) !important;
-  letter-spacing: 0.01em !important;
+}
+
+.shell .groupChatSection :global(h2),
+.shell .additionalInfoSection :global(h2) {
+  font-size: clamp(24px, 5.2vw, 34px);
+  letter-spacing: 0.01em;
 }
 
 .dressSection :global(p),
@@ -375,8 +388,8 @@
   justify-content: center;
 }
 
-.dressSection :global([class*="swatch"]) {
-  border-radius: 999px !important;
+.shell .dressSection :global([class*="swatch"]) {
+  border-radius: 999px;
 }
 
 .groupChatSection :global(a) {

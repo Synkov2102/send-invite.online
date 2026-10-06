@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import styles from "./template.module.css";
 
 type WeddingRingsSceneProps = {
   ink: string;
@@ -424,7 +425,7 @@ export default function WeddingRingsScene({
   return (
     <div
       aria-label="Анимированные 3D обручальные кольца"
-      className="invite-three-canvas"
+      className={styles.threeCanvas}
       ref={mountRef}
       role="img"
     />
