@@ -126,13 +126,11 @@
   pointer-events: none;
 }
 
-.canvasWide > article,
-.canvasNarrow > :global(.invite-shell) {
+.canvasWide > article {
   width: 100% !important;
 }
 
-.canvasReadonly > :global(.published-site),
-.canvasReadonly > :global(.invite-shell) {
+.canvasReadonly > :global(.published-site) {
   pointer-events: none;
 }
 

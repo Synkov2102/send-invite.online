@@ -900,47 +900,47 @@
     0 18px 38px color-mix(in srgb, var(--manor-ink) 18%, transparent);
 }
 
-.dressBlock :global(h2) {
-  color: var(--manor-ink) !important;
-  font-family: var(--manor-script) !important;
-  font-size: clamp(30px, 8vw, 42px) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  text-indent: 0 !important;
-  text-transform: none !important;
+.shell .dressBlock :global(h2) {
+  color: var(--manor-ink);
+  font-family: var(--manor-script);
+  font-size: clamp(30px, 8vw, 42px);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-indent: 0;
+  text-transform: none;
 }
 
-.dressBlock :global([class*="eyebrow"]) {
-  display: none !important;
+.shell .dressBlock :global([class*="eyebrow"]) {
+  display: none;
 }
 
-.dressBlock :global(p) {
-  max-width: 38ch !important;
-  font-family: var(--manor-serif) !important;
-  font-size: 15px !important;
-  line-height: 1.7 !important;
+.shell .dressBlock :global(p) {
+  max-width: 38ch;
+  font-family: var(--manor-serif);
+  font-size: 15px;
+  line-height: 1.7;
 }
 
 /* Подпись «Цвет N» не нужна глазу, но нужна скринридеру — прячем визуально. */
-.dressBlock :global([class*="swatchLabel"]) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  clip-path: inset(50%) !important;
-  white-space: nowrap !important;
+.shell .dressBlock :global([class*="swatchLabel"]) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Квадратные выкраски вместо кружков — ближе к образцам тканей. */
-.dressBlock ul li > span:first-child {
-  width: clamp(42px, 9vw, 54px) !important;
-  border: 1px solid color-mix(in srgb, var(--manor-ink) 20%, transparent) !important;
-  border-radius: 0 !important;
-  box-shadow: 0 5px 12px color-mix(in srgb, var(--manor-ink) 12%, transparent) !important;
+.shell .dressBlock ul li > span:first-child {
+  width: clamp(42px, 9vw, 54px);
+  border: 1px solid color-mix(in srgb, var(--manor-ink) 20%, transparent);
+  border-radius: 0;
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--manor-ink) 12%, transparent);
 }
 
-.dressBlock ul li {
-  min-width: 0 !important;
+.shell .dressBlock ul li {
+  min-width: 0;
 }
 
 /* --- Детали --- */
@@ -977,42 +977,42 @@
   box-shadow: none;
 }
 
-.detailsBlock :global(h2) {
-  font-family: var(--manor-script) !important;
-  font-size: clamp(25px, 6.5vw, 32px) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  text-indent: 0 !important;
-  text-transform: none !important;
+.shell .detailsBlock :global(h2) {
+  font-family: var(--manor-script);
+  font-size: clamp(25px, 6.5vw, 32px);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-indent: 0;
+  text-transform: none;
 }
 
-.detailsBlock :global([class*="eyebrow"]) {
-  display: none !important;
+.shell .detailsBlock :global([class*="eyebrow"]) {
+  display: none;
 }
 
-.detailsBlock :global(p) {
-  margin-inline: auto !important;
-  max-width: 40ch !important;
-  font-family: var(--manor-serif) !important;
-  font-size: 15px !important;
-  line-height: 1.7 !important;
+.shell .detailsBlock :global(p) {
+  margin-inline: auto;
+  max-width: 40ch;
+  font-family: var(--manor-serif);
+  font-size: 15px;
+  line-height: 1.7;
 }
 
-.detailsBlock :global(a) {
-  min-height: 46px !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  padding: 12px 24px !important;
-  font-size: 11px !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.2em !important;
-  text-indent: 0.2em !important;
-  text-transform: uppercase !important;
-  transition: background-color 240ms ease !important;
+.shell .detailsBlock :global(a) {
+  min-height: 46px;
+  border-radius: 0;
+  background: transparent;
+  padding: 12px 24px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  transition: background-color 240ms ease;
 }
 
-.detailsBlock :global(a):hover {
-  background: color-mix(in srgb, var(--manor-ink) 8%, transparent) !important;
+.shell .detailsBlock :global(a):hover {
+  background: color-mix(in srgb, var(--manor-ink) 8%, transparent);
 }
 
 .detailsBlock::after {
@@ -1055,13 +1055,16 @@
 .rsvpPhoto {
   position: relative;
   width: calc(100% - clamp(8px, 2vw, 14px));
-  margin-bottom: clamp(14px, 4vw, 24px) !important;
   aspect-ratio: 4 / 3;
   border: 8px solid var(--manor-paper);
   box-shadow:
     0 12px 28px color-mix(in srgb, var(--manor-ink) 17%, transparent),
     0 0 0 1px var(--manor-line);
   overflow: hidden;
+}
+
+.shell .rsvpPhoto {
+  margin-bottom: clamp(14px, 4vw, 24px);
 }
 
 .rsvpPhoto .photoMono {
@@ -1104,57 +1107,57 @@
   text-align: left;
 }
 
-.rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
-  border-inline: 0 !important;
-  border-top: 1px solid var(--manor-line) !important;
-  border-bottom: 0 !important;
-  padding: 26px 0 !important;
-  background: transparent !important;
-  backdrop-filter: none !important;
+.shell .rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
+  border-inline: 0;
+  border-top: 1px solid var(--manor-line);
+  border-bottom: 0;
+  padding: 26px 0;
+  background: transparent;
+  backdrop-filter: none;
 }
 
-.rsvpForm :global([class*="__step"]) {
-  border: 1px solid var(--manor-line) !important;
-  background: color-mix(in srgb, var(--manor-paper) 92%, white) !important;
-  color: var(--manor-accent) !important;
-  font-family: var(--manor-serif) !important;
-  font-weight: 400 !important;
+.shell .rsvpForm :global([class*="__step"]) {
+  border: 1px solid var(--manor-line);
+  background: color-mix(in srgb, var(--manor-paper) 92%, white);
+  color: var(--manor-accent);
+  font-family: var(--manor-serif);
+  font-weight: 400;
 }
 
 /* Заголовки шагов формы живут в той же антикве, что и заголовки секций. */
-.rsvpForm :global([class*="__sectionHeading"]) h3 {
-  font-family: var(--manor-serif) !important;
-  font-size: clamp(17px, 4.4vw, 19px) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
+.shell .rsvpForm :global([class*="__sectionHeading"]) h3 {
+  font-family: var(--manor-serif);
+  font-size: clamp(17px, 4.4vw, 19px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.rsvpForm :global([class*="__sectionHeading"]) p {
-  font-family: var(--manor-serif) !important;
-  font-size: 13px !important;
+.shell .rsvpForm :global([class*="__sectionHeading"]) p {
+  font-family: var(--manor-serif);
+  font-size: 13px;
 }
 
-.rsvpForm :global([class*="__option"]:not([class*="__optionText"])) {
-  border: 0 !important;
-  border-bottom: 1px solid var(--manor-line) !important;
-  padding-inline: 0 !important;
-  background: transparent !important;
+.shell .rsvpForm :global([class*="__option"]:not([class*="__optionText"])) {
+  border: 0;
+  border-bottom: 1px solid var(--manor-line);
+  padding-inline: 0;
+  background: transparent;
 }
 
-.rsvpForm :global([class*="__textInput"]),
-.rsvpForm :global([class*="__textarea"]) {
-  border: 0 !important;
-  border-bottom: 1px solid var(--manor-line) !important;
-  padding-inline: 0 !important;
-  background: transparent !important;
+.shell .rsvpForm :global([class*="__textInput"]),
+.shell .rsvpForm :global([class*="__textarea"]) {
+  border: 0;
+  border-bottom: 1px solid var(--manor-line);
+  padding-inline: 0;
+  background: transparent;
 }
 
-.rsvpForm :global([class*="__submit"]) {
-  min-height: 58px !important;
-  padding-inline: 22px !important;
-  letter-spacing: 0.16em !important;
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--manor-ink) 16%, transparent) !important;
+.shell .rsvpForm :global([class*="__submit"]) {
+  min-height: 58px;
+  padding-inline: 22px;
+  letter-spacing: 0.16em;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--manor-ink) 16%, transparent);
 }
 
 /* --- Финал --- */
@@ -1311,8 +1314,8 @@
     padding-inline: 22px;
   }
 
-  .rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
-    padding-block: 18px !important;
+  .shell .rsvpForm :global([class*="__section"]:not([class*="__sectionHeading"])) {
+    padding-block: 18px;
   }
 
   .closing {
@@ -1573,8 +1576,15 @@
   .shell .hero *,
   .shell .heroBackdrop,
   .shell .countdownGrid strong {
-    animation: none !important;
     opacity: 1;
     stroke-dashoffset: 0;
+  }
+  .shell.shell[data-animate="on"] [data-reveal],
+  .shell.shell[data-animate="on"] [data-reveal][data-revealed],
+  .shell.shell [data-revealed] *,
+  .shell.shell .hero *,
+  .shell.shell .heroBackdrop,
+  .shell.shell .countdownGrid strong {
+    animation: none;
   }
 }

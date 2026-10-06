@@ -224,13 +224,13 @@
   }
 
   /* Появление по прокрутке уже отключено в `useScrollReveal`, остаётся вступление обложки. */
-  .topline,
-  .hero .heroTitle > *,
-  .hero .heroNote,
-  .hero .heroPhoto .photo,
-  .namesBadge,
-  .seal {
-    animation: none !important;
+  .shell .topline,
+  .shell .hero .heroTitle > *,
+  .shell .hero .heroNote,
+  .shell .hero .heroPhoto .photo,
+  .shell .namesBadge,
+  .shell .seal {
+    animation: none;
   }
 }
 
@@ -629,37 +629,40 @@
   display: none;
 }
 
-.dressBlock :global(h2) {
-  color: var(--chapter-ink) !important;
-  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif !important;
-  font-size: clamp(28px, 7.4vw, 44px) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.005em !important;
-  line-height: 0.98 !important;
-  text-transform: uppercase !important;
+.shell .dressBlock :global(h2) {
+  color: var(--chapter-ink);
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(28px, 7.4vw, 44px);
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 0.98;
+  text-transform: uppercase;
 }
 
 .dressBlock :global(p) {
   margin-inline: auto;
   max-width: 42ch;
-  margin-top: 14px !important;
-  color: var(--chapter-muted) !important;
-  font-size: 14px !important;
-  line-height: 1.6 !important;
 }
 
-.dressBlock :global([class*="swatches"]) {
-  justify-content: center !important;
-  margin-top: 22px !important;
-  gap: 10px !important;
+.shell .dressBlock :global(p) {
+  margin-top: 14px;
+  color: var(--chapter-muted);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.dressBlock :global([class*="swatch_"]) {
-  width: clamp(40px, 8vw, 52px) !important;
-  height: clamp(40px, 8vw, 52px) !important;
-  border: 1px solid color-mix(in srgb, var(--chapter-ink) 16%, transparent) !important;
-  border-radius: 999px !important;
-  box-shadow: none !important;
+.shell .dressBlock :global([class*="swatches"]) {
+  justify-content: center;
+  margin-top: 22px;
+  gap: 10px;
+}
+
+.shell .dressBlock :global([class*="swatch_"]) {
+  width: clamp(40px, 8vw, 52px);
+  height: clamp(40px, 8vw, 52px);
+  border: 1px solid color-mix(in srgb, var(--chapter-ink) 16%, transparent);
+  border-radius: 999px;
+  box-shadow: none;
 }
 
 .details {
@@ -711,23 +714,27 @@
   display: none;
 }
 
-.infoBlock :global(h2),
-.chatBlock :global(h2) {
-  color: var(--chapter-paper) !important;
-  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif !important;
-  font-size: 20px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.02em !important;
-  text-transform: uppercase !important;
+.shell .infoBlock :global(h2),
+.shell .chatBlock :global(h2) {
+  color: var(--chapter-paper);
+  font-family: var(--font-invite-condensed), var(--font-geist-sans), Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .infoBlock :global(p),
 .chatBlock :global(p) {
   margin-inline: auto;
   max-width: 42ch;
-  color: color-mix(in srgb, var(--chapter-paper) 74%, transparent) !important;
-  font-size: 14px !important;
-  line-height: 1.6 !important;
+}
+
+.shell .infoBlock :global(p),
+.shell .chatBlock :global(p) {
+  color: color-mix(in srgb, var(--chapter-paper) 74%, transparent);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .chatBlock.chatBlock {
@@ -738,14 +745,17 @@
 
 .chatBlock :global(a) {
   margin-top: 14px;
-  border: 0 !important;
-  border-radius: 999px !important;
-  background: var(--chapter-accent) !important;
-  padding: 11px 22px !important;
-  color: var(--chapter-photo-text) !important;
-  font-size: 11px !important;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.shell .chatBlock :global(a) {
+  border: 0;
+  border-radius: 999px;
+  background: var(--chapter-accent);
+  padding: 11px 22px;
+  color: var(--chapter-photo-text);
+  font-size: 11px;
 }
 
 .rsvp {

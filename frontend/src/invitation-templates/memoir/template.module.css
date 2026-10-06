@@ -85,7 +85,6 @@
 }
 
 .heroTitle {
-  margin-top: clamp(20px, 5vw, 32px) !important;
   color: var(--memoir-blue);
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(45px, 12vw, 72px);
@@ -97,17 +96,24 @@
   animation: memoirScriptIn 900ms var(--memoir-ease) both 180ms;
 }
 
+.shell .heroTitle {
+  margin-top: clamp(20px, 5vw, 32px);
+}
+
 .heroNames {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
   gap: 0.05em 0.4em;
-  margin-top: 16px !important;
   font-family: var(--font-invite-serif), Georgia, serif;
   font-size: clamp(17px, 4vw, 23px);
   font-style: italic;
   animation: memoirRise 720ms var(--memoir-ease) both 420ms;
+}
+
+.shell .heroNames {
+  margin-top: 16px;
 }
 
 .heroNames i {
@@ -121,7 +127,6 @@
   --memoir-tilt: -1.6deg;
   position: relative;
   width: min(88%, 430px);
-  margin-top: clamp(28px, 6vw, 44px) !important;
   background: color-mix(in srgb, var(--memoir-paper) 90%, white);
   padding: 13px 13px 18px;
   box-shadow:
@@ -129,6 +134,10 @@
     0 2px 0 color-mix(in srgb, var(--memoir-ink) 7%, transparent);
   transform: rotate(var(--memoir-tilt));
   animation: memoirPhotoDrop 950ms var(--memoir-ease) both 520ms;
+}
+
+.shell .childhoodCard {
+  margin-top: clamp(28px, 6vw, 44px);
 }
 
 .childhoodPhoto {
@@ -563,7 +572,6 @@
   position: relative;
   z-index: 3;
   justify-self: center;
-  margin-bottom: -18px !important;
   border-radius: 999px;
   background: var(--memoir-paper);
   padding: 7px clamp(20px, 6vw, 28px) 9px;
@@ -572,6 +580,10 @@
   font-size: clamp(39px, 10vw, 58px);
   text-align: center;
   transform: rotate(var(--memoir-tilt));
+}
+
+.shell .dressScript {
+  margin-bottom: -18px;
 }
 
 .dressBlock.dressBlock {
@@ -598,22 +610,25 @@
 
 .dressBlock :global(p) {
   max-width: 36ch;
-  margin-inline: auto !important;
-  color: color-mix(in srgb, var(--memoir-ink) 70%, var(--memoir-paper)) !important;
-  font-size: 13px !important;
-  line-height: 1.58 !important;
 }
 
-.dressBlock :global([class*="swatches"]) {
-  margin-top: 16px !important;
-  gap: 8px !important;
+.shell .dressBlock :global(p) {
+  margin-inline: auto;
+  color: color-mix(in srgb, var(--memoir-ink) 70%, var(--memoir-paper));
+  font-size: 13px;
+  line-height: 1.58;
 }
 
-.dressBlock :global([class*="swatch_"]) {
-  width: clamp(44px, 10vw, 52px) !important;
-  height: clamp(44px, 10vw, 52px) !important;
-  border: 3px solid var(--memoir-paper) !important;
-  box-shadow: 0 0 0 1px var(--memoir-line) !important;
+.shell .dressBlock :global([class*="swatches"]) {
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.shell .dressBlock :global([class*="swatch_"]) {
+  width: clamp(44px, 10vw, 52px);
+  height: clamp(44px, 10vw, 52px);
+  border: 3px solid var(--memoir-paper);
+  box-shadow: 0 0 0 1px var(--memoir-line);
 }
 
 .details {
@@ -651,26 +666,26 @@
   box-shadow: none;
 }
 
-.infoBlock :global(.invite-section-eyebrow),
-.chatBlock :global(.invite-section-eyebrow) {
-  color: color-mix(in srgb, var(--memoir-photo-text) 62%, transparent) !important;
+.shell .infoBlock :global(.invite-section-eyebrow),
+.shell .chatBlock :global(.invite-section-eyebrow) {
+  color: color-mix(in srgb, var(--memoir-photo-text) 62%, transparent);
 }
 
-.infoBlock :global(h2),
-.chatBlock :global(h2) {
-  color: var(--memoir-photo-text) !important;
-  font-family: var(--font-invite-serif), Georgia, serif !important;
-  font-size: clamp(22px, 5vw, 28px) !important;
-  font-weight: 500 !important;
-  letter-spacing: -0.02em !important;
-  line-height: 1.08 !important;
+.shell .infoBlock :global(h2),
+.shell .chatBlock :global(h2) {
+  color: var(--memoir-photo-text);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
 }
 
-.infoBlock :global(p),
-.chatBlock :global(p) {
-  color: color-mix(in srgb, var(--memoir-photo-text) 78%, transparent) !important;
-  font-size: 13px !important;
-  line-height: 1.58 !important;
+.shell .infoBlock :global(p),
+.shell .chatBlock :global(p) {
+  color: color-mix(in srgb, var(--memoir-photo-text) 78%, transparent);
+  font-size: 13px;
+  line-height: 1.58;
 }
 
 .infoBlock.infoBlock {
@@ -686,31 +701,34 @@
   box-shadow: 0 12px 30px color-mix(in srgb, var(--memoir-ink) 8%, transparent);
 }
 
-.infoBlock :global(.invite-section-eyebrow) {
-  color: var(--memoir-muted) !important;
+.shell .infoBlock :global(.invite-section-eyebrow) {
+  color: var(--memoir-muted);
 }
 
-.infoBlock :global(h2) {
-  color: var(--memoir-ink) !important;
+.shell .infoBlock :global(h2) {
+  color: var(--memoir-ink);
 }
 
-.infoBlock :global(p) {
-  color: color-mix(in srgb, var(--memoir-ink) 70%, var(--memoir-paper)) !important;
+.shell .infoBlock :global(p) {
+  color: color-mix(in srgb, var(--memoir-ink) 70%, var(--memoir-paper));
 }
 
 .chatBlock :global(a) {
-  min-height: 46px !important;
-  justify-content: center !important;
-  border: 1px solid color-mix(in srgb, var(--memoir-photo-text) 34%, transparent) !important;
-  border-radius: 999px !important;
-  background: transparent !important;
-  padding: 11px 18px !important;
-  color: var(--memoir-photo-text) !important;
   transition:
     background-color 160ms ease,
     border-color 160ms ease,
     color 160ms ease,
     transform 160ms ease;
+}
+
+.shell .chatBlock :global(a) {
+  min-height: 46px;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--memoir-photo-text) 34%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  padding: 11px 18px;
+  color: var(--memoir-photo-text);
 }
 
 .rsvp {
@@ -1349,11 +1367,11 @@
     color: var(--memoir-photo-text);
   }
 
-  .chatBlock :global(a:hover),
-  .backToTop:hover {
-    border-color: var(--memoir-photo-text) !important;
-    background: var(--memoir-photo-text) !important;
-    color: var(--memoir-blue) !important;
+  .shell .chatBlock :global(a:hover),
+  .shell .backToTop:hover {
+    border-color: var(--memoir-photo-text);
+    background: var(--memoir-photo-text);
+    color: var(--memoir-blue);
   }
 }
 
@@ -1414,22 +1432,27 @@
   }
 
   /* Появление по прокрутке уже отключено в `useScrollReveal`, остаётся вступление обложки. */
-  .invitationLabel,
-  .heroTitle,
-  .heroNames,
-  .childhoodCard,
-  .childhoodPhoto .photo,
-  .tape,
-  .childhoodCard figcaption,
-  .heroDoodle,
-  .heroDoodle span {
-    animation: none !important;
+  .shell .invitationLabel,
+  .shell .heroTitle,
+  .shell .heroNames,
+  .shell .childhoodCard,
+  .shell .childhoodPhoto .photo,
+  .shell .tape,
+  .shell .childhoodCard figcaption,
+  .shell .heroDoodle,
+  .shell .heroDoodle span {
+    animation: none;
   }
 
   .venueCopy a,
   .backToTop,
   .chatBlock :global(a) {
     transition: none;
-    transform: none !important;
+  }
+
+  .shell .venueCopy a,
+  .shell .backToTop,
+  .shell .chatBlock :global(a) {
+    transform: none;
   }
 }

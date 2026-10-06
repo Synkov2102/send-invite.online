@@ -128,6 +128,12 @@ export const scribbleImages = {
   venue: "/images/handwritten-note-venue.webp",
 } as const;
 
+export const villaImages = {
+  cover: "/images/villa-amore-cover.webp",
+  portrait: "/images/villa-amore-portrait.webp",
+  venue: "/images/villa-amore-venue.webp",
+} as const;
+
 export type TemplateImageSet = { cover: string; portrait: string; venue: string };
 
 export const voyageImages = {
@@ -144,6 +150,7 @@ export const petalImages = {
 
 /** Единственное место, куда нужно добавить новый TemplateKind — потребители (редактор, живой рендерер) берут картинки только отсюда. */
 export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  villa: villaImages,
   voyage: voyageImages,
   petal: petalImages,
   alpine: alpineImages,

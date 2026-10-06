@@ -186,11 +186,14 @@
 
 .lead {
   max-width: 39ch;
-  margin-top: 28px !important;
   color: var(--minimal-ink);
   font-family: var(--font-invite-serif), Georgia, serif;
   font-size: clamp(17px, 2.3vw, 22px);
   line-height: 1.7;
+}
+
+.shell .lead {
+  margin-top: 28px;
 }
 
 .greetingCopy time {
@@ -260,8 +263,8 @@
   text-transform: uppercase;
 }
 
-.sectionHeader .scriptTitle {
-  margin-top: 25px !important;
+.shell .sectionHeader .scriptTitle {
+  margin-top: 25px;
 }
 
 .sectionHeader h2 {
@@ -439,8 +442,8 @@
   align-self: start;
 }
 
-.programHeader .scriptTitle {
-  margin-top: 25px !important;
+.shell .programHeader .scriptTitle {
+  margin-top: 25px;
 }
 
 .programHeader h2 {
@@ -493,10 +496,13 @@
 
 .timeline p {
   max-width: 38ch;
-  margin-top: 8px !important;
   color: var(--minimal-muted);
   font-size: 12px;
   line-height: 1.55;
+}
+
+.shell .timeline p {
+  margin-top: 8px;
 }
 
 .dressSection {
@@ -536,14 +542,14 @@
   display: none;
 }
 
-.dressBlock :global(h2) {
-  color: var(--minimal-accent) !important;
-  font-family: var(--font-invite-script), "Segoe Script", cursive !important;
-  font-size: clamp(42px, 8vw, 68px) !important;
-  font-weight: 400 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1.05 !important;
-  text-transform: none !important;
+.shell .dressBlock :global(h2) {
+  color: var(--minimal-accent);
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-size: clamp(42px, 8vw, 68px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-transform: none;
 }
 
 .dressBlock :global(p) {
@@ -554,9 +560,9 @@
   line-height: 1.65;
 }
 
-.dressBlock :global([class*="swatch_"]) {
-  border-radius: 999px !important;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--minimal-paper) 45%, transparent) !important;
+.shell .dressBlock :global([class*="swatch_"]) {
+  border-radius: 999px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--minimal-paper) 45%, transparent);
 }
 
 .groupChatSection {
@@ -700,8 +706,8 @@
   gap: clamp(48px, 9vw, 110px);
 }
 
-.rsvpInner header .scriptTitle {
-  margin-top: 24px !important;
+.shell .rsvpInner header .scriptTitle {
+  margin-top: 24px;
 }
 
 .rsvpInner header h2 {

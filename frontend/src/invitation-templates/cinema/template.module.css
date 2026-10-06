@@ -293,35 +293,37 @@
   white-space: pre-line;
   overflow-wrap: anywhere;
 }
-.shared {
-  padding: 0 !important;
-  gap: 0 !important;
-  border: 0 !important;
-  background: transparent !important;
-  color: var(--invite-ink) !important;
-  box-shadow: none !important;
+.shell .shared {
+  padding: 0;
+  gap: 0;
+  border: 0;
+  background: transparent;
+  color: var(--invite-ink);
+  box-shadow: none;
 }
 .shared > :global(.invite-section-eyebrow) {
   display: none;
 }
-.shared h2 {
-  font-family: var(--cinema-script) !important;
-  font-weight: 400 !important;
-  font-size: clamp(34px, 10cqw, 54px) !important;
-  letter-spacing: 0 !important;
-  line-height: 1.2 !important;
-  margin: 0 0 32px !important;
+.shell .shared h2 {
+  font-family: var(--cinema-script);
+  font-weight: 400;
+  font-size: clamp(34px, 10cqw, 54px);
+  letter-spacing: 0;
+  line-height: 1.2;
+  margin: 0 0 32px;
 }
 .shared > p {
   min-width: 0;
   width: 100%;
   overflow-wrap: anywhere;
-  margin: 0 auto !important;
-  font-size: 15px !important;
-  line-height: 1.7 !important;
   max-width: 350px;
   text-wrap: pretty;
-  color: var(--invite-ink) !important;
+}
+.shell .shared > p {
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--invite-ink);
 }
 .shared ul {
   justify-content: center;
@@ -392,9 +394,11 @@
 }
 .form h3 {
   font-family: var(--cinema-serif);
-  font-size: clamp(22px, 6cqw, 26px) !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
+}
+.shell .form h3 {
+  font-size: clamp(22px, 6cqw, 26px);
+  font-weight: 500;
+  line-height: 1.2;
 }
 .form input[type="text"],
 .form textarea {

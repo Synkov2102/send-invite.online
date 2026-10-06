@@ -32,8 +32,12 @@ const nextConfig: NextConfig = {
       },
       {
         pathname: "/images/templates/**",
-        search: "?v=20260830-1",
-      },
+          search: "?v=20260830-1",
+        },
+        {
+          pathname: "/images/templates/**",
+          search: "?v=20261004-2",
+        },
     ],
     remotePatterns: [
       {

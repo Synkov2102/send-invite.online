@@ -64,6 +64,15 @@
   background: var(--paper);
   color: var(--accent);
   text-align: center;
+  -webkit-mask:
+    radial-gradient(circle at top left, transparent var(--notch), #000 calc(var(--notch) + 1px)) top
+      left,
+    radial-gradient(circle at top right, transparent var(--notch), #000 calc(var(--notch) + 1px))
+      top right,
+    radial-gradient(circle at bottom left, transparent var(--notch), #000 calc(var(--notch) + 1px))
+      bottom left,
+    radial-gradient(circle at bottom right, transparent var(--notch), #000 calc(var(--notch) + 1px))
+      bottom right;
   mask:
     radial-gradient(circle at top left, transparent var(--notch), #000 calc(var(--notch) + 1px)) top
       left,
@@ -73,7 +82,9 @@
       bottom left,
     radial-gradient(circle at bottom right, transparent var(--notch), #000 calc(var(--notch) + 1px))
       bottom right;
+  -webkit-mask-size: 51% 51%;
   mask-size: 51% 51%;
+  -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }
 
@@ -220,6 +231,8 @@
   height: var(--lace-height);
   background: var(--paper);
   /* The wave starts below the opaque 300px band in the 2172px-wide original. */
+  -webkit-mask: url("/images/velvet-ticket/lace-edge-wave.webp") center -13.812cqw / 100% auto
+    no-repeat;
   mask: url("/images/velvet-ticket/lace-edge-wave.webp") center -13.812cqw / 100% auto no-repeat;
   content: "";
   pointer-events: none;
@@ -291,11 +304,14 @@
 
 .lead {
   max-width: 36ch;
-  margin: 42px auto 0 !important;
   font-size: 14px;
   line-height: 1.55;
   overflow-wrap: anywhere;
   text-align: center;
+}
+
+.shell .lead {
+  margin: 42px auto 0;
 }
 
 .datePlace,
@@ -503,12 +519,15 @@
 }
 
 .dateNote {
-  margin-top: 4cqw !important;
   border-top: 1px solid var(--line);
   padding-top: 4cqw;
   color: var(--muted);
   font-size: clamp(11px, 2.8cqw, 14px);
   letter-spacing: 0.08em;
+}
+
+.shell .dateNote {
+  margin-top: 4cqw;
 }
 
 .dateNote time {
@@ -613,25 +632,34 @@
 }
 
 .programDate {
-  margin-bottom: 6cqw !important;
   color: #d7bda7;
   font-family: var(--font-geist-mono), monospace;
   font-size: clamp(10px, 2.5cqw, 13px);
   letter-spacing: 0.24em;
 }
 
+.shell .programDate {
+  margin-bottom: 6cqw;
+}
+
 .programScript {
-  margin-top: -0.08em !important;
   color: #dfc6ae;
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(36px, 10cqw, 64px);
   line-height: 1;
 }
 
+.shell .programScript {
+  margin-top: -0.08em;
+}
+
 .programList {
   position: relative;
   z-index: 1;
-  margin-top: 10cqw !important;
+}
+
+.shell .programList {
+  margin-top: 10cqw;
 }
 
 .programList::before {
@@ -641,6 +669,7 @@
   width: 33.8%;
   background: url("/images/velvet-ticket/pearl-thread.svg") center top / 100% auto repeat-y;
   filter: var(--paper-filter);
+  -webkit-mask: linear-gradient(transparent, #000 12px, #000 calc(100% - 12px), transparent);
   mask: linear-gradient(transparent, #000 12px, #000 calc(100% - 12px), transparent);
   content: "";
   pointer-events: none;
@@ -721,12 +750,15 @@
 .programClosing {
   position: relative;
   z-index: 1;
-  margin-top: 3cqw !important;
   color: #dfc6ae;
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(27px, 7.5cqw, 48px);
   line-height: 1.15;
   text-align: center;
+}
+
+.shell .programClosing {
+  margin-top: 3cqw;
 }
 
 .programClosing::before {
@@ -751,24 +783,30 @@
 .dressBlock {
   position: relative;
   z-index: 1;
-  margin-top: -24px !important;
-  background: var(--paper) !important;
-  padding: 48px 16px 0 !important;
 }
 
-.dressBlock h2 {
-  font-family: var(--font-invite-serif), Georgia, serif !important;
-  font-size: clamp(45px, 11cqw, 76px) !important;
-  font-weight: 400 !important;
-  letter-spacing: -0.045em !important;
-  text-transform: uppercase !important;
+.shell .dressBlock {
+  margin-top: -24px;
+  background: var(--paper);
+  padding: 48px 16px 0;
+}
+
+.shell .dressBlock h2 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(45px, 11cqw, 76px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
 }
 
 .dressBlock p {
   max-width: 38ch;
-  color: var(--muted) !important;
-  font-size: 13px !important;
   overflow-wrap: anywhere;
+}
+
+.shell .dressBlock p {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .details {
@@ -810,17 +848,20 @@
 
 .detailBlock {
   min-width: 0;
-  gap: 3cqw !important;
-  border: 0 !important;
-  background: none !important;
-  padding: 0 !important;
-  color: inherit !important;
   overflow-wrap: anywhere;
 }
 
-.detailBlock + .detailBlock {
-  border-top: 1px solid var(--line) !important;
-  padding-top: 6cqw !important;
+.shell .detailBlock {
+  gap: 3cqw;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.shell .detailBlock + .detailBlock {
+  border-top: 1px solid var(--line);
+  padding-top: 6cqw;
 }
 
 .detailBlock > :global(.invite-section-eyebrow) {
@@ -828,32 +869,41 @@
 }
 
 .detailBlock h2 {
-  color: inherit !important;
-  font-family: var(--font-invite-serif), Georgia, serif !important;
-  font-size: clamp(23px, 5.5cqw, 35px) !important;
   font-weight: 400;
-  line-height: 1.1 !important;
-  text-transform: none !important;
+}
+
+.shell .detailBlock h2 {
+  color: inherit;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(23px, 5.5cqw, 35px);
+  line-height: 1.1;
+  text-transform: none;
 }
 
 .detailBlock p {
-  color: var(--muted) !important;
-  font-size: clamp(13px, 3.2cqw, 16px) !important;
   line-height: 1.65;
 }
 
+.shell .detailBlock p {
+  color: var(--muted);
+  font-size: clamp(13px, 3.2cqw, 16px);
+}
+
 .detailBlock a {
-  border: 1px solid var(--accent) !important;
   border-radius: 0;
-  background: var(--accent) !important;
   padding: 12px 18px;
-  color: var(--paper) !important;
   font-size: clamp(12px, 2.8cqw, 15px);
   font-weight: 400;
 }
 
-.detailBlock a:hover {
-  background: color-mix(in srgb, var(--accent) 85%, var(--ink)) !important;
+.shell .detailBlock a {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.shell .detailBlock a:hover {
+  background: color-mix(in srgb, var(--accent) 85%, var(--ink));
 }
 
 .detailBlock a:focus-visible {
@@ -937,11 +987,14 @@
 }
 
 .closing h2 {
-  margin-top: 16px !important;
   font-family: var(--font-invite-script), "Segoe Script", cursive;
   font-size: clamp(46px, 13cqw, 84px);
   font-weight: 400;
   line-height: 0.95;
+}
+
+.shell .closing h2 {
+  margin-top: 16px;
 }
 
 .closing h2 i {

@@ -35,6 +35,7 @@ export const sharedTemplateRenderers: Record<
   SharedTemplateKind,
   ComponentType<SharedTemplateViewProps>
 > = {
+  villa: dynamic(() => import("./villa").then((module) => module.VillaTemplate), { ssr: true }),
   cinema: dynamic(() => import("./cinema").then((module) => module.CinemaTemplate), { ssr: true }),
   voyage: dynamic(() => import("./voyage").then((module) => module.VoyageTemplate), { ssr: true }),
   petal: dynamic(() => import("./petal").then((module) => module.PetalTemplate), { ssr: true }),

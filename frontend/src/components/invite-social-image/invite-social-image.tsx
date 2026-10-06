@@ -11,6 +11,7 @@ export const socialImageFonts = {
 type Font = keyof typeof socialImageFonts;
 
 export const socialImageStyles: Record<TemplateKind, { font: Font; size: number }> = {
+  villa: { font: "script", size: 112 },
   cinema: { font: "script", size: 112 },
   alpine: { font: "serif", size: 104 },
   aqua: { font: "serif", size: 108 },

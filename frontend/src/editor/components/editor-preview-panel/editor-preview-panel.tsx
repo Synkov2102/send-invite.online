@@ -5,7 +5,6 @@ import { Eye, Maximize2, Monitor, Smartphone } from "lucide-react";
 import { InviteSiteRenderer } from "@/components/invite-site-renderer";
 import { MobilePreviewFrame } from "../mobile-preview-frame";
 import { useEditor } from "../../editor-context";
-import inviteOverrides from "../editor-invite-overrides/editor-invite-overrides.module.css";
 import styles from "./editor-preview-panel.module.css";
 
 type EditorPreviewPanelProps = Readonly<{
@@ -40,7 +39,7 @@ export function EditorPreviewPanel({ isCompact = false }: EditorPreviewPanelProp
   );
 
   return (
-    <section className={`${styles.root} ${inviteOverrides.scope}`} id="invite-preview">
+    <section className={`${styles.root} editor-preview-scope`} id="invite-preview">
       <div className={styles.inner}>
         <div className={styles.toolbar} data-preview-toolbar>
           <div>

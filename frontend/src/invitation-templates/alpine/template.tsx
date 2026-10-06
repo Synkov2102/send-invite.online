@@ -31,6 +31,7 @@ import {
   formatDate,
   formatMonth,
 } from "./motion";
+import styles from "./template.module.css";
 
 type AlpineTemplateProps = {
   calendarDays: ReturnType<typeof getCalendarDays>;
@@ -70,21 +71,21 @@ export default function AlpineTemplate({
     />
     <motion.article
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      className={`invite-shell mx-auto ${coverType === "rings" ? "invite-shell--alpine-rings" : ""}`}
+      className={coverType === "rings" ? `${styles.shell} ${styles.rings}` : styles.shell}
       initial={{ opacity: 0, y: 24, scale: 0.985 }}
       style={inviteVars}
       transition={{ duration: 0.72, ease: "easeOut" }}
     >
       {coverType === "rings" ? (
         <motion.section
-          className="invite-cover invite-cover--three"
+          className={`${styles.cover} ${styles.coverThree}`}
           data-invite-section="hero"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
           whileInView="visible"
         >
-          <motion.div className="invite-cover__three-bg" variants={photoReveal}>
+          <motion.div className={styles.coverScene} variants={photoReveal}>
             <WeddingRingsScene
               ink={inviteVars["--invite-ink"]}
               line={inviteVars["--invite-line"]}
@@ -92,7 +93,7 @@ export default function AlpineTemplate({
               ringColor={ringColor}
             />
           </motion.div>
-          <motion.div className="invite-hero-copy" variants={copyReveal}>
+          <motion.div className={styles.heroCopy} variants={copyReveal}>
             <p>{formatDate(invite.date)}</p>
             <h1>
               {invite.groom}
@@ -103,17 +104,17 @@ export default function AlpineTemplate({
         </motion.section>
       ) : (
         <motion.section
-          className="invite-cover"
+          className={styles.cover}
           data-invite-section="hero"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
           whileInView="visible"
         >
-          <motion.div className="invite-arch" variants={photoReveal}>
+          <motion.div className={styles.arch} variants={photoReveal}>
             <Image
               alt=""
-              className="invite-photo__image"
+              className={styles.photo}
               fill
               unoptimized={isRuntimeImageSource(coverImage)}
               priority
@@ -121,7 +122,7 @@ export default function AlpineTemplate({
               src={coverImage}
             />
           </motion.div>
-          <motion.div className="invite-hero-copy" variants={copyReveal}>
+          <motion.div className={styles.heroCopy} variants={copyReveal}>
             <p>{formatDate(invite.date)}</p>
             <h1>
               {invite.groom}
@@ -133,7 +134,7 @@ export default function AlpineTemplate({
       )}
 
       <motion.section
-        className="invite-panel"
+        className={styles.panel}
         data-invite-section="greeting date cover"
         initial="hidden"
         variants={sectionReveal}
@@ -141,26 +142,26 @@ export default function AlpineTemplate({
         whileInView="visible"
       >
         <InvitationSectionEyebrow>Приглашение</InvitationSectionEyebrow>
-        <p className="invite-small">Дорогие гости</p>
-        <p className="mx-auto mt-4 max-w-[34ch] text-center text-[var(--invite-muted)]">
+        <p className={styles.small}>Дорогие гости</p>
+        <p className={styles.lead}>
           {invite.lead}
         </p>
-        <motion.div className="invite-when invite-when--photo" variants={staggerContainer}>
-          <motion.div className="invite-image-motion" variants={photoReveal}>
+        <motion.div className={`${styles.when} ${styles.whenPhoto}`} variants={staggerContainer}>
+          <motion.div className={styles.imageMotion} variants={photoReveal}>
             <Image
               alt="Свадебное фото пары"
-              className="invite-photo__image"
+              className={styles.photo}
               fill
               unoptimized={isRuntimeImageSource(coverImage)}
               sizes="(max-width: 767px) 520px, 100vw"
               src={coverImage}
             />
           </motion.div>
-          <motion.div className="invite-when__content" variants={copyReveal}>
-            <h2 className="invite-heading">Дата</h2>
-            <p className="invite-when__month">{formatMonth(invite.date)}</p>
+          <motion.div className={styles.whenContent} variants={copyReveal}>
+            <h2 className={styles.heading}>Дата</h2>
+            <p className={styles.whenMonth}>{formatMonth(invite.date)}</p>
             <motion.div
-              className="invite-calendar"
+              className={styles.calendar}
               initial="hidden"
               variants={staggerContainer}
               viewport={revealViewport}
@@ -168,7 +169,7 @@ export default function AlpineTemplate({
             >
               {calendarDays.map((item) => (
                 <motion.div
-                  className={item.selected ? "is-selected" : ""}
+                  className={item.selected ? styles.selected : undefined}
                   key={`${item.label}-${item.day}`}
                   variants={staggerItem}
                 >
@@ -183,29 +184,29 @@ export default function AlpineTemplate({
 
       {invite.showSchedule ? (
         <motion.section
-          className="invite-details"
+          className={styles.details}
           data-invite-section="schedule"
           initial="hidden"
           variants={sectionReveal}
           viewport={revealViewport}
           whileInView="visible"
         >
-          <motion.div className="invite-plan__head" variants={copyReveal}>
+          <motion.div className={styles.planHead} variants={copyReveal}>
             <InvitationSectionEyebrow>Расписание</InvitationSectionEyebrow>
-            <h2 className="invite-heading invite-plan__title">План дня</h2>
-            <div className="invite-plan__meta">
-              <span className="invite-plan__chip">
+            <h2 className={`${styles.heading} ${styles.planTitle}`}>План дня</h2>
+            <div className={styles.planMeta}>
+              <span className={styles.planChip}>
                 <CalendarDays aria-hidden="true" size={16} />
                 {formatDate(invite.date)}
               </span>
-              <span className="invite-plan__chip">
+              <span className={styles.planChip}>
                 <Clock3 aria-hidden="true" size={16} />
                 Начало в {invite.time}
               </span>
             </div>
           </motion.div>
           <motion.ol
-            className="invite-program invite-timeline"
+            className={`${styles.program} ${styles.timeline}`}
             initial="hidden"
             variants={staggerContainer}
             viewport={revealViewport}
@@ -213,15 +214,15 @@ export default function AlpineTemplate({
           >
             {invite.schedule.map((item, index) => (
               <motion.li
-                className="invite-timeline__item"
+                className={styles.timelineItem}
                 key={`${item.time}-${index}`}
                 variants={staggerItem}
               >
-                <span className="invite-timeline__time">{item.time}</span>
-                <span aria-hidden="true" className="invite-timeline__rail">
-                  <span className="invite-timeline__dot" />
+                <span className={styles.timelineTime}>{item.time}</span>
+                <span aria-hidden="true" className={styles.timelineRail}>
+                  <span className={styles.timelineDot} />
                 </span>
-                <div className="invite-timeline__body">
+                <div className={styles.timelineBody}>
                   <strong>{item.title}</strong>
                   {item.description ? <p>{item.description}</p> : null}
                 </div>
@@ -232,33 +233,33 @@ export default function AlpineTemplate({
       ) : null}
 
       <motion.section
-        className="invite-photo-band"
+        className={styles.photoBand}
         data-invite-section="location"
         initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}
         whileInView="visible"
       >
-        <motion.div className="invite-image-motion" variants={photoReveal}>
+        <motion.div className={styles.imageMotion} variants={photoReveal}>
           <Image
             alt="Горная долина и свадебная прогулка"
-            className="invite-photo__image"
+            className={styles.photo}
             fill
             unoptimized={isRuntimeImageSource(venueImage)}
             sizes="(max-width: 1199px) 100vw, 55vw"
             src={venueImage}
           />
         </motion.div>
-        <motion.div className="invite-photo-band__content" variants={copyReveal}>
+        <motion.div className={styles.photoBandContent} variants={copyReveal}>
           <MapPin aria-hidden="true" size={18} />
-          <h2 className="invite-heading">Место</h2>
+          <h2 className={styles.heading}>Место</h2>
           <p>
             {invite.venue}
             <br />
             {invite.address}, {invite.city}
           </p>
           {mapUrl ? (
-            <a className="invite-map-link" href={mapUrl} rel="noreferrer" target="_blank">
+            <a className={styles.mapLink} href={mapUrl} rel="noreferrer" target="_blank">
               Посмотреть на карте
             </a>
           ) : null}
@@ -267,7 +268,7 @@ export default function AlpineTemplate({
 
       {invite.showDressCode ? (
         <motion.section
-          className="invite-dress-code"
+          className={styles.dressCode}
           data-invite-section="dress-code"
           initial="hidden"
           variants={sectionReveal}
@@ -284,7 +285,7 @@ export default function AlpineTemplate({
 
       {invite.showGroupChat ? (
         <motion.section
-          className="invite-group-chat"
+          className={styles.groupChat}
           data-invite-section="chat"
           initial="hidden"
           variants={sectionReveal}
@@ -302,7 +303,7 @@ export default function AlpineTemplate({
 
       {invite.showAdditionalInfo ? (
         <motion.section
-          className="invite-additional-info"
+          className={styles.additionalInfo}
           data-invite-section="info"
           initial="hidden"
           variants={sectionReveal}
@@ -319,16 +320,16 @@ export default function AlpineTemplate({
 
       {invite.showRsvp ? (
         <motion.section
-          className="invite-rsvp"
+          className={styles.rsvp}
           data-invite-section="rsvp"
           initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}
         whileInView="visible"
       >
-          <div className="invite-rsvp__header">
+          <div className={styles.rsvpHeader}>
             <InvitationSectionEyebrow>Ответ</InvitationSectionEyebrow>
-            <h2 className="invite-heading">Анкета гостя</h2>
+            <h2 className={styles.heading}>Анкета гостя</h2>
             <p>{invite.rsvpText}</p>
             <span>Ответьте до {formatDate(invite.rsvpDate)}</span>
           </div>
@@ -342,24 +343,24 @@ export default function AlpineTemplate({
       ) : null}
 
       <motion.section
-        className="invite-final"
+        className={styles.final}
         data-invite-section="portrait"
         initial="hidden"
         variants={sectionReveal}
         viewport={revealViewport}
         whileInView="visible"
       >
-        <motion.div className="invite-image-motion" variants={photoReveal}>
+        <motion.div className={styles.imageMotion} variants={photoReveal}>
           <Image
             alt="Финальный свадебный кадр в горной долине"
-            className="invite-photo__image invite-photo__image--slow"
+            className={`${styles.photo} ${styles.photoSlow}`}
             fill
             unoptimized={isRuntimeImageSource(portraitImage)}
             sizes="100vw"
             src={portraitImage}
           />
         </motion.div>
-        <motion.div className="invite-final__content" variants={copyReveal}>
+        <motion.div className={styles.finalContent} variants={copyReveal}>
           <h2>До встречи</h2>
           <p>
             {invite.groom} & {invite.bride}

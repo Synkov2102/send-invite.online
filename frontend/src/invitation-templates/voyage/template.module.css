@@ -49,6 +49,9 @@
 .ticket {
   background: var(--invite-surface);
   color: var(--invite-ink);
+  -webkit-mask:
+    radial-gradient(circle at 10px 0, transparent 6px, #000 6.6px) top / 20px 51% repeat-x,
+    radial-gradient(circle at 10px 100%, transparent 6px, #000 6.6px) bottom / 20px 51% repeat-x;
   mask:
     radial-gradient(circle at 10px 0, transparent 6px, #000 6.6px) top / 20px 51% repeat-x,
     radial-gradient(circle at 10px 100%, transparent 6px, #000 6.6px) bottom / 20px 51% repeat-x;
@@ -101,13 +104,17 @@
   width: 100%;
   height: 100%;
   background-color: var(--invite-ink);
+  -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
+  -webkit-mask-position: center;
   mask-position: center;
+  -webkit-mask-size: contain;
   mask-size: contain;
   mask-mode: alpha;
   pointer-events: none;
 }
 .globeArtwork {
+  -webkit-mask-image: url("/images/voyage-ticket/globe.webp");
   mask-image: url("/images/voyage-ticket/globe.webp");
 }
 .globe .orbitPlane {
@@ -135,8 +142,10 @@
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   text-align: left;
-  margin-top: 24px !important;
   border-top: 1px solid var(--invite-line);
+}
+.shell .boarding {
+  margin-top: 24px;
 }
 .boarding > div {
   padding: 12px 8px;
@@ -185,6 +194,7 @@
 .stampArtwork {
   position: absolute;
   inset: 0;
+  -webkit-mask-image: url("/images/voyage-ticket/stamp.webp");
   mask-image: url("/images/voyage-ticket/stamp.webp");
 }
 .stampTitle,

@@ -225,7 +225,9 @@
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  margin-bottom: 16px !important;
+}
+.shell .eyebrow {
+  margin-bottom: 16px;
 }
 .greeting > .eyebrow {
   margin-top: 10px;

@@ -320,14 +320,14 @@
   display: none;
 }
 
-.dressBlock :global(h2) {
-  color: var(--clarity-ink) !important;
-  font-family: Arial, var(--font-geist-sans), sans-serif !important;
-  font-size: clamp(46px, 6vw, 88px) !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  line-height: 0.92 !important;
-  text-transform: lowercase !important;
+.shell .dressBlock :global(h2) {
+  color: var(--clarity-ink);
+  font-family: Arial, var(--font-geist-sans), sans-serif;
+  font-size: clamp(46px, 6vw, 88px);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-transform: lowercase;
 }
 
 .dressBlock :global(p) {
@@ -335,9 +335,9 @@
   font-size: 15px;
 }
 
-.dressBlock :global([class*="swatch"]) {
-  border-radius: 50% !important;
-  box-shadow: none !important;
+.shell .dressBlock :global([class*="swatch"]) {
+  border-radius: 50%;
+  box-shadow: none;
 }
 
 .dressPhoto {
