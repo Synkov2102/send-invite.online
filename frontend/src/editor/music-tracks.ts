@@ -271,6 +271,7 @@ export const editorMusicTracks: readonly EditorMusicTrack[] = [
 const musicTrackById = new Map(editorMusicTracks.map((track) => [track.id, track]));
 
 const templateMusicTrackIds: Record<string, string> = {
+  "lace-letter": "wedding-romantic-leberch-375196",
   "villa-amore": "reading-soft-piano-clavier-221781",
   "quiet-cinema": "wedding-romantic-love-krasnoshchok-409293",
   "voyage-ticket": "wedding-the-mountain-487025",

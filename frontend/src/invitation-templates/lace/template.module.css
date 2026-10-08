@@ -1,0 +1,847 @@
+.shell {
+  container-type: inline-size;
+  width: 100%;
+  max-width: 640px;
+  /* Published and editor shells reset article margins with a more specific selector. */
+  margin-inline: auto !important;
+  background:
+    url("/images/lace-letter-grain.svg") repeat,
+    var(--invite-bg);
+  color: var(--invite-photo-text);
+  text-align: center;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  --section-space: clamp(64px, 17cqw, 104px);
+}
+.shell *,
+.shell *::before,
+.shell *::after {
+  box-sizing: border-box;
+}
+.shell figure,
+.shell p {
+  margin: 0;
+}
+.shell p {
+  white-space: pre-line;
+}
+.shell img {
+  object-fit: cover;
+}
+.heading,
+.names,
+.locationCopy h3,
+.eventCopy h3 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-weight: 400;
+}
+.shell .heading,
+.shell .dressBlock > h2,
+.shell .detailBlock > h2 {
+  margin: 16px 0 28px;
+  font-size: clamp(32px, 8.8cqw, 52px);
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-weight: 400;
+  line-height: 1.13;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: inherit;
+}
+.heading em,
+.heroHeading > span,
+.names i,
+.signature {
+  font-family: var(--font-invite-script), "Segoe Script", cursive;
+  font-weight: 400;
+}
+.heading em {
+  display: inline-block;
+  font-size: 1.2em;
+  line-height: 1.2;
+}
+.eyebrow {
+  font-size: clamp(11px, 2.4cqw, 12px);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+.bodyCopy {
+  max-width: 390px;
+  margin-inline: auto !important;
+  font-size: clamp(16px, 3.6cqw, 18px);
+  font-weight: 400;
+  line-height: 1.7;
+}
+.ornament {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin: 32px auto;
+}
+.ornament span {
+  width: 44px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.3;
+}
+.laceDivider {
+  width: 150px;
+  height: 32px;
+  flex-shrink: 0;
+  background: currentColor;
+  mask: url("/images/lace-letter-divider.webp") center / contain no-repeat;
+  opacity: 0.75;
+}
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 8% 0;
+}
+.heroRails {
+  position: absolute;
+  inset: 22px 4% 0;
+  border: 1px solid color-mix(in srgb, var(--invite-photo-text) 24%, transparent);
+  border-bottom: 0;
+  border-radius: 160px 160px 0 0;
+  pointer-events: none;
+  mask-image: linear-gradient(transparent, black 22%, black 70%, transparent);
+}
+.heroHeading {
+  order: 0;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(18px, 4.8cqw, 26px);
+  line-height: 1.1;
+}
+.heroHeading > span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.6em;
+}
+.laceFrame {
+  order: 3;
+  position: relative;
+  width: 90%;
+  aspect-ratio: 2 / 3;
+  margin: 20px auto 14px !important;
+  isolation: isolate;
+}
+.framePhoto {
+  position: absolute;
+  inset: 18% 20%;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1px var(--invite-line),
+    0 0 0 5px color-mix(in srgb, var(--invite-surface) 24%, transparent);
+}
+.laceArtwork {
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  mask: url("/images/lace-letter-frame.webp") center / contain no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+.shell .laceArtwork img {
+  object-fit: contain;
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+}
+.names {
+  order: 1;
+  width: 100%;
+  margin: 24px 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0 18px;
+  font-size: clamp(24px, var(--name-size, 11cqw), 48px);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.names > span {
+  min-width: 0;
+  max-width: 100%;
+}
+.names i {
+  font-size: 0.66em;
+  padding: 8px 0;
+}
+.hero .ornament {
+  order: 4;
+  margin-block: 24px 18px;
+}
+.heroDate {
+  order: 2;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(18px, 4.8cqw, 28px);
+  letter-spacing: 0.025em;
+}
+.greeting {
+  padding: var(--section-space) 8% 28px;
+}
+.letter {
+  position: relative;
+  padding: 40px 8% 100px;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  outline: 1px solid var(--invite-line);
+  outline-offset: -10px;
+}
+.monogram {
+  position: relative;
+  width: 76px;
+  height: 90px;
+  margin: 0 auto 26px;
+  color: currentColor;
+}
+.monogramFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  mask: url("/images/lace-letter-monogram-frame.webp") center / contain no-repeat;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.monogram > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 5px;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 25px;
+  line-height: 1;
+}
+.monogram i {
+  font-weight: 400;
+  font-style: normal;
+}
+.botanical {
+  position: absolute;
+  bottom: -16px;
+  left: -12px;
+  width: clamp(82px, 22cqw, 126px);
+  height: clamp(115px, 30cqw, 174px);
+  transform: rotate(-14deg);
+  pointer-events: none;
+}
+.shell .botanical img {
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px color-mix(in srgb, var(--invite-ink) 12%, transparent));
+}
+.greeting .ornament {
+  margin-top: 36px;
+  margin-bottom: 0;
+}
+.paper {
+  position: relative;
+  width: 88%;
+  margin-inline: auto;
+  padding: 48px 8%;
+  background:
+    radial-gradient(ellipse at 20% 0, color-mix(in srgb, white 20%, transparent), transparent 70%),
+    var(--invite-surface);
+  color: var(--invite-ink);
+  box-shadow: 0 20px 36px -20px color-mix(in srgb, var(--invite-ink) 30%, transparent);
+  isolation: isolate;
+}
+.paper::before,
+.paper::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.paper::before {
+  inset: 0;
+  background: url("/images/lace-letter-grain.svg") repeat;
+  opacity: 0.7;
+  z-index: -1;
+}
+.paper::after {
+  inset: 10px;
+  border: 1px solid var(--invite-line);
+  outline: 1px solid color-mix(in srgb, var(--invite-line) 40%, transparent);
+  outline-offset: 3px;
+  z-index: -1;
+}
+.rosette {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 22px;
+  color: var(--invite-accent);
+  background: currentColor;
+  mask: url("/images/lace-letter-rosette.webp") center / contain no-repeat;
+}
+.laceTrim {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  width: calc(100% - 28px);
+  height: 32px;
+  background: var(--invite-accent);
+  mask: url("/images/lace-letter-trim.webp") center / auto 100% repeat-x;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.paper:has(> .laceTrim) {
+  padding-top: 68px;
+}
+.capsule > .laceTrim {
+  top: 26px;
+  left: 22%;
+  width: 56%;
+  height: 26px;
+}
+.closingFrame > .laceTrim {
+  top: auto;
+  bottom: -24px;
+  left: calc(50% - 32px);
+  width: 64px;
+  height: 64px;
+  mask: url("/images/lace-letter-rosette.webp") center / contain no-repeat;
+  background: var(--invite-photo-text);
+  opacity: 0.9;
+  z-index: 1;
+}
+.dateCard {
+  margin-top: 48px;
+}
+.calendarMonth {
+  margin: 30px 0 18px !important;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(22px, 5.8cqw, 32px);
+  text-transform: capitalize;
+}
+.calendar {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.calendar th {
+  padding: 8px 0 16px;
+  border-top: 1px solid var(--invite-line);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--invite-muted);
+}
+.calendar td {
+  padding: 3px 0;
+  height: clamp(34px, 9cqw, 48px);
+}
+.calendar td > span {
+  display: grid;
+  position: relative;
+  width: 100%;
+  min-height: 32px;
+  place-items: center;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(19px, 5cqw, 28px);
+  line-height: 1;
+}
+.selectedDay svg {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  max-width: 125%;
+  z-index: -1;
+  fill: color-mix(in srgb, var(--invite-accent) 10%, var(--invite-surface));
+  stroke: var(--invite-accent);
+  stroke-width: 1;
+  filter: drop-shadow(0 2px 1px color-mix(in srgb, var(--invite-line) 35%, transparent));
+}
+.selectedDay {
+  isolation: isolate;
+  text-shadow:
+    1px 0 var(--invite-surface),
+    -1px 0 var(--invite-surface),
+    0 1px var(--invite-surface),
+    0 -1px var(--invite-surface);
+  color: var(--invite-ink);
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--invite-accent) 15%, transparent),
+    transparent 70%
+  );
+}
+.dateNote {
+  display: grid;
+  gap: 4px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--invite-line);
+  font-size: 16px;
+}
+.dateNote time {
+  text-transform: capitalize;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+}
+.dateNote > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.location {
+  position: relative;
+  padding: var(--section-space) 8%;
+}
+.locationFlower {
+  position: absolute;
+  bottom: -12px;
+  right: -14px;
+  width: clamp(56px, 14cqw, 80px);
+  height: clamp(80px, 20cqw, 112px);
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+.shell .locationFlower img,
+.shell .closingFlower img {
+  object-fit: contain;
+}
+.venueCard {
+  margin-top: 32px;
+  border: 1px solid var(--invite-line);
+  border-radius: 48% 48% 0 0 / 30cqw 30cqw 0 0;
+  background: var(--invite-surface);
+}
+.venuePhoto {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0 !important;
+  overflow: hidden;
+  border-radius: 48% 48% 0 0 / 30cqw 30cqw 0 0;
+  border: 7px solid var(--invite-surface);
+}
+.locationCopy {
+  padding: 28px 12% 44px;
+  background:
+    url("/images/lace-letter-grain.svg") repeat,
+    var(--invite-surface);
+  color: var(--invite-ink);
+  position: relative;
+}
+.locationCopy::before {
+  content: "";
+  position: absolute;
+  inset: 0 7px 7px;
+  border: 1px solid var(--invite-line);
+  border-top: 0;
+  pointer-events: none;
+}
+.locationCopy h3 {
+  margin: 0 0 16px;
+  font-size: clamp(26px, 7cqw, 40px);
+  line-height: 1.15;
+}
+.locationCopy address {
+  display: grid;
+  gap: 4px;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.mapLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 24px;
+  padding: 8px 20px;
+  border: 1px solid currentColor;
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.mapLink:hover {
+  color: var(--invite-surface);
+  background: var(--invite-ink);
+}
+.capsule {
+  width: 88%;
+  margin: 0 auto;
+  padding: 72px 8%;
+  border-radius: 50% / 85px;
+  position: relative;
+  isolation: isolate;
+  background:
+    url("/images/lace-letter-grain.svg") repeat,
+    var(--invite-surface);
+  color: var(--invite-ink);
+}
+.capsule::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--invite-line);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+.dress > .eyebrow {
+  margin-bottom: 18px;
+}
+.shell .dressBlock,
+.shell .detailBlock {
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.shell .dressBlock > div:first-child,
+.shell .detailBlock > div:first-child {
+  display: none;
+}
+.shell .dressBlock > h2 {
+  margin-top: 0;
+}
+.shell .dressBlock > p,
+.shell .detailBlock > p {
+  font-size: clamp(16px, 3.6cqw, 18px);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--invite-ink);
+}
+.shell .dressBlock > ul {
+  gap: clamp(8px, 2.6cqw, 16px);
+  margin: 28px 0 0;
+}
+.shell .dressBlock > ul > li {
+  min-width: 0;
+}
+.shell .dressBlock > ul > li > span:first-child {
+  width: clamp(34px, 9cqw, 54px);
+  aspect-ratio: 3 / 4;
+  border-radius: 50%;
+  background-image:
+    linear-gradient(
+      125deg,
+      transparent 14%,
+      #ffffff45 28%,
+      #00000025 34%,
+      transparent 44%,
+      #ffffff55 53%,
+      #00000028 59%,
+      transparent 70%
+    ),
+    radial-gradient(ellipse at 25% 15%, #ffffff40, transparent 65%);
+  border: 3px double color-mix(in srgb, var(--invite-surface) 70%, var(--invite-accent));
+  outline: 1px solid var(--invite-line);
+  outline-offset: 3px;
+  box-shadow: 0 6px 10px -8px var(--invite-ink);
+}
+.shell .dressBlock > ul > li > span:last-child {
+  display: none;
+}
+.capsule > .ornament {
+  margin-block: 52px;
+  color: var(--invite-accent);
+}
+.program .heading {
+  margin-bottom: 36px;
+}
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+.timeline > li {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  position: relative;
+  gap: 18px;
+  padding-bottom: 34px;
+}
+.timeline > li:last-child {
+  padding-bottom: 0;
+}
+.timeline > li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 18.5px;
+  top: 42px;
+  bottom: 0;
+  width: 1px;
+  background: var(--invite-line);
+}
+.eventMedallion {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 44px;
+  border: 3px double var(--invite-line);
+  border-radius: 50%;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 17px;
+  line-height: 1;
+  margin-top: 2px;
+  color: var(--invite-muted);
+  box-shadow: inset 0 0 0 2px var(--invite-surface);
+}
+.eventCopy time {
+  display: block;
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(26px, 7cqw, 38px);
+  line-height: 1.15;
+}
+.eventCopy h3 {
+  margin: 7px 0;
+  font-size: clamp(21px, 5.5cqw, 29px);
+  line-height: 1.15;
+}
+.eventCopy p {
+  color: var(--invite-ink);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.details {
+  display: grid;
+  gap: 40px;
+  padding-top: var(--section-space);
+}
+.detailCard {
+  padding-top: 40px;
+  padding-bottom: 44px;
+}
+.shell .detailBlock > h2 {
+  margin: 0 0 24px;
+  font-size: clamp(28px, 7.2cqw, 42px);
+}
+.shell .detailBlock > a {
+  min-height: 44px;
+  border: 1px solid var(--invite-ink);
+  border-radius: 0;
+  background: none;
+  color: var(--invite-ink);
+  margin-top: 24px;
+  font-size: 12px;
+}
+.rsvp {
+  padding-top: var(--section-space);
+}
+.rsvp > .bodyCopy {
+  width: 78%;
+}
+.deadline {
+  margin: 24px auto 0 !important;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.deadline time {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(23px, 6cqw, 32px);
+}
+.formPaper {
+  padding: 38px 6%;
+  margin-top: 40px;
+  text-align: left;
+}
+.formHeading {
+  text-align: center;
+  padding-bottom: 32px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--invite-line);
+}
+.formHeading .monogram {
+  width: 64px;
+  height: 76px;
+  margin-bottom: 14px;
+}
+.formHeading .monogram > span {
+  font-size: 21px;
+}
+.shell .rsvpForm {
+  --rsvp-accent: var(--invite-ink);
+  --rsvp-accent-soft: color-mix(in srgb, var(--invite-accent) 12%, var(--invite-surface));
+  --rsvp-ink: var(--invite-ink);
+  --rsvp-muted: var(--invite-muted);
+  --rsvp-line: var(--invite-line);
+  --rsvp-section: transparent;
+  --rsvp-surface: var(--invite-surface);
+  --rsvp-radius: 0;
+  --rsvp-control-radius: 4px;
+  --rsvp-shadow: none;
+  gap: 24px;
+}
+.shell .rsvpForm > section {
+  padding: 0 0 24px;
+  border: 0;
+  border-bottom: 1px solid var(--invite-line);
+}
+.shell .rsvpForm h3 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(22px, 5.5cqw, 28px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.shell .rsvpForm button[type="submit"] {
+  border-radius: 2px;
+  min-height: 48px;
+  background: var(--invite-ink);
+  color: var(--invite-surface);
+  letter-spacing: 0.08em;
+  box-shadow:
+    inset 0 0 0 1px var(--invite-ink),
+    inset 0 0 0 4px var(--invite-surface),
+    inset 0 0 0 5px color-mix(in srgb, var(--invite-surface) 45%, transparent);
+  transition: background-color 0.2s;
+}
+.shell .rsvpForm button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--invite-ink) 85%, var(--invite-accent));
+}
+.closing {
+  position: relative;
+  padding: var(--section-space) 11% 100px;
+}
+.closingFlower {
+  position: absolute;
+  bottom: -14px;
+  right: 0;
+  width: clamp(56px, 14cqw, 80px);
+  height: 94px;
+  transform: rotate(12deg);
+  z-index: 2;
+  pointer-events: none;
+}
+.closingPhoto {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0 auto !important;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.closingFrame {
+  width: 86%;
+  margin: 0 auto 48px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--invite-photo-text) 60%, transparent);
+  border-radius: 50%;
+  outline: 1px solid color-mix(in srgb, var(--invite-photo-text) 24%, transparent);
+  outline-offset: 6px;
+  position: relative;
+}
+.closingFrame::before,
+.closingFrame::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--invite-photo-text);
+  border-radius: 50%;
+  background: var(--invite-bg);
+}
+.closingFrame::before {
+  top: -4px;
+}
+.closingFrame::after {
+  bottom: -4px;
+}
+.closingDate {
+  display: block;
+  margin-top: 28px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.closing .heading {
+  font-size: clamp(30px, 7.8cqw, 46px);
+}
+.closing .ornament {
+  margin-block: 30px;
+}
+.signature {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0 12px;
+  margin-top: 20px !important;
+  font-size: clamp(24px, var(--name-size, 9cqw), 52px);
+  line-height: 1.3;
+}
+.signature span {
+  min-width: 0;
+  max-width: 100%;
+}
+.signature i {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: 0.6em;
+  font-style: italic;
+}
+.shell a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+@container (max-width: 430px) {
+  .names {
+    display: grid;
+    gap: 6px;
+  }
+  .names i {
+    padding: 0;
+    line-height: 1;
+  }
+}
+@container (min-width: 480px) {
+  .hero {
+    padding-top: 56px;
+  }
+  .laceFrame {
+    width: 84%;
+  }
+  .paper,
+  .capsule {
+    width: 84%;
+  }
+  .greeting {
+    padding-inline: 10%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shell a,
+  .shell button {
+    transition: none;
+  }
+}
+@media (max-width: 640px) {
+  .musicControls :global(.invite-music) {
+    width: 48px;
+    min-width: 48px;
+    height: 48px;
+    padding: 6px;
+    border-radius: 50%;
+    justify-content: center;
+  }
+  .musicControls :global(.invite-music__copy) {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shell[data-animate="on"] [data-reveal] {
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+  .shell[data-animate="on"] [data-revealed] {
+    opacity: 1;
+  }
+}

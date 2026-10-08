@@ -1,12 +1,12 @@
 .layout {
-  width: 390px;
+  width: min(390px, 100%);
   min-height: 844px;
-  margin: 0;
+  margin: 0 auto;
   overflow: hidden;
 }
 
 .root {
-  width: 390px;
+  width: 100%;
   height: 844px;
   overflow: hidden;
   margin: 0;
@@ -14,14 +14,14 @@
 }
 
 .screen {
-  width: 390px;
+  width: 100%;
   height: 844px;
   overflow: hidden;
 }
 
 .screen > :global(.published-site),
 .screen > div {
-  width: 390px;
+  width: 100%;
   min-height: 844px;
 }
 

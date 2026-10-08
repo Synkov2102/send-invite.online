@@ -299,6 +299,10 @@ for (const template of templates) {
               assert.ok(result.cardWidth <= 601, "ширина «Лепестков» не должна превышать 600px");
               assert.ok(result.cardCenterOffset <= 1, "приглашение должно быть по центру экрана");
             }
+            if (template.kind === "lace") {
+              assert.ok(result.cardWidth <= 641, "ширина «Кружевного письма» не должна превышать 640px");
+              assert.ok(result.cardCenterOffset <= 1, "«Кружевное письмо» должно быть по центру экрана");
+            }
             assert.deepEqual(pageErrors, [], "не должно быть ошибок выполнения");
             assert.deepEqual(consoleErrors, [], "не должно быть ошибок в консоли");
             assert.deepEqual(failedRequests, [], "статика шаблона должна отдаваться без ошибок");
