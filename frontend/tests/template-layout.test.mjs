@@ -278,6 +278,14 @@ for (const template of templates) {
 
             assert.equal(response?.status(), 200, "страница должна отвечать 200");
             await page.waitForSelector("[data-template-capture]", { timeout: 30_000 });
+            if (template.kind === "lace") {
+              await page.waitForFunction(() => {
+                const photos = document.querySelectorAll(
+                  '[data-invite-section="location"] figure img, [data-invite-section="portrait"] figure img',
+                );
+                return photos.length === 2 && [...photos].every((photo) => photo.complete && photo.naturalWidth > 0);
+              }, null, { timeout: 30_000 });
+            }
             // Прокручиваем весь свиток: подгружаем ленивые фото и проверяем страницу целиком.
             await page.evaluate(async () => {
               const step = Math.max(window.innerHeight, 400);

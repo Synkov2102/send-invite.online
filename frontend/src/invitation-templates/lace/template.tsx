@@ -24,8 +24,9 @@ function Photo({ src, alt, priority = false }: { src: string; alt: string; prior
       alt={alt}
       fill
       priority={priority}
+      loading="eager"
       sizes="(max-width: 640px) 80vw, 500px"
-      unoptimized={src.startsWith("data:") || src.startsWith("/api/")}
+      unoptimized={src.startsWith("/images/lace-letter-") || src.startsWith("data:") || src.startsWith("/api/")}
     />
   );
 }
