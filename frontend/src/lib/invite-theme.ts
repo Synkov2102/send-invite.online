@@ -149,7 +149,14 @@ export const petalImages = {
 } as const;
 
 /** Единственное место, куда нужно добавить новый TemplateKind — потребители (редактор, живой рендерер) берут картинки только отсюда. */
+export const laceImages = {
+  cover: "/images/lace-letter-cover.webp",
+  portrait: "/images/lace-letter-portrait.webp",
+  venue: "/images/lace-letter-venue.webp",
+} as const;
+
 export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  lace: laceImages,
   villa: villaImages,
   voyage: voyageImages,
   petal: petalImages,

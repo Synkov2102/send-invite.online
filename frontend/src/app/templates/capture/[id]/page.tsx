@@ -14,7 +14,11 @@ export const metadata: Metadata = {
 
 type TemplateCapturePageProps = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ fixture?: string | string[]; palette?: string | string[] }>;
+  searchParams: Promise<{
+    fixture?: string | string[];
+    palette?: string | string[];
+    preview?: string | string[];
+  }>;
 };
 
 function readParam(value: string | string[] | undefined) {
@@ -49,7 +53,14 @@ export default async function TemplateCapturePage({
   const invite = { ...initialInvite, ...fixture, paletteId: palette.id };
 
   if (!fixture) {
-    return <TemplateCaptureView invite={invite} palette={palette} template={template} />;
+    return (
+      <TemplateCaptureView
+        bare={readParam(query.preview) === "1"}
+        invite={invite}
+        palette={palette}
+        template={template}
+      />
+    );
   }
 
   return (

@@ -1,9 +1,19 @@
 export function parseDate(value: string) {
-  return value ? new Date(`${value}T12:00:00`) : new Date();
+  if (!value) {
+    return new Date();
+  }
+  const date = new Date(`${value}T12:00:00`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || Number.isNaN(date.getTime())) {
+    return new Date(NaN);
+  }
+  const [year, month, day] = value.split("-").map(Number);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+    ? date
+    : new Date(NaN);
 }
 
 export function formatDate(value: string) {
-  if (!value) {
+  if (!value || Number.isNaN(parseDate(value).getTime())) {
     return "дата уточняется";
   }
 
@@ -16,10 +26,16 @@ export function formatDate(value: string) {
 
 /** Templates render the same date in several shapes, so the options stay per call site. */
 export function formatInviteDate(value: string, options: Intl.DateTimeFormatOptions) {
+  if (!value || Number.isNaN(parseDate(value).getTime())) {
+    return "дата уточняется";
+  }
   return new Intl.DateTimeFormat("ru-RU", options).format(parseDate(value));
 }
 
 export function formatMonth(value: string) {
+  if (!value || Number.isNaN(parseDate(value).getTime())) {
+    return "ДАТА УТОЧНЯЕТСЯ";
+  }
   return new Intl.DateTimeFormat("ru-RU", { month: "long" })
     .format(parseDate(value))
     .toUpperCase();
@@ -27,6 +43,9 @@ export function formatMonth(value: string) {
 
 export function getCalendarDays(value: string) {
   const eventDate = parseDate(value);
+  if (!value || Number.isNaN(eventDate.getTime())) {
+    return [];
+  }
 
   return Array.from({ length: 7 }, (_, index) => {
     const day = new Date(eventDate);
@@ -45,6 +64,9 @@ export function getCalendarDays(value: string) {
 
 export function getMonthCalendar(value: string) {
   const firstDay = parseDate(value);
+  if (!value || Number.isNaN(firstDay.getTime())) {
+    return [];
+  }
   firstDay.setDate(1);
   const offset = (firstDay.getDay() + 6) % 7;
   const lastDay = new Date(firstDay);

@@ -278,6 +278,14 @@ for (const template of templates) {
 
             assert.equal(response?.status(), 200, "страница должна отвечать 200");
             await page.waitForSelector("[data-template-capture]", { timeout: 30_000 });
+            if (template.kind === "lace") {
+              await page.waitForFunction(() => {
+                const photos = document.querySelectorAll(
+                  '[data-invite-section="location"] figure img, [data-invite-section="portrait"] figure img',
+                );
+                return photos.length === 2 && [...photos].every((photo) => photo.complete && photo.naturalWidth > 0);
+              }, null, { timeout: 30_000 });
+            }
             // Прокручиваем весь свиток: подгружаем ленивые фото и проверяем страницу целиком.
             await page.evaluate(async () => {
               const step = Math.max(window.innerHeight, 400);
@@ -298,6 +306,10 @@ for (const template of templates) {
             if (template.kind === "petal") {
               assert.ok(result.cardWidth <= 601, "ширина «Лепестков» не должна превышать 600px");
               assert.ok(result.cardCenterOffset <= 1, "приглашение должно быть по центру экрана");
+            }
+            if (template.kind === "lace") {
+              assert.ok(result.cardWidth <= 641, "ширина «Кружевного письма» не должна превышать 640px");
+              assert.ok(result.cardCenterOffset <= 1, "«Кружевное письмо» должно быть по центру экрана");
             }
             assert.deepEqual(pageErrors, [], "не должно быть ошибок выполнения");
             assert.deepEqual(consoleErrors, [], "не должно быть ошибок в консоли");

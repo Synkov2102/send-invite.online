@@ -18,6 +18,7 @@ export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
 export type TemplateKind =
+  | "lace"
   | "alpine"
   | "aqua"
   | "chapter"
@@ -1200,6 +1201,52 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       rsvpText:
         "Подтвердите, пожалуйста, ваше присутствие. Мы хотим позаботиться о каждом госте и сделать этот вечер особенным для всех.",
       paletteId: "villa-wine",
+    },
+  },
+  {
+    id: "lace-letter",
+    name: "Кружевное письмо",
+    description: "Кружевные овалы, молочная бумага и каллиграфия на дымчато-синем фоне.",
+    kind: "lace",
+    coverType: "arch",
+    editorReady: true,
+    defaultPaletteId: "lace-slate",
+    recommendedPaletteIds: ["lace-slate", "lace-ivory", "lace-noir", "lace-wine", "lace-jade", "lace-olive", "lace-lilac", "lace-terracotta", "lace-rose", "lace-honey"],
+    tags: ["классика", "кружево"],
+    screenshot: "/images/templates/lace-letter-mobile.webp",
+    preview: { background: "#46515e", surface: "#fff8e7", ink: "#46515e", accent: "#7f8c9a" },
+    editorPreset: {
+      bride: "Марина",
+      groom: "Алексей",
+      date: "2027-06-26",
+      time: "15:00",
+      city: "Санкт-Петербург",
+      venue: "Усадьба у озера",
+      address: "Озёрная улица, 26",
+      lead: "Этот день для нас — начало новой главы. Мы мечтаем разделить его с самыми родными людьми: смеяться, обниматься и создавать воспоминания, которые останутся с нами навсегда.",
+      dressCode:
+        "Будем рады, если вы поддержите атмосферу нашего дня нарядами в мягких пастельных и глубоких природных оттенках.",
+      dressCodeColors: ["#c7959d", "#a198b6", "#c4b27e", "#7c8964", "#46515e"],
+      paletteId: "lace-slate",
+      showDressCode: true,
+      showSchedule: true,
+      schedule: [
+        { time: "15:00", title: "Сбор гостей", description: "Приветственный фуршет" },
+        { time: "16:30", title: "Церемония", description: "Самые важные слова" },
+        {
+          time: "17:30",
+          title: "Праздничный ужин",
+          description: "Поздравления и тёплые разговоры",
+        },
+        { time: "20:00", title: "Первый танец", description: "Вечер в кругу любимых людей" },
+      ],
+      showAdditionalInfo: true,
+      additionalInfo:
+        "Ваше присутствие — самый дорогой подарок. Вместо цветов будем рады открытке с тёплыми словами: сохраним её в нашей семейной истории.",
+      showGroupChat: false,
+      showRsvp: true,
+      rsvpDate: "2027-05-26",
+      rsvpText: "Пожалуйста, подтвердите присутствие, чтобы мы могли позаботиться о каждом из вас.",
     },
   },
 ];
