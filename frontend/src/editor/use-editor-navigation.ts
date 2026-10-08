@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { YANDEX_METRIKA_ID } from "@/components/yandex-metrika";
 import { editorStepIds, editorSteps } from "./constants";
 import { showStepErrors } from "./lib/editor-toast";
 import type { getEditorStepErrors } from "./validation";
@@ -47,6 +48,8 @@ export function useEditorNavigation({
   const updateEditorUrl = useCallback(
     (step: number, preview: boolean, mode: "push" | "replace") => {
       const url = new URL(window.location.href);
+      const referrer = url.href;
+      const wasPreview = url.searchParams.get("preview") === "1";
       url.searchParams.set("step", editorStepIds[step] ?? editorStepIds[0]);
 
       if (preview) {
@@ -65,6 +68,14 @@ export function useEditorNavigation({
         "",
         `${url.pathname}${url.search}${url.hash}`,
       );
+
+      // Editor history preserves Next's state, so this transition needs its own view.
+      if (wasPreview && !preview) {
+        window.ym?.(YANDEX_METRIKA_ID, "hit", url.href, {
+          referer: referrer,
+          title: document.title,
+        });
+      }
     },
     [],
   );

@@ -1,4 +1,6 @@
 import Script from "next/script";
+import { Suspense } from "react";
+import { YandexMetrikaPageViews } from "./yandex-metrika-page-views";
 
 export const YANDEX_METRIKA_ID = 111031054;
 
@@ -9,6 +11,9 @@ export function YandexMetrika() {
 
   return (
     <>
+      <Suspense fallback={null}>
+        <YandexMetrikaPageViews />
+      </Suspense>
       <Script id="yandex-metrika" strategy="afterInteractive">
         {`
           (function(m,e,t,r,i,k,a){
