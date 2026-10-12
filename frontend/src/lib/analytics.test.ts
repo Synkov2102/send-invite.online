@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, beforeEach, test } from "node:test";
-import { trackGoalOnceWhenReady } from "./analytics";
+import { trackGoal, trackGoalOnceWhenReady } from "./analytics";
 
 const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window");
 let pending: Map<number, () => void>;
@@ -65,4 +65,19 @@ test("unavailable Metrika stops retrying and leaves payment eligible for a later
   for (let i = 0; i < 60; i += 1) tick();
   assert.equal(pending.size, 0);
   assert.equal(sent.size, 0);
+});
+
+test("goal reaches every loaded counter", () => {
+  const calls: unknown[][] = [];
+  window.ym = (...args: unknown[]) => calls.push(["ym", ...args]);
+  window.gtag = (...args: unknown[]) => calls.push(["gtag", ...args]);
+  window._tmr = [];
+  const params = { currency: "RUB", value: 1990 };
+
+  assert.equal(trackGoal("payment_success", params), true);
+  assert.deepEqual(calls, [
+    ["ym", 111031054, "reachGoal", "payment_success", params],
+    ["gtag", "event", "payment_success", params],
+  ]);
+  assert.deepEqual(window._tmr, [{ id: "3796018", type: "reachGoal", goal: "payment_success" }]);
 });

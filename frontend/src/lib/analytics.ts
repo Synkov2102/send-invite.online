@@ -1,9 +1,20 @@
+import { TOP_MAILRU_COUNTER_ID } from "@/components/top-mailru-counter";
 import { YANDEX_METRIKA_ID } from "@/components/yandex-metrika";
 
 declare global {
   interface Window {
+    _tmr?: unknown[];
+    gtag?: (...args: unknown[]) => void;
     ym?: (...args: unknown[]) => void;
   }
+}
+
+// Google Analytics and Top.Mail.Ru count history changes themselves; Metrika needs explicit hits.
+export function trackPageView(url: string, referrer: string) {
+  window.ym?.(YANDEX_METRIKA_ID, "hit", url, {
+    referer: referrer,
+    title: document.title,
+  });
 }
 
 export function trackGoal(goal: string, params?: Record<string, unknown>) {
@@ -16,6 +27,8 @@ export function trackGoal(goal: string, params?: Record<string, unknown>) {
   } else {
     window.ym(YANDEX_METRIKA_ID, "reachGoal", goal);
   }
+  window.gtag?.("event", goal, params);
+  window._tmr?.push({ id: TOP_MAILRU_COUNTER_ID, type: "reachGoal", goal });
   return true;
 }
 
@@ -30,7 +43,7 @@ export function trackGoalOnceWhenReady(
   function send() {
     if (window.sessionStorage.getItem(sentKey)) return;
     attempts += 1;
-    // Mark only after handing the event to Metrika (or its initialization queue).
+    // Mark only after handing the event to the counters (or their initialization queues).
     if (trackGoal(goal, params)) {
       window.sessionStorage.setItem(sentKey, "1");
     } else if (attempts < 60) {

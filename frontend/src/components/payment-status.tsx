@@ -126,6 +126,7 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
     return trackGoalOnceWhenReady(`payment_goal_sent:${orderId}`, "payment_success", {
       currency: "RUB",
       order_price: Number(order.amount),
+      value: Number(order.amount),
     });
   }, [order, orderId]);
 
@@ -138,12 +139,13 @@ export default function PaymentStatus({ failed = false, orderId }: PaymentStatus
             Платёж получен, а приглашение уже доступно гостям по публичной ссылке.
           </p>
           <div className="payment-actions">
-            <Link
+            {/* Full page load: the guest page must not inherit product analytics. */}
+            <a
               className="marketing-button marketing-button--primary"
               href={order.siteUrl ?? "/dashboard"}
             >
               Открыть приглашение
-            </Link>
+            </a>
             <Link className="marketing-button marketing-button--ghost" href="/dashboard">
               В личный кабинет
             </Link>

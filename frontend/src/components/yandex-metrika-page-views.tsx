@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { YANDEX_METRIKA_ID } from "./yandex-metrika";
+import { trackPageView } from "@/lib/analytics";
 
 export function YandexMetrikaPageViews() {
   const pathname = usePathname();
@@ -16,10 +16,7 @@ export function YandexMetrikaPageViews() {
 
     // Initialization sends the first view; client navigation needs an explicit hit.
     if (referrer && referrer !== url) {
-      window.ym?.(YANDEX_METRIKA_ID, "hit", url, {
-        referer: referrer,
-        title: document.title,
-      });
+      trackPageView(url, referrer);
     }
   }, [pathname, searchParams]);
 

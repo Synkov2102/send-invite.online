@@ -7,7 +7,9 @@ import {
   Oswald,
   Ponomar,
 } from "next/font/google";
+import { AnalyticsGate } from "@/components/analytics-gate";
 import CookieConsent from "@/components/cookie-consent";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { TopMailRuCounter } from "@/components/top-mailru-counter";
 import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
@@ -67,8 +69,11 @@ export default function RootLayout({
         {children}
         <CookieConsent />
       </body>
-      <YandexMetrika />
-      <TopMailRuCounter />
+      <AnalyticsGate>
+        <YandexMetrika />
+        <TopMailRuCounter />
+        <GoogleAnalytics />
+      </AnalyticsGate>
     </html>
   );
 }

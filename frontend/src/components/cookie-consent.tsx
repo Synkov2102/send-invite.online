@@ -36,7 +36,7 @@ export default function CookieConsent() {
     <div className={styles.bar} role="region" aria-label="Уведомление о cookie">
       <p>
         Сайт использует технический cookie-файл сессии для входа и аналитические
-        cookie «Яндекс.Метрики» для статистики посещаемости. Подробнее — в{" "}
+        cookie «Яндекс.Метрики», Google Analytics и Top.Mail.Ru для статистики посещаемости. Подробнее — в{" "}
         <Link href="/privacy">политике обработки персональных данных</Link>.
       </p>
       <button className={styles.button} onClick={dismiss} type="button">
