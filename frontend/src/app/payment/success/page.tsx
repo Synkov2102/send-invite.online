@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PaymentStatus from "@/components/payment-status";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
 import ProductPageShell from "@/components/product-page-shell";
-import {
-  confirmRobokassaSuccessRedirect,
-  readRobokassaSearchParam,
-} from "@/lib/payments";
+import { confirmRobokassaSuccessRedirect, readRobokassaSearchParam } from "@/lib/payments";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -19,7 +17,9 @@ export const metadata: Metadata = createPageMetadata({
 export default async function PaymentSuccessPage({
   searchParams,
 }: {
-  searchParams: Promise<{ order?: string | string[] } & Record<string, string | string[] | undefined>>;
+  searchParams: Promise<
+    { order?: string | string[] } & Record<string, string | string[] | undefined>
+  >;
 }) {
   const query = await searchParams;
   const orderId = Array.isArray(query.order) ? query.order[0] : query.order;
@@ -49,6 +49,14 @@ export default async function PaymentSuccessPage({
           <section className="payment-panel is-failed">
             <h1>Заказ не найден</h1>
             <p>Вернитесь в личный кабинет и проверьте состояние сайта.</p>
+            <div className="payment-actions">
+              <Link className="marketing-button marketing-button--primary" href="/dashboard">
+                В личный кабинет
+              </Link>
+              <Link className="marketing-button marketing-button--ghost" href="/templates">
+                К шаблонам
+              </Link>
+            </div>
           </section>
         )}
       </main>

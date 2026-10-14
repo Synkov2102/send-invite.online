@@ -391,3 +391,15 @@
     width: 195px;
   }
 }
+
+.scope :global(.site-header) :is(a, button):focus-visible {
+  outline: 2px solid var(--header-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 899px) {
+  .scope :global(.site-header__mobile-panel) {
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}

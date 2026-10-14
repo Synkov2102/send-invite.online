@@ -11,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import SiteHeaderUserActions, { type HeaderUser } from "./site-header-user-actions";
 import SupportModal from "./support-modal";
 
@@ -22,10 +22,26 @@ type SiteHeaderMobileMenuProps = {
 
 export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeaderMobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const panelId = useId();
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        triggerRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isOpen]);
 
   return (
     <div className="site-header__mobile-menu">
       <button
+        ref={triggerRef}
+        aria-controls={isOpen ? panelId : undefined}
         aria-expanded={isOpen}
         aria-label={isOpen ? "Закрыть меню" : "Открыть меню"}
         className="site-header__menu-button"
@@ -36,7 +52,7 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
       </button>
 
       {isOpen ? (
-        <div className="site-header__mobile-panel">
+        <div className="site-header__mobile-panel" id={panelId}>
           <nav aria-label="Мобильная навигация">
             <Link
               aria-current={active === "home" ? "page" : undefined}
@@ -45,7 +61,10 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
               onClick={() => setIsOpen(false)}
             >
               <House aria-hidden size={18} />
-              <span><strong>Главная</strong><small>О сервисе и возможностях</small></span>
+              <span>
+                <strong>Главная</strong>
+                <small>О сервисе и возможностях</small>
+              </span>
             </Link>
             <Link
               aria-current={active === "templates" ? "page" : undefined}
@@ -54,7 +73,10 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
               onClick={() => setIsOpen(false)}
             >
               <PanelsTopLeft aria-hidden size={18} />
-              <span><strong>Шаблоны</strong><small>Выбрать дизайн приглашения</small></span>
+              <span>
+                <strong>Шаблоны</strong>
+                <small>Выбрать дизайн приглашения</small>
+              </span>
             </Link>
             <Link
               aria-current={active === "how-it-works" ? "page" : undefined}
@@ -63,7 +85,10 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
               onClick={() => setIsOpen(false)}
             >
               <ListOrdered aria-hidden size={18} />
-              <span><strong>Как это работает</strong><small>Три шага, цена и ответы на вопросы</small></span>
+              <span>
+                <strong>Как это работает</strong>
+                <small>Три шага, цена и ответы на вопросы</small>
+              </span>
             </Link>
             <Link
               aria-current={active === "blog" ? "page" : undefined}
@@ -72,11 +97,17 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
               onClick={() => setIsOpen(false)}
             >
               <BookOpen aria-hidden size={18} />
-              <span><strong>Блог</strong><small>Как собрать приглашение и RSVP</small></span>
+              <span>
+                <strong>Блог</strong>
+                <small>Как собрать приглашение и RSVP</small>
+              </span>
             </Link>
             <SupportModal onClose={() => setIsOpen(false)}>
               <LifeBuoy aria-hidden size={18} />
-              <span><strong>Поддержка</strong><small>Мы на связи в ВКонтакте</small></span>
+              <span>
+                <strong>Поддержка</strong>
+                <small>Мы на связи в ВКонтакте</small>
+              </span>
             </SupportModal>
           </nav>
 
@@ -84,7 +115,11 @@ export default function SiteHeaderMobileMenu({ active, initialUser }: SiteHeader
             <SiteHeaderUserActions initialUser={initialUser} variant="mobile" />
           </div>
 
-          <Link className="site-header__mobile-cta" href="/templates" onClick={() => setIsOpen(false)}>
+          <Link
+            className="site-header__mobile-cta"
+            href="/templates"
+            onClick={() => setIsOpen(false)}
+          >
             Создать приглашение
             <ArrowUpRight aria-hidden size={16} />
           </Link>

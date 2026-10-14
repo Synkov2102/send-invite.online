@@ -54,8 +54,7 @@ export const editorMusicTracks: readonly EditorMusicTrack[] = [
     author: "HumanStudioEDM",
     duration: "2:28",
     audioUrl: "/api/catalog-music/energetic-party-humanstudioedm-513983",
-    sourceUrl:
-      "https://pixabay.com/music/dance-energetic-party-no-copyright-dj-513983/",
+    sourceUrl: "https://pixabay.com/music/dance-energetic-party-no-copyright-dj-513983/",
   },
   {
     id: "wedding-prettyjohn1-487335",
@@ -271,6 +270,7 @@ export const editorMusicTracks: readonly EditorMusicTrack[] = [
 const musicTrackById = new Map(editorMusicTracks.map((track) => [track.id, track]));
 
 const templateMusicTrackIds: Record<string, string> = {
+  "sol-letter": "wedding-paulyudin-485932",
   "lace-letter": "wedding-romantic-leberch-375196",
   "villa-amore": "reading-soft-piano-clavier-221781",
   "quiet-cinema": "wedding-romantic-love-krasnoshchok-409293",

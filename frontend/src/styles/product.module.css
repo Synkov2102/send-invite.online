@@ -2772,3 +2772,24 @@
     width: 100%;
   }
 }
+
+.scope :is(a, button, input, textarea, select, summary):focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 360px) {
+  .scope:global(.templates-page__grid),
+  .scope :global(.templates-page__grid) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+}
+@media (max-width: 640px) {
+  .scope:global(.auth-panel) h1,
+  .scope :global(.auth-panel) h1 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    max-width: 14ch;
+  }
+}

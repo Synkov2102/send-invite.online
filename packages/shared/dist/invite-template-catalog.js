@@ -1119,6 +1119,32 @@ exports.inviteTemplateCatalog = [
             rsvpText: "Пожалуйста, подтвердите присутствие, чтобы мы могли позаботиться о каждом из вас.",
         },
     },
+    {
+        id: "sol-letter",
+        name: "Солнечное письмо",
+        description: "Солнечные полосы, фигурная бумага и тонкая типографика летнего праздника.",
+        kind: "sol",
+        coverType: "arch",
+        editorReady: true,
+        defaultPaletteId: "sol-yellow",
+        recommendedPaletteIds: ["sol-yellow", "sol-honey", "sol-rose", "sol-peach", "sol-lavender", "sol-sky", "sol-sage", "sol-olive", "sol-dusty-rose", "sol-linen"],
+        tags: ["лето", "типографика"],
+        screenshot: "/images/templates/sol-letter-mobile.webp",
+        preview: { background: "#fff8da", surface: "#fffff8", ink: "#181810", accent: "#E6B800" },
+        editorPreset: {
+            bride: "Ксения",
+            groom: "Кирилл",
+            date: "2027-08-16",
+            time: "15:00",
+            city: "Москва",
+            venue: "The Sun Lake",
+            address: "Площадка Veranda",
+            paletteId: "sol-yellow",
+            showAdditionalInfo: true,
+            additionalInfo: "Ваше присутствие — самый важный подарок для нас. Если вы захотите дополнить его, будем благодарны за вклад в наше свадебное путешествие.",
+            dressCodeColors: ["#ffcc00", "#fff0a8", "#fffff8", "#d6b981", "#181810"],
+        },
+    },
 ];
 const templateDefinitionById = new Map(exports.inviteTemplateCatalog.map((template) => [template.id, template]));
 function toPublicTemplate(definition) {

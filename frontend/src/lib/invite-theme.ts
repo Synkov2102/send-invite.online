@@ -155,7 +155,14 @@ export const laceImages = {
   venue: "/images/lace-letter-venue.webp",
 } as const;
 
+export const solImages = {
+  cover: "/images/sol-letter-cover.webp",
+  portrait: "/images/sol-letter-portrait.webp",
+  venue: "/images/sol-letter-venue.webp",
+} as const;
+
 export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  sol: solImages,
   lace: laceImages,
   villa: villaImages,
   voyage: voyageImages,

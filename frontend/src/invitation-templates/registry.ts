@@ -35,6 +35,7 @@ export const sharedTemplateRenderers: Record<
   SharedTemplateKind,
   ComponentType<SharedTemplateViewProps>
 > = {
+  sol: dynamic(() => import("./sol").then((module) => module.SolTemplate), { ssr: true }),
   lace: dynamic(() => import("./lace").then((module) => module.LaceTemplate), { ssr: true }),
   villa: dynamic(() => import("./villa").then((module) => module.VillaTemplate), { ssr: true }),
   cinema: dynamic(() => import("./cinema").then((module) => module.CinemaTemplate), { ssr: true }),
@@ -47,17 +48,15 @@ export const sharedTemplateRenderers: Record<
   chrome: dynamic(() => import("./chrome").then((module) => module.ChromeTemplate), {
     ssr: true,
   }),
-  clarity: dynamic(
-    () => import("./clarity").then((module) => module.ClarityTemplate),
-    { ssr: true },
-  ),
+  clarity: dynamic(() => import("./clarity").then((module) => module.ClarityTemplate), {
+    ssr: true,
+  }),
   crimson: dynamic(() => import("./crimson").then((module) => module.CrimsonTemplate), {
     ssr: true,
   }),
-  electric: dynamic(
-    () => import("./electric").then((module) => module.ElectricTemplate),
-    { ssr: true },
-  ),
+  electric: dynamic(() => import("./electric").then((module) => module.ElectricTemplate), {
+    ssr: true,
+  }),
   editorial: dynamic(() => import("./editorial").then((module) => module.EditorialTemplate), {
     ssr: true,
   }),
@@ -67,10 +66,9 @@ export const sharedTemplateRenderers: Record<
   memoir: dynamic(() => import("./memoir").then((module) => module.MemoirTemplate), {
     ssr: true,
   }),
-  minimal: dynamic(
-    () => import("./minimal").then((module) => module.MinimalTemplate),
-    { ssr: true },
-  ),
+  minimal: dynamic(() => import("./minimal").then((module) => module.MinimalTemplate), {
+    ssr: true,
+  }),
   scribble: dynamic(() => import("./scribble").then((module) => module.ScribbleTemplate), {
     ssr: true,
   }),

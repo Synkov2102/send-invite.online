@@ -680,3 +680,15 @@
     transform: none;
   }
 }
+
+.heroPrice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+.heroPrice span {
+  max-width: none;
+}
+.heroPriceValue {
+  flex-wrap: wrap;
+}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import PaymentStatus from "@/components/payment-status";
 import SiteHeader from "@/components/site-header";
 import CommerceFooter from "@/components/commerce-footer";
@@ -30,6 +31,14 @@ export default async function PaymentFailPage({
           <section className="payment-panel is-failed">
             <h1>Оплата не завершена</h1>
             <p>Вернитесь в личный кабинет и повторите оплату.</p>
+            <div className="payment-actions">
+              <Link className="marketing-button marketing-button--primary" href="/dashboard">
+                В личный кабинет
+              </Link>
+              <Link className="marketing-button marketing-button--ghost" href="/templates">
+                К шаблонам
+              </Link>
+            </div>
           </section>
         )}
       </main>

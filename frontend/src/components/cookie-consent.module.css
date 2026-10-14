@@ -60,3 +60,23 @@
     transform: translateY(8px);
   }
 }
+
+.button {
+  min-height: 44px;
+}
+.button:focus-visible {
+  outline: 2px solid var(--header-accent, #ff4f72);
+  outline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .bar {
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .button {
+    width: 100%;
+  }
+}

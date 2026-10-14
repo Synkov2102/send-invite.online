@@ -1,0 +1,1126 @@
+.shell {
+  --vanilla-orange: var(--invite-accent);
+  --vanilla-ink: var(--invite-ink);
+  --vanilla-muted: var(--invite-muted);
+  --vanilla-pink: var(--invite-line);
+  --vanilla-paper: var(--invite-surface);
+  --vanilla-bg-soft: var(--invite-veil);
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  container-type: inline-size;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.shell * {
+  box-sizing: border-box;
+}
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure {
+  margin: 0;
+}
+.shell h1,
+.shell h2 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+.shell h2 {
+  font-size: clamp(30px, 8cqw, 45px);
+  margin-bottom: 25px;
+}
+.shell h3 {
+  font-size: 17px;
+  font-weight: 400;
+}
+.shell p {
+  white-space: pre-line;
+}
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 95px 8% 55px;
+}
+
+.seal {
+  position: relative;
+  width: 60%;
+  aspect-ratio: 1;
+  margin: 0 auto 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--invite-surface);
+  mask: url("/images/sol-letter/circle.webp") center / contain no-repeat;
+}
+.seal time {
+  font-size: 13px;
+  letter-spacing: 0.06em;
+}
+.seal span {
+  font-family: var(--font-invite-condensed), sans-serif;
+  font-size: clamp(78px, 23cqw, 125px);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.08em;
+}
+.seal p {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+}
+.hero h1 {
+  position: relative;
+  font-size: clamp(42px, 12cqw, 68px);
+}
+.hero h1 i {
+  font-size: 0.48em;
+  font-weight: 400;
+}
+.caption {
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 24px !important;
+}
+.paper {
+  padding: 48px 8%;
+}
+.doodle {
+  width: 150px;
+  height: 100px;
+  margin: 20px 0 10px auto;
+  background: var(--invite-ink);
+  mask: url("/images/sol-letter/doodle.webp") center / contain no-repeat;
+}
+.coverPhoto,
+.portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+}
+.shell figure img {
+  object-fit: cover;
+}
+.coverPhoto,
+.portrait,
+.venuePhoto {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.locationGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--invite-accent);
+  text-align: center;
+}
+.locationGrid > div {
+  padding: 24px 12px;
+}
+.locationGrid > div + div {
+  border-left: 1px solid var(--invite-accent);
+}
+.locationGrid address {
+  font-style: normal;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.button {
+  display: block;
+  padding: 12px;
+  background: var(--invite-accent);
+  color: var(--invite-ink);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: var(--font-invite-serif), serif;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin: 35px 0;
+  text-align: center;
+}
+.calendar > div {
+  padding: 10px 0;
+}
+.calendar span {
+  display: block;
+  font-size: 10px;
+}
+.calendar strong {
+  font-family: var(--font-invite-serif), serif;
+  font-size: 25px;
+  font-weight: 400;
+}
+.selected {
+  background: var(--invite-accent);
+  mask: url("/images/sol-letter/oval.webp") center / 100% 100% no-repeat;
+}
+.venuePhoto {
+  position: relative;
+  aspect-ratio: 3/2;
+}
+.sunny,
+.rsvp {
+  position: relative;
+  padding: 85px 8%;
+  isolation: isolate;
+}
+
+.schedule {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shell .shared {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+}
+.shell .shared h2 {
+  font-family: var(--font-invite-serif), serif;
+  font-size: clamp(30px, 8cqw, 45px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+.rsvp > h2,
+.rsvp > p {
+  text-align: center;
+}
+.deadline {
+  font-size: 12px;
+  margin-top: 16px !important;
+}
+.shell .form {
+  --rsvp-surface: transparent;
+  --rsvp-section: transparent;
+  --rsvp-accent-soft: var(--invite-surface);
+  --rsvp-focus-surface: var(--invite-surface);
+  --rsvp-line: color-mix(in srgb, var(--invite-ink) 30%, transparent);
+  --rsvp-accent: var(--invite-ink);
+  --rsvp-button-text: var(--invite-surface);
+  --rsvp-radius: 0px;
+  --rsvp-control-radius: 4px;
+  --rsvp-shadow: none;
+  margin-top: 30px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.closing {
+  padding: 45px 8% 65px;
+  text-align: center;
+}
+.closing h2 {
+  margin-top: 22px;
+}
+.closing time {
+  font-size: 12px;
+}
+@media (max-width: 400px) {
+  .shell {
+    font-size: 16px;
+  }
+
+  .paper {
+    padding: 35px 8%;
+  }
+  .sunny,
+  .rsvp {
+    padding: 65px 8%;
+  }
+}
+
+/* The reference decorations use generated raster alpha masks. */
+.shell {
+  border: 1px solid var(--invite-line);
+  border-radius: 28px 28px 0 0;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.shell h2,
+.shell .shared h2 {
+  font-family: var(--font-invite-serif), serif;
+  text-transform: uppercase;
+  font-size: clamp(28px, 7.2cqw, 40px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.hero {
+  min-height: 0;
+  height: 125cqw;
+  padding: 0;
+}
+
+.monogram {
+  position: absolute;
+  top: 29%;
+  left: 23%;
+  width: 54%;
+  aspect-ratio: 1;
+}
+.seal {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  margin: 0;
+  background: var(--invite-surface);
+}
+.hero h1 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-invite-condensed), sans-serif;
+  font-size: 21cqw;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  transform: scaleX(0.8);
+}
+.dateRing {
+  position: absolute;
+  inset: 8%;
+  font-family: var(--font-invite-serif), serif;
+  font-size: clamp(14px, 4cqw, 20px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--invite-ink);
+}
+.dateRing span {
+  position: absolute;
+  inset: 0;
+  text-align: center;
+}
+.heroNames {
+  line-height: 1.4;
+  position: absolute;
+  bottom: 19%;
+  left: 15%;
+  width: 70%;
+  padding: 16px 24px;
+  isolation: isolate;
+  background: transparent;
+  font-size: 16px;
+}
+.paper {
+  padding: 50px 7%;
+}
+.greeting {
+  position: relative;
+  padding-top: 35px;
+  padding-bottom: 100px;
+}
+.greeting h2 {
+  white-space: normal;
+}
+.greeting p {
+  max-width: 88%;
+}
+.arrow {
+  position: absolute;
+  right: 5%;
+  bottom: -10px;
+  width: 27%;
+  height: 135px;
+  background: var(--invite-ink);
+  mask: url("/images/sol-letter/arrow-reference.webp") center / contain no-repeat;
+}
+.location {
+  padding-top: 0;
+  padding-bottom: 50px;
+}
+.locationLabel {
+  position: relative;
+  z-index: 1;
+  width: 48%;
+  margin: 0 auto -24px !important;
+  padding: 14px 8px;
+  background: var(--invite-surface);
+  mask: url("/images/sol-letter/oval.webp") center / 100% 100% no-repeat;
+  font-size: clamp(19px, 5cqw, 28px) !important;
+  text-align: center;
+}
+.locationGrid > div {
+  padding-top: 45px;
+  padding-bottom: 35px;
+}
+.button {
+  font-size: 22px;
+  padding: 10px;
+}
+.calendar {
+  margin-bottom: 0;
+}
+
+.wishes {
+  padding: 65px 0 50px;
+  position: relative;
+}
+
+.wishes > h2 {
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.wishesCircles {
+  position: relative;
+  min-height: 78cqw;
+  isolation: isolate;
+  margin: 0 6%;
+  padding: 18% 12%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shell .wishesFirst {
+  padding: 15px 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  text-align: center;
+  width: 100%;
+  color: var(--invite-ink);
+  font-size: 16px;
+}
+.shell .wishesFirst p {
+  color: var(--invite-ink);
+  font-size: inherit;
+  line-height: 1.55;
+}
+.shell .wishesFirst h2,
+.shell .wishesFirst :global(.invite-section-eyebrow),
+.shell .shared :global(.invite-section-eyebrow) {
+  display: none;
+}
+.envelope,
+.gift {
+  position: absolute;
+  background: var(--invite-ink);
+  width: 17%;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+.envelope {
+  left: 10%;
+  top: 8%;
+  mask: url("/images/sol-letter/envelope-reference.webp") center / contain no-repeat;
+}
+.gift {
+  right: 8%;
+  bottom: 8%;
+  mask: url("/images/sol-letter/gift-reference.webp") center / contain no-repeat;
+}
+.rsvp {
+  padding: 80px 7%;
+}
+.deadline {
+  margin-top: 12px !important;
+}
+.closing {
+  position: relative;
+  isolation: isolate;
+  padding-top: 75px;
+}
+.closing::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--invite-accent);
+  z-index: -1;
+  mask: url("/images/sol-letter/corner-reference.webp") left top / 100% 100% no-repeat;
+}
+.coverPhoto {
+  width: 84%;
+  margin: 0 auto 20px !important;
+}
+.venuePhoto {
+  margin: 0 auto 30px !important;
+}
+.portrait {
+  width: 100%;
+  margin: auto !important;
+}
+@media (max-width: 400px) {
+  .hero {
+    min-height: 0;
+    height: 125cqw;
+  }
+  .shell {
+    font-size: 16px;
+  }
+  .greeting {
+    padding-bottom: 90px;
+  }
+  .wishesCircles {
+    gap: 40px;
+  }
+  .shell .wishesFirst,
+  .shell .wishesSecond {
+    font-size: 13px;
+  }
+  .rsvp {
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+}
+
+.chat {
+  position: relative;
+  padding-bottom: 135px;
+}
+
+.scene {
+  width: 100%;
+  padding: 24px 16px;
+  background: var(--invite-bg) url("/images/sol-letter/marble-reference.webp") center / cover;
+}
+@media (max-width: 400px) {
+  .scene {
+    padding: 12px 8px;
+  }
+}
+
+.shell .shared h2 {
+  color: var(--invite-ink);
+}
+
+.locationLabelFrame {
+  position: relative;
+  z-index: 1;
+  width: 48%;
+  margin: 0 auto;
+  transform: translateY(50%);
+  background: var(--invite-surface);
+}
+.locationLabelFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--invite-accent);
+  mask: url("/images/sol-letter/label-oval-reference.webp") center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.locationLabelFrame .locationLabel {
+  width: 100%;
+  margin: 0 !important;
+  background: transparent;
+  mask: none;
+}
+
+.wishesCircles::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--invite-surface);
+  mask: url("/images/sol-letter/oval.webp") center / 100% 100% no-repeat;
+}
+.venueDetails {
+  padding: 40px 20px 25px;
+  text-align: center;
+  border: 1px solid var(--invite-line);
+}
+.venueDetails address {
+  font-style: normal;
+  margin-top: 12px;
+  color: var(--invite-muted);
+}
+.scene {
+  background-blend-mode: luminosity;
+}
+
+.shell .form > section {
+  padding: 24px 0;
+  border-width: 0 0 1px;
+  backdrop-filter: none;
+}
+.shell .form h3 {
+  font-family: var(--font-invite-serif), serif;
+  font-size: clamp(22px, 5.2cqw, 27px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+}
+.shell .form button[type="submit"] {
+  border-radius: 0;
+  background: var(--invite-ink);
+  color: var(--invite-surface);
+}
+.shell .form button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--invite-ink) 88%, var(--invite-surface));
+}
+
+.shell p {
+  text-wrap: pretty;
+}
+.shell .shared p {
+  font-size: 16px;
+  line-height: 1.55;
+}
+.shell h3 {
+  line-height: 1.35;
+}
+.calendar span {
+  font-size: 12px;
+  line-height: 1.4;
+}
+.calendar strong,
+.schedule time {
+  font-variant-numeric: tabular-nums;
+}
+.deadline,
+.closing time {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.wishes > h2 {
+  padding-inline: 7%;
+}
+.shell .form {
+  line-height: 1.5;
+}
+.shell .form input[type="text"] {
+  font-size: 16px;
+  line-height: 1.5;
+}
+.shell .form label strong {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.shell .form h3 + p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.shell .form footer p,
+.shell .form > label {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.shell .form button[type="submit"] {
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+}
+
+.sunny,
+.rsvp,
+.wishes {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(
+    to bottom,
+    transparent calc(14cqw - 2px),
+    var(--invite-accent) calc(14cqw - 2px),
+    var(--invite-accent) calc(100% - 14cqw + 2px),
+    transparent calc(100% - 14cqw + 2px)
+  );
+  padding-top: calc(14cqw + 24px);
+  padding-bottom: calc(14cqw + 24px);
+}
+.sunny::before,
+.rsvp::before,
+.wishes::before,
+.sunny::after,
+.rsvp::after,
+.wishes::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 14cqw;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--invite-accent);
+  mask: url("/images/sol-letter/regular-edge.webp") center top / 100% auto no-repeat;
+}
+.sunny::before,
+.rsvp::before,
+.wishes::before {
+  top: 0;
+}
+.sunny::after,
+.rsvp::after,
+.wishes::after {
+  bottom: 0;
+  transform: rotate(180deg);
+}
+.wishes + .rsvp {
+  margin-top: 16px;
+}
+
+.heroNames::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--invite-surface);
+  mask: url("/images/sol-letter/oval.webp") center / 100% 100% no-repeat;
+}
+
+.stripeBody {
+  position: absolute;
+  inset: 0;
+  background: var(--invite-accent);
+  mask: url("/images/sol-letter/stripes-square.webp") left top / 50% auto repeat;
+}
+.stripeEdge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 14cqw;
+  background: var(--invite-surface);
+  mask: url("/images/sol-letter/regular-edge.webp") center top / 100% auto no-repeat;
+}
+
+.hero {
+  height: auto;
+  min-height: 125cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 25cqw 12% calc(14cqw + 24px);
+}
+.monogram {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 72%;
+  flex-shrink: 0;
+}
+.heroNames {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  width: 100%;
+  padding: 16px 24px;
+  font-family: var(--font-invite-serif), serif;
+  font-size: clamp(22px, 5.5cqw, 30px);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.coverPanel {
+  padding: 20px 0 0;
+}
+.paper {
+  padding: 36px 8%;
+}
+.greeting {
+  padding-top: 28px;
+  padding-bottom: 20px;
+}
+.greeting p {
+  max-width: 100%;
+}
+.arrow {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 28%;
+  height: 72px;
+  margin: 12px 0 0 auto;
+}
+.datePanel {
+  text-align: center;
+}
+.datePanel > time {
+  display: block;
+  font-family: var(--font-invite-serif), serif;
+  font-size: clamp(24px, 6cqw, 32px);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.datePanel > p {
+  color: var(--invite-muted);
+  font-size: 15px;
+}
+.calendar {
+  gap: 2px;
+  margin-top: 24px;
+}
+.calendar > div {
+  padding: 12px 0;
+}
+.calendar strong {
+  font-size: clamp(24px, 6cqw, 32px);
+}
+.location {
+  padding-top: 24px;
+}
+.venueDetails {
+  padding: 38px 20px 24px;
+  border-bottom: 0;
+}
+.venueDetails h3 {
+  font-family: var(--font-invite-serif), serif;
+  font-size: clamp(24px, 6cqw, 32px);
+  line-height: 1.2;
+}
+.location .venuePhoto {
+  margin: 0 !important;
+}
+.button {
+  padding: 14px 16px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+.button:focus-visible {
+  outline: 2px solid var(--invite-ink);
+  outline-offset: 3px;
+}
+.sunny {
+  padding-inline: 8%;
+}
+.sunny > h2 {
+  text-align: center;
+}
+
+.dressCode .shared {
+  text-align: center;
+}
+.dressCode .shared ul {
+  gap: 16px 12px;
+  margin-top: 24px;
+  justify-content: center;
+}
+.dressCode .shared li > span:first-child {
+  box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--invite-surface) 40%, transparent);
+}
+.dressCode .shared li > span:last-child {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.chat {
+  padding-bottom: 145px;
+}
+.wishesCircles {
+  min-height: 64cqw;
+  padding: 13% 13%;
+}
+.shell .wishesFirst {
+  font-size: 16px;
+}
+.envelope,
+.gift {
+  width: 15%;
+}
+.shell .form {
+  gap: 18px;
+}
+.shell .form > section {
+  padding: 22px 0;
+}
+.shell .form > section:first-child {
+  padding-top: 8px;
+}
+.shell .form input::placeholder {
+  color: var(--invite-muted);
+  opacity: 1;
+}
+.shell .form footer p {
+  color: var(--invite-ink);
+}
+.closing {
+  padding: 32px 8% 44px;
+}
+.closing::before {
+  mask-size: 100% auto;
+  mask-position: left bottom;
+}
+.portrait {
+  width: 100%;
+}
+.closing h2 {
+  font-size: clamp(36px, 9cqw, 50px);
+  text-transform: none;
+  line-height: 1.15;
+  margin: 20px 0 16px;
+}
+@media (max-width: 400px) {
+  .hero {
+    height: auto;
+    min-height: 125cqw;
+  }
+  .paper {
+    padding-inline: 7%;
+  }
+  .chat {
+    padding-bottom: 145px;
+  }
+}
+
+.sunny,
+.rsvp,
+.wishes,
+.closing {
+  --sol-colored-ink: color-mix(in srgb, var(--invite-ink) 85%, var(--invite-accent));
+  --sol-colored-heading: color-mix(in srgb, var(--invite-ink) 70%, var(--invite-accent));
+  color: var(--sol-colored-ink);
+}
+.sunny > h2,
+.rsvp > h2,
+.wishes > h2,
+.closing > h2 {
+  color: var(--sol-colored-heading);
+}
+.wishes .envelope,
+.wishes .gift {
+  background: var(--sol-colored-heading);
+}
+.rsvp .form {
+  --rsvp-ink: var(--sol-colored-ink);
+  --rsvp-muted: var(--sol-colored-ink);
+  --rsvp-accent: var(--sol-colored-ink);
+  --rsvp-line: color-mix(in srgb, var(--sol-colored-ink) 30%, transparent);
+}
+.shell .rsvp .form button[type="submit"] {
+  background: var(--sol-colored-ink);
+}
+.shell .rsvp .form footer p {
+  color: var(--sol-colored-ink);
+}
+
+.schedule {
+  position: relative;
+}
+.schedule::before {
+  content: "";
+  position: absolute;
+  left: 72px;
+  top: 15px;
+  bottom: 15px;
+  border-left: 1px solid color-mix(in srgb, var(--sol-colored-ink) 25%, transparent);
+}
+.schedule li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr);
+  gap: 32px;
+  padding: 0 0 32px;
+  border: 0;
+}
+.schedule li:last-child {
+  padding-bottom: 0;
+}
+.schedule li::before {
+  content: "";
+  position: absolute;
+  left: 68px;
+  top: 12px;
+  width: 9px;
+  height: 9px;
+  background: var(--sol-colored-ink);
+  mask: url("/images/sol-letter/oval.webp") center / contain no-repeat;
+}
+.schedule time {
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: clamp(18px, 5cqw, 22px);
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0.02em;
+  color: var(--sol-colored-ink);
+}
+.shell .schedule h3 {
+  font-family: var(--font-invite-serif), Georgia, serif;
+  font-size: clamp(25px, 6cqw, 32px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--sol-colored-heading);
+  text-wrap: balance;
+}
+.shell .schedule p {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--sol-colored-ink);
+}
+@media (max-width: 360px) {
+  .schedule li {
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 22px;
+  }
+  .schedule::before {
+    left: 59px;
+  }
+  .schedule li::before {
+    left: 55px;
+  }
+}
+
+.chat {
+  padding-bottom: 36px;
+}
+.chat .shared a {
+  position: static;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 48px;
+  height: auto;
+  margin-top: 8px;
+  padding: 12px 22px;
+  justify-self: start;
+  gap: 10px;
+  border: 1px solid var(--invite-line);
+  border-radius: 6px;
+  background: var(--invite-accent);
+  color: var(--invite-ink);
+  mask: none;
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.chat .shared a svg {
+  display: block;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+.chat .shared a:hover {
+  border-color: var(--invite-ink);
+  background: color-mix(in srgb, var(--invite-accent) 82%, var(--invite-surface));
+}
+.chat .shared a:focus-visible {
+  outline: 2px solid var(--invite-ink);
+  outline-offset: 4px;
+}
+
+.sunny,
+.rsvp,
+.wishes {
+  --sol-block-bg: var(--invite-accent);
+  --sol-colored-ink: var(--invite-ink);
+  --sol-colored-heading: color-mix(in srgb, var(--invite-ink) 85%, var(--invite-accent));
+  background: linear-gradient(
+    to bottom,
+    transparent calc(14cqw - 2px),
+    var(--sol-block-bg) calc(14cqw - 2px),
+    var(--sol-block-bg) calc(100% - 14cqw + 2px),
+    transparent calc(100% - 14cqw + 2px)
+  );
+}
+.sunny::before,
+.sunny::after,
+.rsvp::before,
+.rsvp::after,
+.wishes::before,
+.wishes::after {
+  background: var(--sol-block-bg);
+}
+.wishes .envelope,
+.wishes .gift {
+  background: var(--sol-colored-heading);
+}
+.shell .rsvp .form input[type="text"] {
+  color: var(--invite-ink);
+}
+.shell .rsvp .form input::placeholder {
+  color: var(--invite-muted);
+}
+.shell .rsvp .form button[type="submit"] {
+  background: var(--invite-ink);
+  color: var(--invite-surface);
+}
+.shell .rsvp .form button[type="submit"]:hover {
+  background: color-mix(in srgb, var(--invite-ink) 88%, var(--invite-surface));
+}
+
+.sunny,
+.rsvp,
+.wishes {
+  --sol-colored-ink: #ffffff;
+  --sol-colored-heading: #ffffff;
+  color: #ffffff;
+}
+.sunny > h2,
+.rsvp > h2,
+.wishes > h2,
+.shell .schedule h3,
+.shell .schedule p,
+.schedule time {
+  color: #ffffff;
+  background: transparent;
+}
+.schedule li > div {
+  padding: 0;
+  background: transparent;
+}
+.schedule time {
+  align-self: start;
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  line-height: 32px;
+}
+.schedule::before {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.rsvp .form {
+  --rsvp-ink: #ffffff;
+  --rsvp-muted: #ffffff;
+  --rsvp-accent: #ffffff;
+  --rsvp-line: rgba(255, 255, 255, 0.5);
+  --rsvp-surface: var(--invite-surface);
+}
+.shell .rsvp .form h3,
+.shell .rsvp .form h3 + p,
+.shell .rsvp .form > label,
+.shell .rsvp .form > label a,
+.shell .rsvp .form footer p {
+  color: #ffffff;
+  background: transparent;
+}
+.shell .rsvp .form input[type="text"] {
+  color: var(--invite-ink);
+}
+.shell .rsvp .form label:has(input[type="radio"]),
+.shell .rsvp .form label:has(input[type="checkbox"]):not(:has(a)) {
+  --rsvp-ink: var(--invite-ink);
+  --rsvp-muted: var(--invite-ink);
+  --rsvp-accent: var(--invite-ink);
+}
+.shell .rsvp .form label strong {
+  color: var(--invite-ink);
+}
+.shell .rsvp .form > section > div > span:first-child {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.closing,
+.closing > h2,
+.closing > p,
+.closing > time {
+  color: #ffffff;
+}

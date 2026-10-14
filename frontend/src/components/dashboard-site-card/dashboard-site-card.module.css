@@ -265,3 +265,18 @@
     flex-basis: 100%;
   }
 }
+
+.card :is(a, button):focus-visible {
+  outline: 2px solid var(--product-accent);
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .review {
+    min-height: 44px;
+  }
+  .quiet {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+}

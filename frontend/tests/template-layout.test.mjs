@@ -288,6 +288,9 @@ for (const template of templates) {
             }
             // Прокручиваем весь свиток: подгружаем ленивые фото и проверяем страницу целиком.
             await page.evaluate(async () => {
+              document.querySelectorAll("details").forEach((panel) => {
+                panel.open = true;
+              });
               const step = Math.max(window.innerHeight, 400);
 
               for (let y = 0; y < document.body.scrollHeight; y += step) {
@@ -343,6 +346,34 @@ for (const template of templates) {
             });
 
             assert.ok(invite, "фикстура должна быть отдана странице");
+            if (template.kind === "sol") {
+              const sections = await page.locator("article [data-invite-section]").evaluateAll((nodes) =>
+                nodes.map((node) => node.getAttribute("data-invite-section").split(" ")[0]),
+              );
+              const expectedSections = ["hero", "greeting", "date", "location"];
+              if (invite.showSchedule) expectedSections.push("schedule");
+              if (invite.showDressCode) expectedSections.push("dress-code");
+              if (invite.showGroupChat) expectedSections.push("chat");
+              if (invite.showAdditionalInfo) expectedSections.push("info");
+              if (invite.showRsvp) expectedSections.push("rsvp");
+              expectedSections.push("closing");
+              assert.deepEqual(sections, expectedSections, "блоки должны следовать контракту шаблона");
+              const edges = await page.locator('article [data-invite-section="schedule"], article [data-invite-section="info"], article [data-invite-section="rsvp"]').evaluateAll((nodes) => nodes.map((node) => {
+                const top = getComputedStyle(node, "::before");
+                const bottom = getComputedStyle(node, "::after");
+                return { top: parseFloat(top.height), bottom: parseFloat(bottom.height), width: node.closest("article").clientWidth, size: top.maskSize };
+              }));
+              for (const edge of edges) {
+                assert.ok(Math.abs(edge.top - edge.width * 0.14) <= 1, "высота края должна зависеть только от ширины приглашения");
+                assert.equal(edge.top, edge.bottom, "верхний и нижний края должны иметь одинаковую высоту");
+                assert.ok(["100%", "100% auto"].includes(edge.size), "маска должна сохранять свои пропорции");
+              }
+
+              for (const section of ["hero", "location", "closing"]) {
+                assert.equal(await page.locator('article [data-invite-section^="' + section + '"] img').count(), 1, "в секции должно быть своё фото");
+              }
+            }
+
 
             for (const missing of findMissingContent(invite, result.text)) {
               assert.fail(`шаблон не показывает ${missing}`);

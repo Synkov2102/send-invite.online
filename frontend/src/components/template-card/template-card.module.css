@@ -99,7 +99,7 @@
 
 .activeDot {
   opacity: 1;
-  transform: scale(1.35);
+  transform: scale(1.1);
 }
 
 .swipeHint {
@@ -160,7 +160,7 @@
   }
 
   .activeDot {
-    transform: scale(1.25);
+    transform: scale(1.1);
   }
 }
 
@@ -170,4 +170,34 @@
   .activeDot {
     transition: none;
   }
+}
+
+.paletteMeta {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.paletteMeta > span {
+  max-width: 100%;
+  font-size: 0.75rem;
+}
+.dots {
+  flex-wrap: wrap;
+  gap: 0;
+}
+.control {
+  width: 44px;
+  height: 44px;
+}
+.dot,
+.activeDot {
+  width: 24px;
+  height: 24px;
+  padding: 8px;
+  background-clip: content-box;
+  opacity: 0.4;
+}
+.activeDot {
+  opacity: 1;
+  transform: scale(1.1);
 }
