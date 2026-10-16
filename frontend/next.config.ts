@@ -10,6 +10,26 @@ if (existsSync(rootFrontendEnv)) {
 }
 
 const apiBaseUrl = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
+const isDev = process.env.NODE_ENV !== "production";
+
+// Hosts of the analytics counters (Метрика, GA4, Top.Mail.Ru) per their CSP docs.
+// Inline scripts stay allowed: nonces would force dynamic rendering of every prerendered page.
+const analyticsHosts =
+  "https://mc.yandex.ru https://mc.yandex.com https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.mail.ru";
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://yastatic.net ${analyticsHosts}`,
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data: blob: https://avatars.yandex.net https://storage.yandexcloud.net https://static.tildacdn.com ${analyticsHosts}`,
+  "font-src 'self' data:",
+  "media-src 'self' blob:",
+  `connect-src 'self'${isDev ? " ws:" : ""} ${analyticsHosts}`,
+  // Webvisor of Метрика replays sessions in blob: frames.
+  "frame-src 'self' blob: https://mc.yandex.ru https://mc.yandex.com",
+  "frame-ancestors 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+].join("; ");
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@invite/shared"],
@@ -71,6 +91,11 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          { key: "Content-Security-Policy", value: contentSecurityPolicy },
+          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
+          { key: "X-XSS-Protection", value: "0" },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+          { key: "Cross-Origin-Resource-Policy", value: "same-site" },
         ],
       },
     ];

@@ -44,6 +44,28 @@
   cursor: pointer;
 }
 
+.actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.secondaryButton {
+  padding: 10px 18px;
+  border: 1px solid var(--header-line, rgba(49, 51, 42, 0.12));
+  border-radius: 999px;
+  background: transparent;
+  color: var(--header-ink, #282126);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondaryButton:hover {
+  border-color: var(--header-ink, #282126);
+}
+
 .button:hover {
   background: var(--header-accent, #ff4f72);
 }
@@ -61,10 +83,12 @@
   }
 }
 
-.button {
+.button,
+.secondaryButton {
   min-height: 44px;
 }
-.button:focus-visible {
+.button:focus-visible,
+.secondaryButton:focus-visible {
   outline: 2px solid var(--header-accent, #ff4f72);
   outline-offset: 3px;
 }
@@ -76,7 +100,11 @@
     padding: 14px 16px;
     gap: 10px;
   }
-  .button {
+  .actions {
     width: 100%;
+  }
+  .button,
+  .secondaryButton {
+    flex: 1 1 0;
   }
 }
