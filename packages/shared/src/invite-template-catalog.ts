@@ -1260,7 +1260,7 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     defaultPaletteId: "sol-yellow",
     recommendedPaletteIds: ["sol-yellow","sol-honey","sol-rose","sol-peach","sol-lavender","sol-sky","sol-sage","sol-olive","sol-dusty-rose","sol-linen"],
     tags: ["лето", "типографика"],
-    screenshot: "/images/templates/sol-letter-mobile.webp",
+    screenshot: "/images/templates/sol-letter-mobile.webp?v=20261017-2",
     preview: { background: "#fff8da", surface: "#fffff8", ink: "#181810", accent: "#E6B800" },
     editorPreset: {
       bride: "Ксения",

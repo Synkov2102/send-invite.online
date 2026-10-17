@@ -32,7 +32,7 @@ function CircularText({ text, className }: { text: string; className?: string })
 
 function Photo({ src, alt, className }: { src: string; alt: string; className?: string }) {
   return (
-    <figure className={className}>
+    <figure className={className} data-reveal>
       <Image
         src={src}
         alt={alt}
@@ -71,7 +71,7 @@ export default function SolTemplate({
       <div className={styles.scene} style={inviteVars}>
         <article className={styles.shell} style={inviteVars} ref={ref}>
           <section data-invite-section="hero">
-            <div className={styles.hero}>
+            <div className={styles.hero} data-reveal>
               <div className={styles.stripeBody} aria-hidden />
               <div className={styles.stripeEdge} aria-hidden />
               <div className={styles.monogram}>
@@ -146,7 +146,7 @@ export default function SolTemplate({
               <h2>Этот день</h2>
               <ol className={styles.schedule}>
                 {invite.schedule.map((item, index) => (
-                  <li key={index}>
+                  <li key={index} data-reveal>
                     <time>{item.time}</time>
                     <div>
                       <h3>{item.title}</h3>

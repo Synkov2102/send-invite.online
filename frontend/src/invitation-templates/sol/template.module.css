@@ -922,8 +922,8 @@
 .schedule li {
   position: relative;
   display: grid;
-  grid-template-columns: 60px minmax(0, 1fr);
-  gap: 32px;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 24px;
   padding: 0 0 32px;
   border: 0;
 }
@@ -942,6 +942,8 @@
 }
 .schedule time {
   font-family: var(--font-geist-sans), Arial, sans-serif;
+  white-space: nowrap;
+  overflow-wrap: normal;
   font-size: clamp(18px, 5cqw, 22px);
   font-weight: 500;
   line-height: 32px;
@@ -1123,4 +1125,244 @@
 .closing > p,
 .closing > time {
   color: #ffffff;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell {
+    --sol-reveal-distance: 12px;
+  }
+  .shell[data-animate="on"] :is(figure, .schedule li)[data-reveal],
+  .shell[data-animate="on"]
+    section[data-reveal]
+    > :is(h2, p, time, .calendar, .venueDetails, .locationLabelFrame, .button),
+  .shell[data-animate="on"] section[data-reveal] .shared > :is(h2, p, a),
+  .shell[data-animate="on"] .dressCode[data-reveal] .shared li,
+  .shell[data-animate="on"] .wishes[data-reveal] :is(.wishesFirst, .envelope, .gift),
+  .shell[data-animate="on"] .greeting[data-reveal] .arrow {
+    opacity: 0;
+    translate: 0 var(--sol-reveal-distance);
+    transition:
+      opacity 550ms ease,
+      translate 550ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .shell[data-animate="on"] :is(figure, .schedule li)[data-revealed],
+  .shell[data-animate="on"]
+    section[data-revealed]
+    > :is(h2, p, time, .calendar, .venueDetails, .locationLabelFrame, .button),
+  .shell[data-animate="on"] section[data-revealed] .shared > :is(h2, p, a),
+  .shell[data-animate="on"] .dressCode[data-revealed] .shared li,
+  .shell[data-animate="on"] .wishes[data-revealed] :is(.wishesFirst, .envelope, .gift),
+  .shell[data-animate="on"] .greeting[data-revealed] .arrow {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .shell[data-animate="on"] section[data-reveal] > p,
+  .shell[data-animate="on"] section[data-reveal] .shared > p {
+    transition-delay: 100ms;
+  }
+  .shell[data-animate="on"] .closing[data-reveal] > p {
+    transition-delay: 150ms;
+  }
+  .shell[data-animate="on"] .closing[data-reveal] > h2 {
+    transition-delay: 250ms;
+  }
+  .shell[data-animate="on"] .closing[data-reveal] > time {
+    transition-delay: 350ms;
+  }
+  .shell[data-animate="on"] .dressCode .shared li:nth-child(2) {
+    transition-delay: 60ms;
+  }
+  .shell[data-animate="on"] .dressCode .shared li:nth-child(3) {
+    transition-delay: 120ms;
+  }
+  .shell[data-animate="on"] .dressCode .shared li:nth-child(4) {
+    transition-delay: 180ms;
+  }
+  .shell[data-animate="on"] .dressCode .shared li:nth-child(n + 5) {
+    transition-delay: 240ms;
+  }
+  .shell[data-animate="on"] .wishes .envelope,
+  .shell[data-animate="on"] .wishes .gift {
+    rotate: -6deg;
+    transition:
+      opacity 550ms ease 180ms,
+      translate 550ms ease 180ms,
+      rotate 650ms ease 180ms;
+  }
+  .shell[data-animate="on"] .wishes[data-revealed] :is(.envelope, .gift) {
+    rotate: 0deg;
+  }
+  .shell[data-animate="on"] .hero .stripeBody {
+    animation: sol-stripes 700ms ease both;
+  }
+  .shell[data-animate="on"] .hero .monogram {
+    animation: sol-seal 650ms 180ms ease both;
+  }
+  .shell[data-animate="on"] .hero .heroNames {
+    animation: sol-enter 550ms 350ms ease both;
+  }
+  .shell .form :is(input, label, button) {
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+  }
+}
+@media (max-width: 430px) {
+  .shell {
+    --sol-reveal-distance: 8px;
+  }
+}
+@keyframes sol-stripes {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sol-seal {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes sol-enter {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shell[data-animate="on"] .hero .stripeBody {
+    transform-origin: top;
+    animation: sol-curtain 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .shell[data-animate="on"] .hero .monogram {
+    animation: sol-stamp 1000ms 250ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .shell[data-animate="on"] .hero .heroNames {
+    animation: sol-ribbon 800ms 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .shell[data-animate="on"] figure[data-reveal] {
+    clip-path: inset(0 0 24% 0 round 12px);
+    transition:
+      opacity 700ms ease,
+      translate 900ms ease,
+      clip-path 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .shell[data-animate="on"] figure[data-revealed] {
+    clip-path: inset(0 round 12px);
+  }
+  .shell[data-animate="on"] figure[data-reveal] img {
+    scale: 1.06;
+    transition: scale 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .shell[data-animate="on"] figure[data-revealed] img {
+    scale: 1;
+  }
+  .shell[data-animate="on"] .sunny[data-reveal] .schedule::before {
+    scale: 1 0;
+    transform-origin: top;
+    transition: scale 1300ms 150ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .shell[data-animate="on"] .sunny[data-revealed] .schedule::before {
+    scale: 1;
+  }
+  .shell[data-animate="on"] .schedule li[data-reveal]::before {
+    scale: 0;
+    transition: scale 650ms 120ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .shell[data-animate="on"] .schedule li[data-revealed]::before {
+    scale: 1;
+  }
+  .shell[data-animate="on"] .dressCode[data-reveal] .shared li {
+    scale: 0.78;
+    transition-property: opacity, translate, scale;
+    transition-duration: 650ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .shell[data-animate="on"] .dressCode[data-revealed] .shared li {
+    scale: 1;
+  }
+  .shell[data-animate="on"] .wishes[data-revealed] .envelope {
+    animation: sol-doodle 1000ms 100ms both;
+  }
+  .shell[data-animate="on"] .wishes[data-revealed] .gift {
+    animation: sol-doodle 1000ms 280ms both;
+  }
+  .shell[data-animate="on"] .greeting[data-revealed] .arrow {
+    animation: sol-draw 1000ms 150ms both;
+  }
+  .shell :is(.button, .chat .shared a):active {
+    translate: 0 2px;
+  }
+}
+@keyframes sol-curtain {
+  from {
+    opacity: 0;
+    transform: scaleY(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+@keyframes sol-stamp {
+  0% {
+    opacity: 0;
+    scale: 1.16;
+    rotate: -7deg;
+  }
+  65% {
+    opacity: 1;
+    scale: 0.98;
+    rotate: 1deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+@keyframes sol-ribbon {
+  from {
+    opacity: 0;
+    clip-path: inset(0 50%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+@keyframes sol-doodle {
+  0% {
+    rotate: -12deg;
+    scale: 0.85;
+  }
+  60% {
+    rotate: 5deg;
+    scale: 1.04;
+  }
+  100% {
+    rotate: 0deg;
+    scale: 1;
+  }
+}
+@keyframes sol-draw {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
 }

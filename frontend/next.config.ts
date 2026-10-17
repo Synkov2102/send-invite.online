@@ -42,6 +42,10 @@ const nextConfig: NextConfig = {
     qualities: [75, 90],
     localPatterns: [
       {
+        pathname: "/images/templates/**",
+        search: "?v=20261017-2",
+      },
+      {
         pathname: "/images/**",
         search: "",
       },

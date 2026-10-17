@@ -156,8 +156,8 @@ export const laceImages = {
 } as const;
 
 export const solImages = {
-  cover: "/images/sol-letter-cover.webp",
-  portrait: "/images/sol-letter-portrait.webp",
+  cover: "/images/sol-letter-cover-v2.webp",
+  portrait: "/images/sol-letter-portrait-v2.webp",
   venue: "/images/sol-letter-venue.webp",
 } as const;
 
