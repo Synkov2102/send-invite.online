@@ -109,13 +109,16 @@ export class InviteSiteStore {
     id: string,
     ownerId: string,
     payload: CreateInviteSitePayload,
+    expectedUpdatedAt: string,
   ) {
     await this.ensureIndexes();
 
     const collection = await this.getSitesCollection();
     const updatedAt = new Date().toISOString();
+    // Фильтр по updatedAt — оптимистичная блокировка: параллельное сохранение
+    // не перезапишет сайт ссылками на медиа, которые соседний запрос уже удалил.
     const result = await collection.findOneAndUpdate(
-      { id, ownerId },
+      { id, ownerId, updatedAt: expectedUpdatedAt },
       {
         $set: {
           ...payload,

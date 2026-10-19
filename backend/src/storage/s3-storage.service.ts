@@ -4,6 +4,7 @@ import { Injectable, type OnModuleDestroy } from "@nestjs/common";
 import {
   DeleteObjectCommand,
   GetObjectCommand,
+  ListObjectsV2Command,
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
@@ -12,7 +13,7 @@ const defaultEndpoint = "https://storage.yandexcloud.net";
 const defaultRegion = "ru-central1";
 const s3RefPrefix = "s3://";
 export const inviteImageKeyPrefix = "invite-images/";
-const inviteMusicKeyPrefix = "invite-music/";
+export const inviteMusicKeyPrefix = "invite-music/";
 const catalogMusicKeyPrefix = "catalog-music/";
 export const blogImageKeyPrefix = "blog-images/";
 
@@ -263,8 +264,8 @@ export class S3StorageService implements OnModuleDestroy {
     };
   }
 
-  // Только для миграции webp: удаляет исходник, чей ref уже заменён в Mongo.
-  async deleteInviteImageObject(ref: string) {
+  // Удаляет загрузку, чей ref уже заменён в Mongo (замена медиа сайта, миграция webp).
+  async deleteInviteMediaObject(ref: string) {
     const parsed = parseS3ObjectRef(ref);
     const config = this.getS3Config();
 
@@ -272,7 +273,10 @@ export class S3StorageService implements OnModuleDestroy {
       throw new Error("Invalid S3 object reference.");
     }
 
-    if (!parsed.key.startsWith(inviteImageKeyPrefix)) {
+    if (
+      !parsed.key.startsWith(inviteImageKeyPrefix) &&
+      !parsed.key.startsWith(inviteMusicKeyPrefix)
+    ) {
       throw new Error("S3 object key is not allowed.");
     }
 
@@ -282,6 +286,40 @@ export class S3StorageService implements OnModuleDestroy {
         Key: parsed.key,
       }),
     );
+  }
+
+  // Постранично обходит загрузки сайтов под префиксом — для очистки сирот.
+  async *listInviteMediaObjects(prefix: string) {
+    if (prefix !== inviteImageKeyPrefix && prefix !== inviteMusicKeyPrefix) {
+      throw new Error("S3 prefix is not allowed.");
+    }
+
+    const config = this.getS3Config();
+    let continuationToken: string | undefined;
+
+    do {
+      const response = await this.getS3Client(config).send(
+        new ListObjectsV2Command({
+          Bucket: config.bucket,
+          ContinuationToken: continuationToken,
+          Prefix: prefix,
+        }),
+      );
+
+      for (const object of response.Contents ?? []) {
+        if (!object.Key || !object.LastModified) {
+          continue;
+        }
+
+        yield {
+          lastModified: object.LastModified,
+          ref: createS3Ref(config.bucket, object.Key),
+          size: object.Size ?? 0,
+        };
+      }
+
+      continuationToken = response.IsTruncated ? response.NextContinuationToken : undefined;
+    } while (continuationToken);
   }
 
   async getInviteS3Object(ref: string) {

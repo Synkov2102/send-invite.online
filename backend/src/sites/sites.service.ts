@@ -1,8 +1,10 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from "@nestjs/common";
 import ExcelJS from "exceljs";
@@ -32,6 +34,7 @@ import {
   InviteMusicUploadError,
   isS3NotConfiguredError,
   resolveStoredMedia,
+  stripMediaVersion,
   WEBP_MIME_TYPE,
   type ServedMedia,
 } from "./sites-media";
@@ -52,6 +55,8 @@ function getMaxResponsesPerSite() {
 
 @Injectable()
 export class SitesService {
+  private readonly logger = new Logger(SitesService.name);
+
   constructor(
     private readonly inviteResponses: InviteResponseStore,
     private readonly inviteSites: InviteSiteStore,
@@ -151,11 +156,28 @@ export class SitesService {
       existingSite,
     );
     const payload = await this.prepareSitePayload(payloadWithExistingMedia, existingSite.invite);
-    const site = await this.inviteSites.updateInviteSite(siteId, ownerId, payload);
+    let site: PublishedInviteSite | null;
+
+    try {
+      site = await this.inviteSites.updateInviteSite(
+        siteId,
+        ownerId,
+        payload,
+        existingSite.updatedAt,
+      );
+    } catch (error) {
+      await this.deleteUnusedMedia(payload.invite, existingSite.invite);
+      throw error;
+    }
 
     if (!site) {
-      throw new NotFoundException({ error: "Сайт не найден." });
+      await this.deleteUnusedMedia(payload.invite, existingSite.invite);
+      throw new ConflictException({
+        error: "Сайт изменили параллельно. Обновите страницу и сохраните ещё раз.",
+      });
     }
+
+    await this.deleteUnusedMedia(existingSite.invite, payload.invite);
 
     return {
       id: site.id,
@@ -463,12 +485,12 @@ export class SitesService {
     const invite = { ...payload.invite };
 
     for (const { field, slot } of INVITE_IMAGE_SLOTS) {
-      if (invite[field] === `/api/sites/${siteId}/images/${slot}`) {
+      if (stripMediaVersion(invite[field]) === `/api/sites/${siteId}/images/${slot}`) {
         invite[field] = existingSite.invite[field];
       }
     }
 
-    if (invite.musicUrl === `/api/sites/${siteId}/music`) {
+    if (stripMediaVersion(invite.musicUrl) === `/api/sites/${siteId}/music`) {
       invite.musicUrl = existingSite.invite.musicUrl;
     }
 
@@ -476,6 +498,39 @@ export class SitesService {
       ...payload,
       invite,
     };
+  }
+
+  // Удаляет S3-файлы из `staleInvite`, которых нет в `currentInvite`.
+  // После успешной записи — заменённые файлы сайта (только после записи в Mongo:
+  // если апдейт упадёт, сайт останется на рабочих старых файлах). После неудачной —
+  // только что загруженные. S3-ref уникален для сайта (чужие ref при сохранении
+  // отклоняются), так что удалённый файл больше никем не используется.
+  private async deleteUnusedMedia(
+    staleInvite: CreateInviteSitePayload["invite"],
+    currentInvite: CreateInviteSitePayload["invite"],
+  ) {
+    const staleRefs = [
+      ...INVITE_IMAGE_SLOTS.map(({ field }) => staleInvite[field]),
+      staleInvite.musicUrl,
+    ];
+    const currentRefs = new Set([
+      ...INVITE_IMAGE_SLOTS.map(({ field }) => currentInvite[field]),
+      currentInvite.musicUrl,
+    ]);
+    const unusedRefs = new Set(
+      staleRefs.filter((ref) => isS3ObjectRef(ref) && !currentRefs.has(ref)),
+    );
+
+    for (const ref of unusedRefs) {
+      try {
+        await this.s3Storage.deleteInviteMediaObject(ref);
+      } catch (error) {
+        // Результат запроса уже определён — осиротевший файл не повод менять ответ.
+        this.logger.warn(
+          `Не удалось удалить ${ref}: ${error instanceof Error ? error.message : String(error)}`,
+        );
+      }
+    }
   }
 
   private async getOwnedSite(ownerId: string, siteId: string) {

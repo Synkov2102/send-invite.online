@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import type { Readable } from "stream";
 import { BadRequestException, NotFoundException } from "@nestjs/common";
 import sharp from "sharp";
@@ -68,13 +69,28 @@ export const ALLOWED_AUDIO_MIME_TYPES = new Set([
   "audio/x-wav",
 ]);
 
+// URL медиа стабилен (`/api/sites/:id/images/:slot`), а отдаётся с immutable-кэшем
+// на год. Версия из хранимой ссылки (в S3 у каждой загрузки свой UUID-ключ) меняет
+// URL при замене файла, иначе браузер и CDN продолжают показывать старое фото.
+function withMediaVersion(path: string, storedUrl: string) {
+  const version = createHash("sha1").update(storedUrl).digest("hex").slice(0, 12);
+
+  return `${path}?v=${version}`;
+}
+
+export function stripMediaVersion(url: string) {
+  const queryIndex = url.indexOf("?");
+
+  return queryIndex === -1 ? url : url.slice(0, queryIndex);
+}
+
 export function getPublicMusicUrl(siteId: string, musicUrl: string) {
   if (!musicUrl) {
     return "";
   }
 
   if (musicUrl.startsWith("data:") || isS3ObjectRef(musicUrl)) {
-    return `/api/sites/${siteId}/music`;
+    return withMediaVersion(`/api/sites/${siteId}/music`, musicUrl);
   }
 
   return musicUrl;
@@ -86,7 +102,7 @@ export function getPublicImageUrl(siteId: string, imageUrl: string, slot: Invite
   }
 
   if (imageUrl.startsWith("data:") || isS3ObjectRef(imageUrl)) {
-    return `/api/sites/${siteId}/images/${slot}`;
+    return withMediaVersion(`/api/sites/${siteId}/images/${slot}`, imageUrl);
   }
 
   return imageUrl;

@@ -166,7 +166,7 @@ export async function runInviteImageMigration(options: MigrationOptions) {
 
     for (const ref of replacedRefs) {
       try {
-        await options.s3Storage.deleteInviteImageObject(ref);
+        await options.s3Storage.deleteInviteMediaObject(ref);
       } catch (error) {
         orphanRefs.push(ref);
         options.logError(

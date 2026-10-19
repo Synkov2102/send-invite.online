@@ -124,7 +124,7 @@ describe("runInviteImageMigration", () => {
 
   const makeS3Mock = (overrides: Record<string, jest.Mock> = {}) =>
     ({
-      deleteInviteImageObject: jest.fn().mockResolvedValue(undefined),
+      deleteInviteMediaObject: jest.fn().mockResolvedValue(undefined),
       getInviteS3Object: jest.fn().mockImplementation(() => Promise.resolve({ buffer: png })),
       uploadInviteImageObject: jest.fn().mockResolvedValue(ref("invite-images/cover/2026/x.webp")),
       ...overrides,
@@ -175,7 +175,7 @@ describe("runInviteImageMigration", () => {
       "invite.coverImageUrl": ref("invite-images/cover/2026/x.webp"),
       "invite.portraitImageUrl": ref("invite-images/cover/2026/x.webp"),
     });
-    expect(s3Storage.deleteInviteImageObject).not.toHaveBeenCalled();
+    expect(s3Storage.deleteInviteMediaObject).not.toHaveBeenCalled();
     expect(summary.convertedCount).toBe(2);
     expect(summary.orphanRefs).toEqual([
       ref("invite-images/cover/2025/aaa.jpg"),
@@ -186,7 +186,7 @@ describe("runInviteImageMigration", () => {
   it("deletes originals only after the mongo update landed", async () => {
     const order: string[] = [];
     const s3Storage = makeS3Mock({
-      deleteInviteImageObject: jest.fn().mockImplementation(() => {
+      deleteInviteMediaObject: jest.fn().mockImplementation(() => {
         order.push("delete");
         return Promise.resolve();
       }),
@@ -230,8 +230,8 @@ describe("runInviteImageMigration", () => {
     expect(options.updateSite).toHaveBeenCalledWith("site-1", {
       "invite.portraitImageUrl": ref("invite-images/cover/2026/x.webp"),
     });
-    expect(s3Storage.deleteInviteImageObject).toHaveBeenCalledTimes(1);
-    expect(s3Storage.deleteInviteImageObject).toHaveBeenCalledWith(
+    expect(s3Storage.deleteInviteMediaObject).toHaveBeenCalledTimes(1);
+    expect(s3Storage.deleteInviteMediaObject).toHaveBeenCalledWith(
       ref("invite-images/portrait/2025/bbb.png"),
     );
   });
