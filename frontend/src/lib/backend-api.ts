@@ -1,6 +1,11 @@
 import "server-only";
 
-import { INVITE_SITE_PRICE_RUB, isSitePricing } from "@invite/shared";
+import {
+  INVITE_SITE_PRICE_RUB,
+  isSitePricing,
+  type PartnerPromoCode,
+  type PartnerPromoStats,
+} from "@invite/shared";
 import type { InviteSitePricing } from "@/lib/commerce";
 import { getIncomingForwardedForHeaders } from "@/lib/forwarded-for";
 import { isPublishedInviteSite, type PublishedInviteSite } from "@/lib/invite-site-types";
@@ -122,6 +127,28 @@ export async function getOwnedInviteSites(sessionToken: string) {
   );
 
   return data.sites;
+}
+
+export async function getPartnerCodes(sessionToken: string) {
+  const data = await fetchAuthorizedJson<{ codes: PartnerPromoCode[] }>(
+    "/api/partner/codes",
+    sessionToken,
+  );
+
+  return data.codes;
+}
+
+export function getPartnerPromoStats(
+  promoId: string,
+  range: { from: string; to: string },
+  sessionToken: string,
+) {
+  const query = new URLSearchParams(range);
+
+  return fetchAuthorizedJson<PartnerPromoStats>(
+    `/api/partner/codes/${encodeURIComponent(promoId)}/stats?${query}`,
+    sessionToken,
+  );
 }
 
 export function getInviteResponses(siteId: string, sessionToken: string) {

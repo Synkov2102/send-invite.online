@@ -6,6 +6,7 @@ import {
   Inbox,
   MessageSquareText,
   Plus,
+  Ticket,
 } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -13,7 +14,7 @@ import DashboardSiteCard from "@/components/dashboard-site-card";
 import CommerceFooter from "@/components/commerce-footer";
 import PageShellProvider from "@/components/page-shell";
 import SiteHeader from "@/components/site-header";
-import { getOwnedInviteSites, type OwnedInviteSite } from "@/lib/backend-api";
+import { getOwnedInviteSites, getPartnerCodes, type OwnedInviteSite } from "@/lib/backend-api";
 import { getAuthSessionToken, getCurrentUser } from "@/lib/auth";
 import { createPageMetadata, privateRobots } from "@/lib/seo";
 import dashboardStyles from "@/styles/dashboard.module.css";
@@ -47,12 +48,16 @@ export default async function DashboardPage() {
 
   let sites: OwnedInviteSite[] = [];
   let loadError = false;
+  // Ссылка на партнёрскую статистику — необязательная: ошибка не ломает кабинет.
+  const partnerCodesPromise = getPartnerCodes(sessionToken).catch(() => []);
 
   try {
     sites = await getOwnedInviteSites(sessionToken);
   } catch {
     loadError = true;
   }
+
+  const hasPartnerCodes = (await partnerCodesPromise).length > 0;
 
   const totalResponses = sites.reduce((total, site) => total + site.responseCount, 0);
   const publishedSites = sites.filter((site) => site.isPublished).length;
@@ -72,10 +77,18 @@ export default async function DashboardPage() {
             <h1>Мои сайты</h1>
             <span>Управляйте приглашениями и ответами гостей в одном месте.</span>
           </div>
-          <Link className="dashboard-create" href="/templates">
-            <Plus aria-hidden size={16} />
-            Создать приглашение
-          </Link>
+          <div className="dashboard-heading-actions">
+            {hasPartnerCodes ? (
+              <Link className="dashboard-partner-link" href="/dashboard/partner">
+                <Ticket aria-hidden size={16} />
+                Партнёрская статистика
+              </Link>
+            ) : null}
+            <Link className="dashboard-create" href="/templates">
+              <Plus aria-hidden size={16} />
+              Создать приглашение
+            </Link>
+          </div>
         </header>
 
         {loadError ? (

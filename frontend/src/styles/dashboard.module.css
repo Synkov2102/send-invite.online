@@ -2822,3 +2822,97 @@
     width: 100%;
   }
 }
+
+/* Действия в шапке кабинета и ссылка на партнёрскую статистику */
+.scope:global(.dashboard-heading-actions),
+.scope :global(.dashboard-heading-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.scope:global(.dashboard-partner-link),
+.scope :global(.dashboard-partner-link) {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--product-line);
+  border-radius: 999px;
+  background: var(--product-paper);
+  padding: 10px 16px;
+  color: var(--product-ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.scope:global(.dashboard-partner-link):hover,
+.scope :global(.dashboard-partner-link):hover {
+  border-color: var(--product-accent);
+}
+.scope:global(.dashboard-heading) p a,
+.scope :global(.dashboard-heading) p a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+}
+@media (max-width: 640px) {
+  .scope:global(.dashboard-heading-actions),
+  .scope :global(.dashboard-heading-actions) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Пустое состояние партнёрской статистики */
+.scope:global(.dashboard-partner-empty),
+.scope :global(.dashboard-partner-empty) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+  align-items: center;
+  gap: clamp(24px, 4vw, 48px);
+  border: 1px solid var(--product-line);
+  border-radius: 22px;
+  background: var(--product-paper);
+  padding: clamp(24px, 4vw, 40px);
+  box-shadow: var(--product-shadow);
+}
+.scope:global(.dashboard-partner-empty) h2,
+.scope :global(.dashboard-partner-empty) h2 {
+  margin: 0;
+  color: var(--product-ink);
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 720;
+  letter-spacing: -0.04em;
+}
+.scope:global(.dashboard-partner-empty) p,
+.scope :global(.dashboard-partner-empty) p {
+  max-width: 42ch;
+  margin: 12px 0 0;
+  color: var(--product-muted);
+  line-height: 1.6;
+}
+.scope:global(.dashboard-partner-empty__visual),
+.scope :global(.dashboard-partner-empty__visual) {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff0f3;
+}
+.scope:global(.dashboard-partner-empty__visual) > img,
+.scope :global(.dashboard-partner-empty__visual) > img {
+  object-fit: cover;
+}
+@media (max-width: 720px) {
+  .scope:global(.dashboard-partner-empty),
+  .scope :global(.dashboard-partner-empty) {
+    grid-template-columns: 1fr;
+  }
+  .scope:global(.dashboard-partner-empty__visual),
+  .scope :global(.dashboard-partner-empty__visual) {
+    width: min(100%, 240px);
+  }
+}

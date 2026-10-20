@@ -13,6 +13,8 @@ export type PromoCode = {
   maxUses: number | null;
   maxUsesPerUser: number | null;
   note: string | null;
+  /** Пользователь, который видит статистику кода в /dashboard/partner. Ставится CLI-скриптом. */
+  partnerUserId?: string | null;
   startsAt: string | null;
   type: PromoDiscountType;
   updatedAt: string;
@@ -41,6 +43,7 @@ export class PromoCodeStore {
     await promoCodes.createIndex({ code: 1 }, { unique: true });
     await promoCodes.createIndex({ id: 1 }, { unique: true });
     await promoCodes.createIndex({ isActive: 1, expiresAt: 1 });
+    await promoCodes.createIndex({ partnerUserId: 1 }, { sparse: true });
   }
 
   async getByCode(code: string) {
@@ -53,6 +56,18 @@ export class PromoCodeStore {
     await this.ensureIndexes();
     const promoCodes = await this.getCollection();
     return promoCodes.findOne({ id });
+  }
+
+  async listByPartner(partnerUserId: string) {
+    await this.ensureIndexes();
+    const promoCodes = await this.getCollection();
+    return promoCodes.find({ partnerUserId }).sort({ createdAt: -1 }).toArray();
+  }
+
+  async getByIdForPartner(id: string, partnerUserId: string) {
+    await this.ensureIndexes();
+    const promoCodes = await this.getCollection();
+    return promoCodes.findOne({ id, partnerUserId });
   }
 
   async create(input: {

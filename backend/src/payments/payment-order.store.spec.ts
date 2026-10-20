@@ -113,4 +113,34 @@ describe("PaymentOrderStore", () => {
       );
     });
   });
+
+  describe("listPaidAtForPromo", () => {
+    it("queries only paid orders of the code in the half-open [from, to) range", async () => {
+      const toArray = jest
+        .fn()
+        .mockResolvedValue([
+          { paidAt: "2026-10-01T10:00:00.000Z" },
+          { paidAt: null },
+          { paidAt: "2026-10-02T10:00:00.000Z" },
+        ]);
+      const find = jest.fn().mockReturnValue({ toArray });
+      Object.assign(collection, { find });
+
+      const paidAt = await store.listPaidAtForPromo(
+        "promo-1",
+        "2026-09-30T21:00:00.000Z",
+        "2026-10-02T21:00:00.000Z",
+      );
+
+      expect(find).toHaveBeenCalledWith(
+        {
+          paidAt: { $gte: "2026-09-30T21:00:00.000Z", $lt: "2026-10-02T21:00:00.000Z" },
+          promoCodeId: "promo-1",
+          status: "paid",
+        },
+        { projection: { _id: 0, paidAt: 1 } },
+      );
+      expect(paidAt).toEqual(["2026-10-01T10:00:00.000Z", "2026-10-02T10:00:00.000Z"]);
+    });
+  });
 });

@@ -61,6 +61,7 @@ export class PaymentOrderStore {
     await orders.createIndex({ siteId: 1, createdAt: -1 });
     await orders.createIndex({ ownerId: 1, promoCodeId: 1, status: 1 });
     await orders.createIndex({ status: 1, createdAt: 1 });
+    await orders.createIndex({ promoCodeId: 1, status: 1, paidAt: 1 });
   }
 
   /**
@@ -320,6 +321,20 @@ export class PaymentOrderStore {
       },
       { returnDocument: "after" },
     );
+  }
+
+  /** paidAt оплаченных заказов с промокодом в полуинтервале [fromIso, toIso). */
+  async listPaidAtForPromo(promoCodeId: string, fromIso: string, toIso: string) {
+    await this.ensureIndexes();
+    const orders = await this.getOrdersCollection();
+    const documents = await orders
+      .find(
+        { paidAt: { $gte: fromIso, $lt: toIso }, promoCodeId, status: "paid" },
+        { projection: { _id: 0, paidAt: 1 } },
+      )
+      .toArray();
+
+    return documents.flatMap((document) => (document.paidAt ? [document.paidAt] : []));
   }
 
   async markPaid(invId: number, paymentMethod: string | null) {
