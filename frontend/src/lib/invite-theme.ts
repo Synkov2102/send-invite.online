@@ -161,7 +161,14 @@ export const solImages = {
   venue: "/images/sol-letter-venue.webp",
 } as const;
 
+export const ribbonImages = {
+  cover: "/images/burgundy-ribbon-cover.webp",
+  portrait: "/images/burgundy-ribbon-portrait.webp",
+  venue: "/images/burgundy-ribbon-venue.webp",
+} as const;
+
 export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  ribbon: ribbonImages,
   sol: solImages,
   lace: laceImages,
   villa: villaImages,

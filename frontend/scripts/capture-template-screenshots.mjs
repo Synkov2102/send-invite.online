@@ -42,7 +42,7 @@ const page = await browser.newPage({
   viewport: { width: 390, height: 844 },
 });
 await page.addInitScript(() => {
-  window.localStorage.setItem("invite.cookieConsent", "necessary");
+  window.localStorage.setItem("invite.cookieNoticeSeen", "seen");
 });
 
 for (const template of templates) {

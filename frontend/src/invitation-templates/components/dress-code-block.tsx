@@ -8,6 +8,8 @@ type InvitationDressCodeBlockProps = Readonly<{
   colors: string[];
   text: string;
   variant?: DressCodeVariant;
+  onColorSelect?: (color: string) => void;
+  selectedColor?: string | null;
 }>;
 
 function cx(...classes: Array<string | false | null | undefined>) {
@@ -19,6 +21,8 @@ export function InvitationDressCodeBlock({
   colors,
   text,
   variant = "alpine",
+  onColorSelect,
+  selectedColor,
 }: InvitationDressCodeBlockProps) {
   return (
     <div
@@ -34,11 +38,19 @@ export function InvitationDressCodeBlock({
       <ul className={styles.swatches} aria-label="Цвета дресс-кода">
         {colors.map((color, index) => (
           <li className={styles.swatchItem} key={`${color}-${index}`}>
-            <span
-              className={styles.swatch}
-              style={{ backgroundColor: color }}
-              title={color}
-            />
+            {onColorSelect ? (
+              <button
+                type="button"
+                aria-label={`Выбрать цвет ${color}`}
+                aria-pressed={selectedColor === color}
+                className={`${styles.swatch} ${styles.swatchButton}`}
+                style={{ backgroundColor: color }}
+                title={color}
+                onClick={() => onColorSelect(color)}
+              />
+            ) : (
+              <span className={styles.swatch} style={{ backgroundColor: color }} title={color} />
+            )}
             <span className={styles.swatchLabel}>Цвет {index + 1}</span>
           </li>
         ))}

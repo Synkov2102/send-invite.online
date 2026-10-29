@@ -240,6 +240,270 @@ after(async () => {
   server?.kill();
 });
 
+describe("Центрирование всех шаблонов каталога", () => {
+  for (const template of editorReady) {
+    for (const mode of ["published", "fullscreen", "editor"]) {
+      it(`${template.id} · ${mode}`, async () => {
+        const page = await browser.newPage({
+          viewport: { width: 1280, height: 900 },
+          reducedMotion: "reduce",
+        });
+        try {
+          await page.route("**/api/catalog-music/**", (route) => route.fulfill({ status: 204 }));
+          await page.addInitScript(() => {
+            localStorage.setItem("invite.cookieNoticeSeen", "seen");
+          });
+          const url =
+            mode === "published"
+              ? `${baseUrl}/templates/capture/${template.id}?preview=1`
+              : `${baseUrl}/editor?template=${template.id}${mode === "fullscreen" ? "&preview=1" : ""}`;
+          const response = await page.goto(url, {
+            waitUntil: "domcontentloaded",
+            timeout: 120_000,
+          });
+          assert.equal(response?.status(), 200);
+          if (mode === "editor") {
+            await page
+              .getByRole("button", { name: "Предпросмотр на компьютере", exact: true })
+              .click();
+          }
+          const card = page.locator(".published-site article").first();
+          await card.waitFor({ state: "visible" });
+          for (const width of [1280, 768, 320]) {
+            await page.setViewportSize({ width, height: 900 });
+            await page.evaluate(
+              () =>
+                new Promise((resolve) =>
+                  requestAnimationFrame(() => requestAnimationFrame(resolve)),
+                ),
+            );
+            const bounds = await card.evaluate((element) => {
+              const rect = element.getBoundingClientRect();
+              const host = element.closest(".published-site").getBoundingClientRect();
+              return {
+                offset: Math.abs((rect.left + rect.right - host.left - host.right) / 2),
+                width: rect.width,
+                hostWidth: host.width,
+              };
+            });
+            assert.ok(bounds.width > 0, "приглашение должно иметь ненулевую ширину");
+            assert.ok(
+              bounds.width <= bounds.hostWidth + 1,
+              "приглашение не должно быть шире оболочки",
+            );
+            assert.ok(
+              bounds.offset <= 1,
+              `${width}px: смещение от центра оболочки ${bounds.offset}px`,
+            );
+          }
+        } finally {
+          await page.close();
+        }
+      });
+    }
+  }
+});
+
+describe("Анимации Бордового банта", () => {
+  it("в закрытой фазе конверта фотографии не выглядывают наружу", async () => {
+    const page = await browser.newPage({
+      viewport: { width: 390, height: 844 },
+      reducedMotion: "no-preference",
+    });
+    try {
+      await page.route("**/api/catalog-music/**", (route) => route.fulfill({ status: 204 }));
+      await page.goto(`${baseUrl}/templates/capture/burgundy-ribbon?preview=1`, {
+        waitUntil: "domcontentloaded",
+      });
+      await page.waitForFunction(() =>
+        document
+          .getAnimations()
+          .some((animation) => animation.animationName?.includes("cardUnsealLeft")),
+      );
+      await page.evaluate(() =>
+        document.getAnimations().forEach((animation) => {
+          animation.pause();
+          animation.currentTime = 200;
+        }),
+      );
+      const cards = await page
+        .locator('[data-invite-section="hero"] figure')
+        .evaluateAll((nodes) => {
+          const envelope = document.querySelector("[data-ribbon-envelope]").getBoundingClientRect();
+          return nodes.map((node) => ({
+            opacity: getComputedStyle(node).opacity,
+            top: node.getBoundingClientRect().top,
+            bottom: node.getBoundingClientRect().bottom,
+            envelopeTop: envelope.top,
+            envelopeBottom: envelope.bottom,
+          }));
+        });
+      for (const card of cards) {
+        assert.equal(card.opacity, "0", "фотографии скрыты до открытия клапана");
+        assert.ok(
+          card.top >= card.envelopeTop && card.bottom <= card.envelopeBottom,
+          "начальная позиция карточки внутри конверта",
+        );
+      }
+    } finally {
+      await page.close();
+    }
+  });
+
+  it("линия следует скроллу, события остаются открытыми, цвет можно выбрать", async () => {
+    const page = await browser.newPage({
+      viewport: { width: 390, height: 844 },
+      reducedMotion: "no-preference",
+    });
+    try {
+      await page.route("**/api/catalog-music/**", (route) => route.fulfill({ status: 204 }));
+      await page.addInitScript(() => localStorage.setItem("invite.cookieNoticeSeen", "seen"));
+      const errors = [];
+      page.on("pageerror", (error) => errors.push(error.message));
+      await page.goto(`${baseUrl}/templates/capture/burgundy-ribbon?preview=1`, {
+        waitUntil: "domcontentloaded",
+      });
+      await page.waitForSelector("article[data-animate='on']");
+      await page.waitForFunction(
+        () =>
+          getComputedStyle(document.querySelector("[data-ribbon-envelope]")).visibility ===
+          "hidden",
+      );
+      await page.waitForFunction(
+        () => document.querySelector("article").style.getPropertyValue("--ribbon-progress") !== "",
+      );
+      assert.equal(
+        Number(
+          await page
+            .locator("article")
+            .evaluate((node) => node.style.getPropertyValue("--ribbon-progress")),
+        ),
+        0,
+      );
+      await page.locator("[data-ribbon-timeline]").evaluate((node) => {
+        window.scrollTo(
+          0,
+          window.scrollY + node.getBoundingClientRect().top - window.innerHeight * 0.45,
+        );
+      });
+      await page.waitForFunction(() => {
+        const progress = Number(
+          document.querySelector("article").style.getPropertyValue("--ribbon-progress"),
+        );
+        return progress > 0 && progress < 1;
+      });
+      const reached = await page.locator("[data-timeline-item][data-revealed]").count();
+      const total = await page.locator("[data-timeline-item]").count();
+      assert.ok(reached > 0 && reached < total, "на середине линии открыта только часть событий");
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      await page.waitForFunction(
+        () =>
+          Number(document.querySelector("article").style.getPropertyValue("--ribbon-progress")) ===
+          1,
+      );
+      assert.equal(await page.locator("[data-timeline-item][data-revealed]").count(), total);
+      await page.evaluate(() => window.scrollTo(0, 0));
+      assert.equal(await page.locator("[data-timeline-item][data-revealed]").count(), total);
+      const swatch = page.getByRole("button", { name: /^Выбрать цвет/ }).first();
+      const color = await swatch.getAttribute("title");
+      await swatch.click();
+      assert.equal(await swatch.getAttribute("aria-pressed"), "true");
+      assert.equal(await page.locator("output").textContent(), color.toUpperCase());
+      assert.deepEqual(await page.locator('[data-invite-section="chat info"] h2').allTextContents(), ["Детали", "Чат"], "в блоках не должно быть дублирующих скрытых заголовков");
+      assert.deepEqual(errors, []);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it("программа реагирует на скролл внутренней панели редактора", async () => {
+    const page = await browser.newPage({
+      viewport: { width: 1280, height: 900 },
+      reducedMotion: "no-preference",
+    });
+    try {
+      await page.route("**/api/catalog-music/**", (route) => route.fulfill({ status: 204 }));
+      await page.addInitScript(() => localStorage.setItem("invite.cookieNoticeSeen", "seen"));
+      await page.goto(`${baseUrl}/editor?template=burgundy-ribbon`, {
+        waitUntil: "domcontentloaded",
+      });
+      await page.getByRole("button", { name: "Предпросмотр на компьютере", exact: true }).click();
+      await page.waitForSelector("article[data-animate='on']");
+      await page
+        .locator("[data-ribbon-timeline]")
+        .evaluate((node) => node.scrollIntoView({ block: "center" }));
+      await page.waitForFunction(
+        () =>
+          Number(document.querySelector("article").style.getPropertyValue("--ribbon-progress")) > 0,
+      );
+      assert.ok((await page.locator("[data-timeline-item][data-revealed]").count()) > 0);
+      assert.equal(
+        await page.evaluate(() => window.scrollY),
+        0,
+        "прокручивается панель, а не окно",
+      );
+    } finally {
+      await page.close();
+    }
+  });
+
+  it("программа реагирует на прокрутку iframe мобильного превью", async () => {
+    const page = await browser.newPage({
+      viewport: { width: 1280, height: 900 },
+      reducedMotion: "no-preference",
+    });
+    try {
+      await page.route("**/api/catalog-music/**", (route) => route.fulfill({ status: 204 }));
+      await page.addInitScript(() => localStorage.setItem("invite.cookieNoticeSeen", "seen"));
+      await page.goto(`${baseUrl}/editor?template=burgundy-ribbon`, { waitUntil: "networkidle" });
+      await page.getByRole("button", { name: "Предпросмотр на телефоне", exact: true }).click();
+      const preview = page.frameLocator('iframe[title="Предпросмотр на телефоне"]');
+      await preview.locator("[data-ribbon-timeline]").waitFor();
+      await preview
+        .locator("[data-ribbon-timeline]")
+        .evaluate((node) => node.scrollIntoView({ block: "center" }));
+      await preview.locator("article").evaluate(async (node) => {
+        const view = node.ownerDocument.defaultView;
+        for (let attempt = 0; attempt < 60; attempt++) {
+          if (Number(node.style.getPropertyValue("--ribbon-progress")) > 0) return;
+          await new Promise((resolve) => view.requestAnimationFrame(resolve));
+        }
+        throw new Error("линия не реагирует на прокрутку iframe");
+      });
+      assert.ok((await preview.locator("[data-timeline-item][data-revealed]").count()) > 0);
+      assert.equal(await page.evaluate(() => window.scrollY), 0);
+    } finally {
+      await page.close();
+    }
+  });
+
+  it("при уменьшении движения содержимое видно без скролл-анимаций", async () => {
+    const page = await browser.newPage({
+      viewport: { width: 390, height: 844 },
+      reducedMotion: "reduce",
+    });
+    try {
+      await page.route("**/api/catalog-music/**", (route) => route.fulfill({ status: 204 }));
+      await page.goto(`${baseUrl}/templates/capture/burgundy-ribbon?preview=1`, {
+        waitUntil: "domcontentloaded",
+      });
+      await page.locator("[data-ribbon-timeline]").waitFor();
+      assert.equal(await page.locator("article").getAttribute("data-animate"), null);
+      assert.ok(
+        await page
+          .locator("[data-timeline-item]")
+          .evaluateAll((nodes) => nodes.every((node) => getComputedStyle(node).opacity === "1")),
+      );
+      await page.getByRole("timer").scrollIntoViewIfNeeded();
+      await page.waitForFunction(
+        () => getComputedStyle(document.querySelector("[role='timer'] i")).animationName === "none",
+      );
+    } finally {
+      await page.close();
+    }
+  });
+});
+
 for (const template of templates) {
   describe(`Раскладка шаблона «${template.name}» (${template.id})`, () => {
     for (const fixture of fixtures) {
@@ -306,13 +570,12 @@ for (const template of templates) {
             const result = await page.evaluate(collectLayoutProblems);
 
             assert.ok(!result.fatal, result.fatal);
+            assert.ok(result.cardCenterOffset <= 1, "приглашение должно быть по центру экрана");
             if (template.kind === "petal") {
               assert.ok(result.cardWidth <= 601, "ширина «Лепестков» не должна превышать 600px");
-              assert.ok(result.cardCenterOffset <= 1, "приглашение должно быть по центру экрана");
             }
             if (template.kind === "lace") {
               assert.ok(result.cardWidth <= 641, "ширина «Кружевного письма» не должна превышать 640px");
-              assert.ok(result.cardCenterOffset <= 1, "«Кружевное письмо» должно быть по центру экрана");
             }
             assert.deepEqual(pageErrors, [], "не должно быть ошибок выполнения");
             assert.deepEqual(consoleErrors, [], "не должно быть ошибок в консоли");

@@ -3,7 +3,6 @@
   max-width: 600px;
   container-type: inline-size;
   margin: 0 auto;
-  margin-inline: auto !important;
   overflow: hidden;
   background: var(--invite-surface);
   color: var(--invite-ink);

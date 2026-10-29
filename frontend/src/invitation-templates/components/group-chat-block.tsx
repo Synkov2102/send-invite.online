@@ -9,6 +9,7 @@ type InvitationGroupChatBlockProps = Readonly<{
   className?: string;
   show: boolean;
   text: string;
+  title?: string;
   url: string;
   variant?: GroupChatVariant;
 }>;
@@ -21,6 +22,7 @@ export function InvitationGroupChatBlock({
   className,
   show,
   text,
+  title = "Общий чат",
   url,
   variant = "alpine",
 }: InvitationGroupChatBlockProps) {
@@ -39,7 +41,7 @@ export function InvitationGroupChatBlock({
       )}
     >
       <InvitationSectionEyebrow>Чат</InvitationSectionEyebrow>
-      <h2 className={styles.title}>Общий чат</h2>
+      <h2 className={styles.title}>{title}</h2>
       {text.trim() ? <p className={styles.text}>{text}</p> : null}
       <a className={styles.link} href={trimmedUrl} rel="noreferrer" target="_blank">
         <MessagesSquare aria-hidden size={16} />

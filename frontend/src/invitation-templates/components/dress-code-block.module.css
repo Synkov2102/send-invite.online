@@ -183,6 +183,26 @@
   text-transform: uppercase;
 }
 
+.swatchButton {
+  appearance: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 180ms ease;
+}
+.swatchButton:focus-visible,
+.swatchButton[aria-pressed="true"] {
+  outline: 2px solid var(--dress-accent);
+  outline-offset: 3px;
+}
+.swatchButton[aria-pressed="true"] {
+  transform: translateY(-3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .swatchButton {
+    transition: none;
+  }
+}
+
 @media (max-width: 560px) {
   .block {
     gap: 15px;

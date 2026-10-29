@@ -2,8 +2,7 @@
   container-type: inline-size;
   width: 100%;
   max-width: 640px;
-  /* Published and editor shells reset article margins with a more specific selector. */
-  margin-inline: auto !important;
+  margin-inline: auto;
   background:
     url("/images/lace-letter-grain.svg") repeat,
     var(--invite-bg);

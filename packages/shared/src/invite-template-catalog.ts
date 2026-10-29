@@ -18,6 +18,7 @@ export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
 export type TemplateKind =
+  | "ribbon"
   | "sol"
   | "lace"
   | "alpine"
@@ -619,7 +620,8 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   {
     id: "clarity-editorial",
     name: "Ясность",
-    description: "Минималистичное приглашение с журнальной типографикой, крупной фотографией и ясной композицией.",
+    description:
+      "Минималистичное приглашение с журнальной типографикой, крупной фотографией и ясной композицией.",
     coverType: "arch",
     kind: "clarity",
     editorReady: true,
@@ -638,7 +640,8 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   {
     id: "electric-vows",
     name: "Неон",
-    description: "Яркое плакатное приглашение с контрастной типографикой, цветными полями и дерзкой журнальной сеткой.",
+    description:
+      "Яркое плакатное приглашение с контрастной типографикой, цветными полями и дерзкой журнальной сеткой.",
     coverType: "arch",
     kind: "electric",
     editorReady: true,
@@ -668,7 +671,8 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
   {
     id: "minimal-paper",
     name: "Бумага",
-    description: "Фарфорово-синее приглашение с рукописной типографикой, воздушной вёрсткой и авторской line-art иллюстрацией.",
+    description:
+      "Фарфорово-синее приглашение с рукописной типографикой, воздушной вёрсткой и авторской line-art иллюстрацией.",
     coverType: "arch",
     kind: "minimal",
     editorReady: true,
@@ -1212,7 +1216,18 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     coverType: "arch",
     editorReady: true,
     defaultPaletteId: "lace-slate",
-    recommendedPaletteIds: ["lace-slate", "lace-ivory", "lace-noir", "lace-wine", "lace-jade", "lace-olive", "lace-lilac", "lace-terracotta", "lace-rose", "lace-honey"],
+    recommendedPaletteIds: [
+      "lace-slate",
+      "lace-ivory",
+      "lace-noir",
+      "lace-wine",
+      "lace-jade",
+      "lace-olive",
+      "lace-lilac",
+      "lace-terracotta",
+      "lace-rose",
+      "lace-honey",
+    ],
     tags: ["классика", "кружево"],
     screenshot: "/images/templates/lace-letter-mobile.webp",
     preview: { background: "#46515e", surface: "#fff8e7", ink: "#46515e", accent: "#7f8c9a" },
@@ -1258,7 +1273,18 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     coverType: "arch",
     editorReady: true,
     defaultPaletteId: "sol-yellow",
-    recommendedPaletteIds: ["sol-yellow","sol-honey","sol-rose","sol-peach","sol-lavender","sol-sky","sol-sage","sol-olive","sol-dusty-rose","sol-linen"],
+    recommendedPaletteIds: [
+      "sol-yellow",
+      "sol-honey",
+      "sol-rose",
+      "sol-peach",
+      "sol-lavender",
+      "sol-sky",
+      "sol-sage",
+      "sol-olive",
+      "sol-dusty-rose",
+      "sol-linen",
+    ],
     tags: ["лето", "типографика"],
     screenshot: "/images/templates/sol-letter-mobile.webp?v=20261017-2",
     preview: { background: "#fff8da", surface: "#fffff8", ink: "#181810", accent: "#E6B800" },
@@ -1278,6 +1304,61 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
     },
   },
 
+  {
+    id: "burgundy-ribbon",
+    name: "Бордовый бант",
+    description:
+      "Молочная бумага, бордовые банты, парные фотокарточки и рукописная история вашего дня.",
+    coverType: "arch",
+    kind: "ribbon",
+    editorReady: true,
+    defaultPaletteId: "ribbon-cream",
+    recommendedPaletteIds: [
+      "ribbon-cream",
+      "ribbon-rose",
+      "ribbon-porcelain",
+      "ribbon-midnight",
+      "ribbon-emerald",
+      "ribbon-olive",
+      "ribbon-chocolate",
+      "ribbon-terracotta",
+      "ribbon-plum",
+      "ribbon-petrol",
+    ],
+    tags: ["романтика", "фото"],
+    screenshot: "/images/templates/burgundy-ribbon-mobile.webp?v=20261027-2",
+    preview: { background: "#ece3da", surface: "#fff6ef", ink: "#292220", accent: "#870d29" },
+    editorPreset: {
+      bride: "Марина",
+      groom: "Виктор",
+      date: "2027-09-20",
+      rsvpDate: "2027-09-01",
+      paletteId: "ribbon-cream",
+      time: "15:00",
+      city: "Новосибирск",
+      venue: "Оранжерея",
+      address: "ул. Новая Заря, 53а",
+      mapUrl: "https://yandex.ru/maps/?text=Новосибирск%2C%20Новая%20Заря%2053а",
+      dressCode:
+        "Нам будет приятно, если вы поддержите стилистику нашей свадьбы и используете в ваших нарядах предложенные цвета.",
+      dressCodeColors: ["#111110", "#705018", "#870d29", "#74721c", "#777a40", "#e5dfd4"],
+      schedule: [
+        { time: "15:00", title: "сбор гостей", description: "" },
+        { time: "15:30", title: "фуршет", description: "" },
+        { time: "16:00", title: "свадебная церемония", description: "" },
+        { time: "17:00", title: "начало банкета", description: "" },
+        { time: "23:00", title: "завершение торжества", description: "" },
+      ],
+      showGroupChat: true,
+      groupChatText:
+        "Мы создали чат, посвящённый нашему празднику, где вы можете узнать всю актуальную информацию, а после — поделиться самыми впечатляющими фото и видео.",
+      lead: "Совсем скоро в нашей жизни произойдёт очень важное событие — наша свадьба! Мы верим, что этот день станет красивым началом долгой и счастливой жизни. Приглашаем вас разделить с нами его радость.",
+      showRsvp: false,
+      showAdditionalInfo: true,
+      additionalInfo:
+        "Дорогие родные и близкие! Ваше присутствие — лучший подарок для нас. Вместо букетов будем рады вашим тёплым пожеланиям и улыбкам.",
+    },
+  },
 ];
 
 const templateDefinitionById = new Map(

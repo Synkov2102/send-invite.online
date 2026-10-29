@@ -7,6 +7,7 @@ type InvitationAdditionalInfoBlockProps = Readonly<{
   className?: string;
   show?: boolean;
   text: string;
+  title?: string;
   variant?: AdditionalInfoVariant;
 }>;
 
@@ -18,6 +19,7 @@ export function InvitationAdditionalInfoBlock({
   className,
   show = true,
   text,
+  title = "Дополнительная информация",
   variant = "alpine",
 }: InvitationAdditionalInfoBlockProps) {
   const trimmed = text.trim();
@@ -35,7 +37,7 @@ export function InvitationAdditionalInfoBlock({
       )}
     >
       <InvitationSectionEyebrow>Важно</InvitationSectionEyebrow>
-      <h2 className={styles.title}>Дополнительная информация</h2>
+      <h2 className={styles.title}>{title}</h2>
       <p className={styles.text}>{trimmed}</p>
     </div>
   );
