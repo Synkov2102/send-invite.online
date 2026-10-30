@@ -1,0 +1,943 @@
+.shell {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  overflow: hidden;
+  container-type: inline-size;
+  background: var(--invite-surface);
+  color: var(--invite-ink);
+  font:
+    400 clamp(14px, 3.9cqw, 17px)/1.5 var(--font-geist-sans),
+    Arial,
+    sans-serif;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.shell * {
+  box-sizing: border-box;
+}
+@media (min-width: 600px) {
+  .shell {
+    box-shadow: 0 0 0 1px var(--invite-line);
+  }
+}
+.shell {
+  --terra-glow: color-mix(in srgb, var(--invite-surface) 85%, var(--invite-accent));
+  --terra-gap: clamp(48px, 14cqw, 64px);
+  --terra-paper: color-mix(in srgb, var(--invite-surface) 40%, #fff);
+}
+.shell h1,
+.shell h2,
+.shell h3,
+.shell p,
+.shell figure,
+.shell ol {
+  margin: 0;
+}
+.shell p {
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+.shell section {
+  position: relative;
+}
+.shell figure img {
+  object-fit: cover;
+}
+.title,
+.block h2,
+.hero h1 {
+  font:
+    700 clamp(28px, 8.6cqw, 44px)/1.02 var(--font-invite-condensed),
+    "Arial Narrow",
+    sans-serif;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.title {
+  color: var(--invite-accent);
+}
+.shell .script {
+  font:
+    400 clamp(26px, 8cqw, 40px)/1.1 var(--font-invite-script),
+    cursive;
+  text-transform: none;
+}
+
+/* Бегущая строка */
+.ticker {
+  overflow: hidden;
+  background: var(--invite-accent);
+  color: var(--invite-surface);
+  font:
+    500 10px/1 var(--font-invite-condensed),
+    sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ticker > div {
+  display: flex;
+  width: max-content;
+}
+.ticker span {
+  display: flex;
+}
+.ticker i {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 7px 0 7px 16px;
+  font-style: normal;
+}
+.ticker i::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+/* Обложка */
+.hero {
+  padding: 34px 7% var(--terra-gap);
+  text-align: left;
+}
+.hero h1 {
+  color: var(--invite-accent);
+  font-size: clamp(40px, 13cqw, 66px);
+  line-height: 0.95;
+}
+.hero h1 span {
+  display: inline-block;
+}
+.hero .heroNote {
+  max-width: 70%;
+  margin: 16px 0 26px;
+  color: var(--invite-muted);
+  font-size: 0.92em;
+}
+.cover {
+  position: relative;
+  aspect-ratio: 4/4.6;
+  overflow: hidden;
+  background: var(--invite-line);
+}
+/* Затемнение снизу — подписи читаются на любом фото пары */
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.5));
+  pointer-events: none;
+}
+.cover .coverScript {
+  position: absolute;
+  z-index: 1;
+  bottom: 12px;
+  left: 14px;
+  color: var(--invite-photo-text);
+  font:
+    400 clamp(26px, 8cqw, 38px)/1 var(--font-invite-script),
+    cursive;
+  text-shadow: 0 1px 10px rgb(0 0 0 / 0.35);
+  transform: rotate(-4deg);
+  transform-origin: left center;
+}
+.cover time {
+  position: absolute;
+  z-index: 1;
+  right: 12px;
+  bottom: 12px;
+  color: var(--invite-photo-text);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 6px rgb(0 0 0 / 0.35);
+}
+
+/* Кирпичная плашка */
+.block {
+  background: var(--invite-accent);
+  color: var(--invite-surface);
+}
+.block h2 {
+  color: inherit;
+}
+.greeting {
+  padding: var(--terra-gap) 9% 30px;
+}
+.greeting p {
+  margin-top: 16px;
+  opacity: 0.92;
+}
+.when {
+  padding-bottom: 28px;
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid color-mix(in srgb, var(--invite-surface) 55%, transparent);
+}
+.calendar li {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  font:
+    400 clamp(17px, 5.4cqw, 26px)/1 var(--font-invite-condensed),
+    sans-serif;
+}
+.calendar li + li {
+  border-left: 1px solid color-mix(in srgb, var(--invite-surface) 55%, transparent);
+}
+.calendar span {
+  position: relative;
+}
+.calendar svg {
+  position: absolute;
+  inset: 12%;
+  width: 76%;
+  height: 76%;
+  color: var(--invite-surface);
+}
+.selected span {
+  margin-top: 2px;
+  color: var(--invite-accent);
+  font-weight: 700;
+}
+.when .month {
+  margin-top: 16px;
+  font:
+    500 13px/1 var(--font-invite-condensed),
+    sans-serif;
+  letter-spacing: 0.14em;
+}
+.when .eventTime {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+.eventTime time {
+  font:
+    600 clamp(22px, 6.6cqw, 30px)/1 var(--font-invite-condensed),
+    sans-serif;
+  letter-spacing: 0.02em;
+}
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  padding-bottom: 8px;
+  font:
+    500 10px/1 var(--font-invite-condensed),
+    sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  opacity: 0.85;
+}
+.location {
+  padding: 4px 9% var(--terra-gap);
+}
+.location h3 {
+  margin-top: 6px;
+  font-size: 1.05em;
+  font-weight: 500;
+}
+.location address {
+  margin-top: 6px;
+  font-style: normal;
+  font-size: 0.9em;
+  opacity: 0.85;
+}
+.location figure {
+  position: relative;
+  aspect-ratio: 3/2;
+  margin-top: 22px;
+  overflow: hidden;
+  border: 6px solid var(--invite-surface);
+}
+.location .button {
+  margin-top: 26px;
+}
+.button,
+.chat.chat a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 30px;
+  border: 0;
+  border-radius: 0;
+  background: var(--invite-surface);
+  color: var(--invite-accent);
+  font:
+    600 12px/1.2 var(--font-invite-condensed),
+    sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: none;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+/* Программа */
+.program {
+  padding: var(--terra-gap) 6% 0;
+}
+.program ol {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 32px;
+  padding: 0;
+  list-style: none;
+}
+.program ol::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 50%;
+  width: 1px;
+  background: var(--invite-accent);
+}
+.program li {
+  position: relative;
+  grid-column: 2;
+  padding: 0 0 44px 22px;
+  text-align: left;
+}
+.program li::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: -3.5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--invite-accent);
+  box-shadow: 0 0 0 4px var(--invite-surface);
+}
+.program li:nth-child(even) {
+  grid-column: 1;
+  padding: 0 22px 44px 0;
+  text-align: right;
+}
+.program li:last-child {
+  padding-bottom: 0;
+}
+.program li:last-child::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 0;
+  left: -1px;
+  width: 4px;
+  background: var(--invite-surface);
+}
+.program li:last-child:nth-child(even)::after {
+  right: -2px;
+  left: auto;
+}
+.program li:nth-child(even)::before {
+  right: -4.5px;
+  left: auto;
+}
+.program li:only-child {
+  grid-column: 1 / -1;
+  padding: 0;
+  text-align: center;
+}
+.program li:only-child::before,
+.program li:only-child::after,
+.program ol:has(> li:only-child)::before {
+  display: none;
+}
+.program time {
+  color: var(--invite-accent);
+  font:
+    600 clamp(17px, 5cqw, 22px)/1 var(--font-invite-condensed),
+    sans-serif;
+}
+.program h3 {
+  margin-top: 2px;
+  color: var(--invite-accent);
+  font:
+    700 clamp(15px, 4.6cqw, 20px)/1.1 var(--font-invite-condensed),
+    sans-serif;
+  text-transform: uppercase;
+}
+.program li p {
+  margin-top: 4px;
+  color: var(--invite-muted);
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+/* Дресс-код */
+.dress {
+  padding: var(--terra-gap) 7% 0;
+}
+.shared.shared {
+  gap: 18px;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.shared.shared > div:first-child {
+  display: none;
+}
+.shared.shared h2 {
+  color: var(--invite-accent);
+  font:
+    700 clamp(28px, 8.6cqw, 44px)/1.02 var(--font-invite-condensed),
+    sans-serif;
+  text-transform: uppercase;
+}
+.shared.shared p {
+  color: var(--invite-muted);
+  font: inherit;
+}
+.shared.shared ul {
+  gap: 10px;
+}
+.shared.shared li > :first-child {
+  width: clamp(42px, 12cqw, 56px);
+  border: 1px solid var(--invite-line);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 3px var(--invite-surface);
+}
+
+.colorHint {
+  display: block;
+  min-height: 18px;
+  margin-top: 14px;
+  color: var(--invite-muted);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+/* Пожелания и детали */
+.details {
+  padding: var(--terra-gap) 7% 0;
+}
+.polaroids {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin-bottom: -46px;
+}
+.polaroids figure {
+  position: relative;
+  width: 34%;
+  aspect-ratio: 4/4.3;
+  border: 6px solid var(--terra-paper);
+  border-bottom-width: 18px;
+  background: var(--invite-line);
+  box-shadow: 0 8px 18px rgb(0 0 0 / 0.18);
+  transform: rotate(-8deg);
+}
+.polaroids figure::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: -14px;
+  left: 50%;
+  width: 46%;
+  height: 20px;
+  background: color-mix(in srgb, var(--invite-accent) 22%, var(--invite-surface));
+  opacity: 0.9;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  transform: translateX(-50%) rotate(-4deg);
+}
+.closeUp {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.closeUp img {
+  object-position: 50% 30%;
+  transform: scale(1.6);
+  transform-origin: 50% 35%;
+}
+.polaroids figure + figure::before {
+  transform: translateX(-50%) rotate(5deg);
+}
+.polaroids figure + figure {
+  margin: 14px 0 0 -6%;
+  transform: rotate(7deg);
+}
+.details .block {
+  padding: 78px 9% 44px;
+}
+.details .block h2 {
+  margin-bottom: 22px;
+}
+.info.info,
+.chat.chat {
+  --info-ink: var(--invite-surface);
+  --info-muted: var(--invite-surface);
+  --chat-ink: var(--invite-surface);
+  --chat-muted: var(--invite-surface);
+  --chat-accent: var(--invite-surface);
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.info.info > div:first-child,
+.chat.chat > div:first-child,
+.info.info h2,
+.chat.chat h2 {
+  display: none;
+}
+.info.info p,
+.chat.chat p {
+  max-width: 34ch;
+  margin: 0 auto;
+  color: inherit;
+  font: inherit;
+  line-height: 1.55;
+  text-wrap: balance;
+  opacity: 0.92;
+}
+.note {
+  margin-bottom: 12px;
+  color: var(--terra-glow);
+}
+/* Орнамент между пожеланиями и чатом: линия — сердце — линия */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(70%, 220px);
+  margin: 30px auto 26px;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+.shell .note .script {
+  font-size: clamp(24px, 7cqw, 32px);
+  transform: rotate(-3deg);
+}
+.info + .note .script,
+.block > h2 + .note .script {
+  margin-top: 0;
+}
+.chat.chat a {
+  margin: 28px auto 0;
+}
+.chat.chat a svg {
+  display: none;
+}
+
+/* RSVP */
+.rsvp {
+  padding: var(--terra-gap) 7% 0;
+}
+.rsvp > p {
+  margin-top: 12px;
+  color: var(--invite-muted);
+}
+.form.form {
+  --rsvp-radius: 0;
+  --rsvp-control-radius: 0;
+  --rsvp-shadow: none;
+  --rsvp-accent-soft: transparent;
+  --rsvp-surface: color-mix(in srgb, #fff 55%, transparent);
+  --rsvp-section: transparent;
+}
+.form.form h3 {
+  color: var(--invite-accent);
+  font:
+    700 clamp(15px, 4.6cqw, 19px)/1.15 var(--font-invite-condensed),
+    sans-serif;
+  text-transform: uppercase;
+}
+/* Номер вопроса: квадрат в линию вместо розового круга */
+.form.form section > div:first-child > span:first-child {
+  border-color: var(--invite-accent);
+  border-radius: 0;
+  font:
+    600 11px/1 var(--font-invite-condensed),
+    sans-serif;
+}
+.form.form button[type="submit"] {
+  justify-content: center;
+  border-radius: 0;
+  font:
+    600 13px/1.2 var(--font-invite-condensed),
+    sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.form.form button[type="submit"] span:last-child {
+  display: none;
+}
+.rsvp .deadline {
+  margin: 4px 0 24px;
+  font-size: 0.9em;
+}
+
+/* Финал */
+.closing {
+  padding: var(--terra-gap) 7%;
+}
+.closing > p:first-of-type {
+  margin-top: 12px;
+  color: var(--invite-muted);
+  font-size: 0.92em;
+}
+.closing figure {
+  position: relative;
+  width: 46%;
+  aspect-ratio: 4/5;
+  margin: 28px auto 22px;
+  overflow: hidden;
+  border: 6px solid var(--terra-paper);
+  border-bottom-width: 18px;
+  background: var(--invite-line);
+  box-shadow: 0 8px 18px rgb(0 0 0 / 0.14);
+  transform: rotate(-2deg);
+}
+.closing .script {
+  color: var(--invite-accent);
+  font-size: clamp(22px, 6.4cqw, 30px);
+}
+.digits {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  color: var(--invite-accent);
+}
+.digits > div {
+  display: grid;
+  gap: 4px;
+  min-width: 2.3em;
+}
+.digits span,
+.digits b {
+  font:
+    600 clamp(28px, 8.4cqw, 40px)/1 var(--font-invite-condensed),
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.digits small {
+  color: var(--invite-muted);
+  font-size: 12px;
+}
+.bigHeart {
+  display: block;
+  width: 52px;
+  height: 52px;
+  margin: 30px auto 0;
+  color: var(--invite-accent);
+}
+
+.button:focus-visible,
+.chat.chat a:focus-visible {
+  outline: 2px solid var(--invite-surface);
+  outline-offset: 4px;
+}
+@media (hover: hover) {
+  .button:hover,
+  .chat.chat a:hover {
+    background: color-mix(in srgb, var(--invite-surface) 82%, var(--invite-accent));
+  }
+}
+
+/* .nameLine — маска для строк имён: без анимации ничего не меняет */
+.nameLine {
+  max-width: 100%;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  vertical-align: top;
+}
+.nameLine > span {
+  max-width: 100%;
+}
+
+/*
+ * Движение: «плакат собирается по мере чтения».
+ * Скрытые состояния — только при data-animate="on" (его ставит useScrollReveal),
+ * поэтому без JS и при prefers-reduced-motion всё видно сразу.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .shell {
+    --terra-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --terra-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .ticker > div {
+    animation: ticker 22s linear infinite;
+  }
+
+  .shell[data-animate="on"] [data-reveal] {
+    transition:
+      opacity 700ms ease,
+      transform 800ms var(--terra-ease);
+  }
+  .shell[data-animate="on"] [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  /*
+   * Обложка видна сразу после серверного рендера, поэтому анимируется keyframes
+   * с первой отрисовки, а не через data-reveal: иначе при гидрации она мигнула бы.
+   */
+  .nameLine > span {
+    animation: nameRise 900ms var(--terra-ease) both;
+  }
+  .nameLine + .nameLine > span {
+    animation-delay: 120ms;
+  }
+  .hero .heroNote {
+    animation: fadeUp 700ms ease 350ms both;
+  }
+  .cover {
+    animation: curtain 1100ms var(--terra-ease) 200ms both;
+  }
+  .cover img {
+    animation: settle 1700ms var(--terra-ease) 200ms both;
+  }
+  .cover .coverScript,
+  .cover time {
+    animation: fadeUp 700ms var(--terra-ease) 1100ms both;
+  }
+
+  /* Календарь: дни отщёлкиваются слева направо, на дату ставится сердце-штамп */
+  .shell[data-animate="on"] .calendar li > span {
+    transition:
+      opacity 400ms ease,
+      translate 500ms var(--terra-ease);
+    transition-delay: calc(250ms + var(--i) * 70ms);
+  }
+  .shell[data-animate="on"] .when:not([data-revealed]) .calendar li > span {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  .shell[data-animate="on"] .calendar .selected > span {
+    transition-delay: 950ms;
+  }
+  .shell[data-animate="on"] .selected svg {
+    transition:
+      scale 650ms var(--terra-pop) 850ms,
+      rotate 650ms var(--terra-ease) 850ms;
+  }
+  .shell[data-animate="on"] .when:not([data-revealed]) .selected svg {
+    scale: 0;
+    rotate: -24deg;
+  }
+
+  /* Локация: фото «приближается» внутри рамки */
+  .shell[data-animate="on"] .location figure img {
+    transition: transform 1600ms var(--terra-ease) 150ms;
+  }
+  .shell[data-animate="on"] .location:not([data-revealed]) figure img {
+    transform: scale(1.12);
+  }
+
+  /* Программа: пункты выезжают со своей стороны, точки «пробиваются» */
+  .shell[data-animate="on"] .program li:not([data-revealed]) {
+    transform: translateX(20px);
+  }
+  .shell[data-animate="on"] .program li:nth-child(even):not([data-revealed]) {
+    transform: translateX(-20px);
+  }
+  .shell[data-animate="on"] .program li::before {
+    transition: scale 500ms var(--terra-pop) 250ms;
+  }
+  .shell[data-animate="on"] .program li:not([data-revealed])::before {
+    scale: 0;
+  }
+
+  /* Дресс-код: кружки выскакивают по очереди */
+  .shell[data-animate="on"] .dress .shared li {
+    transition:
+      opacity 400ms ease,
+      scale 600ms var(--terra-pop);
+    transition-delay: 250ms;
+  }
+  .shell[data-animate="on"] .dress:not([data-revealed]) .shared li {
+    opacity: 0;
+    scale: 0.4;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(2) {
+    transition-delay: 320ms;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(3) {
+    transition-delay: 390ms;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(4) {
+    transition-delay: 460ms;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(5) {
+    transition-delay: 530ms;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(6) {
+    transition-delay: 600ms;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(7) {
+    transition-delay: 670ms;
+  }
+  .shell[data-animate="on"] .dress .shared li:nth-child(8) {
+    transition-delay: 740ms;
+  }
+
+  /* Полароиды: фото бросают на плашку, затем приклеивают скотчем */
+  .shell[data-animate="on"] .polaroids:not([data-revealed]) {
+    opacity: 1;
+    transform: none;
+  }
+  .shell[data-animate="on"] .polaroids figure {
+    transition:
+      opacity 500ms ease,
+      transform 900ms var(--terra-ease);
+  }
+  .shell[data-animate="on"] .polaroids figure + figure {
+    transition-delay: 160ms;
+  }
+  .shell[data-animate="on"] .polaroids:not([data-revealed]) figure {
+    opacity: 0;
+    transform: translateY(-60px) rotate(-18deg);
+  }
+  .shell[data-animate="on"] .polaroids:not([data-revealed]) figure + figure {
+    transform: translateY(-60px) rotate(20deg);
+  }
+  .shell[data-animate="on"] .polaroids figure::before {
+    transition: scale 350ms var(--terra-ease) 900ms;
+  }
+  .shell[data-animate="on"] .polaroids figure + figure::before {
+    transition-delay: 1050ms;
+  }
+  .shell[data-animate="on"] .polaroids:not([data-revealed]) figure::before {
+    scale: 0 1;
+  }
+
+  /* Орнамент между пожеланиями и чатом расходится от сердца */
+  .shell[data-animate="on"] .divider::before {
+    transform-origin: right;
+  }
+  .shell[data-animate="on"] .divider::after {
+    transform-origin: left;
+  }
+  .shell[data-animate="on"] .divider::before,
+  .shell[data-animate="on"] .divider::after {
+    transition: scale 800ms var(--terra-ease) 450ms;
+  }
+  .shell[data-animate="on"] .block:not([data-revealed]) .divider::before,
+  .shell[data-animate="on"] .block:not([data-revealed]) .divider::after {
+    scale: 0 1;
+  }
+
+  /* Финал: цифры перекатываются при смене, сердце бьётся «тук-тук» */
+  .digits span {
+    animation: roll 380ms var(--terra-ease);
+  }
+  .closing[data-revealed] .bigHeart {
+    animation: heartbeat 2.8s ease-in-out 600ms infinite;
+  }
+}
+
+/* Линия программы прорисовывается вслед за прокруткой (где браузер это умеет) */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .shell[data-animate="on"] .program ol {
+      view-timeline: --terra-program block;
+    }
+    .shell[data-animate="on"] .program ol::before {
+      transform-origin: top;
+      animation: lineDraw linear both;
+      animation-timeline: --terra-program;
+      animation-range: entry 25% cover 60%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .shell[data-animate="on"] .polaroids[data-revealed] figure:hover {
+    z-index: 2;
+    transform: rotate(0deg) scale(1.05);
+  }
+}
+
+@media (hover: hover) {
+  .ticker:hover > div {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes nameRise {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+@keyframes curtain {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.12);
+  }
+}
+@keyframes lineDraw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes roll {
+  from {
+    opacity: 0;
+    transform: translateY(-45%);
+  }
+}
+@keyframes heartbeat {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+  8% {
+    transform: scale(1.16);
+  }
+  16% {
+    transform: scale(0.98);
+  }
+  24% {
+    transform: scale(1.1);
+  }
+}

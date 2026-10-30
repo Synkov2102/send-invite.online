@@ -18,6 +18,7 @@ export type { CoverType, InviteTemplate };
 export { isInviteTemplate } from "./schemas/invite-template.schema";
 
 export type TemplateKind =
+  | "terra"
   | "ribbon"
   | "sol"
   | "lace"
@@ -1357,6 +1358,73 @@ export const inviteTemplateCatalog: InviteTemplateDefinition[] = [
       showAdditionalInfo: true,
       additionalInfo:
         "Дорогие родные и близкие! Ваше присутствие — лучший подарок для нас. Вместо букетов будем рады вашим тёплым пожеланиям и улыбкам.",
+    },
+  },
+
+  {
+    id: "terracotta-forever",
+    name: "Вместе навсегда",
+    description:
+      "Кирпичные плашки, крупная плакатная типографика, бегущая строка и календарь с сердцем.",
+    coverType: "arch",
+    kind: "terra",
+    editorReady: true,
+    defaultPaletteId: "terra-brick",
+    recommendedPaletteIds: [
+      "terra-brick",
+      "terra-rust",
+      "terra-wine",
+      "terra-rose",
+      "terra-plum",
+      "terra-cocoa",
+      "terra-olive",
+      "terra-forest",
+      "terra-navy",
+      "terra-graphite",
+    ],
+    tags: ["типографика", "фото"],
+    screenshot: "/images/templates/terracotta-forever-mobile.webp",
+    preview: { background: "#eadbcb", surface: "#fbeedf", ink: "#3a1f18", accent: "#8e2b1b" },
+    editorPreset: {
+      bride: "Вероника",
+      groom: "Руслан",
+      date: "2027-08-15",
+      rsvpDate: "2027-08-01",
+      paletteId: "terra-brick",
+      time: "15:30",
+      city: "Санкт-Петербург",
+      venue: "Ресторан «Времена года»",
+      address: "Английская набережная, 10",
+      mapUrl: "https://yandex.ru/maps/?text=Санкт-Петербург%2C%20Английская%20набережная%2010",
+      lead: "Приглашаем вас разделить радость особенного для нас события и стать частью начала нашей семейной истории. Мы будем очень рады видеть вас на нашей свадьбе!",
+      dressCode:
+        "Будем благодарны, если в своих нарядах вы поддержите цветовую гамму нашего праздника.",
+      dressCodeColors: ["#8e2b1b", "#5a3a27", "#c9a27e", "#e8d6c0", "#2e2219"],
+      schedule: [
+        { time: "15:30", title: "Сбор гостей", description: "Тёплая встреча и фуршет в оранжерее" },
+        {
+          time: "16:00",
+          title: "Церемония",
+          description: "Готовьте платочки, камеры и поздравления",
+        },
+        {
+          time: "17:00",
+          title: "Банкет",
+          description: "Вкусная еда, весёлые танцы и, конечно, любовь",
+        },
+        {
+          time: "23:00",
+          title: "Финал вечера",
+          description: "Много объятий и напутствий в семейную жизнь",
+        },
+      ],
+      showGroupChat: true,
+      groupChatText:
+        "Мы создали общий чат: там вся актуальная информация, а после праздника — фото и видео.",
+      showAdditionalInfo: true,
+      additionalInfo:
+        "Пожалуйста, не ломайте голову над подарком — мы будем рады вашему вкладу в наше свадебное путешествие.",
+      showRsvp: true,
     },
   },
 ];

@@ -35,6 +35,7 @@ export const sharedTemplateRenderers: Record<
   SharedTemplateKind,
   ComponentType<SharedTemplateViewProps>
 > = {
+  terra: dynamic(() => import("./terra").then((module) => module.TerraTemplate), { ssr: true }),
   ribbon: dynamic(() => import("./ribbon").then((module) => module.RibbonTemplate), { ssr: true }),
   sol: dynamic(() => import("./sol").then((module) => module.SolTemplate), { ssr: true }),
   lace: dynamic(() => import("./lace").then((module) => module.LaceTemplate), { ssr: true }),

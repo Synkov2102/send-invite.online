@@ -167,7 +167,14 @@ export const ribbonImages = {
   venue: "/images/burgundy-ribbon-venue.webp",
 } as const;
 
+export const terraImages = {
+  cover: "/images/terracotta-forever-cover.webp",
+  portrait: "/images/terracotta-forever-portrait.webp",
+  venue: "/images/terracotta-forever-venue.webp",
+} as const;
+
 export const templateImagesByKind: Record<TemplateKind, TemplateImageSet> = {
+  terra: terraImages,
   ribbon: ribbonImages,
   sol: solImages,
   lace: laceImages,
