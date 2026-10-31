@@ -1239,7 +1239,7 @@ exports.inviteTemplateCatalog = [
             "terra-graphite",
         ],
         tags: ["типографика", "фото"],
-        screenshot: "/images/templates/terracotta-forever-mobile.webp",
+        screenshot: "/images/templates/terracotta-forever-mobile.webp?v=20261031",
         preview: { background: "#eadbcb", surface: "#fbeedf", ink: "#3a1f18", accent: "#8e2b1b" },
         editorPreset: {
             bride: "Вероника",

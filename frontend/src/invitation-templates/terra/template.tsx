@@ -63,16 +63,20 @@ function Photo({
 
 function Countdown({ date, time }: { date: string; time: string }) {
   const [remaining, setRemaining] = useState<number | null>(null);
+  // Дата и время в схеме — свободные строки: без валидного момента отсчёт не показываем
+  const timestamp = new Date(date + "T" + time + ":00").getTime();
   useEffect(() => {
-    const timestamp = new Date(date + "T" + time + ":00").getTime();
-    const update = () =>
-      setRemaining(
-        Number.isFinite(timestamp) ? Math.max(0, Math.floor((timestamp - Date.now()) / 1000)) : 0,
-      );
+    if (!Number.isFinite(timestamp)) {
+      return;
+    }
+    const update = () => setRemaining(Math.max(0, Math.floor((timestamp - Date.now()) / 1000)));
     update();
     const timer = window.setInterval(update, 1000);
     return () => window.clearInterval(timer);
-  }, [date, time]);
+  }, [timestamp]);
+  if (!Number.isFinite(timestamp)) {
+    return null;
+  }
   const seconds = remaining ?? 0;
   const parts = [
     Math.floor(seconds / 86400),
@@ -141,7 +145,7 @@ export default function TerraTemplate({
       />
       <article ref={rootRef} className={styles.shell} style={inviteVars}>
         <Ticker />
-        <section className={styles.hero} data-invite-section="hero">
+        <section className={styles.hero} data-invite-section="hero cover">
           <h1>
             <span className={styles.nameLine}>
               <span>{invite.groom}</span>
@@ -162,8 +166,8 @@ export default function TerraTemplate({
           </figure>
         </section>
 
-        <section className={styles.block} data-invite-section="greeting when location">
-          <div className={styles.greeting} data-reveal>
+        <section className={styles.block}>
+          <div className={styles.greeting} data-reveal data-invite-section="greeting">
             <h2>
               Дорогие родные
               <br />и друзья!
@@ -171,7 +175,7 @@ export default function TerraTemplate({
             {invite.lead && <p>{tie(invite.lead)}</p>}
           </div>
 
-          <div className={styles.when} data-reveal>
+          <div className={styles.when} data-reveal data-invite-section="when date">
             <div className={styles.weekdays} aria-hidden="true">
               {calendarDays.map((day, index) => (
                 <span key={index}>{day.label}</span>
@@ -199,7 +203,7 @@ export default function TerraTemplate({
             </p>
           </div>
 
-          <div className={styles.location} data-reveal>
+          <div className={styles.location} data-reveal data-invite-section="location">
             <h2 className={styles.script}>Локация</h2>
             <h3>{invite.venue}</h3>
             <address>{[invite.city, invite.address].filter(Boolean).join(", ")}</address>

@@ -107,7 +107,7 @@
 .hero h1 {
   color: var(--invite-accent);
   font-size: clamp(40px, 13cqw, 66px);
-  line-height: 0.95;
+  line-height: 1.05;
 }
 .hero h1 span {
   display: inline-block;
@@ -668,7 +668,9 @@
 .nameLine {
   max-width: 100%;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  /* Поля под кратку Й, точки Ё и хвосты Д/Щ; отрицательные отступы сохраняют раскладку */
+  padding: 0.24em 0 0.16em;
+  margin: -0.24em 0 -0.16em;
   vertical-align: top;
 }
 .nameLine > span {
@@ -892,7 +894,7 @@
 }
 @keyframes nameRise {
   from {
-    transform: translateY(105%);
+    transform: translateY(140%);
   }
 }
 @keyframes fadeUp {
