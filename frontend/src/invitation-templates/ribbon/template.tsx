@@ -326,7 +326,7 @@ export default function RibbonTemplate({
         )}
         <section className={styles.closing} data-reveal data-invite-section="portrait">
           <figure>
-            <Photo src={portraitImage} alt={`${invite.bride} и ${invite.groom}`} />
+            <Photo src={coverImage} alt={`${invite.bride} и ${invite.groom}`} />
           </figure>
           <p className={styles.signature}>
             <span>{invite.bride}</span>
