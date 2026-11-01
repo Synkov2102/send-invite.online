@@ -37,11 +37,14 @@ export function useRibbonScroll(rootRef: RefObject<HTMLElement | null>, revision
       let top = 0;
       let bottom = view.innerHeight;
       for (let parent = root.parentElement; parent; parent = parent.parentElement) {
-        if (/auto|scroll|hidden|clip/.test(view.getComputedStyle(parent).overflowY)) {
+        const style = view.getComputedStyle(parent);
+        if (/auto|scroll|hidden|clip/.test(style.overflowY)) {
           const rect = parent.getBoundingClientRect();
           top = Math.max(top, rect.top);
           bottom = Math.min(bottom, rect.bottom);
         }
+        // Fixed-превью на телефоне вылезает из схлопнутого <main> редактора: предки выше него не обрезают.
+        if (style.position === "fixed") break;
       }
       if (bottom <= top) return;
       const height = bottom - top;
