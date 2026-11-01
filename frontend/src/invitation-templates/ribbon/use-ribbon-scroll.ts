@@ -18,6 +18,21 @@ export function useRibbonScroll(rootRef: RefObject<HTMLElement | null>, revision
     const venue = root.querySelector<HTMLElement>("[data-invite-section='location'] figure");
     const bows = root.querySelectorAll<HTMLElement>("[data-ribbon-bow]");
     const clamp = (value: number) => Math.max(0, Math.min(1, value));
+    // Chrome на Android анимирует clip-path на GPU и не раскрывает фото, если внутри
+    // одновременно меняется scale — параллакс включаем только после раскрытия.
+    let venueOpened = Boolean(venue?.parentElement?.hasAttribute("data-revealed"));
+    const onVenueOpened = (event: TransitionEvent) => {
+      if (
+        event.target !== venue ||
+        event.propertyName !== "clip-path" ||
+        !venue?.parentElement?.hasAttribute("data-revealed")
+      ) {
+        return;
+      }
+      venueOpened = true;
+      schedule();
+    };
+    venue?.addEventListener("transitionend", onVenueOpened);
 
     function update() {
       frame = 0;
@@ -74,7 +89,7 @@ export function useRibbonScroll(rootRef: RefObject<HTMLElement | null>, revision
         root.style.setProperty("--ribbon-cover-pan", `${distance * 15}px`);
         root.style.setProperty("--ribbon-cover-scale", String(1.035 + distance * 0.055));
       }
-      if (venueRect) {
+      if (venueRect && venueOpened) {
         root.style.setProperty(
           "--ribbon-venue-scale",
           String(1.12 - clamp((bottom - venueRect.top) / (height + venueRect.height)) * 0.1),
@@ -101,6 +116,7 @@ export function useRibbonScroll(rootRef: RefObject<HTMLElement | null>, revision
     return () => {
       view.cancelAnimationFrame(frame);
       observer.disconnect();
+      venue?.removeEventListener("transitionend", onVenueOpened);
       ownerDocument.removeEventListener("scroll", schedule, true);
       view.removeEventListener("resize", schedule);
       preference.removeEventListener("change", schedule);

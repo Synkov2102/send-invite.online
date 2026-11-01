@@ -793,6 +793,9 @@
   .shell[data-animate="on"] .location figure {
     transition: clip-path 1200ms cubic-bezier(0.16, 1, 0.3, 1) 100ms;
   }
+  .shell[data-animate="on"] .location figure img {
+    transition: transform 500ms ease-out;
+  }
   .shell[data-animate="on"] .location:not([data-revealed]) figure {
     clip-path: inset(8% 48% 8% 48% round 45%);
   }
