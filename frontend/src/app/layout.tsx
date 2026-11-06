@@ -10,6 +10,7 @@ import {
 import { AnalyticsGate } from "@/components/analytics-gate";
 import CookieConsent from "@/components/cookie-consent";
 import { GoogleAnalytics } from "@/components/google-analytics";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { TopMailRuCounter } from "@/components/top-mailru-counter";
 import { YandexMetrika } from "@/components/yandex-metrika";
 import { createRootMetadata } from "@/lib/seo";
@@ -66,6 +67,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${inviteSerif.variable} ${inviteScript.variable} ${inviteCondensed.variable} ${inviteSlavic.variable} h-full antialiased`}
     >
       <body className={`${headerBaseStyles.scope} min-h-full flex flex-col`}>
+        <SmoothScroll />
         {children}
         <CookieConsent />
       </body>
