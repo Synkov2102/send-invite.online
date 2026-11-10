@@ -25,11 +25,20 @@ export function YandexMetrika() {
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
           })(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=${YANDEX_METRIKA_ID}","ym");
 
+          // Returns from Robokassa and Yandex ID would start a new "site referral" visit
+          // and steal the payment from the ad that brought the user; report them as internal.
+          var metrikaReferrer=document.referrer;
+          try {
+            if (/(^|\\.)(robokassa\\.ru|oauth\\.yandex\\.(ru|com)|passport\\.yandex\\.(ru|com))$/.test(new URL(metrikaReferrer).hostname)) {
+              metrikaReferrer=location.origin+"/";
+            }
+          } catch (e) {}
+
           ym(${YANDEX_METRIKA_ID},"init",{
             ssr:true,
             webvisor:true,
             clickmap:true,
-            referrer:document.referrer,
+            referrer:metrikaReferrer,
             url:location.href,
             accurateTrackBounce:true,
             trackLinks:true
